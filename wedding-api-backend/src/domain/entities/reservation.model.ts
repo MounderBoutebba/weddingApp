@@ -6,21 +6,21 @@ export interface Reservation {
 	companyId: string;
 	reservationsStatus: ReservationStatus;
 	paymentType?: PaymentType;
-	characteristic: string/*Categorie*/;
+	characteristic: string /*Categorie*/;
 	bookingDate?: string;
 	company: CompanyEntity;
 	start: number;
 	end: number;
 	totalPrice: number;
-	criteres: any ;
+	criteres: any;
 }
 
 export enum ReservationStatus {
 	RESERVATION_REQUEST = 'reservation_request',
 
-	VALIDATED_BY_MARIAGESEREIN = 'validated_by_mariageserein', // admin
-	REFUSED_BY_MARIAGESEREIN = 'refused_by_mariageserein', // admin
-	ARCHIVED_BY_MARIAGESEREIN = 'archived_by_mariageserein', // admin
+	VALIDATED_BY_wedding = 'validated_by_wedding', // admin
+	REFUSED_BY_wedding = 'refused_by_wedding', // admin
+	ARCHIVED_BY_wedding = 'archived_by_wedding', // admin
 
 	VALIDATED_BY_PROVIDER = 'validated_by_provider', // provider
 	REFUSED_BY_PROVIDER = 'refused_by_provider', // provider
@@ -33,9 +33,9 @@ export enum ReservationStatus {
 	CANCELED_REQUEST_BY_CLIENT = 'canceled_request_by_client', // client
 	CANCELED_RESERVATION_BY_CLIENT = 'canceled_reservation_by_client', // client
 
-	PAYED_BY_CLIENT = 'payed_by_client' // client
+	PAYED_BY_CLIENT = 'payed_by_client', // client
 }
 export enum PaymentType {
 	CASH = 'cash',
-	RECURRENCE = 'recurrence'
+	RECURRENCE = 'recurrence',
 }

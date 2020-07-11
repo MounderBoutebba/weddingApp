@@ -13,7 +13,7 @@ import {
 	Query,
 	Request,
 	Response,
-	UseGuards
+	UseGuards,
 } from '@nestjs/common';
 import { BookingService } from './booking.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -36,8 +36,7 @@ export class BookingController {
 		private readonly notificationsService: NotificationsService,
 		private readonly usersService: UsersService,
 		private readonly emailService: EmailService
-	) {
-	}
+	) {}
 
 	@Post()
 	@UseGuards(AuthGuard())
@@ -81,10 +80,10 @@ export class BookingController {
 			const query = {
 				bool: {
 					must: [
-						{ match: { reservationsStatus: ReservationStatus.VALIDATED_BY_MARIAGESEREIN } },
-						{ match: { 'client.id': user.id } }
-					]
-				}
+						{ match: { reservationsStatus: ReservationStatus.VALIDATED_BY_wedding } },
+						{ match: { 'client.id': user.id } },
+					],
+				},
 			};
 			const data = await this.bookingService.findAllBookings(query, page);
 			return data;
@@ -103,9 +102,9 @@ export class BookingController {
 				bool: {
 					must: [
 						{ match: { reservationsStatus: ReservationStatus.VALIDATED_BY_PROVIDER } },
-						{ match: { 'client.id': user.id } }
-					]
-				}
+						{ match: { 'client.id': user.id } },
+					],
+				},
 			};
 			const data = await this.bookingService.findAllBookings(query, page);
 			return data;
@@ -124,9 +123,9 @@ export class BookingController {
 				bool: {
 					must: [
 						{ match: { reservationsStatus: ReservationStatus.PAYED_BY_CLIENT } },
-						{ match: { 'client.id': user.id } }
-					]
-				}
+						{ match: { 'client.id': user.id } },
+					],
+				},
 			};
 			const data = await this.bookingService.findAllBookings(query, page);
 			return data;
@@ -146,9 +145,9 @@ export class BookingController {
 				bool: {
 					must: [
 						{ match: { reservationsStatus: ReservationStatus.VALIDATED_BY_PROVIDER } },
-						{ match: { 'company.id': company.id } }
-					]
-				}
+						{ match: { 'company.id': company.id } },
+					],
+				},
 			};
 			const data = await this.bookingService.findAllBookings(query, page);
 			return data;
@@ -167,10 +166,10 @@ export class BookingController {
 			const query = {
 				bool: {
 					must: [
-						{ match: { reservationsStatus: ReservationStatus.VALIDATED_BY_MARIAGESEREIN } },
-						{ match: { 'company.id': company.id } }
-					]
-				}
+						{ match: { reservationsStatus: ReservationStatus.VALIDATED_BY_wedding } },
+						{ match: { 'company.id': company.id } },
+					],
+				},
 			};
 			const data = await this.bookingService.findAllBookings(query, page);
 			return data;
@@ -191,9 +190,9 @@ export class BookingController {
 				bool: {
 					must: [
 						{ match: { reservationsStatus: ReservationStatus.VALIDATED_BY_CLIENT } },
-						{ match: { 'company.id': company.id } }
-					]
-				}
+						{ match: { 'company.id': company.id } },
+					],
+				},
 			};
 			const data = await this.bookingService.findAllBookings(query, page);
 			return data;
@@ -202,13 +201,12 @@ export class BookingController {
 		}
 	}
 
-
 	@Get('reservation/finished-provider')
 	@UseGuards(AuthGuard(), RolesGuard)
 	@Roles('provider', 'client')
 	public async getReservationPayedByClients(@Query('page') page: number = 0, @Request() req) {
 		try {
-			let query={};
+			let query = {};
 			const user = req.user;
 			if (user.role === 'provider') {
 				const company = await user.company;
@@ -216,19 +214,19 @@ export class BookingController {
 					bool: {
 						must: [
 							{ match: { reservationsStatus: ReservationStatus.PAYED_BY_CLIENT } },
-							{ match: { 'company.id': company.id } }
-						]
-					}
-				}
-			}else if(user.role === 'client'){
+							{ match: { 'company.id': company.id } },
+						],
+					},
+				};
+			} else if (user.role === 'client') {
 				query = {
 					bool: {
 						must: [
 							{ match: { reservationsStatus: ReservationStatus.PAYED_BY_CLIENT } },
-							{ match: { 'client.id': user.id } }
-						]
-					}
-				}
+							{ match: { 'client.id': user.id } },
+						],
+					},
+				};
 			}
 			const data = await this.bookingService.findAllBookings(query, page);
 			return data;
@@ -273,7 +271,6 @@ export class BookingController {
 
 	@Patch(':id')
 	async patchBooking(@Body() order: UpdateBookingDto, @Param('id') id: string, @Request() req) {
-
 		try {
 			const data = await this.bookingService.updateBooking(id, order);
 			return { data };
@@ -281,7 +278,6 @@ export class BookingController {
 			console.log('error', e);
 			throw new NotFoundException();
 		}
-
 	}
 
 	@Patch(':id/validate-request')
@@ -291,14 +287,14 @@ export class BookingController {
 		try {
 			if (
 				![
-					ReservationStatus.VALIDATED_BY_MARIAGESEREIN,
-					ReservationStatus.ARCHIVED_BY_MARIAGESEREIN,
-					ReservationStatus.REFUSED_BY_MARIAGESEREIN
+					ReservationStatus.VALIDATED_BY_wedding,
+					ReservationStatus.ARCHIVED_BY_wedding,
+					ReservationStatus.REFUSED_BY_wedding,
 				].includes(order.reservationsStatus)
 			) {
 				throw new NotFoundException();
 			}
-			order = { reservationsStatus: order.reservationsStatus};
+			order = { reservationsStatus: order.reservationsStatus };
 			const reservation = await this.bookingService.findReservation(id);
 			if (reservation.reservationsStatus !== ReservationStatus.RESERVATION_REQUEST) {
 				throw new ForbiddenException();
@@ -316,8 +312,7 @@ export class BookingController {
 	@Roles('provider')
 	public async validateRequestByProvider(@Body() order: UpdateBookingDto, @Param('id') id: string, @Request() req) {
 		try {
-
-		if (
+			if (
 				![ReservationStatus.VALIDATED_BY_PROVIDER, ReservationStatus.REFUSED_BY_PROVIDER].includes(
 					order.reservationsStatus
 				)
@@ -326,16 +321,16 @@ export class BookingController {
 			}
 			order = {
 				reservationsStatus: order.reservationsStatus,
-				additionalFees:order.additionalFees || [],
+				additionalFees: order.additionalFees || [],
 				discounts: order.discounts || [],
-				providerConfirmationDate: new Date()
+				providerConfirmationDate: new Date(),
 			};
 			const user = req.user;
 			const company = await user.company;
 			const reservation = await this.bookingService.findReservation(id);
 			if (
 				reservation.company.id !== company.id ||
-				reservation.reservationsStatus !== ReservationStatus.VALIDATED_BY_MARIAGESEREIN
+				reservation.reservationsStatus !== ReservationStatus.VALIDATED_BY_wedding
 			) {
 				throw new ForbiddenException();
 			}
@@ -351,25 +346,23 @@ export class BookingController {
 			order.allPrice = allPrice;
 			const data = await this.bookingService.updateBooking(id, order);
 			return {
-				data
+				data,
 			};
 		} catch (e) {
 			throw e;
 		}
 	}
 
-
 	@Patch(':id/cancel_request_provider')
 	@UseGuards(AuthGuard(), RolesGuard)
 	@Roles('provider')
 	public async cancelRequestByProvider(@Body() order: UpdateBookingDto, @Param('id') id: string, @Request() req) {
 		try {
-
 			if (![ReservationStatus.CANCELED_REQUEST_BY_PROVIDER].includes(order.reservationsStatus)) {
 				throw new NotFoundException();
 			}
 			order = {
-				reservationsStatus: order.reservationsStatus
+				reservationsStatus: order.reservationsStatus,
 			};
 			const user = req.user;
 			const company = await user.company;
@@ -380,34 +373,32 @@ export class BookingController {
 			) {
 				throw new ForbiddenException();
 			}
-			const data:any = await this.bookingService.updateBooking(id, order);
-			const content=`Votre demande de reservation N ${data.orderNumber} est annulée par ${data.company.name}`;
+			const data: any = await this.bookingService.updateBooking(id, order);
+			const content = `Votre demande de reservation N ${data.orderNumber} est annulée par ${data.company.name}`;
 			await this.notificationsService.createNotification({
 				content,
-				url:'',
-				userId:data.client.id
+				url: '',
+				userId: data.client.id,
 			});
-			await this.emailService.sendMmail(content,data.client.email);
+			await this.emailService.sendMmail(content, data.client.email);
 			return {
-				data
+				data,
 			};
 		} catch (e) {
 			throw e;
 		}
 	}
 
-
 	@Patch(':id/cancel_reservation_provider')
 	@UseGuards(AuthGuard(), RolesGuard)
 	@Roles('provider')
 	public async cancelReservationByProvider(@Body() order: UpdateBookingDto, @Param('id') id: string, @Request() req) {
 		try {
-
 			if (![ReservationStatus.CANCELED_RESERVATION_BY_PROVIDER].includes(order.reservationsStatus)) {
 				throw new NotFoundException();
 			}
 			order = {
-				reservationsStatus: order.reservationsStatus
+				reservationsStatus: order.reservationsStatus,
 			};
 			const user = req.user;
 			const company = await user.company;
@@ -418,22 +409,21 @@ export class BookingController {
 			) {
 				throw new ForbiddenException();
 			}
-			const data:any = await this.bookingService.updateBooking(id, order);
-			const content=`Votre réservation N ${data.orderNumber} est annulée par ${data.company.name}`;
+			const data: any = await this.bookingService.updateBooking(id, order);
+			const content = `Votre réservation N ${data.orderNumber} est annulée par ${data.company.name}`;
 			await this.notificationsService.createNotification({
 				content,
-				url:'',
-				userId:data.client.id
+				url: '',
+				userId: data.client.id,
 			});
-			await this.emailService.sendMmail(content,data.client.email);
+			await this.emailService.sendMmail(content, data.client.email);
 			return {
-				data
+				data,
 			};
 		} catch (e) {
 			throw e;
 		}
 	}
-
 
 	@Post(':id/remind-client-provider')
 	@UseGuards(AuthGuard(), RolesGuard)
@@ -449,21 +439,21 @@ export class BookingController {
 			) {
 				throw new ForbiddenException();
 			}
-			const content=`Vous avez une demande de réservation N ${reservation.orderNumber} en attente de paiement. Veuillez procéder à son règlement pour la confirmer`;
+			const content = `Vous avez une demande de réservation N ${reservation.orderNumber} en attente de paiement. Veuillez procéder à son règlement pour la confirmer`;
 			await this.notificationsService.createNotification({
 				content,
 				url: '',
-				userId: reservation.client.id
+				userId: reservation.client.id,
 			});
-			await this.emailService.sendMmail(content,reservation.client.email);
+			await this.emailService.sendMmail(content, reservation.client.email);
 			const count = reservation.notifyClientCount || 0;
 			const order = {
-				notifyClientCount: count + 1
+				notifyClientCount: count + 1,
 			};
 			const data: any = await this.bookingService.updateBooking(id, order);
 
 			return {
-				data
+				data,
 			};
 		} catch (e) {
 			throw e;
@@ -473,31 +463,34 @@ export class BookingController {
 	@Patch(':id/cancel-request-client')
 	@UseGuards(AuthGuard(), RolesGuard)
 	@Roles('client')
-	public async cancelPendingRequestByClient(@Body() order: UpdateBookingDto, @Param('id') id: string, @Request() req) {
+	public async cancelPendingRequestByClient(
+		@Body() order: UpdateBookingDto,
+		@Param('id') id: string,
+		@Request() req
+	) {
 		try {
 			if (![ReservationStatus.CANCELED_PENDING_BY_CLIENT].includes(order.reservationsStatus)) {
 				throw new NotFoundException();
 			}
 			order = {
-				reservationsStatus: order.reservationsStatus
+				reservationsStatus: order.reservationsStatus,
 			};
 			const user = req.user;
 			const reservation = await this.bookingService.findReservation(id);
 			if (
 				reservation.client.id !== user.id ||
-				reservation.reservationsStatus !== ReservationStatus.VALIDATED_BY_MARIAGESEREIN
+				reservation.reservationsStatus !== ReservationStatus.VALIDATED_BY_wedding
 			) {
 				throw new ForbiddenException();
 			}
-			const data = await this.bookingService.updateBooking(id,order);
+			const data = await this.bookingService.updateBooking(id, order);
 			return {
-				data
+				data,
 			};
 		} catch (e) {
 			throw e;
 		}
 	}
-
 
 	@Patch(':id/validate-client')
 	@UseGuards(AuthGuard(), RolesGuard)
@@ -514,7 +507,7 @@ export class BookingController {
 				throw new NotFoundException();
 			}
 			order = {
-				reservationsStatus: order.reservationsStatus
+				reservationsStatus: order.reservationsStatus,
 			};
 			const user = req.user;
 			const reservation = await this.bookingService.findReservation(id);
@@ -526,7 +519,7 @@ export class BookingController {
 			}
 			const data = await this.bookingService.validateReservationByClient(order, id);
 			return {
-				data
+				data,
 			};
 		} catch (e) {
 			throw e;
