@@ -7,7 +7,7 @@ export const environment = {
     callbackURL: '/'
   },
   apiUrl: '/api',
-  key: 'key-sample',
-  googleApiKey: 'AIzaSyBkjTJgW1LxVJUqIi-wPQsce-GFAtzKJkQ'
+  : 'key-sample',
+  googleApiKey: '-wPQsce-GFAtzKJkQ'
 
 };
