@@ -1,0 +1,20 @@
+@import '../../pro-showcase.component.scss';
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: block;
+}
+.rating-box{
+    border: solid 3.3px #e6e6e6;
+    border-radius: 7px;
+    width: 150px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.comment-text{
+    line-height: 22.5px;
+    text-align: justify;
+}

@@ -1,0 +1,539 @@
+<div [formGroup]="form" *ngIf="field.type === fieldTypeEnum.CHECKBOX_NUMBER_LIST && field.name === 'tiragePapier'" ngStyle.lt-md="width: 91vw"
+style=" !important">
+  <div fxLayout="column" formGroupName="{{field.name}}">
+    <div fxLayout="row" fxLayoutAlign="space-between space-between">
+
+      <mat-label class="cnl-title">
+        {{field.displayName|lowercase|translate|capitalizeFirstLetter}}
+      </mat-label>
+      <mat-slide-toggle [color]="color" (change)="toggle($event.checked)" [formControlName]="'value'">
+      </mat-slide-toggle>
+    </div>
+
+    <mat-label class="cnl-label">
+      {{field.label|lowercase|translate|capitalizeFirstLetter}}
+    </mat-label>
+
+    <div [hidden]="!field.value">
+      <div fxLayout="column">
+        <mat-label class="cnl-title">
+          {{field.checkbox.name|lowercase|translate|capitalizeFirstLetter}}
+        </mat-label>
+        <mat-label class="cnl-label">
+          {{field.checkbox.label|lowercase|translate|capitalizeFirstLetter}}
+        </mat-label>
+      </div>
+      <div formGroupName="finitions" fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div *ngFor="let finition of field.finitions; let i=index" style="width: 50%">
+          <mat-checkbox formControlName="{{finition.key}}" color='primary' style="width: 100%;text-align: center"
+                           (change)='checkBoxChanged($event.checked,finition.key)'>
+            {{finition.key|lowercase|translate|capitalizeFirstLetter}}
+          </mat-checkbox>
+        </div>
+        <div style='margin-top: 1rem;' class="text-danger" *ngIf="!finitionsError" translate>Vous devez sélectionner une finition</div>
+      </div>
+
+      <br>
+      <mat-divider *ngIf="finitionsError"></mat-divider>
+      <br>
+      <div id='format-wrapper' *ngIf="finitionsError">
+        <div *ngFor="let format of field.formats; let i=index"  fxLayout="column" formGroupName="formats" [ngClass]='{"hide": !showMoreOptions && i>=displayItemsLimit}'>
+
+          <div *ngIf='i<displayItemsLimit' fxLayout="row wrap">
+            <mat-label class="cnl-title" fxFlex='92%'>
+              {{format.name|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <mat-label class="cnl-label-format" fxFlex='92%'>
+              {{format.label|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <div fxFlex='8%' formGroupName="{{format.name}}" >
+              <mat-slide-toggle [color]="color" (change)="toggle($event.checked, format.name)" [formControlName]="'value'">
+              </mat-slide-toggle>
+            </div>
+            <div *ngIf="format.value" fxLayout="row wrap" fxLayoutAlign="space-between center" ngStyle.gt-md="margin-top: -1rem;">
+              <div *ngFor="let modele of format.modeles; let j=index" ngStyle.gt-md="margin-top:1rem;width: 48%"
+                   fxLayout="column" [ngClass]='{"hide": !showMoreOptionsModele && j>=displayModelsLimit}'>
+
+                <mat-label style="color: black; font-size: 15px; margin-bottom: 0.9375rem;" *ngIf='showMoreOptionsModele && j>=displayModelsLimit'>
+                  {{modele.name|lowercase|translate|capitalizeFirstLetter}}
+                </mat-label>
+                <mat-label style="color: black; font-size: 15px; margin-bottom: 0.9375rem;" *ngIf='j<displayModelsLimit'>
+                  {{modele.name|lowercase|translate|capitalizeFirstLetter}}
+                </mat-label>
+
+                <div *ngIf='j<displayModelsLimit'>
+                  <app-number [field]="field" [form]="form" [disableOptions]='field.value'
+                              [format]='format'
+                              [modele]='modele'
+                              [numberOption]='{value: modele.tarif, label: modele.label, unit: modele.unit, step: modele.step}'>
+                  </app-number>
+                </div>
+
+                <div *ngIf='showMoreOptionsModele && j>=displayModelsLimit'>
+                    <app-number [field]="field" [form]="form" [disableOptions]='field.value'
+                                [numberOption]='{value: modele.tarif, label: modele.label, unit: modele.unit, step: modele.step}'></app-number>
+                </div>
+
+              </div>
+
+            </div>
+            <div *ngIf="format.value" fxLayout='column' style="margin-bottom: 1rem;"
+            [ngStyle]='{"margin-top": showMoreOptionsModele ? "1rem" : "0rem"}'>
+              <div>
+                <button mat-button color='primary' (click)='showMoreOptionsModele = !showMoreOptionsModele'
+                *ngIf='format.modeles?.length > displayModelsLimit'>
+                {{showMoreModeleLabel|lowercase|translate|capitalizeFirstLetter}}
+                <mat-icon color='primary' *ngIf='!showMoreOptionsModele'>keyboard_arrow_down</mat-icon>
+                <mat-icon color='primary' *ngIf='showMoreOptionsModele'>keyboard_arrow_up</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          <div *ngIf='showMoreOptions && i>=displayItemsLimit' fxLayout="row wrap">
+            <mat-label class="cnl-title" fxFlex='92%'>
+              {{format.name|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <mat-label class="cnl-label-format" fxFlex='92%'>
+              {{format.label|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <div fxFlex='8%' formGroupName="{{format.name}}" >
+              <mat-slide-toggle [color]="color" (change)="toggle($event.checked, format.name)" [formControlName]="'value'">
+              </mat-slide-toggle>
+            </div>
+            <div *ngIf="format.value" fxLayout="row wrap" fxLayoutAlign="space-between center" ngStyle.gt-md="margin-top: -1rem;">
+              <div *ngFor="let modele of format.modeles; let j=index" ngStyle.gt-md="margin-top:1rem;width: 48%"
+                   fxLayout="column" [ngClass]='{"hide": !showMoreOptionsModele && j>=displayModelsLimit}'>
+
+                <mat-label style="color: black; font-size: 15px; margin-bottom: 0.9375rem;" *ngIf='showMoreOptionsModele && j>=displayModelsLimit'>
+                  {{modele.name|lowercase|translate|capitalizeFirstLetter}}
+                </mat-label>
+                <mat-label style="color: black; font-size: 15px; margin-bottom: 0.9375rem;" *ngIf='j<displayModelsLimit'>
+                  {{modele.name|lowercase|translate|capitalizeFirstLetter}}
+                </mat-label>
+
+                <div *ngIf='j<displayModelsLimit'>
+                  <app-number [field]="field" [form]="form" [disableOptions]='field.value'
+                              [format]='format'
+                              [modele]='modele'
+                              [numberOption]='{value: modele.tarif, label: modele.label, unit: modele.unit, step: modele.step}'>
+                  </app-number>
+                </div>
+
+                <div *ngIf='showMoreOptionsModele && j>=displayModelsLimit'>
+                    <app-number [field]="field" [form]="form" [disableOptions]='field.value'
+                                [numberOption]='{value: modele.tarif, label: modele.label, unit: modele.unit, step: modele.step}'></app-number>
+                </div>
+
+              </div>
+
+            </div>
+            <div *ngIf="format.value" fxLayout='column' style="margin-bottom: 1rem;"
+            [ngStyle]='{"margin-top": showMoreOptionsModele ? "1rem" : "0rem"}'>
+              <div>
+                <button mat-button color='primary' (click)='showMoreOptionsModele = !showMoreOptionsModele'
+                *ngIf='format.modeles?.length > displayModelsLimit'>
+                {{showMoreModeleLabel|lowercase|translate|capitalizeFirstLetter}}
+                <mat-icon color='primary' *ngIf='!showMoreOptionsModele'>keyboard_arrow_down</mat-icon>
+                <mat-icon color='primary' *ngIf='showMoreOptionsModele'>keyboard_arrow_up</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          <mat-divider *ngIf="showMoreOptions && i !== field.formats.length - 1" style="margin-bottom: 1rem;"></mat-divider>
+          <mat-divider *ngIf="!showMoreOptions && i<displayItemsLimit" style="margin-bottom: 1rem;"></mat-divider>
+
+        </div>
+        <div style='margin-top: 1rem;' class="text-danger" *ngIf="!thereIsAtleastFormatActive"
+        translate>Veuillez sélectionner et renseigner au minimum un format pour continuer</div>
+      </div>
+
+
+    </div>
+
+
+    <div [hidden]="!field.value || !finitionsError">
+              <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+              *ngIf='field.formats?.length > displayItemsLimit'>
+              {{showMoreLabel|lowercase|translate|capitalizeFirstLetter}}
+              <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+              <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+              </button>
+    </div>
+
+    <div [hidden]="!field.value || !finitionsError">
+      <button class="ajout-btn" mat-stroked-button (click)='addOption.emit(field)'>
+        <mat-icon  style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+      </button>
+      &nbsp;
+      <mat-label>{{addBtnLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+    </div>
+    </div>
+  <br>
+  <mat-divider></mat-divider>
+</div>
+<div [formGroup]="form" *ngIf="field.type === fieldTypeEnum.CHECKBOX_NUMBER_LIST && field.name === 'creationAlbum'"
+ngStyle.lt-md="width: 91vw" style=" !important">
+  <div fxLayout="column" formGroupName="{{field.name}}">
+    <div fxLayout="row" fxLayoutAlign="space-between space-between">
+
+      <mat-label class="cnl-title">
+        {{field.displayName|lowercase|translate|capitalizeFirstLetter}}
+      </mat-label>
+      <mat-slide-toggle [color]="color" (change)="toggle($event.checked)" [formControlName]="'value'">
+      </mat-slide-toggle>
+    </div>
+
+    <mat-label class="cnl-label">
+      {{field.label|lowercase|translate|capitalizeFirstLetter}}
+    </mat-label>
+
+    <div [hidden]="!field.value">
+      <div fxLayout="column">
+        <mat-label class="cnl-title">
+          {{field.checkbox.name|lowercase|translate|capitalizeFirstLetter}}
+        </mat-label>
+        <mat-label class="cnl-label">
+          {{field.checkbox.label|lowercase|translate|capitalizeFirstLetter}}
+        </mat-label>
+      </div>
+      <div formGroupName="finitions" fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div *ngFor="let finition of field.finitions; let i=index" style="width: 50%">
+          <mat-checkbox formControlName="{{finition.key}}" color='primary' style="width: 100%;text-align: center"
+                           (change)='checkBoxChanged($event.checked,finition.key)'>
+            {{finition.key|lowercase|translate|capitalizeFirstLetter}}
+          </mat-checkbox>
+        </div>
+        <div style='margin-top: 1rem;' class="text-danger" *ngIf="!finitionsError" translate>Vous devez sélectionner une finition</div>
+      </div>
+
+      <br>
+      <mat-divider *ngIf="finitionsError"></mat-divider>
+      <br>
+      <div id='format-wrapper' *ngIf="finitionsError">
+        <div *ngFor="let format of field.formats; let i=index" fxLayout="column" formGroupName="formats">
+
+          <div *ngIf='i<displayItemsLimit' fxLayout="row wrap">
+            <mat-label class="cnl-title" fxFlex='92%'>
+              {{format.name|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <mat-label class="cnl-label-format" fxFlex='92%'>
+              {{format.label|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <div fxFlex='8%' formGroupName="{{format.name}}" style="margin-top: -0.8rem;">
+              <mat-slide-toggle [color]="color" (change)="toggle($event.checked, format.name)" [formControlName]="'value'">
+              </mat-slide-toggle>
+            </div>
+            <div *ngIf="format.value" fxLayout="row wrap" fxLayoutAlign="space-between center" ngStyle.gt-md="margin-top: -1rem;">
+              <div *ngFor="let modele of format.modeles; let j=index" ngStyle.gt-md="margin-top:1rem;width: 48%"
+                   fxLayout="column" [ngClass]='{"hide": !showMoreOptionsModele && j>=displayModelsLimit}'>
+                <mat-checkbox style="color: black; font-size: 15px; margin-bottom: 0.9375rem;" color='primary' [checked]='getModelCheckBoxChangedValue(format.name, modele.name)'
+                *ngIf='j<displayModelsLimit' (change)='modelCheckBoxChanged($event.checked,format.name, modele.name)'>
+                   <span class="checkbox-label" style="top: 0.1rem;">{{modele.name|lowercase|translate|capitalizeFirstLetter}}</span>
+                </mat-checkbox>
+                <mat-checkbox style="color: black; font-size: 15px; margin-bottom: 0.9375rem;" color='primary' [checked]='getModelCheckBoxChangedValue(format.name, modele.name)'
+                *ngIf='showMoreOptionsModele && j>=displayModelsLimit' (change)='modelCheckBoxChanged($event.checked,format.name, modele.name)'>
+                   <span class="checkbox-label" style="top: 0.1rem;">{{modele.name|lowercase|translate|capitalizeFirstLetter}}</span>
+                </mat-checkbox>
+                <div *ngIf='j<displayModelsLimit'>
+                  <app-number [field]="field" [form]="form" [disableOptions]='field.value'
+                              [format]='format'
+                              [modele]='modele'
+                              [numberOption]='{value: modele.tarif, label: modele.label, unit: modele.unit, step: modele.step}'>
+                  </app-number>
+                </div>
+
+                <div *ngIf='showMoreOptionsModele && j>=displayModelsLimit'>
+                    <app-number [field]="field" [form]="form" [disableOptions]='field.value'
+                                [numberOption]='{value: modele.tarif, label: modele.label, unit: modele.unit, step: modele.step}'></app-number>
+                </div>
+
+              </div>
+
+            </div>
+            <div fxLayout='column' fxFlexAlign='center space-around'>
+              <div *ngIf="format.value" fxLayout='column' style="margin-bottom: 1rem;"
+              [ngStyle]='{"margin-top": showMoreOptionsModele ? "1rem" : "0rem"}'>
+                <div>
+                  <button mat-button color='primary' (click)='showMoreOptionsModele = !showMoreOptionsModele'
+                  *ngIf='format.modeles?.length > displayModelsLimit'>
+                  {{showMoreModeleLabel|lowercase|translate|capitalizeFirstLetter}}
+                  <mat-icon color='primary' *ngIf='!showMoreOptionsModele'>keyboard_arrow_down</mat-icon>
+                  <mat-icon color='primary' *ngIf='showMoreOptionsModele'>keyboard_arrow_up</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <div style='margin-top: 1rem;' class="text-danger"
+              *ngIf="!showErrMsg(format)" translate>Vous devez sélectionner un modele</div>
+              <div  *ngIf="format.value" style="margin-bottom: 1rem !important;">
+                <button class="ajout-btn" mat-stroked-button
+                        (click)='addOption.emit({field: field, formatName: format.name})'>
+                  <mat-icon  style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+                </button>
+                &nbsp;
+                <mat-label>{{addBtnLabelModele|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+              </div>
+            </div>
+
+            <br>
+          </div>
+
+
+          <div *ngIf='showMoreOptions && i>=displayItemsLimit' fxLayout="row wrap">
+            <mat-label class="cnl-title" fxFlex='92%'>
+              {{format.name|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <mat-label class="cnl-label-format" fxFlex='92%'>
+              {{format.label|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <div fxFlex='8%' formGroupName="{{format.name}}" style="margin-top: -0.8rem;">
+              <mat-slide-toggle [color]="color" (change)="toggle($event.checked, format.name)" [formControlName]="'value'">
+              </mat-slide-toggle>
+            </div>
+            <div *ngIf="format.value" fxLayout="row wrap" fxLayoutAlign="space-between center" ngStyle.gt-md="margin-top: -1rem;">
+              <div *ngFor="let modele of format.modeles; let j=index" ngStyle.gt-md="margin-top:1rem;width: 48%"
+                   fxLayout="column" [ngClass]='{"hide": !showMoreOptionsModele && j>=displayModelsLimit}'>
+                <mat-checkbox style="color: black; font-size: 15px; margin-bottom: 0.9375rem;" color='primary' [checked]='getModelCheckBoxChangedValue(format.name, modele.name)'
+                *ngIf='j<displayModelsLimit' (change)='modelCheckBoxChanged($event.checked,format.name, modele.name)'>
+                   <span class="checkbox-label" style="top: 0.1rem;">{{modele.name|lowercase|translate|capitalizeFirstLetter}}</span>
+                </mat-checkbox>
+                <mat-checkbox style="color: black; font-size: 15px; margin-bottom: 0.9375rem;" color='primary' [checked]='getModelCheckBoxChangedValue(format.name, modele.name)'
+                *ngIf='showMoreOptionsModele && j>=displayModelsLimit' (change)='modelCheckBoxChanged($event.checked,format.name, modele.name)'>
+                   <span class="checkbox-label" style="top: 0.1rem;">{{modele.name|lowercase|translate|capitalizeFirstLetter}}</span>
+                </mat-checkbox>
+                <div *ngIf='j<displayModelsLimit'>
+                  <app-number [field]="field" [form]="form" [disableOptions]='field.value'
+                              [format]='format'
+                              [modele]='modele'
+                              [numberOption]='{value: modele.tarif, label: modele.label, unit: modele.unit, step: modele.step}'>
+                  </app-number>
+                </div>
+
+                <div *ngIf='showMoreOptionsModele && j>=displayModelsLimit'>
+                    <app-number [field]="field" [form]="form" [disableOptions]='field.value'
+                                [numberOption]='{value: modele.tarif, label: modele.label, unit: modele.unit, step: modele.step}'></app-number>
+                </div>
+
+              </div>
+
+            </div>
+            <div fxLayout='column' fxFlexAlign='center space-around'>
+              <div *ngIf="format.value" fxLayout='column' style="margin-bottom: 1rem;"
+              [ngStyle]='{"margin-top": showMoreOptionsModele ? "1rem" : "0rem"}'>
+                <div>
+                  <button mat-button color='primary' (click)='showMoreOptionsModele = !showMoreOptionsModele'
+                  *ngIf='format.modeles?.length > displayModelsLimit'>
+                  {{showMoreModeleLabel|lowercase|translate|capitalizeFirstLetter}}
+                  <mat-icon color='primary' *ngIf='!showMoreOptionsModele'>keyboard_arrow_down</mat-icon>
+                  <mat-icon color='primary' *ngIf='showMoreOptionsModele'>keyboard_arrow_up</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <div style='margin-top: 1rem;' class="text-danger"
+              *ngIf="!showErrMsg(format)" translate>Vous devez sélectionner un modele</div>
+              <div  *ngIf="format.value" style="margin-bottom: 1rem !important;">
+                <button class="ajout-btn" mat-stroked-button
+                        (click)='addOption.emit({field: field, formatName: format.name})'>
+                  <mat-icon  style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+                </button>
+                &nbsp;
+                <mat-label>{{addBtnLabelModele|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+              </div>
+            </div>
+
+            <br>
+          </div>
+          <mat-divider *ngIf="showMoreOptions && i !== field.formats.length - 1" style="margin-bottom: 1rem;"></mat-divider>
+          <mat-divider *ngIf="!showMoreOptions && i<displayItemsLimit" style="margin-bottom: 1rem;"></mat-divider>
+        </div>
+        <div style='margin-top: 1rem;' class="text-danger" *ngIf="!thereIsAtleastFormatActive"
+        translate>Veuillez sélectionner et renseigner au minimum un format pour continuer</div>
+      </div>
+
+
+    </div>
+
+
+    <div [hidden]="!field.value || !finitionsError">
+              <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+              *ngIf='field.formats?.length > displayItemsLimit'>
+              {{showMoreLabel|lowercase|translate|capitalizeFirstLetter}}
+              <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+              <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+              </button>
+    </div>
+
+    <div [hidden]="!field.value || !finitionsError">
+      <button class="ajout-btn" mat-stroked-button (click)='addOption.emit(field)'>
+        <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+      </button>
+      &nbsp;
+      <mat-label>{{addBtnLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+    </div>
+    </div>
+  <br>
+  <mat-divider></mat-divider>
+</div>
+<div [formGroup]="form" *ngIf="field.type === fieldTypeEnum.CHECKBOX_NUMBER_LIST && field.name === 'finitionsProposes'" ngStyle.lt-md="width: 91vw"
+style=" !important">
+  <div fxLayout="column" formGroupName="{{field.name}}">
+    <div [hidden]="!field.value">
+      <div fxLayout="column">
+        <mat-label class="cnl-title">
+          {{field.checkbox.name|lowercase|translate|capitalizeFirstLetter}}
+        </mat-label>
+        <mat-label class="cnl-label">
+          {{field.checkbox.label|lowercase|translate|capitalizeFirstLetter}}
+        </mat-label>
+      </div>
+      <div formGroupName="finitions" fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div *ngFor="let finition of field.finitions; let i=index" style="width: 50%">
+          <mat-checkbox formControlName="{{finition.key}}" color='primary' style="width: 100%;text-align: center"
+                           (change)='checkBoxChanged($event.checked,finition.key)'>
+            {{finition.key|lowercase|translate|capitalizeFirstLetter}}
+          </mat-checkbox>
+        </div>
+        <div style='margin-top: 1rem;' class="text-danger" *ngIf="!finitionsError" translate>Vous devez sélectionner une finition</div>
+      </div>
+
+      <br>
+      <mat-divider *ngIf="finitionsError"></mat-divider>
+      <br>
+      <div id='format-wrapper' *ngIf="finitionsError">
+        <div *ngFor="let format of field.formats; let i=index"  fxLayout="column" formGroupName="formats" [ngClass]='{"hide": !showMoreOptions && i>=displayItemsLimit}'>
+
+          <div *ngIf='i<displayItemsLimit' fxLayout="row wrap">
+            <mat-label class="cnl-title" fxFlex='92%'>
+              {{format.name|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <mat-label class="cnl-label-format" fxFlex='92%'>
+              {{format.label|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <div fxFlex='8%' formGroupName="{{format.name}}" >
+              <mat-slide-toggle [color]="color" (change)="toggle($event.checked, format.name)" [formControlName]="'value'">
+              </mat-slide-toggle>
+            </div>
+            <div *ngIf="format.value" fxLayout="row wrap" fxLayoutAlign="space-between center" ngStyle.gt-md="margin-top: -1rem;">
+              <div *ngFor="let modele of format.modeles; let j=index" ngStyle.gt-md="margin-top:1rem;width: 48%"
+                   fxLayout="column" [ngClass]='{"hide": !showMoreOptionsModele && j>=displayModelsLimit}'>
+
+                <mat-label style="color: black; font-size: 15px; margin-bottom: 0.9375rem;" *ngIf='showMoreOptionsModele && j>=displayModelsLimit'>
+                  {{modele.name|lowercase|translate|capitalizeFirstLetter}}
+                </mat-label>
+                <mat-label style="color: black; font-size: 15px; margin-bottom: 0.9375rem;" *ngIf='j<displayModelsLimit'>
+                  {{modele.name|lowercase|translate|capitalizeFirstLetter}}
+                </mat-label>
+
+                <div *ngIf='j<displayModelsLimit'>
+                  <app-number [field]="field" [form]="form" [disableOptions]='field.value'
+                              [format]='format'
+                              [modele]='modele'
+                              [numberOption]='{value: modele.tarif, label: modele.label, unit: modele.unit, step: modele.step}'>
+                  </app-number>
+                </div>
+
+                <div *ngIf='showMoreOptionsModele && j>=displayModelsLimit'>
+                    <app-number [field]="field" [form]="form" [disableOptions]='field.value'
+                                [numberOption]='{value: modele.tarif, label: modele.label, unit: modele.unit, step: modele.step}'></app-number>
+                </div>
+
+              </div>
+
+            </div>
+            <div *ngIf="format.value" fxLayout='column' style="margin-bottom: 1rem;"
+            [ngStyle]='{"margin-top": showMoreOptionsModele ? "1rem" : "0rem"}'>
+              <div>
+                <button mat-button color='primary' (click)='showMoreOptionsModele = !showMoreOptionsModele'
+                *ngIf='format.modeles?.length > displayModelsLimit'>
+                {{showMoreModeleLabel|lowercase|translate|capitalizeFirstLetter}}
+                <mat-icon color='primary' *ngIf='!showMoreOptionsModele'>keyboard_arrow_down</mat-icon>
+                <mat-icon color='primary' *ngIf='showMoreOptionsModele'>keyboard_arrow_up</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          <div *ngIf='showMoreOptions && i>=displayItemsLimit' fxLayout="row wrap">
+            <mat-label class="cnl-title" fxFlex='92%'>
+              {{format.name|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <mat-label class="cnl-label-format" fxFlex='92%'>
+              {{format.label|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <div fxFlex='8%' formGroupName="{{format.name}}" >
+              <mat-slide-toggle [color]="color" (change)="toggle($event.checked, format.name)" [formControlName]="'value'">
+              </mat-slide-toggle>
+            </div>
+            <div *ngIf="format.value" fxLayout="row wrap" fxLayoutAlign="space-between center" ngStyle.gt-md="margin-top: -1rem;">
+              <div *ngFor="let modele of format.modeles; let j=index" ngStyle.gt-md="margin-top:1rem;width: 48%"
+                   fxLayout="column" [ngClass]='{"hide": !showMoreOptionsModele && j>=displayModelsLimit}'>
+
+                <mat-label style="color: black; font-size: 15px; margin-bottom: 0.9375rem;" *ngIf='showMoreOptionsModele && j>=displayModelsLimit'>
+                  {{modele.name|lowercase|translate|capitalizeFirstLetter}}
+                </mat-label>
+                <mat-label style="color: black; font-size: 15px; margin-bottom: 0.9375rem;" *ngIf='j<displayModelsLimit'>
+                  {{modele.name|lowercase|translate|capitalizeFirstLetter}}
+                </mat-label>
+
+                <div *ngIf='j<displayModelsLimit'>
+                  <app-number [field]="field" [form]="form" [disableOptions]='field.value'
+                              [format]='format'
+                              [modele]='modele'
+                              [numberOption]='{value: modele.tarif, label: modele.label, unit: modele.unit, step: modele.step}'>
+                  </app-number>
+                </div>
+
+                <div *ngIf='showMoreOptionsModele && j>=displayModelsLimit'>
+                    <app-number [field]="field" [form]="form" [disableOptions]='field.value'
+                                [numberOption]='{value: modele.tarif, label: modele.label, unit: modele.unit, step: modele.step}'></app-number>
+                </div>
+
+              </div>
+
+            </div>
+            <div *ngIf="format.value" fxLayout='column' style="margin-bottom: 1rem;"
+            [ngStyle]='{"margin-top": showMoreOptionsModele ? "1rem" : "0rem"}'>
+              <div>
+                <button mat-button color='primary' (click)='showMoreOptionsModele = !showMoreOptionsModele'
+                *ngIf='format.modeles?.length > displayModelsLimit'>
+                {{showMoreModeleLabel|lowercase|translate|capitalizeFirstLetter}}
+                <mat-icon color='primary' *ngIf='!showMoreOptionsModele'>keyboard_arrow_down</mat-icon>
+                <mat-icon color='primary' *ngIf='showMoreOptionsModele'>keyboard_arrow_up</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          <mat-divider *ngIf="showMoreOptions && i !== field.formats.length - 1" style="margin-bottom: 1rem;"></mat-divider>
+          <mat-divider *ngIf="!showMoreOptions && i<displayItemsLimit" style="margin-bottom: 1rem;"></mat-divider>
+
+        </div>
+        <div style='margin-top: 1rem;' class="text-danger" *ngIf="!thereIsAtleastFormatActive"
+        translate>Veuillez sélectionner et renseigner au minimum un format pour continuer</div>
+      </div>
+
+
+    </div>
+
+
+    <div [hidden]="!field.value || !finitionsError">
+              <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+              *ngIf='field.formats?.length > displayItemsLimit'>
+              {{showMoreLabel|lowercase|translate|capitalizeFirstLetter}}
+              <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+              <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+              </button>
+    </div>
+
+    <div [hidden]="!field.value || !finitionsError">
+      <button class="ajout-btn" mat-stroked-button (click)='addOption.emit(field)'>
+        <mat-icon  style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+      </button>
+      &nbsp;
+      <mat-label>{{addBtnLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+    </div>
+    </div>
+  <br>
+  <mat-divider></mat-divider>
+</div>

@@ -1,0 +1,102 @@
+<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="2rem" class="container">
+  <h2 translate class='main-title'>Calendrier</h2>
+  <section fxLayout="column" fxLayoutGap="0.5rem">
+    <mat-label class="title" translate>Gestion des disponibilités</mat-label>
+    <span translate class="sub-text">Indiquez les dates de vos congés et celles pour lesquelles vous êtes déjà réservé</span>
+  </section>
+  <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="1.5rem" style="width: 100%">
+
+    <section fxLayout="column" fxLayoutAlign="start start" style="width: 100%">
+      <article fxLayout="column" fxLayoutGap="0.5rem">
+        <mat-label style="font-weight: bold" class="title" translate>Période</mat-label>
+      </article>
+      <form fxLayoutGap="2rem" style="width: 100%" fxLayout="column" fxLayoutAlign="start center" [formGroup]="calendarForm" (submit)="addIndisponibility()">
+        <section style="width: 100%"
+                 fxLayout="row" fxLayoutAlign="start"
+                 fxLayout.lt-md="column" fxLayoutGap.lt-md="0"
+                 fxLayoutGap="1rem">
+          <div>
+            <mat-form-field appearance="outline" class="date-range">
+              <mat-label>Date de l’événement</mat-label>
+              <input matInput type="text" ngxDaterangepickerMd
+                     [required]="true"
+                     [(ngModel)]="range"
+                     [ngModelOptions]="{standalone:true}"
+                     [showCancel]="true" [locale]="locales"
+                     [minDate]="minDate" [isInvalidDate]="filterDays"
+                     (change)="choosedDate($event)">
+              <img class="input-img" matSuffix src="/assets/icons/svg/calendar-pink.svg">
+            </mat-form-field>
+          </div>
+
+          <div>
+            <button
+              [disabled]="calendarForm.invalid"
+              type="submit" color="primary"
+              mat-flat-button class="save-btn w100-lt-md" >
+              <span translate>save</span>
+            </button>
+          </div>
+
+
+        </section>
+
+        <section fxLayout="column" fxLayoutAlign="start start" style="width: 100%">
+          <article fxLayout="column" fxLayoutGap="0.5rem">
+            <mat-label style="font-weight: bold" class="title" translate>Type d'indisponibilité</mat-label>
+          </article>
+          <mat-radio-group formControlName="type"
+                           fxLayout="row" fxLayoutGap="1rem"
+                           fxLayout.lt-md="column" fxLayoutGap.lt-md="0.5rem"
+          >
+            <mat-radio-button color="primary" value="reserved">Marquer les Jours comme déjà réservé</mat-radio-button>
+            <mat-radio-button color="primary" value="absent">Marquer les Jours comme absent</mat-radio-button>
+          </mat-radio-group>
+        </section>
+      </form>
+    </section>
+
+    <section fxLayout="column" class="indispos-container" fxLayoutGap="1rem">
+      <section fxLayout="column" fxLayoutGap="0.5rem">
+        <mat-label style="font-weight: bold" class="title" translate>Indisponibilités enregistrés</mat-label>
+      </section>
+      <article
+        fxLayoutGap="1rem" fxLayout="row"
+        fxLayoutGap.lt-md="0" fxLayout.lt-md="column"
+        *ngFor="let indisponibility of company.disponibility">
+
+        <div fxLayout.lt-md="column" fxLayout="row" class="indispo-container" fxLayoutAlign="space-between center">
+          <div
+            class="w100-lt-md"
+            fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="center center"
+            fxLayout.lt-md="row" fxLayoutGap.lt-md="0" fxLayoutAlign.lt-md="space-between center"
+          >
+            <mat-label class="title-table" translate>Début</mat-label>
+            <span translate class="sub-text-table">{{indisponibility.start.toLocaleDateString()}}</span>
+          </div>
+          <div
+            class="w100-lt-md"
+            fxLayout.lt-md="row" fxLayoutGap.lt-md="0" fxLayoutAlign="center center"
+            fxLayoutAlign.lt-md="space-between center" fxLayout="column" fxLayoutGap="1rem">
+            <mat-label class="title-table" translate>Fin</mat-label>
+            <span translate class="sub-text-table">{{indisponibility.end.toLocaleDateString()}}</span>
+          </div>
+          <div
+            class="w100-lt-md"
+            fxLayout.lt-md="row" fxLayoutGap.lt-md="0" fxLayoutAlign="center center"
+            fxLayoutAlign.lt-md="space-between center" fxLayout="column" fxLayoutGap="1rem">
+            <mat-label class="title-table" translate>Type</mat-label>
+            <span translate class="sub-text-table">{{indisponibility.type}}</span>
+          </div>
+        </div>
+
+        <div fxLayout="column" fxLayoutGap="1rem" class="delete-btn-container">
+          <button mat-flat-button class="delete-btn" (click)="deleteIndisponibility(indisponibility.id)">Supprimer</button>
+        </div>
+
+      </article>
+    </section>
+
+  </div>
+  <br>
+</div>

@@ -1,0 +1,32 @@
+section {
+  background-color: var(--primary-lighter-color);
+  height: 100%;
+  width: 100%;
+  padding-bottom: 1rem;
+}
+
+.container {
+  width: 80%;
+  height: 100%;
+  margin: auto;
+}
+
+.btn {
+  color: var(--white-color);
+}
+
+mat-slider {
+  width: 80%;
+
+  @media screen and (max-width: 959px) {
+    width: 100%;
+  }
+
+  ::ng-deep .mat-slider-thumb {
+    border: 0.2em solid white;
+    width: 30px;
+    height: 30px;
+    bottom: -16px;
+  }
+
+}

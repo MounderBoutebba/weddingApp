@@ -1,0 +1,22 @@
+<h2 mat-dialog-title translate>Jobs details</h2>
+<mat-dialog-content class="mat-typography">
+    <mat-selection-list #jobs [class.hidden]="typesOfJobs.length === 0">
+        <mat-list-option *ngFor="let job of typesOfJobs" [value]='job'>
+            {{job}}
+        </mat-list-option>
+    </mat-selection-list>
+    <p *ngIf="typesOfJobs.length == 0" translate>
+        This user has no jobs yet
+    </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button [disabled]="typesOfJobs.length === 0" (click)="onDeleteJobs($event)" [mat-dialog-close]="true" class="marginRight">
+        <mat-icon>delete_outline</mat-icon>
+        <span translate>Delete</span>
+    </button>
+    <button mat-stroked-button [disabled]="jobs.selectedOptions.selected.length === 0" (click)="onResetJobs($event, jobs.selectedOptions.selected)" [mat-dialog-close]="true" class="marginRight">
+        <mat-icon>autorenew</mat-icon>
+        <span translate>Reset</span>
+    </button>
+    <button mat-button mat-dialog-close>Fermer</button>
+</mat-dialog-actions>

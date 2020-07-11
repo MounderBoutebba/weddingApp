@@ -1,0 +1,141 @@
+<div fxLayout="column" class="container">
+
+  <h3 translate>personal information</h3>
+
+
+  <form [formGroup]="weddingForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="space-evenly space-evenly">
+
+    <div fxLayout="column">
+      <mat-label translate>wedding date</mat-label>
+      <mat-form-field class="date" floatLabel="always" appearance="outline">
+        <input matInput [matDatepicker]="picker" [min]="minDate"
+               placeholder="{{'wedding date'|translate}}" onchange="console.log(this.value);"
+               formControlName="date">
+        <mat-datepicker-toggle color="primary" matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker [touchUi]="(isHandset$|async)"></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1.5rem" fxLayoutGap.lt-md="0" fxLayout.lt-md="column" fxLayoutAlign.lt-md="start start">
+      <mat-label translate>wedding budget</mat-label>
+      <mat-form-field class="full" floatLabel="always" appearance="outline">
+        <input matInput type="number" min="1000" step="0.01" placeholder="{{'wedding budget'| translate}}"
+               formControlName="budget">
+        <mat-icon matSuffix>euro_symbol</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1.5rem" fxLayoutGap.lt-md="0" fxLayout.lt-md="column" fxLayoutAlign.lt-md="start start">
+      <mat-label translate>number of guests</mat-label>
+      <mat-form-field class="full" floatLabel="always" appearance="outline">
+        <input matInput type="number" placeholder="{{'number of guests'| translate}}" formControlName="guestsNumber">
+      </mat-form-field>
+    </div>
+
+
+    <div fxLayout="column">
+      <mat-label translate>location</mat-label>
+      <mat-form-field class="form-input full" floatLabel="always" appearance="outline">
+        <input matInput placeholder="{{'wedding place'|translate}}" type="text"
+               matGoogleMapsAutocomplete [country]="'fr'" (onAutocompleteSelected)="onAutocompleteSelected($event)"
+               (change)="clearLocation()" [value]="location.value.address">
+      </mat-form-field>
+    </div>
+
+    <div>
+
+
+      <div fxLayout="row" fxLayoutGap="1.5rem" fxLayoutGap.lt-md="0px" fxLayout.lt-md="column">
+        <div fxLayout="column">
+          <mat-label translate>spouse's firstname</mat-label>
+          <mat-form-field class="form-input full" floatLabel="always" appearance="outline">
+            <input matInput placeholder="{{'spouse\'s firstname'|translate}}" type="text"
+                   formControlName="conjointFirstname">
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column">
+          <mat-label translate>spouse's lastname</mat-label>
+          <mat-form-field class="form-input full" floatLabel="always" appearance="outline">
+            <input matInput placeholder="{{'spouse\'s lastname'|translate}}" type="text"
+                   formControlName="conjointLastname">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="1.5rem" fxLayoutGap.lt-md="0px" fxLayoutAlign="start center" class="full">
+
+        <div fxLayout="column" class="full">
+          <mat-label translate>spousal email</mat-label>
+          <mat-form-field class="form-input full" floatLabel="always" appearance="outline">
+            <input matInput placeholder="{{'spousal email'|translate}}" type="email" formControlName="conjointEmail">
+            <img matSuffix width="20px" src="/assets/icons/svg/edit.svg">
+          </mat-form-field>
+        </div>
+        &nbsp;&nbsp;
+        <div fxFlexAlign="start start">
+          <button type="button" class="status" mat-flat-button [color]="wedding.emailVerified?'accent':'warn'"
+                  disableRipple>
+            <span translate>{{wedding.emailVerified ? 'confirmed' : 'waiting'}}</span>
+          </button>
+        </div>
+        <br fxShow.lt-md>
+      </div>
+
+      <div fxLayout="column">
+        <mat-label translate>spouse's phone</mat-label>
+        <div fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutGap="1.5rem" fxLayoutGap.lt-md="0px"
+             fxLayoutAlign="start start">
+          <span formGroupName="conjointPhone">
+            <mat-form-field class="full" floatLabel="always" appearance="outline">
+              <mat-select formControlName="country">
+                <mat-select-trigger>
+                  <div *ngIf="weddingForm.getRawValue().conjointPhone.country === '+213'"><img width="27px"
+                                                                                       src="/assets/icons/country/dz.svg"
+                                                                                       alt="dz"> +213
+                  </div>
+                  <div *ngIf="weddingForm.getRawValue().conjointPhone.country === '+33'"><img width="27px"
+                                                                                      src="/assets/icons/country/fr.svg"
+                                                                                      alt="fr"> +33
+                  </div>
+                </mat-select-trigger>
+                <mat-option value="+213"><img width="27px" src="/assets/icons/country/dz.svg"
+                                              alt="dz"> +213</mat-option>
+                <mat-option value="+33"><img width="27px" src="/assets/icons/country/fr.svg" alt="fr"> +33</mat-option>
+              </mat-select>
+            </mat-form-field>
+            &nbsp;&nbsp;
+            <mat-form-field  class="full" floatLabel="always" appearance="outline">
+              <input matInput placeholder="{{'phone'|translate}}" type="text" formControlName="phoneNumber">
+              <img matSuffix width="20px" src="/assets/icons/svg/edit.svg">
+            </mat-form-field>
+          </span>
+
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.lt-md="start center" class="full" style="transform: translateY(3%)">
+            <mat-form-field *ngIf="!wedding.phoneVerified && !!wedding.phoneToken" fxFlexAlign="end" class="full form-input" floatLabel="always" appearance="outline">
+              <input matInput type="text" formControlName="phoneToken">
+            </mat-form-field>
+            &nbsp;&nbsp;
+            <div fxFlexAlign="start" style="transform: translateY(10%)" *ngIf="!!wedding.phoneToken">
+              <button type="button" class="status" mat-flat-button
+                      [color]="wedding.phoneVerified?'accent':'warn'"
+                      disableRipple>
+                <span translate>{{wedding.phoneVerified ? 'confirmed' : 'waiting'}}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+
+    <br>
+    <div fxFlexAlign.lt-md="center" class="full">
+      <button class="form-input full" style="width: 40%" mat-raised-button color="primary" type="submit" [disabled]="weddingForm.invalid">
+        <span style="color: white" translate>save</span>
+      </button>
+    </div>
+
+
+  </form>
+
+</div>

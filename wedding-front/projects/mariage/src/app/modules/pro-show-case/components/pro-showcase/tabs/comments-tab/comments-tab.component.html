@@ -1,0 +1,114 @@
+<div fxLayout="column" class="margin30UD0LR">
+        <span>{{comments?.length}} commentaires</span>
+        <div fxLayout fxLayout.sm="column" fxLayoutAlign="space-between center" class="margin30UD0LR">
+            <div fxLayout="column" fxLayoutGap="30px">
+                <div fxLayout>
+                    <div style="margin-right: 12px;">
+                        <img class="icon" src="/assets/icons/svg/recommended.svg" style="width: 20px;">
+                    </div>
+                    <div fxLayout="column" fxLayoutGap="10px">
+                        <span>Qualité du service</span>
+                        <ngx-stars class="rating" [readonly]="true" [maxStars]="5" [initialStars]="4" color="#f17082">
+                        </ngx-stars>
+                    </div>
+                </div>
+                <div fxLayout>
+                    <div style="margin-right: 12px;">
+                        <img class="icon" src="/assets/icons/svg/controls.svg" style="width: 20px;">
+                    </div>
+                    <div fxLayout="column" fxLayoutGap="10px">
+                        <span>Flexibilité</span>
+                        <ngx-stars class="rating" [readonly]="true" [maxStars]="5"
+                        [initialStars]="flexibiliteValue" color="#f17082">
+                        </ngx-stars>
+                    </div>
+                </div>
+            </div>
+            <div fxLayout="column" fxLayoutGap="30px">
+                <div fxLayout>
+                    <div style="margin-right: 12px;">
+                        <img src="/assets/icons/svg/hand-shake.svg" style="width: 20px;">
+                    </div>
+                    <div fxLayout="column" fxLayoutGap="10px">
+                        <span>Professionalisme</span>
+                        <ngx-stars class="rating" [readonly]="true" [maxStars]="5"
+                        [initialStars]="professionalismeValue" color="#f17082">
+                        </ngx-stars>
+                    </div>
+                </div>
+
+                <div fxLayout>
+                    <div style="margin-right: 12px;">
+                        <img class="icon" src="/assets/icons/svg/euro1.svg" style="width: 20px;">
+                    </div>
+                    <div fxLayout="column" fxLayoutGap="10px">
+                        <span>Rapport Qualité/Prix</span>
+                        <ngx-stars class="rating" [readonly]="true" [maxStars]="5"
+                        [initialStars]="rapportQualitePrixValue" color="#f17082">
+                        </ngx-stars>
+                    </div>
+                </div>
+            </div>
+            <div class="rating-box">
+                    <div style="font-family: Arial;font-size: 35.5px;">{{noteMoyenne}}</div>
+            </div>
+
+        </div>
+    <mat-divider class="margin30D"></mat-divider>
+    <div fxLayout="column">
+        <div *ngFor="let comment of comments;let i=index;let last= last">
+            <div fxLayout="column" fxLayoutGap="30px">
+                <div fxLayout fxLayoutAlign="space-between center">
+                    <div fxLayout>
+                        <div class="margin15R">
+                            <img src="{{comment.client.photo}}" alt="" class="avatar">
+                        </div>
+                        <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px">
+                        <span>{{comment.client.firstname}}</span>
+                        <ngx-stars class="rating" [readonly]="true" [maxStars]="5" [initialStars]="comment.totalNotes" color="#f17082">
+                        </ngx-stars>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span>Envoyé le {{comment.createdAt | date}}</span>
+                    </div>
+                </div>
+                <div>
+                    <p class="comment-text">{{comment.content}}</p>
+                </div>
+            </div>
+            <div fxLayout="column"  class="margin60L30T" fxLayoutGap="30px" *ngIf="!!comment?.response">
+                <div fxLayout fxLayoutAlign="space-between center">
+                    <div fxLayout>
+                        <div class="margin15R">
+                            <ngx-avatar  class="avatar" [src]="comment.response.user.photo" [name]="comment.response.user.firstname +' '+comment.response.user.lastname" size="56"></ngx-avatar>
+                        </div>
+                        <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px">
+                        <span>{{comment.response.user.firstname}}</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span>Envoyé le {{comment.response.createdAt | date}}</span>
+                    </div>
+                </div>
+                <div>
+                    <p class="comment-text">{{comment?.response?.content}}</p>
+                </div>
+            </div>
+            
+            <mat-divider class="margin30UD0LR"></mat-divider>
+        </div>
+        <section
+            [fxShow]="comments.length>0"
+            fxLayout="row wrap" fxLayoutAlign="center center"
+            style="width: 100%;padding-top: 1rem">
+            <app-paginator
+              [length]="totalPage"
+              [pageSize]="10"
+              (page)="searchPaginated($event)"
+            ></app-paginator>
+            </section>
+    </div>
+</div>

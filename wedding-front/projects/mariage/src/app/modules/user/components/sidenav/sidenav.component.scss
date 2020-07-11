@@ -1,0 +1,43 @@
+.drawer {
+  min-width: 250px;
+  width: 17.125rem;
+  height: 100%;
+  background-color: #f9f9f9 !important;
+}
+
+.opened {
+  background-color: #f3f3f3 !important;
+}
+
+.active {
+  color: var(--primary-color) !important;
+}
+
+.profile-active {
+  color: var(--primary-color) !important;
+}
+.item{
+  padding: 0 8px;
+}
+.nav-link-font-size {
+  font-size: 15px;
+  font-weight: 600;
+}
+.drawer-fixed{
+  position: fixed;
+  height: calc(100vh - 71px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 17.063rem;
+
+  scrollbar-width: none;
+
+
+}
+::-webkit-scrollbar{
+  width: 0 !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #cdcdcd;
+}

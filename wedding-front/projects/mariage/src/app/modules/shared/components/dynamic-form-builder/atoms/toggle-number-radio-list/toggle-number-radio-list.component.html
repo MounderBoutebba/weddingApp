@@ -1,0 +1,86 @@
+<div fxLayout="column">
+  <mat-label class='cnl-title'>
+  {{field.displayName|lowercase|translate|capitalizeFirstLetter}}
+  </mat-label>
+  <br>
+
+
+<div [formGroup]="form">
+  <div formGroupName="{{field.name}}">
+    <div *ngFor="let f of field.optionsToggleNumberRadioList; let i=index" formGroupName="{{f.name}}" fxLayout="column">
+
+      <div *ngIf='i < displayItemsLimit'>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-bottom: 1rem;">
+          <div fxLayout="column">
+            <mat-label class='cnl-title'>
+              {{f.name|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <mat-label class='cnl-label'>
+              {{f.label|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+          </div>
+          <mat-slide-toggle [color]="color" (change)="toggle($event.checked, f.name)"
+                            [formControlName]="'value'"></mat-slide-toggle>
+        </div>
+
+        <mat-form-field *ngIf="f.value" class="toggle-dfb" >
+          <input matInput [hidden]='true'>
+          <div *ngIf='f.value'>
+            <app-radio [field]="field" [form]="form" [disableOptions]='f.value' [subField]='f'></app-radio>
+          </div>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+        <br>
+      </div>
+
+      <div *ngIf='showMoreOptions && i>=displayItemsLimit'>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-bottom: 1rem;">
+          <div fxLayout="column">
+
+            <mat-label class='cnl-title'>
+              {{f.name|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <mat-label class="cnl-label">
+              {{f.label|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+
+          </div>
+          <mat-slide-toggle [color]="color" (change)="toggle($event.checked, f.name)" [formControlName]="'value'"></mat-slide-toggle>
+        </div>
+
+        <mat-form-field class="toggle-dfb" *ngIf="f.value">
+          <input matInput [hidden]='true'>
+          <div *ngIf='f.value'>
+            <app-radio [field]="field" [form]="form" [disableOptions]='f.value' [subField]='f'></app-radio>
+          </div>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+        <br>
+      </div>
+
+    </div>
+
+    <div>
+      <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+              *ngIf='field.optionsToggleNumberRadioList?.length > displayItemsLimit'>
+              {{showMoreLabel|lowercase|translate|capitalizeFirstLetter}}
+        <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+        <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+      </button>
+    </div>
+
+    <div>
+      <button mat-stroked-button class='ajout-btn' (click)='addOption.emit(field)'>
+              <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+      </button>
+      &nbsp;
+      <mat-label>{{addBtnLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+    </div>
+    <br>
+    <mat-divider></mat-divider>
+  </div>
+</div>
+
+</div>

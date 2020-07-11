@@ -1,0 +1,45 @@
+<!-- 5 plus images -->
+
+<div *ngIf="images && images.length>=5 && hidden" class="image-gallerie" fxLayout="row wrap">
+    <div (click)="openModal();currentSlide(1)" class="image-container cursor" fxFlex=33 [style]="'background-image: url('+images[0]+'); background-size: cover;'"></div>
+    <div (click)="openModal();currentSlide(2)" class="image-container cursor" fxFlex=34 [style]="'background-image: url('+images[1]+'); background-size: cover;'"></div>
+    <div (click)="openModal();currentSlide(3)" class="image-container cursor" fxFlex=33 [style]="'background-image: url('+images[2]+'); background-size: cover;'"></div>
+    <div (click)="openModal();currentSlide(4)" class="image-container cursor" fxFlex=67 [style]="'background-image: url('+images[3]+'); background-size: cover;'"></div>
+    <div (click)="openModal();currentSlide(5)" [class.overlay]="images.length > 5"  class="image-container" fxFlex=33 [style]="'background-image: url('+images[4]+'); background-size: cover;position:relative'">
+    <div class="showmore" *ngIf="images.length > 5"> voir les {{images.length}} photos</div>
+    </div>
+</div>
+<!-- 4 images -->
+ <div *ngIf="images && images.length==4" class="image-gallerie" fxLayout="row wrap">
+    <div (click)="openModal();currentSlide(1)" class="image-container cursor" fxFlex=33 [style]="'background-image: url('+images[0]+'); background-size: cover;'"></div>
+    <div (click)="openModal();currentSlide(2)" class="image-container cursor" fxFlex=34 [style]="'background-image: url('+images[1]+'); background-size: cover;'"></div>
+    <div (click)="openModal();currentSlide(3)" class="image-container cursor" fxFlex=33 [style]="'background-image: url('+images[2]+'); background-size: cover;'" ></div>
+    <div (click)="openModal();currentSlide(4)" class="image-container cursor" fxFlex=100 [style]="'background-image: url('+images[3]+'); background-size: cover;'" ></div>
+ </div>
+<!-- 3 images -->
+ <div  *ngIf="images && images.length==3" class="image-gallerie" fxLayout="row wrap" fxLayoutAlign="stretch">
+    <div fxLayout="column" fxFlex="66">
+        <div (click)="openModal();currentSlide(1)" class="image-container cursor" fxFlex=100 [style]="'background-image: url('+images[0]+'); background-size: cover;'"></div>
+    </div>
+
+    <div fxLayout="column" fxFlex="34">
+        <div (click)="openModal();currentSlide(2)" class="image-container cursor" fxFlex=50 [style]="'background-image: url('+images[1]+'); background-size: cover;width:100%'"></div>
+        <div (click)="openModal();currentSlide(3)" class="image-container cursor" fxFlex=50 [style]="'background-image: url('+images[2]+'); background-size: cover;'"></div>
+    </div>
+
+</div>
+
+<div [ngStyle]="{'display' : popUpOpened ? 'block' : 'none' }" class="slide-modal">
+     <span class="close cursor" (click)="closeModal()"><img src="assets/icons/svg/cancel1.svg" style="height: 30px;"></span>
+        <div class="slide-modal-content">
+        <div>
+          <a class="prev" (click)="plusSlides(-1)"><img src="assets/icons/svg/arrow-gauche.svg" style="height: 30px;"></a>  
+        </div>       
+        <div class="img-slides" *ngFor="let image of images; let i = index">
+            <img class="image" src="{{image}}">
+        </div>
+        <div>
+          <a class="next" (click)="plusSlides(1)"><img src="assets/icons/svg/arrow.svg" style="height: 30px;"></a>
+        </div>       
+      </div>       
+</div>

@@ -1,0 +1,52 @@
+&nbsp;
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+      <div>
+        <p fxLayoutAlign="center center" fxLayout="row wrap">
+          <span translate>login with</span>
+          <a routerLink="#" (click)="loginSocial('facebook')">&nbsp;Facebook&nbsp;</a>
+          <span translate>or</span>
+          <a routerLink="#" (click)="loginSocial('google-oauth2')">&nbsp;Google</a>
+        </p>
+      </div>
+
+      <mat-divider [inset]="true"></mat-divider>
+
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <mat-divider [inset]="true"></mat-divider>
+        <h3 class="or" translate>or</h3>
+        <mat-divider [inset]="true"></mat-divider>
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="space-around space-around">
+
+        <div>
+          <mat-form-field class="form-input" appearance="outline">
+            <input matInput placeholder="{{'email'|translate}}" type="email" formControlName="email">
+            <img width="15px" matSuffix class="icon" src="/assets/icons/svg/user.svg">
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="form-input" appearance="outline">
+            <input matInput type="password" placeholder="{{'password'|translate}}" formControlName="password">
+            <img width="15px" matSuffix class="icon" src="/assets/icons/svg/key.svg">
+          </mat-form-field>
+        </div>
+
+        <br>
+        <button mat-raised-button color="primary" class="btn-block" type="submit" [disabled]="loginForm.invalid">
+          <span translate>login</span>
+        </button>
+
+        <p class="text-center" fxFlexAlign="center center" fxFlex="column">
+          <a [routerLink]="['/auth/login']" translate>forgot password</a>
+          <a [routerLink]="['/auth/signup']" translate>access your account</a>
+        </p>
+
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

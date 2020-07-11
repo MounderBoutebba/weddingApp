@@ -1,0 +1,72 @@
+<mat-accordion>
+    <mat-expansion-panel [expanded]="panelExpanded" (opened)="panelOpened()" (closed)="panelClosed()" class="mat-expansion-panel-reservation">
+        <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight] = "'50px'"
+        style="padding: 0 16px;" fxLayout fxLayoutAlign="center center">
+           <div fxLayout fxLayoutAlign="space-between" style="width: 95%;font-size: 15px;font-weight: bold;">
+               <span>Total</span> <span>{{prices.total}} €</span>
+           </div>
+        </mat-expansion-panel-header>
+        <mat-list class="devisList">
+            <mat-list-item >
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>{{coachObj.tarif_horaire}}€ x {{bookingObj.coach.durreDeLaMission}} heures </span>
+                    <span>{{coachObj.tarif_horaire * bookingObj.coach.durreDeLaMission}} €</span>
+                </div>
+            </mat-list-item>
+            <mat-divider style="position: inherit;"></mat-divider>
+            <mat-divider *ngIf="!!prices.periodeMaj"
+            style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.periodeMaj">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Majoration pèriode</span>
+                    <span>{{prices.periodeMaj}} € </span>
+                </div>
+            </mat-list-item>
+            
+            <mat-divider *ngIf="!!prices.weekEndMaj"
+            style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.weekEndMaj">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Majoration weekend</span>
+                    <span>{{prices.weekEndMaj}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="!!prices.coach.servicesAssocies" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.coach.servicesAssocies">
+                <div fxLayout fxLayoutAlign="space-between" style="width: 100%;font-family: Arial;
+            font-size: 13px;">
+                    <span>Services associés</span>
+                    <span>{{prices.coach.servicesAssocies}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj?.coach?.conseilsPersonnalises" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.coach?.conseilsPersonnalises">
+                <div fxLayout fxLayoutAlign="space-between" style="width: 100%;font-family: Arial;
+            font-size: 13px;">
+                    <span>Conseils personnalisés</span>
+                    <span>{{coachObj.conseilsPersonnalisesTarif}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj?.coach?.essais" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.coach?.essais">
+                <div fxLayout fxLayoutAlign="space-between" style="width: 100%;font-family: Arial;
+            font-size: 13px;">
+                    <span>Essais</span>
+                    <span>{{coachObj.essaisTarif}} €</span>
+                </div>
+            </mat-list-item>
+
+            <!-- option divers-->
+            <mat-divider  style="position: inherit;" *ngIf="bookingObj?.optionDivers?.length"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.optionDivers?.length">
+                <div fxLayout fxLayoutAlign="space-between" style="width: 100%;font-family: Arial;
+            font-size: 13px;">
+                    <span>Option divers</span>
+                    <span>{{prices.optionDivers}} €</span>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    </mat-expansion-panel>
+</mat-accordion>

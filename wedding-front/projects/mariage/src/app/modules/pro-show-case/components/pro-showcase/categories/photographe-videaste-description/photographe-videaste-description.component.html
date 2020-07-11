@@ -1,0 +1,831 @@
+<form class="formTexture">
+  <div class="mrTop10">
+    <span class="accent-title" translate>Services proposés</span>
+  </div>
+  <div class="prestationContainerBig" fxLayout fxLayoutAlign="space-between">
+    <div *ngIf="isPhotographe" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+      <div>
+        <mat-checkbox color="primary" translate [checked]='photoIsChecked'
+          (change)='initBookingObject($event.checked, videoIsChecked)'><span class="checkbox">Photo</span>
+        </mat-checkbox>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div>
+          <span translate>Durée de la mission</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab
+            (click)='numberInputChangeValue("photographe","decrement", "dureeMissionPhoto", 1, companyDescriptionInfo?.criteres?.photographe_dureeDeReservationMinimum)'
+            class='margin-right number-control-btn number-control-btn-remove margin-left'
+            [disabled]='!photoIsChecked'>
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.photographe.dureeMissionPhoto}}h </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+            (click)='numberInputChangeValue("photographe","increment", "dureeMissionPhoto", 1)'
+            [disabled]='!photoIsChecked'>
+            <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+        </div>
+
+      </div>
+    </div>
+    <div *ngIf="isVidealiste" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+      <div>
+        <mat-checkbox color="primary" translate [checked]='videoIsChecked'
+          (change)='initBookingObject(photoIsChecked, $event.checked)'> <span class="checkbox">Vidéo</span>
+        </mat-checkbox>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div>
+          <span translate>Durée de la mission</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab
+            (click)='numberInputChangeValue("videaliste","decrement", "dureeMissionVideo", 1, companyDescriptionInfo?.criteres?.videaliste_dureeDeReservationMinimum)'
+            class='margin-right number-control-btn number-control-btn-remove margin-left'
+            [disabled]='!videoIsChecked'>
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.videaliste.dureeMissionVideo}}h </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+            (click)='numberInputChangeValue("videaliste","increment", "dureeMissionVideo", 1)'
+            [disabled]='!videoIsChecked'>
+            <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <mat-divider class="matdividerForcedHeight"></mat-divider>
+
+  <!-- photographe title -->
+  <div *ngIf="isPhotographe && photoIsChecked" fxLayout fxLayoutAlign="space-between center" class="divided-title">
+    <div class="half-divider"></div> <span  class="metierTitle">Photographe </span>
+    <div class="half-divider"></div>
+  </div>
+
+  <!-- prestations -->
+  <div *ngIf="isPhotographe && photoIsChecked && 
+    (companyDescriptionInfo?.criteres?.photographe_duoPhoto  || 
+     companyDescriptionInfo?.criteres?.photographe_photomaton || 
+    companyDescriptionInfo?.criteres?.photographe_photocall) " class="margin-20U40D">
+    <span class="accent-title" translate>Prestations</span>
+  </div>
+  <div *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_duoPhoto"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Prestation duo photo</span>
+      <br>
+      <span translate class="greyText">Couvrir l'évenement avec deux
+        photographes</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.photographe.duoPhoto'
+      (change)='toggleChange("photographe","duoPhoto", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_duoPhoto"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_photomaton"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Photomaton</span>
+      <br>
+      <span translate class="greyText">Mise en place d'un photomaton pendant
+        l'événement</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.photographe.photomaton'
+      (change)='toggleChange("photographe","photomaton", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_photomaton"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_photocall"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Photocall</span>
+      <br>
+      <span translate class="greyText">Mise en place d'un photocall pendant
+        l'événement</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.photographe.photocall'
+      (change)='toggleChange("photographe","photocall", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_photocall"
+    class="margin-bottom"></mat-divider>
+  <!-- end prestations -->
+
+
+  <!-- seances -->
+  <div *ngIf="isPhotographe && photoIsChecked && 
+  (companyDescriptionInfo?.criteres?.photographe_seanceEngagement
+   || companyDescriptionInfo?.criteres?.photographe_seanceBrunchOuDejeuner
+   || companyDescriptionInfo?.criteres?.photographe_seanceApresMariage)" fxLayout="column"
+    fxLayoutAlign="space-between">
+    <div class="margin40U40D">
+      <span class="accent-title" translate>Séances</span>
+    </div>
+    <div *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_seanceEngagement"
+      fxLayout="column">
+      <div class="inline-container-4 margin-bottom">
+        <div>
+          <span translate class="boldText">Séance d'engagement</span>
+          <br>
+          <span translate class="greyText">Réserver une séance d’engagement avant votre
+            mariage</span>
+        </div>
+        <mat-slide-toggle color="primary" [checked]='bookingObject.photographe.seanceEngagementIsChecked'
+          (change)='toggleChange("photographe","seanceEngagementIsChecked", $event.checked)'>
+        </mat-slide-toggle>
+      </div>
+      <div *ngIf="bookingObject.photographe.seanceEngagementIsChecked" fxLayout="row"
+        fxLayoutAlign="space-between center" class="margin15U15D">
+        <div fxFlexOffset=53>
+          <span translate>Durée de la mission</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+            (click)='numberInputChangeValue("photographe","decrement", "dureeMissionSeanceEngagement", 1, companyDescriptionInfo?.criteres?.photographe_seanceEngagementDureeMinimum)'>
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.photographe.dureeMissionSeanceEngagement}}h </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+            (click)='numberInputChangeValue("photographe","increment", "dureeMissionSeanceEngagement", 1)'>
+            <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+    <mat-divider
+      *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_seanceEngagement"
+      class="margin-bottom"></mat-divider>
+
+    <div *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_seanceBrunchOuDejeuner"
+      fxLayout="column">
+      <div class="inline-container-4 margin-bottom">
+        <div>
+          <span translate class="boldText">Séance brunch le lendemain</span>
+          <br>
+          <span translate class="greyText">Réserver une séance d’engagement avant votre
+            mariage</span>
+        </div>
+        <mat-slide-toggle color="primary" [checked]='bookingObject.photographe.seanceBrunchOuDejeunerIsChecked'
+          (change)='toggleChange("photographe","seanceBrunchOuDejeunerIsChecked", $event.checked)'>
+        </mat-slide-toggle>
+      </div>
+      <div *ngIf="bookingObject.photographe.seanceBrunchOuDejeunerIsChecked" fxLayout="row"
+        fxLayoutAlign="space-between center" class="margin15U15D">
+        <div fxFlexOffset=53>
+          <span translate>Durée de la mission</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+            (click)='numberInputChangeValue("photographe","decrement", "dureeMissionSeanceBrunchOuDejeuner", 1, companyDescriptionInfo?.criteres?.photographe_seanceBrunchOuDejeunerDureeMinimum)'>
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.photographe.dureeMissionSeanceBrunchOuDejeuner}}h </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+            (click)='numberInputChangeValue("photographe","increment", "dureeMissionSeanceBrunchOuDejeuner", 1)'>
+            <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+        </div>
+
+      </div>
+    </div>
+    <mat-divider
+      *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_seanceBrunchOuDejeuner"
+      class="margin-bottom"></mat-divider>
+
+    <div *ngIf="companyDescriptionInfo?.criteres?.photographe_seanceApresMariage" fxLayout="column">
+      <div class="inline-container-4 margin-bottom">
+        <div>
+          <span translate class="boldText">Séance après le mariage</span>
+          <br>
+          <span translate class="greyText">Réserver une séance d’engagement avant votre
+            mariage</span>
+        </div>
+        <mat-slide-toggle color="primary" [checked]='bookingObject.photographe.seanceApresMariageIsChecked'
+          (change)='toggleChange("photographe","seanceApresMariageIsChecked", $event.checked)'>
+        </mat-slide-toggle>
+      </div>
+      <div *ngIf="bookingObject.photographe.seanceApresMariageIsChecked" fxLayout="row"
+        fxLayoutAlign="space-between center" class="margin15U15D">
+        <div fxFlexOffset=53>
+          <span translate>Durée de la mission</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+            (click)='numberInputChangeValue("photographe","decrement", "dureeMissionSeanceApresMariage", 1, companyDescriptionInfo?.criteres?.photographe_seanceApresMariageDureeMinimum)'>
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.photographe.dureeMissionSeanceApresMariage}}h </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+            (click)='numberInputChangeValue("photographe","increment", "dureeMissionSeanceApresMariage", 1)'>
+            <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+        </div>
+
+      </div>
+    </div>
+    <mat-divider
+      *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_seanceApresMariage"
+      class="margin-bottom"></mat-divider>
+  </div>
+  <!-- end seances -->
+
+  <!-- livrable -->
+
+  <div *ngIf="isPhotographe && photoIsChecked && 
+  (companyDescriptionInfo?.criteres?.photographe_livraisonHauteResolution 
+  || companyDescriptionInfo?.criteres?.photographe_galeriePrive
+  || companyDescriptionInfo?.criteres?.photographe_remise
+  || companyDescriptionInfo?.criteres?.photographe_livraisonExpress)"  class="margin-20U40D">
+    <span class="accent-title" translate>Livrables</span>
+  </div>
+  <div *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_livraisonHauteResolution"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Livraison des originaux haute
+        définition</span>
+      <br>
+      <span translate class="greyText">Obtenir toutes les photos originales en
+        haute résolution</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.photographe.livraisonHauteResolutionPhoto'
+      (change)='toggleChange("photographe","livraisonHauteResolutionPhoto", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider
+    *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_livraisonHauteResolution"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_galeriePrive"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Galerie privée en ligne</span>
+      <br>
+      <span translate class="greyText">Obtenir une galerie privée en ligne</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.photographe.galeriePrive'
+      (change)='toggleChange("photographe","galeriePrive", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_galeriePrive"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_remise"
+    class="height8rem" fxLayout fxLayoutAlign="space-between">
+    <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+      <div>
+        <mat-checkbox [checked]='bookingObject.photographe.donneesDvdExamplairesPhotoIsChecked'
+          (change)='checkBoxChange("photographe","donneesDvdExamplairesPhotoIsChecked", $event.checked)' color="primary"
+          translate><span  class="boldText">Donées sous DVD</span> </mat-checkbox>
+      </div>
+      <div fxLayout="row"
+        fxLayoutAlign="space-between center">
+        <div>
+          <span translate>Exemplaires</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+            (click)='numberInputChangeValue("photographe","decrement", "donneesDvdExamplairesPhoto", 1, 1)'
+            [disabled] = '!bookingObject.photographe.donneesDvdExamplairesPhotoIsChecked' >
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.photographe.donneesDvdExamplairesPhoto ?
+            bookingObject.photographe.donneesDvdExamplairesPhoto : 1}} </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+            (click)='numberInputChangeValue("photographe","increment", "donneesDvdExamplairesPhoto", 1)'
+            [disabled] = '!bookingObject.photographe.donneesDvdExamplairesPhotoIsChecked'>
+            <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+      <div>
+        <mat-checkbox color="primary" translate
+          [checked]='bookingObject.photographe.donneesUsbExamplairesPhotoIsChecked'
+          (change)='checkBoxChange("photographe","donneesUsbExamplairesPhotoIsChecked", $event.checked)'> <span
+          class="boldText">Donées
+            sous Clé USB</span> </mat-checkbox>
+      </div>
+      <div fxLayout="row"
+        fxLayoutAlign="space-between center">
+        <div>
+          <span translate>Exemplaires</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+            (click)='numberInputChangeValue("photographe","decrement", "donneesUsbExamplairesPhoto", 1, 1)'
+            [disabled] = '!bookingObject.photographe.donneesUsbExamplairesPhotoIsChecked'>
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.photographe.donneesUsbExamplairesPhoto ?
+            bookingObject.photographe.donneesUsbExamplairesPhoto : 1}} </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+            (click)='numberInputChangeValue("photographe","increment", "donneesUsbExamplairesPhoto", 1)'
+            [disabled] = '!bookingObject.photographe.donneesUsbExamplairesPhotoIsChecked'>
+            <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <mat-divider *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_remise"
+    class="margin-bottom" class="marginTop1rem"></mat-divider>
+  <div *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_livraisonExpress"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Livraison express photos</span>
+      <br>
+      <span translate class="greyText">Obtenir la livraison de vos photos dans un délais express 7 à 15
+        jours</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.photographe.livraisonExpressPhoto'
+      (change)='toggleChange("photographe","livraisonExpressPhoto", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_livraisonExpress"
+    class="margin-bottom"></mat-divider>
+  <!-- end livrable -->
+
+  <!-- tirage papier section -->
+  <div *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_tiragePapier.value"
+    fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex=100  class="margin-20U40D">
+      <span class="accent-title" translate>Tirage papier</span>
+    </div>
+
+    <div fxFlex=100 class="margin20U20D">
+      <span class="light-title" translate>Finitions</span>
+    </div>
+    <div id="finishesRow" fxLayout="row" fxLayoutAlign="space-between stretch" fxFlex=100 class="margin1rem">
+      <div fxFlex=48 *ngFor="let finish of companyDescriptionInfo?.criteres?.photographe_tiragePapier.finitions">
+        <mat-checkbox *ngIf="finish === 'Mate'" color="primary" translate
+          [checked]='bookingObject.photographe.tiragePapierFinitionMate'
+          (change)='checkBoxChange("photographe","tiragePapierFinitionMate", $event.checked)'> <span
+          class="checkbox">Finition Mate</span> </mat-checkbox>
+
+        <mat-checkbox *ngIf="finish === 'Brillante'" color="primary" translate
+          [checked]='bookingObject.photographe.tiragePapierFinitionBrillante'
+          (change)='checkBoxChange("photographe","tiragePapierFinitionBrillante", $event.checked)'> <span
+          class="checkbox">Finition Brillante</span> </mat-checkbox>
+      </div>
+
+    </div>
+    <div fxFlex=100 class="margin20U20D">
+      <span class="light-title" translate>Formats</span>
+    </div>
+    <div id="formatContainer" fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxFlex=100>
+      <div *ngFor="let format of tiragePapiers; let i = index;let lastFormat = last" fxFlex=100
+        class="marginTop1rem">
+        <div *ngIf="i<=2 || showmoreTirageFormats" class="inline-container-4 margin-bottom">
+          <div>
+            <span translate class="boldText">{{format.name}}</span>
+            <br>
+            <span translate class="greyText">Indiquer si vous voulez ce format</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='tiragePapiers[i].checked'
+            (change)='toggleChangeTiragePapier($event.checked,i)'></mat-slide-toggle>
+        </div>
+        <div *ngIf="tiragePapiers[i].checked" fxLayout="row"
+          fxLayoutAlign="space-between center">
+          <div fxFlexOffset=51 >
+            <span translate>Exemplaires</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+              (click)='numberInputChangeValueObjectComplex("photographe","decrement", "tiragePapier", 1, i, 1)'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{tiragePapiers[i].examplaire}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeValueObjectComplex("photographe","increment", "tiragePapier", 1, i)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+        <button mat-button color='primary' class="padding0" *ngIf="!showmoreTirageFormats && i==2"
+          (click)="showmoreTirageFormats = true" ng-reflect-color="primary">
+          <span translate class="font15andhalf">Afficher plus de formats</span>
+          <mat-icon color='primary' class="margin10L">keyboard_arrow_down</mat-icon>
+        </button>
+        <button mat-button color='primary' class="padding0" *ngIf="showmoreTirageFormats && i>2 && lastFormat"
+          (click)="showmoreTirageFormats = false" ng-reflect-color="primary">
+          <span translate class="font15andhalf">Afficher moins de formats</span>
+          <mat-icon color='primary' class="margin10L">keyboard_arrow_up</mat-icon>
+        </button>
+        <mat-divider *ngIf="i != 2" class="margin1rem"></mat-divider>
+        <mat-divider *ngIf="i == 2 && showmoreTirageFormats" class="margin1rem"></mat-divider>
+      </div>
+    </div>
+  </div>
+
+  <!-- album photo section -->
+  <div *ngIf=" isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_creationAlbum.value"
+    fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex=100  class="margin-20U40D">
+      <span class="accent-title" translate>Album photos</span>
+    </div>
+    <div fxFlex=100 class="margin20U20D">
+      <span class="light-title" translate>Finitions</span>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between stretch" fxFlex=100 class="margin1rem">
+      <div fxFlex=48 *ngFor="let finish of companyDescriptionInfo?.criteres?.photographe_creationAlbum.finitions">
+        <mat-checkbox *ngIf="finish === 'Mate'" color="primary" translate
+          [checked]='bookingObject.photographe.creationAlbumFinitionMate'
+          (change)='checkBoxChange("photographe","creationAlbumFinitionMate", $event.checked)'> <span
+          class="checkbox">Finition Mate</span> </mat-checkbox>
+
+        <mat-checkbox *ngIf="finish === 'Brillante'" color="primary" translate
+          [checked]='bookingObject.photographe.creationAlbumFinitionBrillante'
+          (change)='checkBoxChange("photographe","creationAlbumFinitionBrillante", $event.checked)'> <span
+          class="checkbox">Finition Brillante</span> </mat-checkbox>
+      </div>
+    </div>
+    <div fxFlex=100 class="margin30U45D">
+      <span class="light-title" translate>Formats</span>
+    </div>
+    <div fxLayout="row wrap" fxFlex=100
+      *ngFor="let format of creationAlbums;let i=index; let lastCreationAlbumFormat=last">
+      <div *ngIf="i<=0 || showmoreCreationAlbumFormats" class="inline-container-4 margin-bottom" fxFlex=100>
+        <div>
+          <span translate class="boldText">{{format.name}}</span>
+          <br>
+          <span translate class="greyText">Indiquer si vous voulez ce format</span>
+        </div>
+        <mat-slide-toggle color="primary" [checked]="false" (change)="toggleChangeCreationAlbum($event.checked,i)">
+        </mat-slide-toggle>
+      </div>
+      <div *ngIf="creationAlbums[i].checked" fxLayout="row wrap"
+        fxLayoutAlign="space-between stretch" fxFlex=100>
+        <div *ngFor="let model of format.modeles;let j=index;let lastCreationAlbumModel= last" fxFlex=48
+          class="margin1rem">
+          <div class="padding10U10D">
+            <mat-checkbox color="primary" translate (change)="checkBoxChangeModeleCreationAlbum($event.checked,i,j)">
+              <span class="checkbox"> {{model.name}}</span> </mat-checkbox>
+          </div>
+          <div *ngIf="creationAlbums[i].modeles[j].checked" class="padding10U10D"
+            fxLayout="row" fxLayoutAlign="space-between center">
+            <div>
+              <span translate>Exemplaires</span>
+            </div>
+            <div fxLayout fxLayoutAlign="center center">
+              <button (click)='numberInputChangeValueCreationAlbum("decrement", i, j)' mat-mini-fab
+                class='margin-right number-control-btn number-control-btn-remove margin-left'>
+                <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+              </button>
+              <span matSuffix> {{model.examplaire}} </span>
+              <button (click)='numberInputChangeValueCreationAlbum("increment", i, j)' mat-mini-fab
+                class='margin-left number-control-btn'>
+                <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button mat-button color='primary' class="padding0" *ngIf="!showmoreCreationAlbumFormats && i==0"
+        (click)="showmoreCreationAlbumFormats = true" ng-reflect-color="primary">
+        <span translate class="font15andhalf">Afficher plus de formats</span>
+        <mat-icon color='primary' class="margin10L">keyboard_arrow_down</mat-icon>
+      </button>
+      <button mat-button color='primary' class="padding0"
+        *ngIf="showmoreCreationAlbumFormats && i>0 && lastCreationAlbumFormat"
+        (click)="showmoreCreationAlbumFormats = false" ng-reflect-color="primary">
+        <span translate class="font15andhalf">Afficher moins de formats</span>
+        <mat-icon color='primary' class="margin10L">keyboard_arrow_up</mat-icon>
+      </button>
+      <mat-divider fxFlex=100 *ngIf="i != 0" class="margin1rem"></mat-divider>
+      <mat-divider fxFlex=100 *ngIf="i == 0 && showmoreCreationAlbumFormats" class="margin1rem"></mat-divider>
+    </div>
+  </div>
+  <!-- end album photo section -->
+
+  <!-- retouches photos -->
+  <div *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_retouchesPhoto"
+    fxLayout="column" fxLayoutAlign="space-around">
+    <div fxFlex=100  class="margin-20U40D">
+      <span class="accent-title" translate>Retouches</span>
+    </div>
+    <div class="inline-container-4" class="margin30D">
+      <div>
+        <span translate class="boldText">Retouches photo</span>
+        <br>
+        <span translate class="greyText">Post-traitement sur une sélection de photos (les
+          teintes,l'harmonie des couleurs,etc).</span>
+      </div>
+      <mat-slide-toggle color="primary" [checked]='bookingObject.photographe.retouchesPhoto'
+        (change)='toggleChange("photographe","retouchesPhoto", $event.checked)'></mat-slide-toggle>
+    </div>
+    <div *ngIf="bookingObject.photographe.retouchesPhoto" fxLayout="row" fxLayoutAlign="space-between center">
+      <div fxFlexOffset=53>
+        <span translate>Exemplaires</span>
+      </div>
+      <div fxLayout fxLayoutAlign="center center">
+        <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+          (click)='numberInputChangeValue("photographe","decrement", "retouchesPhotoExamplaires", 1, 1)'>
+          <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+        </button>
+        <span matSuffix> {{bookingObject.photographe.retouchesPhotoExamplaires}} </span>
+        <button mat-mini-fab class='margin-left number-control-btn'
+          (click)='numberInputChangeValue("photographe","increment", "retouchesPhotoExamplaires", 1)'>
+          <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <mat-divider *ngIf="isPhotographe && photoIsChecked && companyDescriptionInfo?.criteres?.photographe_retouchesPhoto"
+    class="margin-bottom" class="marginTop1rem"></mat-divider>
+  <!-- end retouches photos -->
+
+  <!-- end photographe -->
+
+  <!-- videaliste -->
+
+  <!-- videaliste title -->
+  <div *ngIf="isVidealiste && videoIsChecked" fxLayout fxLayoutAlign="space-between center" class="divided-title">
+    <div class="half-divider"></div> <span  class="metierTitle">Vidéaste</span>
+    <div class="half-divider"></div>
+  </div>
+
+  <!-- prestations -->
+  <div *ngIf="isVidealiste && videoIsChecked"  class="margin-20U40D">
+    <span class="accent-title" translate>Prestations</span>
+  </div>
+  <div *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_duoVideo"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Prestation duo vidéo</span>
+      <br>
+      <span translate class="greyText">Couvrir l’événement avec deux vidéastes</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.videaliste.duoVideo'
+      (change)='toggleChange("videaliste","duoVideo", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_duoVideo"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_bandeAnnonce"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Bande annonce</span>
+      <br>
+      <span translate class="greyText">Obtenir une bande annonce de votre film de mariage (1 à 2
+        min)</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.videaliste.bandeAnnonce'
+      (change)='toggleChange("videaliste","bandeAnnonce", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_bandeAnnonce"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_filmCourt"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Film court</span>
+      <br>
+      <span translate class="greyText">Obtenir un film court (clip) de mariage (10 à 15 min)</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.videaliste.filmCourt'
+      (change)='toggleChange("videaliste","filmCourt", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_filmCourt"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_filmLong"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Film long</span>
+      <br>
+      <span translate class="greyText">Obtenir un film long (reportage) de mariage (30 à 60 min)</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.videaliste.filmLong'
+      (change)='toggleChange("videaliste","filmLong", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_filmLong"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_courtMetrage"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Court métrage</span>
+      <br>
+      <span translate class="greyText">Obtenir un court métrage scénarisé avec mise en scènes des
+        mariés</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.videaliste.courtMetrage'
+      (change)='toggleChange("videaliste","courtMetrage", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_courtMetrage"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_videoAerienne"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Vidéo aérienne (Drone)</span>
+      <br>
+      <span translate class="greyText">Obtenir des prises de vue aérienne avec un drone de
+        l’événement</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.videaliste.videoAerienne'
+      (change)='toggleChange("videaliste","videoAerienne", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_videoAerienne"
+    class="margin-bottom"></mat-divider>
+  <!-- end prestations -->
+
+  <!-- livrable -->
+
+  <div *ngIf="isVidealiste && videoIsChecked"  class="margin-20U40D">
+    <span class="accent-title" translate>Livrables</span>
+  </div>
+  <div
+    *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_livraisonOriginauxHauteResolution"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Livraison des originaux haute définition</span>
+      <br>
+      <span translate class="greyText">Obtenir tous les ruchs vidéo originaux en haute résolution</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.videaliste.livraisonOriginauxHauteResolutionVideo'
+      (change)='toggleChange("videaliste","livraisonOriginauxHauteResolutionVideo", $event.checked)'>
+    </mat-slide-toggle>
+  </div>
+  <mat-divider
+    *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_livraisonOriginauxHauteResolution"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_remise"
+    class="height8rem" fxLayout fxLayoutAlign="space-between">
+    <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+      <div>
+        <mat-checkbox color="primary" translate [checked]='bookingObject.videaliste.donneesDvdExamplairesVideoIsChecked'
+          (change)='checkBoxChange("videaliste","donneesDvdExamplairesVideoIsChecked", $event.checked)'><span
+          class="boldText">Donées sous DVD</span> </mat-checkbox>
+      </div>
+      <div fxLayout="row"
+        fxLayoutAlign="space-between center">
+        <div>
+          <span translate>Exemplaires</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+            (click)='numberInputChangeValue("videaliste","decrement", "donneesDvdExamplairesVideo", 1, 1)'
+            [disabled] = '!bookingObject.videaliste.donneesDvdExamplairesVideoIsChecked'>
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.videaliste.donneesDvdExamplairesVideo}} </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+            (click)='numberInputChangeValue("videaliste","increment", "donneesDvdExamplairesVideo", 1)'
+            [disabled] = '!bookingObject.videaliste.donneesDvdExamplairesVideoIsChecked'>
+            <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+      <div>
+        <mat-checkbox color="primary" translate [checked]='bookingObject.videaliste.donneesUsbExamplairesVideoIsChecked'
+          (change)='checkBoxChange("videaliste","donneesUsbExamplairesVideoIsChecked", $event.checked)'> <span
+           class="boldText">Donées sous Clé USB</span> </mat-checkbox>
+      </div>
+      <div  fxLayout="row"
+        fxLayoutAlign="space-between center">
+        <div>
+          <span translate>Exemplaires</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+            (click)='numberInputChangeValue("videaliste","decrement", "donneesUsbExamplairesVideo", 1, 1)'
+            [disabled] = '!bookingObject.videaliste.donneesUsbExamplairesVideoIsChecked'>
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.videaliste.donneesUsbExamplairesVideo}} </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+            (click)='numberInputChangeValue("videaliste","increment", "donneesUsbExamplairesVideo", 1)'
+            [disabled] = '!bookingObject.videaliste.donneesUsbExamplairesVideoIsChecked'>
+            <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <mat-divider *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_remise"
+    class="margin-bottom" class="marginTop1rem"></mat-divider>
+
+  <div *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_livraisonExpress"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Livraison express vidéos</span>
+      <br>
+      <span translate class="greyText">Obtenir la livraison de vos vidéos dans un délais express 7 à 15
+        jours</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.videaliste.livraisonExpressVideo'
+      (change)='toggleChange("videaliste","livraisonExpressVideo", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_livraisonExpress"
+    class="margin-bottom"></mat-divider>
+
+  <!-- etalonnage -->
+  <div *ngIf="isVidealiste && videoIsChecked"  class="margin-20U40D">
+    <span class="accent-title" translate>Étalonnage</span>
+  </div>
+  <div *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_etalonnageVideo"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Étalonnage vidéo</span>
+      <br>
+      <span translate class="greyText">Post-traitement du film de mariage (teinte, harmonie des couleurs,
+        identité, etc)</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.videaliste.etalonnageVideo'
+      (change)='toggleChange("videaliste","etalonnageVideo", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isVidealiste && videoIsChecked && companyDescriptionInfo?.criteres?.videaliste_etalonnageVideo"
+   class="margin1rem"></mat-divider>
+
+  <!-- end etalonnage -->
+
+  <!-- options divers -->
+  <div *ngIf="optionDivers?.length && (photoIsChecked || videoIsChecked)" class="margin40U40D">
+    <span class="accent-title" translate>Option Divers</span>
+  </div>
+  <div *ngIf="optionDivers?.length" fxLayout="column" fxLayoutAlign="space-around">
+    <div *ngFor="let opt of optionDivers ; let i = index">
+      <div *ngIf="isPhotographe && photoIsChecked && optionContainCategory(opt.id, 'photographe')">
+        <div class="inline-container-4" class="margin30D margin20U" fxLayout fxLayoutAlign="space-between center">
+          <div>
+            <span translate class="boldText">{{opt.name}}</span>
+            <br>
+            <span translate class="lightGreyText">{{opt.feeType}}</span>
+            <br>
+            <span translate class="greyText">{{opt.description}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='optionDivers[i].checked'
+            (change)='toggleChangeOptionDivers($event.checked, opt)'>
+          </mat-slide-toggle>
+        </div>
+  
+        <div *ngIf="opt.feeType === feeType.UNIT_FEE && optionDivers[i].checked" fxLayout="row"
+          fxLayoutAlign="space-between center">
+          <div fxFlexOffset=53>
+            <span translate>Exemplaires</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+              (click)='numberInputChangeOptionDivers("decrement", 1, opt, 1)'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{opt.examplaire}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeOptionDivers("increment", 1, opt)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isVidealiste && videoIsChecked && optionContainCategory(opt.id, 'videaliste')
+      && !(isPhotographe && photoIsChecked && optionContainCategory(opt.id, 'photographe'))">
+        <div class="inline-container-4" class="margin30D margin20U" fxLayout fxLayoutAlign="space-between center">
+          <div>
+            <span translate class="boldText">{{opt.name}}</span>
+            <br>
+            <span translate class="lightGreyText">{{opt.feeType}}</span>
+            <br>
+            <span translate class="greyText">{{opt.description}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='optionDivers[i].checked'
+            (change)='toggleChangeOptionDivers($event.checked, opt)'>
+          </mat-slide-toggle>
+        </div>
+  
+        <div *ngIf="opt.feeType === feeType.UNIT_FEE && optionDivers[i].checked" fxLayout="row"
+          fxLayoutAlign="space-between center">
+          <div fxFlexOffset=53>
+            <span translate>Exemplaires</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+              (click)='numberInputChangeOptionDivers("decrement", 1, opt, 1)'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{opt.examplaire}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeOptionDivers("increment", 1, opt)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <mat-divider *ngIf="companyDescriptionInfo?.company?.options?.length" class="margin-bottom" class="margin20T">
+  </mat-divider>
+  <!-- end options divers-->
+</form>

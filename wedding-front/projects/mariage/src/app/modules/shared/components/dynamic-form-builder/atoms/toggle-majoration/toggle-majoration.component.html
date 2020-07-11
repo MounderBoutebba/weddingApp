@@ -1,0 +1,28 @@
+<div *ngIf="field.type === fieldTypeEnum.TOGGLE_MAJORATION" ngStyle.lt-md="width:91vw"
+[formGroup]="form" fxLayout="column">
+    <div fxLayout='row wrap' fxLayoutAlign="space-between start" style="width: 100%"
+    class="pd-top-bot" [formGroupName]='field.name'>
+        <div fxLayout="column" fxLayoutAlign="center start">
+            <mat-label class='cnl-title'>
+                {{field.displayName|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+              <mat-label class='cnl-label'>
+                {{field.label|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+        </div>
+        <mat-slide-toggle [color]="color" (change)="toggle($event.checked)"
+        [formControlName]="'value'"></mat-slide-toggle>
+    </div>
+    <div *ngIf="field.value" fxLayout='row wrap' fxLayoutAlign="space-between start" style="width: 100%"
+    class="pd-top-bot" [formGroupName]='field.name'>
+        <div *ngFor="let opt of field.majOptions" fxLayout='column'
+        fxLayoutAlign="space-between start" style="width: 48%" style="margin-bottom: 1rem;">
+            <mat-label class='cnl-title'>
+                {{opt.name|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <app-number [numberOption]='{value: opt.majoration, label: opt.label, step: opt.step, unit: opt.unit}'
+            [field]="field" [form]="form" [disableOptions]='true' [majName]='opt.name'></app-number>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+</div>

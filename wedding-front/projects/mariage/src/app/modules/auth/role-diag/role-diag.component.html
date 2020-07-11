@@ -1,0 +1,82 @@
+<div class="general-container">
+  <div class="first-image-container">
+    <img class="image" aria-hidden src="assets/images/wedding-couple.svg">
+  </div>
+  <div class="general-container-2">
+    <form class="form-container mat-elevation-z3" [formGroup]="userForm">
+      <div class="form-container-2">
+          <div>
+              <img class="image-2" aria-hidden src="assets/images/Logo winwez exact.png">
+          </div>
+          <div class="container-1">
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="{{'firstname'|translate}}" formControlName="firstname">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="{{'lastname'|translate}}" formControlName="lastname">
+            </mat-form-field>
+          </div>
+          <div class="container-2">
+            <mat-form-field class="email-input" appearance="outline">
+              <input matInput placeholder="{{'email'|translate}}" formControlName="email">
+            </mat-form-field>
+            <button mat-raised-button color="accent">
+              <span translate>confirmed</span>
+            </button>
+          </div>
+          <div class="container-4">
+            <span class="account-type-span" translate>Account type</span>
+            <span class="confirmation-account-span" translate>Witch type of account would you create ?</span>
+          </div>
+          <section class="container-5">
+            <mat-radio-group formControlName="role">
+              <mat-radio-button class="example-margin" value="provider" color="primary">
+                <span [ngClass]="{'primary-color' : this.userForm.get('role').value === 'provider'}" translate>Im professional</span>
+              </mat-radio-button>
+              <mat-radio-button class="example-margin" value="client" color="primary">
+                <span [ngClass]="{'primary-color' : this.userForm.get('role').value === 'client'}" translate>Im futur married</span>
+              </mat-radio-button>
+            </mat-radio-group>
+          </section>
+          <div class="container-6">
+            <button mat-raised-button color="primary" [disabled]="userForm.invalid" (click)="formSubmitted()">
+              <span translate>register</span>
+            </button>
+          </div>
+          <div class="container-7">
+            <span *ngIf="fr" translate>
+              Votre inscription implique votre acceptation des <U><a class="ahref" href="https://www.winwez.com/terms" target="_blank">conditions d'utilisation</a></U>.
+            </span>
+            <span *ngIf="!fr" translate>
+              your registration implies your acceptance of the <U><a class="ahref" href="https://www.winwez.com/terms" target="_blank">conditions of use</a></U>.
+            </span>
+            <span translate>we invite you to read them carefully</span>
+          </div>
+      </div>
+    </form>
+    <div class="footer-container">
+      <div class="languages-container">
+          <button mat-button [matMenuTriggerFor]="menu" class="languages-container">
+            <span *ngIf="fr" style="margin-right: 18px" translate>French</span>
+            <img *ngIf="fr" style="width: 17px; height: 11px; margin-right: 20px" src="assets/icons/country/fr.svg">
+            <span *ngIf="!fr" style="margin-right: 18px" translate>English</span>
+            <img *ngIf="!fr" style="width: 20px; height: 16px; margin-right: 20px" src="assets/icons/country/uk.svg">
+            <img style="width: 15px; height: 9px;" src="assets/icons/svg/arrow-noir-bas.svg">
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="changeLanguage('fr')">
+              <span style="margin-right: 18px" translate>French</span>
+              <img style="width: 17px; height: 11px;" src="assets/icons/country/fr.svg">
+            </button>
+            <button mat-menu-item (click)="changeLanguage('en')">
+              <span style="margin-right: 18px" translate>English</span>
+              <img style="width: 20px; height: 16px;" aria-hidden src="assets/icons/country/uk.svg">
+            </button>
+          </mat-menu>
+      </div>
+    </div>
+  </div>
+  <div class="second-image-container">
+    <img class="image" aria-hidden src="assets/images/wedding-couple-2.svg">
+  </div>
+</div>

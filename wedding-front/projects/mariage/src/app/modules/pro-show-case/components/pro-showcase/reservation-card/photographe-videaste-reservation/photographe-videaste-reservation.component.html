@@ -1,0 +1,250 @@
+<mat-accordion>
+    <mat-expansion-panel [expanded]="panelExpanded" (opened)="panelOpened()" (closed)="panelClosed()" class="mat-expansion-panel-reservation">
+        <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight] = "'50px'"
+         style="padding: 0 16px;" fxLayout fxLayoutAlign="center center">
+            <div fxLayout fxLayoutAlign="space-between" style="width: 95%;font-size: 15px;font-weight: bold;">
+                <span>Total</span> <span>{{prices.total}} €</span>
+            </div>
+        </mat-expansion-panel-header>
+        <mat-list class="devisList">
+            <mat-list-item *ngIf="bookingObj.photographe.dureeMissionPhoto">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>{{photographeObj.tarif_horaire}}€ x {{bookingObj.photographe.dureeMissionPhoto}} heures (photos)</span>
+                    <span>{{photographeObj.tarif_horaire * bookingObj.photographe.dureeMissionPhoto}} €</span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.photographe.dureeMissionPhoto" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj.videaliste.dureeMissionVideo">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>{{photographeObj.tarif_horaire}}€ x {{bookingObj.videaliste.dureeMissionVideo}} heures (videos)</span>
+                    <span>{{videasteObj.tarif_horaire * bookingObj.videaliste.dureeMissionVideo}} €</span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.videaliste.dureeMissionVideo" style="position: inherit;"></mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.photographe.duoPhoto">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Duo Photo</span> <span>{{photographeObj.duoPhotoTarif}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.photographe.duoPhoto" style="position: inherit;"></mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.photographe.photomaton">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Photomaton</span> <span>{{photographeObj.photomatonTarifUnique}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.photographe.photomaton" style="position: inherit;"></mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.photographe.photocall">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Photocall</span> <span>{{photographeObj.photocallTraifUnique}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.photographe.photocall" style="position: inherit;"></mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.photographe.livraisonHauteResolutionPhoto">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Livraison Haute Résolution (photos)</span> <span>{{photographeObj.livraisonHauteResolutionTarif}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.photographe.livraisonHauteResolutionPhoto" style="position: inherit;"></mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.photographe.galeriePrive">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Galerie privée</span> <span>{{photographeObj.galeriePriveTarif}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.photographe.galeriePrive" style="position: inherit;"></mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.photographe.seanceEngagementIsChecked">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Sèance d'engagement</span>
+                    <span>{{photographeObj.seanceEngagementDureeMinimumTarifHoraire * bookingObj.photographe.dureeMissionSeanceEngagement}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.photographe.seanceEngagementIsChecked" style="position: inherit;"></mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.photographe.seanceBrunchOuDejeunerIsChecked">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Sèance Brunch ou Déjeuner</span>
+                    <span>{{photographeObj.seanceBrunchOuDejeunerDureeMinimumTarifHoraire * bookingObj.photographe.dureeMissionSeanceBrunchOuDejeuner}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.photographe.seanceBrunchOuDejeunerIsChecked"
+            style="position: inherit;"></mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.photographe.seanceApresMariageIsChecked">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Sèance aprés mariage</span>
+                    <span>{{photographeObj.seanceApresMariageDureeMinimumTarifHoraire * bookingObj.photographe.dureeMissionSeanceApresMariage}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.photographe.seanceApresMariageIsChecked"
+            style="position: inherit;"></mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.photographe.donneesDvdExamplairesPhotoIsChecked">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Donées sous DVD</span>
+                    <span>{{prices.donneDvdPhoto}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.photographe.donneesDvdExamplairesPhotoIsChecked"
+            style="position: inherit;"></mat-divider>
+            
+            <mat-list-item *ngIf="!!prices.periodeMaj">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Majoration pèriode</span>
+                    <span>{{prices.periodeMaj}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="!!prices.periodeMaj"
+            style="position: inherit;"></mat-divider>
+            
+            <mat-list-item *ngIf="!!prices.weekEndMaj">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Majoration weekend</span>
+                    <span>{{prices.weekEndMaj}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="!!prices.weekEndMaj"
+            style="position: inherit;"></mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.photographe.donneesUsbExamplairesPhotoIsChecked">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Donées sous USB</span>
+                    <span>{{prices.donneUsbPhoto}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.photographe.donneesUsbExamplairesPhotoIsChecked"
+            style="position: inherit;"></mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.photographe.retouchesPhoto">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Retouches photo</span>
+                    <span>{{prices.retouchesPhoto}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.photographe.retouchesPhoto"
+            style="position: inherit;"></mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.photographe.creationAlbum">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Création d'album</span>
+                    <span>{{prices.creationAlbum}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.photographe.creationAlbum"
+            style="position: inherit;"></mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.photographe.tiragePapier">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Tirage papier</span>
+                    <span>{{prices.tiragePapier}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.photographe.tiragePapier"
+            style="position: inherit;"></mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.photographe.livraisonExpressPhoto">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Livraison express photo</span> <span>{{photographeObj.livraisonExpressTarif}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.photographe.livraisonExpressPhoto" style="position: inherit;">
+            </mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.videaliste.duoVideo">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Duo video</span> <span>{{videasteObj.duoVideoTarif}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.videaliste.duoVideo" style="position: inherit;">
+            </mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.videaliste.bandeAnnonce">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Bande annonce</span> <span>{{videasteObj.bandeAnnonceTarif}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.videaliste.bandeAnnonce" style="position: inherit;">
+            </mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.videaliste.filmCourt">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Film court</span> <span>{{videasteObj.filmCourtTarif}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.videaliste.filmCourt" style="position: inherit;">
+            </mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.videaliste.filmLong">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Film long</span> <span>{{videasteObj.filmLongTarif}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.videaliste.filmLong" style="position: inherit;">
+            </mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.videaliste.courtMetrage">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Court Métrage</span> <span>{{videasteObj.courtMetrageTarif}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.videaliste.courtMetrage" style="position: inherit;">
+            </mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.videaliste.videoAerienne">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Vidéo aerienne</span> <span>{{videasteObj.videoAerienneTarif}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.videaliste.videoAerienne" style="position: inherit;">
+            </mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.videaliste.livraisonOriginauxHauteResolutionVideo">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Livraison originaux haute résolution (vidéo)</span> <span>{{videasteObj.livraisonOriginauxHauteResolutionTarif}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.videaliste.livraisonOriginauxHauteResolutionVideo" style="position: inherit;">
+            </mat-divider>
+            
+            <mat-list-item *ngIf="bookingObj.videaliste.livraisonExpressVideo">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Livraison express (video)</span>
+                    <span>{{videasteObj.livraisonExpressTarif}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.videaliste.livraisonExpressVideo" style="position: inherit;">
+            </mat-divider>
+
+            <mat-list-item *ngIf="bookingObj.videaliste.donneesDvdExamplairesVideoIsChecked">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Donées sous DVD (vidéo)</span>
+                    <span>{{prices.donneDvdVideo}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.videaliste.donneesDvdExamplairesVideoIsChecked"
+            style="position: inherit;"></mat-divider>
+
+            <mat-list-item *ngIf="bookingObj.videaliste.donneesUsbExamplairesVideoIsChecked">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Donées sous USB (vidéo)</span>
+                    <span>{{prices.donneUsbVideo}} € </span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.videaliste.donneesUsbExamplairesVideoIsChecked"
+            style="position: inherit;"></mat-divider>
+
+            <mat-list-item *ngIf="!!prices.optionDivers">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Option divers</span>
+                    <span>{{prices.optionDivers}} €</span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="!!prices.optionDivers" style="position: inherit;"></mat-divider>
+
+        </mat-list>
+    </mat-expansion-panel>
+</mat-accordion>

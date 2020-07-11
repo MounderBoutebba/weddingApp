@@ -1,0 +1,192 @@
+<form class="formTexture">
+    <div class="mrTop10">
+        <span class="accent-title" translate>Réservation</span>
+    </div>
+
+    <div class="prestationContainerBig" fxLayout fxLayoutAlign="space-between">
+        <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div>
+              <span translate>Durée de la mission</span>
+            </div>
+            <div fxLayout fxLayoutAlign="center center">
+              <button mat-mini-fab
+                (click)='numberInputChangeValue("coach","decrement", "durreDeLaMission", 1, companyDescriptionInfo?.criteres?.photographe_dureeDeReservationMinimum)'
+                class='margin-right number-control-btn number-control-btn-remove margin-left'
+                [class.number-control-btn-remove]='bookingObject.coach.durreDeLaMission === companyDescriptionInfo?.criteres?.coachSportif_dureeMin'
+                [disabled]='bookingObject.coach.durreDeLaMission === companyDescriptionInfo?.criteres?.coachSportif_dureeMin'>
+                <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+              </button>
+              <span matSuffix> {{bookingObject.coach.durreDeLaMission}}h </span>
+              <button mat-mini-fab class='margin-left number-control-btn'
+                (click)='numberInputChangeValue("coach","increment", "durreDeLaMission", 1)'>
+                <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+              </button>
+            </div>
+    
+          </div>
+        </div>
+    </div>
+    <mat-divider class="matdividerForcedHeight"></mat-divider>
+
+    <div class="margin-20U40D">
+        <span class="accent-title" translate>Lieu de séances</span>
+        <div fxLayout='row wrap' fxLayoutAlign='start center' style="margin-top: 2rem;">
+            <div *ngFor="let place of companyDescriptionInfo?.criteres?.coachSportif_lieu" fxFlex='50%'>
+                
+                <mat-checkbox *ngIf="place === 'a_domicile'" color="primary"
+                (change)='checkboxChanged("lieu", place)'><span
+                class="checkbox">À domicile</span> </mat-checkbox>
+                
+                <mat-checkbox *ngIf="place === 'en_salle'" color="primary"
+                (change)='checkboxChanged("lieu", place)'><span
+                class="checkbox">En salle</span> </mat-checkbox>
+            </div>
+        </div>
+    </div>
+    <mat-divider class="matdividerForcedHeight"></mat-divider>
+
+    <div class="margin-20U40D">
+        <span class="accent-title" translate>Type de sports</span>
+        <div fxLayout='row wrap' fxLayoutAlign='start center' style="margin-top: 2rem;">
+            <div *ngFor="let type of companyDescriptionInfo?.criteres?.coachSportif_typesDeSport, let i= index;" fxFlex='50%'
+            style="margin-bottom: 0.5rem;" [hidden]='i >= 4 && !showMoreTypesDeSport'>
+                <mat-checkbox *ngIf="i < 4" color="primary"
+                (change)='checkboxChanged("typesDeSport", type)'><span
+                class="checkbox">{{type.replace('_', ' ') | capitalizeFirstLetter}}</span> </mat-checkbox>
+                <mat-checkbox *ngIf="showMoreTypesDeSport && i >= 4" color="primary"
+                (change)='checkboxChanged("typesDeSport", type)'><span
+                class="checkbox">{{type.replace('_', ' ') | capitalizeFirstLetter}}</span> </mat-checkbox>
+            </div>
+
+        </div>
+        <div *ngIf="companyDescriptionInfo?.criteres?.coachSportif_typesDeSport.length > 4" style="margin-top: 1rem;">
+          <button mat-button color='primary' (click)="showMoreTypesDeSport = !showMoreTypesDeSport">
+              {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+              <mat-icon color='primary' *ngIf="!showMoreTypesDeSport">keyboard_arrow_down</mat-icon>
+              <mat-icon color='primary' *ngIf="showMoreTypesDeSport">keyboard_arrow_up</mat-icon>
+          </button>
+      </div>
+    </div>
+    <mat-divider class="matdividerForcedHeight"></mat-divider>
+
+    <div *ngIf="!!servicesAssocies.length" class="margin-20U40D">
+        <span class="accent-title" translate>Services associés</span>
+        <div fxLayout='column' fxLayoutAlign='start stretch' style="margin-top: 2rem;">
+            <div *ngFor="let opt of servicesAssocies, let i= index;" fxFlex='100%' style="width: 100%;"
+            style="margin-bottom: 0.5rem;" [hidden]='i >= 2 && !showMoreServices'>
+                <div *ngIf="i < 2" fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+                  <div fxLayout="column" fxLayoutAlign="start space-around" fxFlex='80%'>
+                    <div>
+                      <span class="boldText">{{opt.name | lowercase | translate | capitalizeFirstLetter}}</span>
+                    </div>
+                    <div>
+                      <span class="greyText15">{{opt.label | lowercase | translate | capitalizeFirstLetter}}</span>
+                    </div>
+                  </div>
+                  <mat-slide-toggle color="primary" [checked]='opt.value'
+                  (change)='toggleChangeService(opt.name, $event.checked)'></mat-slide-toggle>
+                </div>
+                <div *ngIf="showMoreServices && i >= 2" fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+                  <div fxLayout="column" fxLayoutAlign="start space-around" fxFlex='80%'>
+                    <div>
+                      <span class="boldText">{{opt.name | lowercase | translate | capitalizeFirstLetter}}</span>
+                    </div>
+                    <div>
+                      <span class="greyText15">{{opt.label | lowercase | translate | capitalizeFirstLetter}}</span>
+                    </div>
+                  </div>
+                  <mat-slide-toggle color="primary" [checked]='opt.value'
+                  (change)='toggleChangeService(opt.name, $event.checked)'></mat-slide-toggle>
+                </div>
+                <mat-divider class="matdividerForcedHeight" style='width: 100% !important;'></mat-divider>
+
+            </div>
+        </div>
+        <div *ngIf="servicesAssocies.length > 2" style="margin-top: 1rem;">
+          <button mat-button color='primary' (click)="showMoreServices = !showMoreServices">
+              {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+              <mat-icon color='primary' *ngIf="!showMoreServices">keyboard_arrow_down</mat-icon>
+              <mat-icon color='primary' *ngIf="showMoreServices">keyboard_arrow_up</mat-icon>
+          </button>
+      </div>
+    </div>
+    <mat-divider class="matdividerForcedHeight"></mat-divider>
+
+    <div *ngIf="companyDescriptionInfo?.criteres?.coachSportif_conseilsPersonnalises ||
+    companyDescriptionInfo?.criteres?.coachSportif_essais">
+      <div style="margin-bottom: 2rem;">
+        <span class="accent-title" translate>Conseils/Essais</span>
+      </div>
+      <div *ngIf="companyDescriptionInfo?.criteres?.coachSportif_conseilsPersonnalises" fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+        <div fxLayout="column" fxLayoutAlign="start space-around" fxFlex='80%'>
+          <div>
+            <span class="boldText">{{'Rendez-vous conseils' | lowercase | translate | capitalizeFirstLetter}}</span>
+          </div>
+          <div>
+            <span class="greyText15">{{'Obtenir le service de conseils personnalisés' | lowercase | translate | capitalizeFirstLetter}}</span>
+          </div>
+        </div>
+        <mat-slide-toggle color="primary" [checked]='bookingObject?.coach?.conseilsPersonnalises'
+        (change)='toggleChange("conseilsPersonnalises", $event.checked)'></mat-slide-toggle>
+      </div>
+      <mat-divider *ngIf="companyDescriptionInfo?.criteres?.coachSportif_conseilsPersonnalises" class="matdividerForcedHeight"></mat-divider>
+      
+      <div *ngIf="companyDescriptionInfo?.criteres?.coachSportif_essais" fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+        <div fxLayout="column" fxLayoutAlign="start space-around" fxFlex='80%'>
+          <div>
+            <span class="boldText">{{'Essais' | lowercase | translate | capitalizeFirstLetter}}</span>
+          </div>
+          <div>
+            <span class="greyText15">{{'Obtenir le service essais' | lowercase | translate | capitalizeFirstLetter}}</span>
+          </div>
+        </div>
+        <mat-slide-toggle color="primary" [checked]='bookingObject?.coach?.essais'
+        (change)='toggleChange("essais", $event.checked)'></mat-slide-toggle>
+      </div>
+      <mat-divider *ngIf="companyDescriptionInfo?.criteres?.coachSportif_essais" class="matdividerForcedHeight"></mat-divider>
+    </div>
+    <!-- options divers -->
+   <div *ngIf="optionDivers?.length" class="margin40U40D">
+    <span class="accent-title" translate>Option Divers</span>
+  </div>
+  <div *ngIf="optionDivers?.length" fxLayout="column" fxLayoutAlign="space-around">
+    <div *ngFor="let opt of optionDivers ; let i = index">
+      <div *ngIf="isCoach && coachIsChecked && optionContainCategory(opt.id, 'coachSportif')">
+        <div class="inline-container-4" class="margin30D margin20U" fxLayout fxLayoutAlign="space-between center">
+          <div>
+            <span translate class="boldText">{{opt.name}}</span>
+            <br>
+            <span translate class="lightGreyText">{{opt.feeType}}</span>
+            <br>
+            <span translate class="greyText">{{opt.description}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='optionDivers[i].checked'
+            (change)='toggleChangeOptionDivers($event.checked, opt)'>
+          </mat-slide-toggle>
+        </div>
+  
+        <div *ngIf="opt.feeType === feeType.UNIT_FEE && optionDivers[i].checked" fxLayout="row"
+          fxLayoutAlign="space-between center">
+          <div fxFlexOffset=53>
+            <span translate>Exemplaires</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+              (click)='numberInputChangeValueObjectComplex("","decrement", "optionDivers", 1, i, 1)'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{opt.examplaire}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeValueObjectComplex("","increment", "optionDivers", 1, i)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <mat-divider *ngIf="companyDescriptionInfo?.company?.options?.length" class="margin-bottom" class="margin20T">
+  </mat-divider>
+</form>

@@ -1,0 +1,39 @@
+<div class="banner">
+  <div class="container" fxLayout="column" fxLayoutAlign="center center">
+
+    <h1 class="mat-display-3 bold">
+      <span translate>choose the serenity for your wedding</span>!
+    </h1>
+    <p>
+      <span translate>book among our verified providers and secure your transactions on the platform</span>.
+      <br>
+      <span translate>We insure your wedding against all the unexpected</span>.
+    </p>
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="searchForm" class="w80">
+
+      <div style="display: flex;position: relative;" class="search-container form-input">
+        <img width="25px" src="/assets/icons/svg/search.svg" alt="fr" class="search-icon">
+        <ng-select class="form-input select"
+                   [items]="searchData"
+                   bindLabel="name"
+                   bindValue="value"
+                   groupBy="group"
+                   placeholder="{{'search'|translate}}"
+                   formControlName="search">
+          <ng-template ng-optgroup-tmp let-item="item">
+            {{item.group || 'Unnamed group'}}
+          </ng-template>
+        </ng-select>
+        <button mat-flat-button matSuffix color="primary" class="search" type="submit">
+          <span translate>start</span>
+        </button>
+      </div>
+
+    </form>
+    <br>
+    <br>
+    <br>
+    <app-top-searched></app-top-searched>
+  </div>
+</div>

@@ -1,0 +1,296 @@
+<form class="formTexture">
+  <!-- Services proposés -->
+  <div class="mrTop10">
+    <span class="accent-title" translate>Services proposés</span>
+  </div>
+  <div class="prestationContainerBig" fxLayout fxLayoutAlign="space-between">
+    <div *ngIf="isVoiture" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+      <mat-checkbox color="primary" translate [checked]='voitureIsChecked'
+        (change)='initBookingObject($event.checked, busIsChecked)'><span class="checkbox">Voiture</span>
+      </mat-checkbox>
+    </div>
+    <div *ngIf="isBus" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+      <mat-checkbox color="primary" translate [checked]=' busIsChecked'
+        (change)='initBookingObject(voitureIsChecked, $event.checked)'> <span class="checkbox">Bus</span>
+      </mat-checkbox>
+    </div>
+  </div>
+  <mat-divider class="matdividerForcedHeight"></mat-divider>
+  <!-- fin Services proposés -->
+
+  <!-- voiture -->
+  <!-- Voiture title -->
+  <div *ngIf="isVoiture && voitureIsChecked" fxLayout fxLayoutAlign="space-between center" class="divided-title">
+    <div class="half-divider"></div> <span class="metierTitle">Voiture </span>
+    <div class="half-divider"></div>
+  </div>
+  <!-- models -->
+  <div *ngIf="isVoiture && voitureIsChecked && bookingObject.voiture.models?.length" class="margin40U40D">
+    <span class="accent-title" translate>Voitures disponibles
+    </span>
+  </div>
+
+  <div *ngIf="isVoiture && voitureIsChecked && bookingObject.voiture.models?.length">
+    <div fxLayout="column">
+      <div *ngFor="let model of bookingObject.voiture.models; let i = index;let lastModel = last">
+        <div *ngIf="i<=1 || showmoreVoitureModels" class="inline-container-4 margin-bottom" class="marginTop1rem"
+          fxLayout fxLayoutAlign="space-between center">
+          <div>
+            <span translate class="boldText">{{model.name}}</span>
+            <br>
+            <span translate class="greyText">{{model.label}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='bookingObject.voiture.models[i].value'
+            (change)='toggleChangeModel("voiture","models", $event.checked,i)'></mat-slide-toggle>
+        </div>
+
+        <div class="margin30UD0LR" *ngIf="bookingObject.voiture.models[i].value  && (i<=1 || showmoreVoitureModels)"
+          fxLayout="row wrap" fxLayoutAlign="space-between center">
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex=47>
+            <div>
+              <span translate>Durée de location</span>
+            </div>
+            <div fxLayout fxLayoutAlign="center center">
+              <button mat-mini-fab
+                (click)='numberInputChangeValueModele("voiture","decrement", "models", 1, i,"dureeLocation",1)'
+                class='margin-right number-control-btn  margin-left'
+                [class.number-control-btn-remove]="bookingObject.voiture.models[i].dureeLocation == 1"
+                [disabled]="bookingObject.voiture.models[i].dureeLocation == 1">
+                <mat-icon
+                  [ngStyle]="{'color' : bookingObject.voiture.models[i].dureeLocation == 1 ? '#999999' : '#F17082'}"
+                  class='position-in-center'>remove</mat-icon>
+              </button>
+              <span matSuffix> {{bookingObject.voiture.models[i].dureeLocation}} J</span>
+              <button mat-mini-fab class='margin-left number-control-btn'
+                (click)='numberInputChangeValueModele("voiture","increment", "models", 1, i,"dureeLocation")'>
+                <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex=47>
+            <div>
+              <span translate>Kilométrage </span>
+            </div>
+            <div fxLayout fxLayoutAlign="center center">
+              <button mat-mini-fab
+                (click)='numberInputChangeValueModele("voiture","decrement", "models", 1, i,"kilometrage", 1)'
+                class='margin-right number-control-btn  margin-left'
+                [class.number-control-btn-remove]="bookingObject.voiture.models[i].kilometrage == 1"
+                [disabled]="bookingObject.voiture.models[i].kilometrage == 1">
+                <mat-icon
+                  [ngStyle]="{'color' : bookingObject.voiture.models[i].kilometrage == 1 ? '#999999' : '#F17082'}"
+                  class='position-in-center'>remove</mat-icon>
+              </button>
+              <span matSuffix> {{bookingObject.voiture.models[i].kilometrage}} KM</span>
+              <button mat-mini-fab class='margin-left number-control-btn'
+                (click)='numberInputChangeValueModele("voiture","increment", "models", 1, i,"kilometrage")'>
+                <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <button mat-button color='primary' class="padding0 marginTop1rem" *ngIf="!showmoreVoitureModels && i==1"
+          (click)="showmoreVoitureModels = true" ng-reflect-color="primary">
+          <span translate class="bold18">Afficher plus voitures</span>
+          <mat-icon color='primary' class="margin10L">keyboard_arrow_down</mat-icon>
+        </button>
+        <button mat-button color='primary' class="padding0 marginTop1rem"
+          *ngIf="showmoreVoitureModels && i>1 && lastModel" (click)="showmoreVoitureModels = false"
+          ng-reflect-color="primary">
+          <span translate class="bold18">Afficher moins de voitures</span>
+          <mat-icon color='primary' class="margin10L">keyboard_arrow_up</mat-icon>
+        </button>
+        <mat-divider *ngIf="isVoiture && voitureIsChecked && (i<=1 || showmoreVoitureModels)"
+          class="margin-bottom marginTop1rem"></mat-divider>
+      </div>
+    </div>
+  </div>
+  <!--fin models -->
+
+  <!-- services -->
+  <div *ngIf="isVoiture && voitureIsChecked && bookingObject.voiture.services?.length" class="margin40T">
+    <span class="accent-title" translate>services</span>
+  </div>
+  <div *ngFor="let service of bookingObject.voiture.services;let i = index;let lastService = last" class="margin10U10D">
+    <div *ngIf="i<=1 || showmoreVoitureServices" class="inline-container-4 margin30UD0LR">
+      <div>
+        <span translate class="boldText">{{service.name}}</span>
+        <br>
+        <span translate class="greyText">Obtenir ce service</span>
+      </div>
+      <mat-slide-toggle color="primary" [checked]='service.checked'
+        (change)='toggleChangeService("voiture",$event.checked,i)'></mat-slide-toggle>
+    </div>
+    <button mat-button color='primary' class="padding0" *ngIf="!showmoreVoitureServices && i==1"
+      (click)="showmoreVoitureServices = true" ng-reflect-color="primary">
+      <span translate class="bold18">Afficher plus de services</span>
+      <mat-icon color='primary' class="margin10L">keyboard_arrow_down</mat-icon>
+    </button>
+    <button mat-button color='primary' class="padding0" *ngIf="showmoreVoitureServices && i>1 && lastService"
+      (click)="showmoreVoitureServices = false" ng-reflect-color="primary">
+      <span translate class="bold18">Afficher moins de services</span>
+      <mat-icon color='primary' class="margin10L">keyboard_arrow_up</mat-icon>
+    </button>
+    <mat-divider *ngIf="i <= 1 || showmoreVoitureServices" class="margin1rem"></mat-divider>
+  </div>
+
+  <!-- end services -->
+  <!--fin voiture -->
+  <!-- bus -->
+  <!-- bus title -->
+  <div *ngIf="isBus && busIsChecked" fxLayout fxLayoutAlign="space-between center" class="divided-title">
+    <div class="half-divider"></div> <span class="metierTitle">Bus </span>
+    <div class="half-divider"></div>
+  </div>
+  <!-- models -->
+  <div *ngIf="isBus && busIsChecked && bookingObject.bus.models?.length" class="margin40U40D">
+    <span class="accent-title" translate>bus disponibles
+    </span>
+  </div>
+
+  <div *ngIf="isBus && busIsChecked && bookingObject.bus.models?.length">
+    <div fxLayout="column">
+      <div *ngFor="let model of bookingObject.bus.models; let i = index;let lastModel = last">
+        <div *ngIf="i<=1 || showmoreBusModels" class="inline-container-4 margin-bottom" class="marginTop1rem" fxLayout
+          fxLayoutAlign="space-between center">
+          <div>
+            <span translate class="boldText">{{model.name}}</span>
+            <br>
+            <span translate class="greyText">{{model.label}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='bookingObject.bus.models[i].value'
+            (change)='toggleChangeModel("bus","models", $event.checked,i)'></mat-slide-toggle>
+        </div>
+
+        <div class="margin30UD0LR" *ngIf="bookingObject.bus.models[i].value  && (i<=1 || showmoreBusModels)"
+          fxLayout="row wrap" fxLayoutAlign="space-between center">
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex=47>
+            <div>
+              <span translate>Durée de location</span>
+            </div>
+            <div fxLayout fxLayoutAlign="center center">
+              <button mat-mini-fab
+                (click)='numberInputChangeValueModele("bus","decrement", "models", 1, i,"dureeLocation",1)'
+                class='margin-right number-control-btn  margin-left'
+                [class.number-control-btn-remove]="bookingObject.bus.models[i].dureeLocation == 1"
+                [disabled]="bookingObject.bus.models[i].dureeLocation == 1">
+                <mat-icon [ngStyle]="{'color' : bookingObject.bus.models[i].dureeLocation == 1 ? '#999999' : '#F17082'}"
+                  class='position-in-center'>remove</mat-icon>
+              </button>
+              <span matSuffix> {{bookingObject.bus.models[i].dureeLocation}} J</span>
+              <button mat-mini-fab class='margin-left number-control-btn'
+                (click)='numberInputChangeValueModele("bus","increment", "models", 1, i,"dureeLocation")'>
+                <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex=47>
+            <div>
+              <span translate>Kilométrage </span>
+            </div>
+            <div fxLayout fxLayoutAlign="center center">
+              <button mat-mini-fab
+                (click)='numberInputChangeValueModele("bus","decrement", "models", 1, i,"kilometrage", 1)'
+                class='margin-right number-control-btn  margin-left'
+                [class.number-control-btn-remove]="bookingObject.bus.models[i].kilometrage == 1"
+                [disabled]="bookingObject.bus.models[i].kilometrage == 1">
+                <mat-icon [ngStyle]="{'color' : bookingObject.bus.models[i].kilometrage == 1 ? '#999999' : '#F17082'}"
+                  class='position-in-center'>remove</mat-icon>
+              </button>
+              <span matSuffix> {{bookingObject.bus.models[i].kilometrage}} KM</span>
+              <button mat-mini-fab class='margin-left number-control-btn'
+                (click)='numberInputChangeValueModele("bus","increment", "models", 1, i,"kilometrage")'>
+                <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <button mat-button color='primary' class="padding0 marginTop1rem" *ngIf="!showmoreBusModels && i==1"
+          (click)="showmoreBusModels = true" ng-reflect-color="primary">
+          <span translate class="bold18">Afficher plus bus</span>
+          <mat-icon color='primary' class="margin10L">keyboard_arrow_down</mat-icon>
+        </button>
+        <button mat-button color='primary' class="padding0 marginTop1rem" *ngIf="showmoreBusModels && i>1 && lastModel"
+          (click)="showmoreBusModels = false" ng-reflect-color="primary">
+          <span translate class="bold18">Afficher moins de bus</span>
+          <mat-icon color='primary' class="margin10L">keyboard_arrow_up</mat-icon>
+        </button>
+        <mat-divider *ngIf="isBus && busIsChecked && (i<=1 || showmoreBusModels)" class="margin-bottom marginTop1rem">
+        </mat-divider>
+      </div>
+    </div>
+  </div>
+  <!--fin models -->
+
+  <!-- services -->
+  <div *ngIf="isBus && busIsChecked && bookingObject.bus.services?.length" class="margin40T">
+    <span class="accent-title" translate>services</span>
+  </div>
+  <div *ngFor="let service of bookingObject.bus.services;let i = index;let lastService = last" class="margin10U10D">
+    <div *ngIf="i<=1 || showmoreBusServices" class="inline-container-4 margin30UD0LR">
+      <div>
+        <span translate class="boldText">{{service.name}}</span>
+        <br>
+        <span translate class="greyText">Obtenir ce service</span>
+      </div>
+      <mat-slide-toggle color="primary" [checked]='service.checked'
+        (change)='toggleChangeService("bus",$event.checked,i)'></mat-slide-toggle>
+    </div>
+    <button mat-button color='primary' class="padding0" *ngIf="!showmoreBusServices && i==1"
+      (click)="showmoreBusServices = true" ng-reflect-color="primary">
+      <span translate class="bold18">Afficher plus de services</span>
+      <mat-icon color='primary' class="margin10L">keyboard_arrow_down</mat-icon>
+    </button>
+    <button mat-button color='primary' class="padding0" *ngIf="showmoreBusServices && i>1 && lastService"
+      (click)="showmoreBusServices = false" ng-reflect-color="primary">
+      <span translate class="bold18">Afficher moins de services</span>
+      <mat-icon color='primary' class="margin10L">keyboard_arrow_up</mat-icon>
+    </button>
+    <mat-divider *ngIf="i <= 1 || showmoreBusServices" class="margin1rem"></mat-divider>
+  </div>
+
+  <!-- end services -->
+  <!--fin bus -->
+
+
+  <!-- options divers -->
+  <div *ngIf="bookingObject.optionDivers?.length" class="margin40U40D">
+    <span class="accent-title" translate>Option Divers</span>
+  </div>
+  <div *ngIf="bookingObject.optionDivers?.length" fxLayout="column" fxLayoutAlign="space-around">
+    <div *ngFor="let opt of bookingObject.optionDivers ; let i = index">
+      <div class="inline-container-4" class="margin30D margin20U" fxLayout fxLayoutAlign="space-between center">
+        <div>
+          <span translate class="boldText">{{opt.name}}</span>
+          <br>
+          <span translate class="lightGreyText">{{opt.feeType}}</span>
+          <br>
+          <span translate class="greyText">{{opt.description}}</span>
+        </div>
+        <mat-slide-toggle color="primary" [checked]='bookingObject.optionDivers[i].checked'
+          (change)='toggleChangeOptionDivers($event.checked, opt)'>
+        </mat-slide-toggle>
+      </div>
+
+      <div *ngIf="opt.feeType === feeType.UNIT_FEE && bookingObject.optionDivers[i].checked" fxLayout="row"
+        fxLayoutAlign="space-between center">
+        <div fxFlexOffset=53>
+          <span translate>Exemplaires</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+            (click)='numberInputChangeValueOptionsDivers("decrement", 1, i, 1)'>
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{opt.examplaire}} </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+            (click)='numberInputChangeValueOptionsDivers("increment", 1, i)'>
+            <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-divider *ngIf="companyDescriptionInfo?.company?.options?.length" class="margin-bottom" class="margin20T">
+  </mat-divider>
+</form>

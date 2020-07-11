@@ -1,0 +1,213 @@
+<section fxLayout="column" style="width: 100%">
+  <div fxLayout="row wrap" fxLayoutAlign="space-between center" style="background-color: #fbfbfb;padding: 1rem">
+
+    <section class="w100-lt-md" fxLayout="column" fxLayoutAlign.lt-md="space-between center" fxLayout.lt-md="row"
+             fxLayoutGap.lt-md="0" fxLayoutGap="1.5rem">
+      <mat-label class="title" translate>Demande de reservation N</mat-label>
+      <span translate class="sub-text">{{reservation.orderNumber}}</span>
+    </section>
+
+    <section class="w100-lt-md" fxLayout="column" fxLayoutAlign.lt-md="space-between center" fxLayout.lt-md="row"
+             fxLayoutGap.lt-md="0" fxLayoutGap="1.5rem">
+      <mat-label class="title" translate>Demande effectuee le</mat-label>
+      <span translate class="sub-text">{{reservation.createdAt}}</span>
+    </section>
+
+    <section class="w100-lt-md" fxLayout="column" fxLayoutAlign.lt-md="space-between center" fxLayout.lt-md="row"
+             fxLayoutGap.lt-md="0" fxLayoutGap="1.5rem">
+      <mat-label class="title" translate>Client</mat-label>
+      <span translate class="sub-text">{{reservation.client.firstname}} {{reservation.client.lastname}}</span>
+    </section>
+
+    <section class="w100-lt-md" fxLayout="column" fxLayoutAlign.lt-md="space-between center" fxLayout.lt-md="row"
+             fxLayoutGap.lt-md="0" fxLayoutGap="1.5rem">
+      <mat-label class="title" translate>Total</mat-label>
+      <span translate class="sub-text">{{(reservation.allPrice).toFixed(2)}} €</span>
+    </section>
+
+
+  </div>
+
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center" fxLayoutAlign.lt-md="center center">
+
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between center" class="sub-table-container">
+
+      <section class="w100-lt-md" fxLayout="column" fxLayoutAlign.lt-md="space-between center" fxLayout.lt-md="row"
+               fxLayoutGap.lt-md="0"
+               fxLayoutGap="1.5rem">
+        <mat-label class="title" translate>Facture émise le</mat-label>
+        <span translate class="sub-text">{{reservation?.providerConfirmationDate}}</span>
+      </section>
+      <section class="w100-lt-md" fxLayout="column" fxLayoutAlign.lt-md="space-between center" fxLayout.lt-md="row"
+               fxLayoutGap.lt-md="0"
+               fxLayoutGap="1.5rem">
+        <mat-label class="title" translate>Confirmée et payée le</mat-label>
+        <span translate class="sub-text">{{reservation?.clientConfirmationDate}}</span>
+      </section>
+
+    </div>
+
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end center" fxLayoutAlign.lt-md="center center"
+         fxLayoutGap="1rem"  class="btn-container">
+      <button mat-flat-button class="action-btn" style="color:white" [color]="!reservation?.showMore?'accent':'primary'"
+              (click)="reservation.showMore=!reservation.showMore">
+        <span *ngIf="!reservation.showMore">Écrire un avis</span>
+        <span *ngIf="reservation.showMore">Cacher l'avis</span>
+      </button>
+    </div>
+  </div>
+
+</section>
+
+<section
+  fxLayoutAlign="space-between start"
+  fxLayout="row" fxLayout.lt-md="column"
+  *ngIf="reservation.showMore"
+  style="padding: 1rem;width: 100%;background-color: #f9f9f9;">
+
+  <article fxLayout="column" fxLayoutGap="2rem" class="price-card">
+    <mat-label class="title-card" translate>Vos notes</mat-label>
+    <section fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap.lt-sm="1rem"  fxLayoutAlign="space-between center">
+      <section fxLayout="column" fxLayoutGap="1rem">
+        <div fxLayout="column" fxLayoutGap="0.7rem">
+          <mat-label class="title" translate>
+            <img class="icon" src="/assets/icons/svg/recommended.svg" style="width: 20px;transform: translateY(4px);">
+            Qualité du service
+          </mat-label>
+          <ngx-stars fxFlexAlign="end" class="rating" [readonly]="true" [maxStars]="5"
+                     [initialStars]="reservation?.comment?.qualiteService || 0" color="#f17082">
+          </ngx-stars>
+        </div>
+        <div fxLayout="column" fxLayoutGap="0.7rem">
+          <mat-label class="title" translate>
+            <img class="icon" src="/assets/icons/svg/recommended.svg" style="width: 20px;transform: translateY(4px);">
+            Flexibilité
+          </mat-label>
+          <ngx-stars fxFlexAlign="end" class="rating" [readonly]="true" [maxStars]="5"
+                     [initialStars]="reservation?.comment?.flexibilite || 0" color="#f17082">
+          </ngx-stars>
+        </div>
+
+      </section>
+      <section fxLayout="column" fxLayoutGap="1rem">
+        <div fxLayout="column" fxLayoutGap="0.7rem">
+          <mat-label class="title" translate>
+            <img class="icon" src="/assets/icons/svg/recommended.svg" style="width: 20px;transform: translateY(4px);">
+            Professionalisme
+          </mat-label>
+          <ngx-stars fxFlexAlign="end" class="rating" [readonly]="true" [maxStars]="5"
+                     [initialStars]="reservation?.comment?.professionnalisme || 0" color="#f17082">
+          </ngx-stars>
+        </div>
+        <div fxLayout="column" fxLayoutGap="0.7rem">
+          <mat-label class="title" translate>
+            <img class="icon" src="/assets/icons/svg/recommended.svg" style="width: 20px;transform: translateY(4px);">
+            Rapport Qualité/Prix
+          </mat-label>
+          <ngx-stars fxFlexAlign="end" class="rating" [readonly]="true" [maxStars]="5"
+                     [initialStars]="reservation?.comment?.rapportQualitePrix || 0" color="#f17082">
+          </ngx-stars>
+        </div>
+
+      </section>
+      <section fxLayout="column" fxLayoutAlign="center center" class="note-box">
+        <span>{{reservation?.comment?.totalNotes || 0}}/5</span>
+      </section>
+    </section>
+    <mat-divider></mat-divider>
+    <mat-label class="title-card" translate>Avis</mat-label>
+    <section fxLayout="column" fxLayoutGap="2rem" fxLayoutAlign="center start" *ngIf="!!reservation?.comment">
+
+     <div fxLayout="column" fxLayoutGap="2rem" fxLayoutAlign="center start">
+       <div class="comment-header" fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;">
+         <div fxLayout="row" fxLayoutGap="0.8rem">
+           <ngx-avatar class="avatar" [src]="reservation.client.photo" [name]="reservation.client.firstname +' '+reservation.client.lastname" size="50"></ngx-avatar>
+           <div fxLayout="column" fxLayoutAlign="start start">
+             <mat-label class="profile-title">{{reservation.client.firstname}}</mat-label>
+             <ngx-stars class="rating" [readonly]="true" [maxStars]="5"
+                        [initialStars]="reservation?.comment?.totalNotes || 0" color="#f17082">
+             </ngx-stars>
+           </div>
+         </div>
+         <div class="time">
+           Envoyé le <time>{{reservation?.comment?.updatedAt}}</time>
+         </div>
+       </div>
+       <div style="width:100%;padding: 0.5rem">
+         <p>{{reservation?.comment?.content}}</p>
+       </div>
+       <div *ngIf="!!reservation?.comment?.response && !edit" class="response-container" fxFlexAlign="end"
+            fxLayout="column" fxLayoutGap="2rem" fxLayoutAlign="center start">
+         <div class="comment-header" fxLayout="row" fxLayoutAlign="space-between center" style="width:100%;">
+           <div fxLayout="row" fxLayoutGap="0.8rem">
+             <ngx-avatar class="avatar" [src]="reservation?.comment?.response?.user?.photo" [name]="reservation?.comment?.response?.user?.firstname +' '+reservation?.comment?.response?.user?.lastname" size="50"></ngx-avatar>
+             <div fxLayout="column" fxLayoutAlign="center start">
+               <mat-label class="profile-title">{{reservation?.comment?.response?.user?.firstname}}</mat-label>
+             </div>
+           </div>
+           <div class="time">
+             Envoyé le <time>{{reservation?.comment?.response?.updatedAt}}</time>
+           </div>
+         </div>
+         <div class="comment-response-content">
+           <p>{{reservation?.comment?.response?.content}}</p>
+         </div>
+         <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="end center" style="width:100%">
+           <button (click)="clickEdit()" color="primary" mat-icon-button>
+             <mat-icon>edit</mat-icon>
+           </button>
+           <button (click)="deleteResponse()" color="primary" mat-icon-button>
+             <mat-icon>delete</mat-icon>
+           </button>
+         </div>
+       </div>
+     </div>
+
+      <section *ngIf="!reservation?.comment?.response || edit" fxLayout="column" fxLayoutGap="1rem" style="width: 100%">
+        <mat-label class="title-response" translate>Votre réponse</mat-label>
+        <span translate>Tout ce que vous pouvez nous dire aidera les autres futurs mariés dans le choix de leurs prestataires. Merci.</span>
+        <mat-form-field class="response-input" floatLabel="always" appearance="outline">
+        <textarea rows="5" matInput placeholder="{{'Votre reponse'}}..." [(ngModel)]="response"></textarea>
+        </mat-form-field>
+        <div
+          fxLayout="row" fxLayout.lt-md="column"
+          fxLayoutGap="1rem"
+          fxLayoutAlign="end start" fxLayoutAlign.lt-md="center center"
+          class="post-btn-container">
+
+          <button *ngIf="!edit" mat-flat-button class="post-btn" color="primary"
+                  (click)="postResponseComment()" [disabled]="response.trim().length < 5">
+            <span>Envoyer</span>
+          </button>
+
+          <button *ngIf="edit" mat-flat-button class="post-btn" color="accent"
+                  (click)="cancelEdit()">
+            <span>Annuler</span>
+          </button>
+
+          <button *ngIf="edit" mat-flat-button class="post-btn" color="primary"
+                  (click)="EditResponseComment()" [disabled]="response.trim().length < 5">
+            <span>Envoyer</span>
+          </button>
+        </div>
+
+        <div fxLayout="column" fxLayoutGap="1rem" *ngIf="!reservation?.comment?.response || edit">
+          <span class="title-plus" translate>Astuces pour écrire un bon avis</span>
+          <span class="title-plus" translate>À ne pas faire</span>
+          <div fxLayout="column" fxLayoutGap="0">
+            <p class="paragraphe">Utiliser du vocabulaire injurieux, des menaces ou des insultes personnelles</p>
+            <p class="paragraphe">Inclure des adresses e-mail ou des numéros de téléphone</p>
+            <p class="paragraphe">Écrire TOUT EN MAJUSCULES</p>
+            <p class="paragraphe">Raconter l'expérience de quelqu'un d'autre</p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section style="padding: 2rem;" *ngIf="!reservation?.comment" fxLayout="column" fxLayoutAlign="center center">
+      <span style="font-size: 32px">Le client n'a pas encore donné son avis</span>
+    </section>
+
+  </article>
+
+</section>

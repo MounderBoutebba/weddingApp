@@ -1,0 +1,8 @@
+<h2 *ngIf="primaryComponent" style="font-size: 18.5px !important;">{{'Car'|lowercase|translate|titlecase}}</h2>
+<app-dynamic-form-builder [fields]="parsedCriteres" (addOption)='onAddOption($event)' *ngIf="showForm" #formBuilder></app-dynamic-form-builder>
+<h2 *ngIf="showBusPricingComponent" style="font-size: 18.5px; color: black;">{{'bus'|lowercase|translate|titlecase}}</h2>
+<app-bus-pricing *ngIf="showBusPricingComponent" [criteres]="busInitCriteres"
+[primaryComponent]='false' #busPricingComponent></app-bus-pricing>
+<button type='button' mat-flat-button color='primary'
+class='submit-btn' [disabled]='!formBuilder.form.valid' (click)='formSubmitted()' *ngIf="showSubmitBtn" [ngClass]="{'hidden': !primaryComponent}">
+{{'Next' | lowercase | translate | titlecase}}</button>

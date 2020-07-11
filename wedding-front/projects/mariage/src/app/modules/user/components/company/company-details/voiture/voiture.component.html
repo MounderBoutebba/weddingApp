@@ -1,0 +1,17 @@
+<div class='control-wrapper' fxLayout="row wrap" fxLayoutGap="10%" fxLayoutAlign="flex-start" fxLayoutGap.xs="0" fxLayout.xs="column"
+*ngIf='primaryComponent' style="width: 58%;"> 
+    <p translate fxFlex='100%' class='mb-0 title'>{{'advantages'|lowercase|translate|titlecase}}</p>
+    <p translate fxFlex='100%' class='mt-0 sub-title'>{{'indicate the services you offer'|lowercase|translate|titlecase}}</p>
+    <div class='checkbox-wrapper' fxLayout="row wrap" fxLayoutGap="10%" fxFlex='100%'>
+        <mat-checkbox class='checkbox-label' [disabled]='true' [checked]='true' fxFlex='40%'>{{'Car'|lowercase|translate|titlecase}}</mat-checkbox>
+        <mat-checkbox class='checkbox-label' [disabled]='true' [checked]='true' fxFlex='40%' *ngIf="isBus">{{'Bus'|lowercase|translate|titlecase}}</mat-checkbox>
+        <mat-checkbox class='checkbox-label' fxFlex='40%' *ngIf="!isBus" color='primary'
+        (change)='busIsChecked($event.checked)'>{{'Bus'|lowercase|translate|titlecase}}</mat-checkbox>
+    </div>
+</div>
+<app-dynamic-form-builder [fields]="parsedCriteres" (addOption)='onAddOption($event)' *ngIf="showForm" #formBuilder></app-dynamic-form-builder>
+<app-bus *ngIf="showBusComponent" [criteres]="busInitCriteres"
+[primaryComponent]='false' #busComponent></app-bus>
+<button type='button' mat-flat-button color='primary'
+class='submit-btn' [disabled]='!formBuilder.form.valid' (click)='formSubmitted()' *ngIf="showSubmitBtn" [ngClass]="{'hidden': !primaryComponent}">
+{{'Next' | lowercase | translate | titlecase}}</button>

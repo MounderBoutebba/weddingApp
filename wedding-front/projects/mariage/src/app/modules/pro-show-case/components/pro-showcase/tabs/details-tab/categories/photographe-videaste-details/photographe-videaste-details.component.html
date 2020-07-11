@@ -1,0 +1,65 @@
+<div fxLayout="column" fxLayoutAlign="space-around">
+    <div fxLayout="column">
+        <div fxLayout="column" style="margin-bottom: 20px;">
+            <div fxLayout fxLayoutAlign="start center" style="margin-bottom: 10px;">
+                <img src="/assets/icons/svg/checked (1).svg" class="icon-img">
+                <span *ngIf="isPhotographe" translate style="font-weight: bold;">Styles de photographie</span>
+            </div>
+            <div *ngIf="isPhotographe && stylesPhotographe" style="margin-left: 30px;">
+                <span translate>{{stylesPhotographe}}</span>
+            </div>   
+        </div> 
+        <div *ngIf="isVidealiste && stylesVidealiste" fxLayout="column" style="margin-left: 30px;">
+            <span translate style="font-weight: bold;margin-bottom: 10px;">Styles de vidéographie</span>
+            <span translate>{{stylesVidealiste}}</span>
+        </div>
+    </div>
+
+    <div *ngIf="photoappareils || photoobjectivs|| photoaccesoires|| videoaccesoires|| videoappareils|| videoobjectivs" class="margin40U40D" fxLayout="column" fxLayoutAlign="space-evenly">
+        <div fxLayout fxLayoutAlign="start center" style="margin-bottom: 10px;">
+            <img src="/assets/icons/svg/tools.svg" class="icon-img">
+            <span translate style="font-weight: bold;">Matériel</span>
+        </div>
+        <div *ngIf="photoappareils" fxLayout="column" style="margin-left: 30px;margin-bottom: 20px;">
+            <span translate>Appareil(s) Photo</span>
+            <span translate>{{photoappareils}}</span>
+        </div>
+        <div *ngIf="photoobjectivs"  fxLayout="column" style="margin-left: 30px;margin-bottom: 20px;">
+            <span translate>Objectif(s) Photo</span>
+            <span translate>{{photoobjectivs}}</span>
+        </div>
+        <div *ngIf="photoaccesoires"  fxLayout="column" style="margin-left: 30px;">
+            <span translate>Accessoire(s) Photo</span>
+            <span translate>{{photoaccesoires}}</span>
+        </div>
+        <div *ngIf="videoappareils"  class="margin-top" fxLayout="column" style="margin-left: 30px;margin-bottom: 20px;">
+            <span translate>Appareil(s) Video</span>
+            <span translate>{{videoappareils}}</span>
+        </div>
+        <div *ngIf="videoobjectivs"  fxLayout="column" style="margin-left: 30px;margin-bottom: 20px;">
+            <span translate>Objectif(s) Video</span>
+            <span translate>{{videoobjectivs}}</span>
+        </div>
+        <div *ngIf="videoaccesoires"  fxLayout="column" style="margin-left: 30px;">
+            <span translate>Accessoire(s) Video</span>
+            <span translate>{{videoaccesoires}}</span>
+        </div>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="space-evenly">
+        <div fxLayout fxLayoutAlign="start center" style="margin-bottom: 10px;">
+            <img src="/assets/icons/svg/delivery-truck.svg" class="icon-img">
+            <span translate style="font-weight: bold;">Délais de livraison</span>
+        </div>
+        <div *ngIf="isPhotographe && photographeDelaisDeLivraison" fxLayout="column" class="ml-30 mb-20" style="margin-left: 30px;margin-bottom: 20px;">
+            <span translate>Photos</span>
+            <span translate>{{photographeDelaisDeLivraison}} jours</span>
+        </div>
+        <div *ngIf="isVidealiste && videalisteDelaisDeLivraison" fxLayout="column" style="margin-left: 30px;">
+            <span translate>Vidéo(s)</span>
+            <span translate>{{videalisteDelaisDeLivraison}} jours</span>
+        </div>
+    </div>
+
+</div>
+<mat-divider style="height: 2px;margin-top: 1em;margin-bottom: 1em;"></mat-divider>

@@ -1,0 +1,184 @@
+<div style="width: 95%;margin: auto">
+
+  <form [formGroup]="filterForm" (ngSubmit)="submit()" enctype="multipart/form-data">
+    <div
+      fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly"
+      class="btn-container" [ngClass.lt-md]="{'btn-container--hidden-search-bar':hiddenSearchbar}">
+
+      <div fxLayout="column">
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>verified providers</mat-label>
+              <span translate>a selection of providers verified according to quality criteria</span>
+            </section>
+            <mat-slide-toggle style="float: right" color="primary"
+                              formControlName="verifiedProvider"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>100% secure services without down payment</mat-label>
+              <span translate>professionals who agree to receive the full payment after completion of the service</span>
+            </section>
+            <mat-slide-toggle style="float: right" color="primary"
+                              formControlName="securePayment"></mat-slide-toggle>
+          </div>
+          <mat-divider [fxShow]="showMore"></mat-divider>
+        </div>
+        <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common"
+             [fxShow]="showMore">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>top rated providers</mat-label>
+            <span translate>display only the providers with the best scores, ie a score higher than 3/5</span>
+          </section>
+          <mat-slide-toggle color="primary"  formControlName="topRatedProviders"></mat-slide-toggle>
+        </div>
+
+        <a class="view-more" (click)="showMore=!showMore">
+          <span translate [fxHide]="showMore">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="showMore">keyboard_arrow_down</mat-icon>
+
+          <span translate [fxShow]="showMore">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="showMore">keyboard_arrow_up</mat-icon>
+        </a>
+        <mat-divider></mat-divider>
+
+      </div>
+
+      <mat-label class="capitalize" translate style="font-weight: bold">invitations</mat-label>
+      <br>
+
+      <div fxLayout="column" formGroupName="faireparts_formats">
+        <mat-label class="capitalize" translate style="font-weight: bold">offered Formats</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="carre_plie">
+            <span class="capitalize" translate>square (14.1 x 14, 1 cm) - Folded</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="grand_a5_plie">
+            <span class="capitalize" translate>large / A5 (14.8 x 21.0cm) Folded</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="petit_a6_plie">
+            <span class="capitalize" translate>small / A6 (10.5 x 14.8 cm) · Folded</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="grand_a5_plat">
+            <span class="capitalize" translate>large / A5 (14.8 x 21.0 cm) · Flat</span>
+          </mat-checkbox>
+        </section>
+        <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="fairepartsFormatsMore">
+          <mat-checkbox color="primary" class="checkbox" formControlName="petit_a6_plat">
+            <span class="capitalize" translate>small / A6 (10.5 x 14.8 cm) - Flat</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="carre_plat">
+            <span class="capitalize" translate>square (14.1 x 14.1 cm) - Flat</span>
+          </mat-checkbox>
+        </section>
+        <a class="view-more" (click)="fairepartsFormatsMore=!fairepartsFormatsMore">
+          <span translate [fxHide]="fairepartsFormatsMore">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="fairepartsFormatsMore">keyboard_arrow_down</mat-icon>
+
+          <span translate [fxShow]="fairepartsFormatsMore">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="fairepartsFormatsMore">keyboard_arrow_up</mat-icon>
+        </a>
+
+        <mat-divider></mat-divider>
+      </div>
+
+
+      <div fxLayout="column"  formGroupName="faireparts_finition">
+        <mat-label class="capitalize" translate style="font-weight: bold">finishes offered</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="mate">
+            <span class="capitalize" translate>matte</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="brillante">
+            <span class="capitalize" translate>shiny</span>
+          </mat-checkbox>
+        </section>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column"  formGroupName="faireparts_colories">
+        <mat-label class="capitalize" translate style="font-weight: bold">suggested colors</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="blanc">
+            <span class="capitalize" translate>white</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="belge">
+            <span class="capitalize" translate>belgian</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="noir">
+            <span class="capitalize" translate>black</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="rouge">
+            <span class="capitalize" translate>red</span>
+          </mat-checkbox>
+        </section>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column"  formGroupName="faireparts_dorures">
+        <mat-label class="capitalize" translate style="font-weight: bold">proposed gildings</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="golden">
+            <span class="capitalize" translate>golden</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="silver">
+            <span class="capitalize" translate>silver</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="rouge">
+            <span class="capitalize" translate>Copper</span>
+          </mat-checkbox>
+        </section>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+          <section fxLayout="column">
+            <mat-label class="bold capitalize" translate>delivery</mat-label>
+            <span class="capitalize" translate>providers who offer the possibility of delivering share</span>
+          </section>
+          <mat-slide-toggle formControlName="livraison" color="primary"></mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+
+
+
+
+
+
+    </div>
+
+    <div
+      fxFlexAlign.lt-md="center" fxLayout="row wrap"  fxLayout.lt-md="column" fxLayoutAlign="end center" fxLayoutGap="1rem"
+      class="group-btn full">
+      <button class="form-input full" mat-raised-button type="button" (click)="cancelForm()">
+        <span class="capitalize" translate>cancel</span>
+      </button>
+      <button class="form-input full"  mat-raised-button type="button" (click)="reset()">
+        <span class="capitalize" translate>delete selected filters</span>
+      </button>
+
+      <button class="form-input full"  mat-raised-button color="primary" type="submit">
+        <span class="capitalize" style="color: white" translate>show results</span>
+      </button>
+    </div>
+  </form>
+
+</div>

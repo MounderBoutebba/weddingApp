@@ -1,0 +1,70 @@
+:host{
+  user-select: none;
+  touch-action: pan-x pan-y;
+}
+mat-icon {
+  @media screen and (min-width: 961px){
+    transform: translate(-18px, 2px);
+    font-size: 60px;
+  }
+  transform: translate(-1px, -6px);
+
+}
+
+.gallery-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffffd4;
+  z-index: 9999999;
+}
+
+.close-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  &:hover {
+    filter: drop-shadow(0 0 3px #484848);
+  }
+}
+
+.image {
+  border-radius: 7px;
+  width: calc(100vw - 50px);
+  height: calc(100vh - 50px);
+  object-fit: contain;
+  @media screen and (max-width: 960px) {
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+.next-btn {
+  position: absolute;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  @media screen and (max-width: 960px) {
+    background-color: #ffffff;
+  }
+}
+
+.prev-btn {
+  position: absolute;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  @media screen and (max-width: 960px) {
+    background-color: #ffffff;
+  }
+}

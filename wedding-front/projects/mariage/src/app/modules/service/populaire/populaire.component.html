@@ -1,0 +1,34 @@
+<section>
+  <div class="container" fxLayout="column" fxLayoutAlign="center">
+    <h2 translate>popular services</h2>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <button mat-mini-fab class="btn" color="primary" (click)="moveLeft()">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      <drag-scroll fxLayout="row" fxLayoutGap="10px" #scrollable
+                   drag-scroll-y-disabled="true"  [drag-scroll-disabled]="!(isHandset$ | async)">
+        <mat-card drag-scroll-item *ngFor="let service of services">
+          <img mat-card-image class="image" [src]="service.url" [alt]="service.description">
+          <mat-card-header>
+            <img mat-card-avatar [alt]="service.avatarAlt" [src]="service.avatar">
+            <mat-card-title fxLayout="row" translate>
+              {{service.title}}
+              <span class="spacer"></span>
+              <div fxLayout="column">
+                <small translate>from</small>
+                {{service.price |currency:'EUR'}}
+              </div>
+            </mat-card-title>
+            <mat-card-subtitle>
+              <mat-icon>room</mat-icon>
+              {{service.position}}
+            </mat-card-subtitle>
+          </mat-card-header>
+        </mat-card>
+      </drag-scroll>
+      <button mat-mini-fab class="btn" color="primary" (click)="moveRight()">
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
+    </div>
+  </div>
+</section>

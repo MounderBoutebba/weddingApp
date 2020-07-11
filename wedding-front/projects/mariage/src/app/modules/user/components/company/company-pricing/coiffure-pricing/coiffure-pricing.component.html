@@ -1,0 +1,14 @@
+<h2 *ngIf="primaryComponent" style="font-size: 18.5px !important;">{{'barber'|lowercase|translate|titlecase}}</h2>
+<app-dynamic-form-builder [fields]="parsedCriteres" (addOption)='onAddOption($event)' *ngIf="showForm" #formBuilder></app-dynamic-form-builder>
+<h2 *ngIf="showMaquillageComponent" style="font-size: 18.5px !important;">{{'makeup'|lowercase|translate|titlecase}}</h2>
+<app-maquillage-pricing *ngIf="showMaquillageComponent" [criteres]="maquillageInitCriteres"
+[primaryComponent]='false' #maquillageComponent></app-maquillage-pricing>
+<h2 *ngIf="showEsthetiqueComponent" style="font-size: 18.5px !important;">{{'aesthetic'|lowercase|translate|titlecase}}</h2>
+<app-esthetique-pricing *ngIf="showEsthetiqueComponent" [criteres]="esthetiqueInitCriteres"
+[primaryComponent]='false' #esthetiqueComponent></app-esthetique-pricing>
+<h2 *ngIf="showSoinComponent" style="font-size: 18.5px !important;">{{'care'|lowercase|translate|titlecase}}</h2>
+<app-soin-pricing *ngIf="showSoinComponent" [criteres]="soinInitCriteres"
+[primaryComponent]='false' #soinComponent></app-soin-pricing>
+<button type='button' mat-flat-button color='primary'
+class='submit-btn' [disabled]='!formBuilder.form.valid' (click)='formSubmitted()' *ngIf="showSubmitBtn" [ngClass]="{'hidden': !primaryComponent}">
+{{'Next' | lowercase | translate | titlecase}}</button>

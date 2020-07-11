@@ -1,0 +1,243 @@
+<div style="width: 95%;margin: auto">
+
+  <form [formGroup]="filterForm" (ngSubmit)="submit()" enctype="multipart/form-data">
+    <div
+      fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly"
+      class="btn-container" [ngClass.lt-md]="{'btn-container--hidden-search-bar':hiddenSearchbar}">
+
+      <div fxLayout="column">
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>verified providers</mat-label>
+              <span translate>a selection of providers verified according to quality criteria</span>
+            </section>
+            <mat-slide-toggle style="float: right" color="primary"
+                              formControlName="verifiedProvider"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>100% secure services without down payment</mat-label>
+              <span translate>professionals who agree to receive the full payment after completion of the service</span>
+            </section>
+            <mat-slide-toggle style="float: right" color="primary"
+                              formControlName="securePayment"></mat-slide-toggle>
+          </div>
+          <mat-divider [fxShow]="showMore"></mat-divider>
+        </div>
+        <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common"
+             [fxShow]="showMore">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>top rated providers</mat-label>
+            <span translate>display only the providers with the best scores, ie a score higher than 3/5</span>
+          </section>
+          <mat-slide-toggle color="primary"  formControlName="topRatedProviders"></mat-slide-toggle>
+        </div>
+
+        <a class="view-more" (click)="showMore=!showMore">
+          <span translate [fxHide]="showMore">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="showMore">keyboard_arrow_down</mat-icon>
+
+          <span translate [fxShow]="showMore">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="showMore">keyboard_arrow_up</mat-icon>
+        </a>
+        <mat-divider></mat-divider>
+
+      </div>
+
+      <div fxLayout="column" formGroupName="categories">
+        <mat-label translate style="font-weight: bold">Proposed services</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="feuArtifices">
+            <span translate>fireworks</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lacher">
+            <span translate>releases</span>
+          </mat-checkbox>
+        </section>
+      </div>
+      <mat-divider></mat-divider>
+
+      <div *ngIf="feuArtifices" fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly">
+        <mat-label translate style="font-weight: bold">fireworks</mat-label>
+        <br>
+        <div fxLayout="column" formGroupName="feuArtifices_effets">
+          <mat-label translate style="font-weight: bold">effects</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="jongleriesDePivoinesRouges">
+              <span translate>juggling red peonies</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="archesDePlumeauxJaunes">
+              <span translate>yellow feather arches</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="batailleDePlumetsBlancsEtCroisillonsTopaze">
+              <span translate>battle of white plumets and topaz braces</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="eventailDeGerbesOr">
+              <span translate>Fan of golden sheaves</span>
+            </mat-checkbox>
+          </section>
+          <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="feuArtificesEffetsShow">
+            <mat-checkbox color="primary" class="checkbox" formControlName="envolees_de_papillons">
+              <span translate>flight of butterflies</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="rideaux_etoiles_de_poussiereor">
+              <span translate>gold dust star curtains</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="palmiers_coiffes_de_lucioles">
+              <span translate>palm trees topped with fireflies</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="elevation_craquante_pointes_violettes">
+              <span translate>crunchy elevation with purple tips</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="rideau_de_poussieres_emeraude">
+              <span translate>emerald dust curtain</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="tourbillons_spirale_argent">
+              <span translate>silver spiral swirls</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="fontaines_or_cascade_de_saphir">
+              <span translate>golden fountains with sapphire waterfall</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="plumets_filaments_nacres">
+              <span translate>pearly filament plumes</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="bouquet_croisement_orange">
+              <span translate>orange cross bouquet</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="coeur_rouge_et_jet_argent">
+              <span translate>red heart and silver spray</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="pluie_scintillante_argentee">
+              <span translate>silver shimmering rain</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="roseaux_mosaique_de_cocotiers_argent">
+              <span translate>reeds with mosaic of silver coconut palms</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="sequences_effets_speciaux">
+              <span translate>special effects sequences</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="lettre_ou_chiffre_de_feu">
+              <span translate>fire letter or number</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="jongleries_de_palmiers_or">
+              <span translate>golden palm juggling</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="lanceurs_de_coeurs_blanc_ou_rouge">
+              <span translate>white or red heart throwers</span>
+            </mat-checkbox>
+          </section>
+          <a class="view-more" (click)="feuArtificesEffetsShow=!feuArtificesEffetsShow">
+            <span translate [fxHide]="feuArtificesEffetsShow">view more questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxHide]="feuArtificesEffetsShow">keyboard_arrow_down</mat-icon>
+
+            <span translate [fxShow]="feuArtificesEffetsShow">view less questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxShow]="feuArtificesEffetsShow">keyboard_arrow_up</mat-icon>
+          </a>
+
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column" formGroupName="feuArtifices_programmes">
+          <mat-label translate style="font-weight: bold">programs</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="tableauxDeFontaines">
+              <span translate>paintings of fountains</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="facadeDeChandelles">
+              <span translate>candlelight facade</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="tableauxMajestueux">
+              <span translate>majestic paintings</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="couleursIntenses">
+              <span translate>intense colors</span>
+            </mat-checkbox>
+          </section>
+          <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="feuArtificesProgrammesShow">
+            <mat-checkbox color="primary" class="checkbox" formControlName="façade_de_gerbes">
+              <span translate>facade of sheaves</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="tableaux_aeriens">
+              <span translate>aerial charts</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="bouquet_spectaculaire_avant_le_bouquet_final">
+              <span translate>spectacular bouquet before the final bouquet</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="mise_en_scene_exceptionnelle">
+              <span translate>exceptional staging</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="produits_pyrotechniques_grand_spectacle">
+              <span translate>great show pyrotechnics</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="bouquet_final_puissant_et_volumineux">
+              <span translate>powerful and voluminous final bouquet</span>
+            </mat-checkbox>
+          </section>
+          <a class="view-more" (click)="feuArtificesProgrammesShow=!feuArtificesProgrammesShow">
+            <span translate [fxHide]="feuArtificesProgrammesShow">view more questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxHide]="feuArtificesProgrammesShow">keyboard_arrow_down</mat-icon>
+
+            <span translate [fxShow]="feuArtificesProgrammesShow">view less questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxShow]="feuArtificesProgrammesShow">keyboard_arrow_up</mat-icon>
+          </a>
+
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+
+      <div *ngIf="lacher" fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly">
+        <mat-label translate style="font-weight: bold">release</mat-label>
+        <br>
+        <div fxLayout="column" formGroupName="lachers_lachers">
+          <mat-label translate style="font-weight: bold">types</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="ballons">
+              <span translate>release balloons</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="lanternes">
+              <span translate>release lanterns</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="colombes">
+              <span translate>release the doves</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="papillons">
+              <span translate>release butterflies</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+
+    </div>
+
+    <div
+      fxFlexAlign.lt-md="center" fxLayout="row wrap"  fxLayout.lt-md="column" fxLayoutAlign="end center" fxLayoutGap="1rem"
+      class="group-btn full">
+      <button class="form-input full" mat-raised-button type="button" (click)="cancelForm()">
+        <span translate>cancel</span>
+      </button>
+      <button class="form-input full"  mat-raised-button type="button" (click)="reset()">
+        <span translate>delete selected filters</span>
+      </button>
+      <button class="form-input full"  mat-raised-button color="primary" type="submit">
+        <span style="color: white" translate>show results</span>
+      </button>
+    </div>
+  </form>
+
+</div>

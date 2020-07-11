@@ -1,0 +1,30 @@
+<div class='control-wrapper' fxLayout="row wrap" fxLayoutGap="10%" fxLayoutAlign="flex-start" fxLayoutGap.xs="0" fxLayout.xs="column"
+*ngIf='primaryComponent' style="width: 58%;"> 
+    <p translate fxFlex='100%' class='mb-0 title'>{{'advantages'|lowercase|translate|titlecase}}</p>
+    <p translate fxFlex='100%' class='mt-0 sub-title'>{{'indicate the services you offer'|lowercase|translate|titlecase}}</p>
+    <div class='checkbox-wrapper' fxLayout="row wrap" fxLayoutGap="10%" fxFlex='100%'>
+        <mat-checkbox [disabled]='true' [checked]='true' fxFlex='40%' class='first-checkbox checkbox-label'>{{'makeup'|lowercase|translate|titlecase}}</mat-checkbox>
+        <mat-checkbox [disabled]='true' [checked]='true' fxFlex='40%' class='checkbox-label' *ngIf="isCoiffure">{{'barber'|lowercase|translate|titlecase}}</mat-checkbox>
+        <mat-checkbox [disabled]='true' [checked]='true' fxFlex='40%' class='checkbox-label' *ngIf="isEsthetique">{{'aesthetic'|lowercase|translate|titlecase}}</mat-checkbox>
+        <mat-checkbox [disabled]='true' [checked]='true' fxFlex='40%' class='checkbox-label' *ngIf="isSoin">{{'care'|lowercase|translate|titlecase}}</mat-checkbox>
+        <mat-checkbox fxFlex='40%' class='checkbox-label' *ngIf="!isCoiffure" color='primary' (change)='coiffureIsChecked($event.checked)'>
+            {{'barber'|lowercase|translate|titlecase}}</mat-checkbox>
+        <mat-checkbox fxFlex='40%' class='checkbox-label' *ngIf="!isEsthetique" color='primary'
+        (change)='esthetiqueIsChecked($event.checked)'>{{'aesthetic'|lowercase|translate|titlecase}}</mat-checkbox>
+        <mat-checkbox fxFlex='40%' class='checkbox-label' *ngIf="!isSoin" color='primary'
+        (change)='soinIsChecked($event.checked)'>{{'care'|lowercase|translate|titlecase}}</mat-checkbox>
+    </div>
+</div>
+<app-dynamic-form-builder [fields]="parsedCriteres" (addOption)='onAddOption($event)' *ngIf="showForm" #formBuilder></app-dynamic-form-builder>
+<h2 *ngIf="showCoiffureComponent" style="font-size: 18.5px !important; margin-top: -1rem;">{{'barber'|lowercase|translate|titlecase}}</h2>
+<app-coiffure *ngIf="showCoiffureComponent" [criteres]="coiffureInitCriteres"
+[primaryComponent]='false' #coiffureComponent></app-coiffure>
+<h2 *ngIf="showEsthetiqueComponent" style="font-size: 18.5px !important; margin-top: -1rem;">{{'aesthetic'|lowercase|translate|titlecase}}</h2>
+<app-esthetique *ngIf="showEsthetiqueComponent" [criteres]="esthetiqueInitCriteres"
+[primaryComponent]='false' #esthetiqueComponent></app-esthetique>
+<h2 *ngIf="showSoinComponent" style="font-size: 18.5px !important; margin-top: -1rem;">{{'care'|lowercase|translate|titlecase}}</h2>
+<app-soin *ngIf="showSoinComponent" [criteres]="soinInitCriteres"
+[primaryComponent]='false' #soinComponent></app-soin>
+<button type='button' mat-flat-button color='primary'
+class='submit-btn' [disabled]='!formBuilder.form.valid' (click)='formSubmitted()' *ngIf="showSubmitBtn" [ngClass]="{'hidden': !primaryComponent}">
+{{'Next' | lowercase | translate | titlecase}}</button>

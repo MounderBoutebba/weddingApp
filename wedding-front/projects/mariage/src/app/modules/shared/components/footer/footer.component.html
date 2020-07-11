@@ -1,0 +1,88 @@
+<div class="footer" [class.pt2]="(isHandset$ |async)">
+  <div class="container pt" fxLayout="column" fxLayoutAlign="start center">
+
+    <div class="mb">
+      <picture>
+        <img width="200px" src="assets/images/logo-alt-2.webp" alt="logo mariage serein">
+      </picture>
+    </div>
+
+    <div class="container" fxLayout="row" fxLayout.lt-sm="row wrap" fxLayoutAlign="space-evenly start">
+
+      <div class="column">
+          <ul class="nav-list">
+            <li class="li-mb"><h4 translate>information</h4></li>
+            <li class="li-mb"><a routerLink="" translate>contact</a></li>
+            <li class="li-mb"><a routerLink="">CGU & CGV</a></li>
+            <li class="li-mb"><a routerLink="" translate>data protection</a></li>
+            <li class="li-mb"><a routerLink="" translate>cookies policy</a></li>
+            <li class="li-mb"><a routerLink="/faq" translate>FAQ</a></li>
+          </ul>
+      </div>
+
+      <div class="column">
+          <ul class="nav-list">
+
+            <li><h4 translate>download the application</h4></li>
+            <li class="li-img-mb">
+              <a routerLink="">
+                <img width="100px" src="assets/images/app-store-badge.svg" alt="apple store link">
+              </a>
+            </li>
+            <li>
+              <a routerLink="">
+                <img width="100px" src="assets/images/google-play-badge.svg" alt="google play link">
+              </a>
+            </li>
+
+          </ul>
+      </div>
+
+      <div class="column">
+          <ul class="nav-list">
+            <li><h4 translate>follow us</h4></li>
+
+            <li class="li-social-mb">
+              <a routerLink="">
+                <img class="align-middle" width="33px" height="33px" src="assets/icons/social/facebook.svg" alt="facebook logo">&nbsp;Facebook
+              </a>
+            </li>
+            <li class="li-social-mb">
+              <a routerLink="">
+                <img class="align-middle" width="33px" height="33px" src="assets/icons/social/twitter.svg" alt="twitter logo">&nbsp;Twitter
+              </a>
+            </li>
+            <li>
+              <a routerLink="">
+                <img class="align-middle" width="33px" height="33px" src="assets/icons/social/instagram.svg" alt="instagram logo">&nbsp;Instagram
+              </a>
+            </li>
+
+          </ul>
+      </div>
+
+      <div class="column">
+          <ul class="nav-list">
+            <li><h4 translate>language</h4></li>
+            <li style="background-color:#f5f5f5;height: 59px; width: 195px;border-radius: 5px"></li>
+            <li style="position: relative;top:-4.2rem;">
+                <mat-form-field  appearance="standard" >
+                  <mat-select aria-label="language" (selectionChange)="changeLanguage()" [(value)]="language">
+                    <mat-select-trigger fxFlexAlign="center center">
+                      <div fxLayout="row" fxFlexAlign="end end" *ngIf="language === 'fr'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Français &nbsp;&nbsp;<img width="20px" src="/assets/icons/svg/france.svg" alt="fr"></div>
+                      <div fxLayout="row" fxFlexAlign="end end" *ngIf="language === 'en'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; English &nbsp;&nbsp;<img width="20px" src="/assets/icons/svg/united-kingdom.svg" alt="en"></div>
+                    </mat-select-trigger>
+                    <mat-option value="en">
+                      English
+                    </mat-option>
+                    <mat-option value="fr">
+                      Français
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </li>
+          </ul>
+      </div>
+    </div>
+  </div>
+</div>

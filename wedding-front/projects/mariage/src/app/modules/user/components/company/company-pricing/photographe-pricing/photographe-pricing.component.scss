@@ -1,0 +1,29 @@
+$btnTextColor: white;
+$btnWidth: 20%;
+$btnMarginTop: 2em;
+.submit-btn {
+    color: $btnTextColor;
+    width: $btnWidth;
+    margin-top: $btnMarginTop;
+    width: 16.75rem;
+    height: 3.375rem;
+}
+.control-wrapper {
+    h2 {
+        line-height: 0em !important;
+        margin-bottom: 3em;
+    }
+}
+.hidden {
+    display: none;
+}
+::ng-deep{
+    .mat-checkbox-inner-container {
+      width: 18px !important;
+      height: 18px !important;
+    }
+    .checkbox-label {
+      position: relative;
+      top: 0.22rem;
+    }
+}

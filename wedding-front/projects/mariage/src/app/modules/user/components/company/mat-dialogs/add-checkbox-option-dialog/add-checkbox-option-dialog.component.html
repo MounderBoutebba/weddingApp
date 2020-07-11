@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>{{description | lowercase | translate | capitalizeFirstLetter}}</h2>
+<mat-dialog-content style="height: 18vh !important;">
+  <form [formGroup]="form"> 
+      <div class="pb-1">
+          <mat-form-field class="form-input full-width" appearance="outline">
+            <input matInput placeholder="{{label | translate}}" type="text" formControlName="label" style="margin-bottom: 1rem;">
+          </mat-form-field>
+      </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align='end'>
+          <button class="mat-raised-button"
+            (click)="cancel()">
+            {{'Cancel' | lowercase | translate | titlecase}}
+          </button>
+
+          <button style="margin-left: 1.4rem; color: white;" class="mat-raised-button mat-primary" type='submit' [disabled]='!form.valid' (click)='save()'>
+                  {{'Save' | lowercase | translate | titlecase}}
+          </button>
+</mat-dialog-actions>

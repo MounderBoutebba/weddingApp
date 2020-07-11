@@ -1,0 +1,35 @@
+<div fxLayout='column' class='section5'>
+    <div fxLayout='column' fxLayoutAlign='center center' style="margin-bottom: 1rem;">
+        <div class="main-title">Réservez en toute confiance</div>
+    </div>
+
+    <div fxLayout='column' fxLayoutAlign='center center' style="margin-bottom: 3rem;">
+        <div class="description">Winwez assure toutes les prestations contractualisées et payées par l’intermédiaire de la plateforme.</div>
+    </div>
+
+    <div class="two-columns-wrapper pl_5" fxLayout.lt-md='column' fxLayout='row wrap' fxLayoutGap.gt-md='17.25rem' style="margin-bottom: 3.5625rem;">
+        <div class="column" fxLayout='column' fxLayoutAlign.lt-md='center center' fxLayoutAlign='start start' fxFlex='29rem' fxFlex.lt-md='100%'>
+            <img src="/assets/icons/how-it-works/lock.png" alt="icon" width="45px" height="40px" class="mb-1">
+            <div class="title-col mb-1">Protection jusqu’à 9 millions d’euros</div>
+            <div class="description-col mb-1">Grâce à son partenaire Axa, la responsabilité de Winwez vis-à-vis de ses clients est protégé.</div>
+            <div class="description-col mb-1">Elle garantie toutes les conséquences pécuniaires, dommages matériels et immatériels ou acte de cybercriminalité.</div>
+            <a routerLink="#" class="link mb-1">En savoir plus</a>
+        </div>
+        <div class="column" fxLayout='column' fxLayoutAlign.lt-md='center center' fxLayoutAlign='start start' fxFlex='29rem' fxFlex.lt-md='100%'>
+            <img src="/assets/icons/how-it-works/life-insurance(1).png" alt="icon" width="45px" height="40px" class="mb-1">
+            <div class="title-col mb-1">Assurance contre les risques</div>
+            <div class="description-col mb-1">Winwez fournit une assurance automatique qui vous protège contre tous les risques imprévisibles.</div>
+            <div class="description-col mb-1">Cette assurance est conçue pour l'éventualité où vous feriez l'objet d’arnaque, d’annulation de dernière minute, de service incomplet ou dépot de bilan du prestataire.</div>
+            <a routerLink="#" class="link mb-1">En savoir plus</a>
+        </div>
+    </div>
+    
+    <div class="three-columns-wrapper pl_5" fxLayout.lt-md='column' fxLayout='row wrap' style="margin-bottom: 4.1875rem;" fxLayoutGap.gt-md='3.6rem' fxLayoutGap.lt-md='0rem'>
+        <div class="column" fxLayout.lt-md='column' fxLayout='row wrap' fxLayoutAlign.lt-md='center center' 
+        fxLayoutAlign='start start' fxFlex='24.8125rem' fxFlex.lt-md='100%' fxLayoutGap='15px'
+        *ngFor="let col of columns">
+            <img src="/assets/icons/how-it-works/right.png" alt="icon" width="43px" height="43px">
+            <div class="label-three-cols mr-2-percent" fxFlex='50%' fxFlex.lt-md='100%'>{{col}}</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,185 @@
+<div style="width: 95%;margin: auto">
+
+  <form [formGroup]="filterForm" (ngSubmit)="submit()" enctype="multipart/form-data">
+    <div
+      fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly"
+      class="btn-container" [ngClass.lt-md]="{'btn-container--hidden-search-bar':hiddenSearchbar}">
+
+      <div fxLayout="column">
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>verified providers</mat-label>
+              <span translate>a selection of providers verified according to quality criteria</span>
+            </section>
+            <mat-slide-toggle style="float: right" color="primary"
+                              formControlName="verifiedProvider"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>100% secure services without down payment</mat-label>
+              <span translate>professionals who agree to receive the full payment after completion of the service</span>
+            </section>
+            <mat-slide-toggle style="float: right" color="primary"
+                              formControlName="securePayment"></mat-slide-toggle>
+          </div>
+          <mat-divider [fxShow]="showMore"></mat-divider>
+        </div>
+        <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common"
+             [fxShow]="showMore">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>top rated providers</mat-label>
+            <span translate>display only the providers with the best scores, ie a score higher than 3/5</span>
+          </section>
+          <mat-slide-toggle color="primary" formControlName="topRatedProviders"></mat-slide-toggle>
+        </div>
+
+        <a class="view-more" (click)="showMore=!showMore">
+          <span translate [fxHide]="showMore">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="showMore">keyboard_arrow_down</mat-icon>
+
+          <span translate [fxShow]="showMore">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="showMore">keyboard_arrow_up</mat-icon>
+        </a>
+        <mat-divider></mat-divider>
+
+      </div>
+
+
+      <div fxLayout="column" formGroupName="categories">
+        <mat-label translate style="font-weight: bold">Proposed services</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="animateurEnfants">
+            <span translate>children's animator</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="animateurAdultes">
+            <span translate>adult animator</span>
+          </mat-checkbox>
+        </section>
+      </div>
+      <mat-divider></mat-divider>
+
+      <div fxLayout="column" *ngIf="animateurEnfants" formGroupName="animateurEnfants_animations">
+        <mat-label translate style="font-weight: bold">children animations</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="magie">
+            <span translate>magic</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="clown">
+            <span translate>Clown</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="maquillage">
+            <span translate>makeup</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="dessin">
+            <span translate>drawing</span>
+          </mat-checkbox>
+        </section>
+        <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="animateurEnfantsAnimationsMore">
+          <mat-checkbox color="primary" class="checkbox" formControlName="danse">
+            <span translate>dance</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="marionnettiste">
+            <span translate>puppeteer</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="atelier_artistique">
+            <span translate>artistic workshop</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="slupteur_de_ballons">
+            <span translate>balloon slipper</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="structure_gonflable">
+            <span translate>inflatable</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="pere_noel">
+            <span translate>santa claus</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="compteur">
+            <span translate>counter</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="spectacle_complet_avec_decor">
+            <span translate>full spectacle with decoration</span>
+          </mat-checkbox>
+
+        </section>
+          <a class="view-more" (click)="animateurEnfantsAnimationsMore=!animateurEnfantsAnimationsMore">
+            <span translate [fxHide]="animateurEnfantsAnimationsMore">view more questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxHide]="animateurEnfantsAnimationsMore">keyboard_arrow_down</mat-icon>
+
+            <span translate [fxShow]="animateurEnfantsAnimationsMore">view less questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxShow]="animateurEnfantsAnimationsMore">keyboard_arrow_up</mat-icon>
+          </a>
+
+        <mat-divider></mat-divider>
+      </div>
+
+
+
+      <div fxLayout="column" *ngIf="animateurAdultes" formGroupName="animateurAdultes_typeDeService">
+        <mat-label class="bold" translate>adult animations</mat-label>
+        <br>
+
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="magicien">
+            <span translate>wizard</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="dessinateur">
+            <span translate>designer</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="danseurs">
+            <span translate>dancers</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="sosie">
+            <span translate>doppelganger</span>
+          </mat-checkbox>
+
+        </section>
+
+        <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="animateurAdultsAnimationsMore">
+          <mat-checkbox color="primary" class="checkbox" formControlName="mentaliste">
+            <span translate>mentalist</span>
+          </mat-checkbox>
+        </section>
+        <a class="view-more" (click)="animateurAdultsAnimationsMore=!animateurAdultsAnimationsMore">
+          <span translate [fxHide]="animateurAdultsAnimationsMore">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="animateurAdultsAnimationsMore">keyboard_arrow_down</mat-icon>
+
+          <span translate [fxShow]="animateurAdultsAnimationsMore">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="animateurAdultsAnimationsMore">keyboard_arrow_up</mat-icon>
+        </a>
+
+        <mat-divider></mat-divider>
+      </div>
+
+
+    </div>
+    <div
+      fxFlexAlign.lt-md="center" fxLayout="row wrap"  fxLayout.lt-md="column" fxLayoutAlign="end center" fxLayoutGap="1rem"
+      class="group-btn full"
+    >
+      <button class="form-input full" mat-raised-button type="button" (click)="cancelForm()">
+        <span translate>cancel</span>
+      </button>
+      <button class="form-input full"  mat-raised-button type="button" (click)="reset()">
+        <span translate>delete selected filters</span>
+      </button>
+      <button class="form-input full"  mat-raised-button color="primary" type="submit">
+        <span style="color: white" translate>show results</span>
+      </button>
+    </div>
+
+  </form>
+
+</div>

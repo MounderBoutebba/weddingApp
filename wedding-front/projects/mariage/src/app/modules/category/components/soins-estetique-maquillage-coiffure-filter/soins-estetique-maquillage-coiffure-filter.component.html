@@ -1,0 +1,293 @@
+<div style="width: 95%;margin: auto">
+
+  <form [formGroup]="filterForm" (ngSubmit)="submit()" enctype="multipart/form-data">
+    <div
+      fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly"
+      class="btn-container" [ngClass.lt-md]="{'btn-container--hidden-search-bar':hiddenSearchbar}">
+
+      <div fxLayout="column">
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>verified providers</mat-label>
+              <span translate>a selection of providers verified according to quality criteria</span>
+            </section>
+            <mat-slide-toggle style="float: right" color="primary"
+                              formControlName="verifiedProvider"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>100% secure services without down payment</mat-label>
+              <span translate>professionals who agree to receive the full payment after completion of the service</span>
+            </section>
+            <mat-slide-toggle style="float: right" color="primary"
+                              formControlName="securePayment"></mat-slide-toggle>
+          </div>
+          <mat-divider [fxShow]="showMore"></mat-divider>
+        </div>
+        <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common"
+             [fxShow]="showMore">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>top rated providers</mat-label>
+            <span translate>display only the providers with the best scores, ie a score higher than 3/5</span>
+          </section>
+          <mat-slide-toggle color="primary" formControlName="topRatedProviders"></mat-slide-toggle>
+        </div>
+
+        <a class="view-more" (click)="showMore=!showMore">
+          <span translate [fxHide]="showMore">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="showMore">keyboard_arrow_down</mat-icon>
+
+          <span translate [fxShow]="showMore">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="showMore">keyboard_arrow_up</mat-icon>
+        </a>
+        <mat-divider></mat-divider>
+
+      </div>
+
+      <div fxLayout="column" formGroupName="categories">
+        <mat-label translate style="font-weight: bold">Proposed services</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="coiffure">
+            <span translate>wedding hairstyle</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="maquillage">
+            <span translate>wedding makeup</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="estetique">
+            <span translate>aesthetic</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="soins">
+            <span translate>care</span>
+          </mat-checkbox>
+        </section>
+      </div>
+      <mat-divider></mat-divider>
+
+      <div *ngIf="coiffure" fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly">
+        <mat-label translate style="font-weight: bold">wedding hairstyle</mat-label>
+        <br>
+        <div fxLayout="column" formGroupName="coiffure_lieuRealisation">
+          <mat-label translate style="font-weight: bold">place of realization</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="domicile">
+              <span translate>home</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="salon">
+              <span translate>salon</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>appointment tips</mat-label>
+              <span translate>providers who offers the possibility of a personalized advice appointment</span>
+            </section>
+            <mat-slide-toggle formControlName="coiffure_conseilsPersonnalises" color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>trials</mat-label>
+              <span translate>providers who offers the possibility of conducting test sessions</span>
+            </section>
+            <mat-slide-toggle formControlName="coiffure_essais" color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>guest service</mat-label>
+              <span translate>providers who offer the possibility of styling guests</span>
+            </section>
+            <mat-slide-toggle formControlName="coiffure_prestationInvitesProches" color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+      <div *ngIf="maquillage" fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly">
+        <mat-label translate style="font-weight: bold">wedding makeup</mat-label>
+        <br>
+        <div fxLayout="column" formGroupName="maquillage_lieuRealisation">
+          <mat-label translate style="font-weight: bold">place of realization</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="domicile">
+              <span translate>home</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="salon">
+              <span translate>salon</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>appointment tips</mat-label>
+              <span translate>providers who offers the possibility of a personalized advice appointment</span>
+            </section>
+            <mat-slide-toggle formControlName="maquillage_conseilsPersonnalises" color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>trials</mat-label>
+              <span translate>providers who offers the possibility of conducting test sessions</span>
+            </section>
+            <mat-slide-toggle formControlName="maquillage_essais" color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>guest service</mat-label>
+              <span translate>providers who offer the possibility to make up the guests</span>
+            </section>
+            <mat-slide-toggle formControlName="maquillage_prestationInvitesProches" color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+      <div *ngIf="estetique" fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly">
+        <mat-label translate style="font-weight: bold">aesthetic</mat-label>
+        <br>
+        <div fxLayout="column" formGroupName="estetique_lieuRealisation">
+          <mat-label translate style="font-weight: bold">place of realization</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="domicile">
+              <span translate>home</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="salon">
+              <span translate>salon</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>appointment tips</mat-label>
+              <span translate>providers who offers the possibility of a personalized advice appointment</span>
+            </section>
+            <mat-slide-toggle formControlName="estetique_conseilsPersonnalises" color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>trials</mat-label>
+              <span translate>providers who offers the possibility of conducting test sessions</span>
+            </section>
+            <mat-slide-toggle formControlName="estetique_essais" color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <mat-label translate style="font-weight: bold">aesthetic</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="estetique_manucurePedicure">
+              <span translate>manicure and pedicure</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="estetique_epilation">
+              <span translate>hair removal</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+      <div *ngIf="soins" fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly">
+        <mat-label translate style="font-weight: bold">care</mat-label>
+        <br>
+        <div fxLayout="column" formGroupName="soins_lieuRealisation">
+          <mat-label translate style="font-weight: bold">place of realization</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="domicile">
+              <span translate>home</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="salon">
+              <span translate>salon</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>appointment tips</mat-label>
+              <span translate>providers who offers the possibility of a personalized advice appointment</span>
+            </section>
+            <mat-slide-toggle formControlName="soins_conseilsPersonnalises" color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>trials</mat-label>
+              <span translate>providers who offers the possibility of conducting test sessions</span>
+            </section>
+            <mat-slide-toggle formControlName="soins_essais" color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <mat-label translate style="font-weight: bold">care</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="soins_soins">
+              <span translate>care</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="soins_massage">
+              <span translate>massage</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+
+    </div>
+
+    <div
+      fxFlexAlign.lt-md="center" fxLayout="row wrap" fxLayout.lt-md="column" fxLayoutAlign="end center"
+      fxLayoutGap="1rem"
+      class="group-btn full">
+      <button class="form-input full" mat-raised-button type="button" (click)="cancelForm()">
+        <span translate>cancel</span>
+      </button>
+      <button class="form-input full" mat-raised-button type="button" (click)="reset()">
+        <span translate>delete selected filters</span>
+      </button>
+      <button class="form-input full" mat-raised-button color="primary" type="submit">
+        <span style="color: white" translate>show results</span>
+      </button>
+    </div>
+  </form>
+
+</div>

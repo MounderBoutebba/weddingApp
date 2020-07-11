@@ -1,0 +1,244 @@
+<h2 mat-dialog-title>{{description | lowercase | translate | capitalizeFirstLetter}}</h2>
+<mat-dialog-content  [style.height]="dialogContentHeight">
+  <form [formGroup]="form">
+      <div class="pb-1">
+          <div id="TEMPLATE_TOGGLE_NUMBER_LIST" *ngIf="fieldType === FieldTypeEnum.TOGGLE_NUMBER_LIST">
+            <div *ngIf="description ==='Animations'">
+              <mat-form-field class="form-input full-width" appearance='outline' style="margin-bottom: 1rem;">
+                <mat-label>{{toggleNumberListNameLabel| translate}}</mat-label>
+                <input matInput type="text" formControlName="label">
+              </mat-form-field>
+              <mat-form-field class="form-input full-width" style="margin-bottom: 2rem;" appearance='outline'>
+                <mat-label>{{toggleNumberListDescriptionLabel| translate}}</mat-label>
+                <input matInput type="text" formControlName="description">
+              </mat-form-field>
+                <app-number [numberOption]='{value: 80, label: "tarif", unit: "€", step: 10}'
+                [disableOptions]='true' [form]="form" class="form-input" style="width: 50%;">
+                </app-number>
+            </div>
+            <div *ngIf="description ==='Matériels'">
+              <mat-form-field class="form-input full-width" appearance='outline' style="margin-bottom: 1rem;">
+                <mat-label>{{toggleNumberListNameLabel| translate}}</mat-label>
+                <input matInput type="text" formControlName="label">
+              </mat-form-field>
+              <mat-form-field class="form-input full-width" style="margin-bottom: 2rem;" appearance='outline'>
+                <mat-label>{{toggleNumberListDescriptionLabel| translate}}</mat-label>
+                <input matInput type="text" formControlName="description">
+              </mat-form-field>
+                <app-number [numberOption]='{value: 80, label: "tarif", unit: "€", step: 10}'
+                [disableOptions]='true' [form]="form" class="form-input" style="width: 50%;">
+                </app-number>
+            </div>
+            <div *ngIf="description ==='Lâchers'">
+              <mat-form-field class="form-input full-width" appearance='outline' style="margin-bottom: 1rem;">
+                <mat-label>{{toggleNumberListNameLabel| translate}}</mat-label>
+                <input matInput type="text" formControlName="label">
+              </mat-form-field>
+              <mat-form-field class="form-input full-width" style="margin-bottom: 2rem;" appearance='outline'>
+                <mat-label>{{toggleNumberListDescriptionLabel| translate}}</mat-label>
+                <input matInput type="text" formControlName="description">
+              </mat-form-field>
+                <app-number [numberOption]='{value: 80, label: "tarif", unit: "€", step: 10}'
+                [disableOptions]='true' [form]="form" class="form-input" style="width: 50%;">
+                </app-number>
+            </div>
+            <div *ngIf="description ==='Produits Salés' || description ==='Produits Sucrés'
+            || description ==='Entrées'|| description ==='Plats'|| description ==='Accompagnements'
+            || description ==='Fromages'|| description ==='Désserts'|| description ==='Boissons Alcoolisés'
+            || description ==='Boissons non-Alcoolisés'">
+            <mat-form-field class="form-input full-width" appearance='outline' style="margin-bottom: 1rem;">
+              <mat-label>{{toggleNumberListNameLabel| translate}}</mat-label>
+              <input matInput type="text" formControlName="label">
+            </mat-form-field>
+            <mat-form-field class="form-input full-width" style="margin-bottom: 2rem;" appearance='outline'>
+              <mat-label>{{toggleNumberListDescriptionLabel| translate}}</mat-label>
+              <input matInput type="text" formControlName="description">
+            </mat-form-field>
+              <app-number [numberOption]='{value: 80, label: "tarif", unit: "€", step: 10}'
+              [disableOptions]='true' [form]="form" class="form-input" style="width: 50%;">
+              </app-number>
+            </div>
+          </div>
+          <div id="TEMPLATE_TOGGLE_VOITURE_LIST" *ngIf="fieldType === FieldTypeEnum.TOGGLE_VOITURE_LIST">
+              <mat-form-field class="form-input full-width" appearance='outline' style="margin-bottom: 1rem;">
+                <mat-label>{{toggleNumberListNameLabel| translate}}</mat-label>
+                <input matInput type="text" formControlName="label">
+              </mat-form-field>
+              <mat-form-field class="form-input full-width" style="margin-bottom: 2rem;" appearance='outline'>
+                <mat-label>{{toggleNumberListDescriptionLabel| translate}}</mat-label>
+                <input matInput type="text" formControlName="description">
+              </mat-form-field>
+              <div  fxLayout="row wrap" fxLayoutAlign="start center">
+                <div *ngFor="let option of vehicleOptions" fxFlex='50%' style="margin-bottom: 1rem;">
+                      <app-number [form]="form" [disableOptions]='true' [addVehicle] = 'true'
+                      [numberOption]='{label: option.name, value: option.value, unit: option.unit, step: option.step}'></app-number>
+                </div>
+              </div>
+              <mat-label class="cnl-title">
+                {{'what is its category ?'|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+              <mat-radio-group aria-label="Select an option" [formControlName]="'categorie'" matInput>
+                <div fxLayout="row wrap" style="margin-top: 1rem;">
+                  <div *ngFor="let opt of vehicleCategories; let j=index"
+                       ngStyle.lt-md="width:100%"
+                       style="width: 50%;margin-bottom: 1rem">
+
+                    <mat-radio-button *ngIf='j<4' [value]="opt"
+                                      color='primary'>
+                      <span
+                        class="radio-label">{{opt|lowercase|translate|capitalizeFirstLetter}}</span>
+                    </mat-radio-button>
+
+                    <mat-radio-button *ngIf='showMoreOptionsCategories && j>=4' [value]="opt"
+                                      color='primary'>
+                      <span
+                        class="radio-label">{{opt|lowercase|translate|capitalizeFirstLetter}}</span>
+                    </mat-radio-button>
+
+                  </div>
+                  </div>
+                  <div>
+
+                  <div>
+                      <button mat-button color='primary' (click)='showMoreOptionsCategories = !showMoreOptionsCategories'
+                      *ngIf='vehicleCategories.length > 4'>
+                      {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                      <mat-icon color='primary' *ngIf='!showMoreOptionsCategories'>keyboard_arrow_down</mat-icon>
+                      <mat-icon color='primary' *ngIf='showMoreOptionsCategories'>keyboard_arrow_up</mat-icon>
+                      </button>
+                  </div>
+
+                  </div>
+              </mat-radio-group>
+          </div>
+          <div id="TEMPLATE_TOGGLE_VIN_HONNEUR_COCKTAIL_BUFFET"
+          *ngIf="fieldType === FieldTypeEnum.TOGGLE_VIN_HONNEUR_COCKTAIL_BUFFET || this.fieldType === FieldTypeEnum.TOGGLE_DINNER">
+            <div *ngIf="description ==='Produits salés' || description ==='Produits sucrés'
+            || description ==='Entrées'|| description ==='Plats'|| description ==='Accompagnements'
+            || description ==='Fromages'|| description ==='Desserts'|| description ==='Boissons Alcoolisés'
+            || description ==='Boissons non-Alcoolisés'">
+              <mat-form-field class="form-input full-width">
+                <mat-label>{{toggleNumberListNameLabel| translate}}</mat-label>
+                <input matInput type="text" formControlName="label" style="margin-bottom: 1rem;">
+              </mat-form-field>
+              <mat-form-field class="form-input full-width" style="margin-bottom: 1rem;">
+                <mat-label>{{toggleNumberListDescriptionLabel| translate}}</mat-label>
+                <input matInput type="text" formControlName="description">
+              </mat-form-field>
+                <app-number [numberOption]='{value: 2, label: "tarif", unit: "€", step: 1}'
+                [disableOptions]='true' [form]="form" class="form-input" style="width: 50%">
+                </app-number>
+            </div>
+          </div>
+          <div id="TEMPLATE_TOGGLE_PRODUITS_ACCESSOIRES"
+          *ngIf="fieldType === FieldTypeEnum.TOGGLE_PRODUITS_ACCESSOIRES">
+            <div>
+              <mat-form-field class="form-input full-width" style="margin-bottom: 1rem;" appearance='outline'>
+                <mat-label>{{toggleNumberListNameLabel| translate}}</mat-label>
+                <input matInput type="text" formControlName="label">
+              </mat-form-field>
+              <app-number [numberOption]='{value: 2, label: "tarif", unit: "€", step: 1}'
+              [disableOptions]='true' [form]="form" class="form-input" style="width: 50%">
+              </app-number>
+
+            </div>
+          </div>
+          <div id="TEMPLATE_TOGGLE_PRODUITS_ACCESSOIRES"
+          *ngIf="fieldType === FieldTypeEnum.TOGGLE_PRESTATIONS">
+              <mat-form-field class="form-input full-width" style="margin-bottom: 1rem;" appearance='outline'>
+                <mat-label>{{toggleNumberListNameLabel| translate}}</mat-label>
+                <input matInput type="text" formControlName="label">
+              </mat-form-field>
+              <app-number [numberOption]='{value: 2, label: "Tarif", unit: "€", step: 1}'
+              [disableOptions]='true' [form]="form" class="form-input" style="width: 50%">
+              </app-number>
+
+          </div>
+          <div id="TOGGLE_NUMBER_LIST_OPTIONS" *ngIf="fieldType === FieldTypeEnum.TOGGLE_NUMBER_LIST_OPTIONS">
+            <div *ngIf="description ==='Gâteaux'">
+              <mat-form-field class="form-input full-width">
+                <mat-label>{{toggleNumberListNameLabel| translate}}</mat-label>
+                <input matInput type="text" formControlName="label" style="margin-bottom: 1rem;">
+              </mat-form-field>
+              <mat-form-field class="form-input full-width">
+                <mat-label>{{toggleNumberListDescriptionLabel| translate}}</mat-label>
+                <input matInput type="text" formControlName="description" style="margin-bottom: 1rem;">
+              </mat-form-field>
+            </div>
+          </div>
+          <div id="TOGGLE_NUMBER_RADIO_LIST" *ngIf="fieldType === FieldTypeEnum.TOGGLE_NUMBER_RADIO_LIST">
+            <div class="pb-1">
+              <mat-form-field class="form-input full-width" appearance="outline" style="margin-bottom: 1rem;">
+                <input matInput placeholder="{{label | translate}}" type="text" formControlName="label" style="margin-bottom: 1rem;">
+              </mat-form-field>
+              <mat-radio-group aria-label="Select an option" [formControlName]="'inclusDansPrix'" matInput>
+                <mat-label>Ce service est-il inclus dans vos prestations?</mat-label>
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center"
+                style="margin-top: 0.5rem; margin-bottom: 1.5rem;">
+                  <mat-radio-button color='primary' [value]="true"
+                                    [disabled]='false' style="width: 50%">
+                    <span class="radio-label">{{'included'|lowercase|translate|capitalizeFirstLetter}}</span>
+                  </mat-radio-button>
+                  <mat-radio-button color='primary' [value]="false"
+                                    [disabled]='false' style="width: 50%">
+                    <span class="radio-label">{{'as an option'|lowercase|translate|capitalizeFirstLetter}}</span>
+                  </mat-radio-button>
+                </div>
+
+              </mat-radio-group>
+              <app-number [numberOption]='{value: 2, label: "Tarif en option", unit: "€", step: 1}'
+              [disableOptions]='true' [longLabel]='true' [form]="form" class="form-input" style="width: 50%; margin-top: 1rem;">
+              </app-number>
+
+          </div>
+          </div>
+          <div *ngIf="fieldType === FieldTypeEnum.CHECKBOX_NUMBER_LIST && description ==='Modèle de pages'"
+          class="pb-1" fxLayout='row wrap'
+          fxLayoutAlign="start center" fxLayoutGap='1rem'>
+              <mat-form-field appearance='outline' fxFlex='16%'>
+                <input matInput type="text" formControlName="label" style="width: 63%; margin-bottom: 0.4rem;"
+                onkeyup="this.value=this.value.replace(/[^\d]/,'')">
+                <mat-icon fxFlexAlign="end">keyboard_arrow_down</mat-icon>
+              </mat-form-field>
+              <mat-label class="mb1">{{'Pages' | lowercase | translate | capitalizeFirstLetter}}</mat-label>
+          </div>
+          <mat-form-field *ngIf="(fieldType !== FieldTypeEnum.CHECKBOX_NUMBER_LIST
+                                  || description !=='Modèle de pages')
+                                  && fieldType !== FieldTypeEnum.TOGGLE_NUMBER_LIST
+                                  && fieldType !== FieldTypeEnum.TOGGLE_VIN_HONNEUR_COCKTAIL_BUFFET
+                                  && fieldType !== FieldTypeEnum.TOGGLE_DINNER
+                                  && fieldType !== FieldTypeEnum.TOGGLE_PRODUITS_ACCESSOIRES
+                                  && fieldType !== FieldTypeEnum.TOGGLE_PRESTATIONS
+                                  && fieldType !== FieldTypeEnum.TOGGLE_NUMBER_RADIO_LIST
+                                  && fieldType !== FieldTypeEnum.TOGGLE_VOITURE_LIST
+                                  && fieldType !== FieldTypeEnum.TOGGLE_NUMBER_LIST_OPTIONS" class="form-input full-width" appearance="outline">
+            <mat-label>{{label| translate}}</mat-label>
+            <input matInput type="text" formControlName="label">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="form-input full-width" *ngIf="fieldType !== FieldTypeEnum.TOGGLE_LIST
+                                                        && fieldType !== FieldTypeEnum.CHECKBOX_NUMBER_LIST
+                                                        && fieldType !== FieldTypeEnum.TOGGLE_VOITURE_LIST
+                                                        && fieldType !== FieldTypeEnum.TOGGLE_NUMBER_LIST
+                                                        && fieldType !== FieldTypeEnum.TOGGLE_VIN_HONNEUR_COCKTAIL_BUFFET
+                                                        && fieldType !== FieldTypeEnum.TOGGLE_DINNER
+                                                        && fieldType !== FieldTypeEnum.TOGGLE_PRODUITS_ACCESSOIRES
+                                                        && fieldType !== FieldTypeEnum.TOGGLE_PRESTATIONS
+                                                        && fieldType !== FieldTypeEnum.TOGGLE_NUMBER_RADIO_LIST
+                                                        && fieldType !== FieldTypeEnum.TOGGLE_FORMATS_LIST
+                                                        && fieldType !== FieldTypeEnum.TOGGLE_NUMBER_LIST_OPTIONS">
+              <mat-label>{{numberValue| lowercase | translate | capitalizeFirstLetter}}</mat-label>
+              <input matInput type="number" formControlName="value" min="1">
+          </mat-form-field>
+      </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align='end'>
+          <button class="mat-raised-button"
+            (click)="cancel()">
+            {{'Cancel' | lowercase | translate | titlecase}}
+          </button>
+
+          <button  style="margin-left: 1.4rem; color: white;" class="mat-raised-button mat-primary" type='submit' [disabled]='!form.valid' (click)='save()'>
+                  {{'Save' | lowercase | translate | titlecase}}
+          </button>
+</mat-dialog-actions>

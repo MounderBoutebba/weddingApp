@@ -1,0 +1,74 @@
+<div *ngIf="field.type === fieldTypeEnum.TOGGLE_PRESTATIONS" ngStyle.lt-md="width:91vw"
+[formGroup]="form" fxLayout="column">
+    <div fxLayout='row wrap' fxLayoutAlign="space-between start" style="width: 100%"
+    class="pd-top-bot" [formGroupName]='field.name'>
+        <div fxLayout="column" fxLayoutAlign="center start">
+            <mat-label class='cnl-title'>
+                {{field.displayName|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <mat-label class='cnl-label'>
+                {{field.label|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+        </div>
+        <mat-slide-toggle [color]="color" (change)="toggle($event.checked)"
+        [formControlName]="'value'"></mat-slide-toggle>
+    </div>
+    <div *ngIf="field.value" fxLayout='row wrap' fxLayoutAlign="end center" style="margin-bottom: 1rem;">
+        <app-number [numberOption]='{value: field.capacite, label: field.secondaryLabel, step: 1, unit: " "}'
+        [field]="field" [form]="form" [disableOptions]='true' [capacite]='true'></app-number>
+    </div>
+    <div id="prestationWrapper" *ngIf="field.value" fxLayout="column">
+        <div *ngFor="let prestation of field.prestations, let i=index" fxLayout="column" >
+            <mat-label *ngIf="!!prestation.name" class='cnl-title' style="margin-bottom: 1rem;">
+                {{prestation.name|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <div *ngIf="field.value" fxLayout='row wrap' fxLayoutAlign="start center" style="width: 100%"
+            class="pd-top-bot" [formGroupName]='field.name'>
+                <div *ngFor="let opt of prestation.options; let j=index" fxLayout='column' id="optionWrapper"
+                fxLayoutAlign="start start" style="width: 50% !important;margin-bottom: 1rem;" [ngClass]='{"ml-auto": j % 2 > 0}'>
+                <div *ngIf="j<displayItemsLimit"
+                [ngClass]='{"mr-3": j%2===0 && opt.name !== "Beauté des pieds + vernis green Manucurist",
+                "mr-1": opt.name === "Beauté des pieds + vernis green Manucurist"}'
+                >
+                    <mat-label class='cnl-title'>
+                        {{opt.name|lowercase|translate|capitalizeFirstLetter}}
+                    </mat-label>
+                    <app-number [numberOption]='{value: opt.tarif, label: opt.label, step: opt.step, unit: opt.unit}'
+                    [field]="field" [form]="form" [disableOptions]='true' [prestationName]='prestation.name' [optionName]='opt.name'></app-number>
+                </div>
+                <div *ngIf="showMoreOptions && j>=displayItemsLimit"
+                    [ngClass]='{"mr-3": j%2===0 && opt.name !== "Beauté des pieds + vernis green Manucurist",
+                    "mr-1": opt.name === "Beauté des pieds + vernis green Manucurist"}'>
+                    <mat-label class='cnl-title'>
+                        {{opt.name|lowercase|translate|capitalizeFirstLetter}}
+                    </mat-label>
+                    <app-number [numberOption]='{value: opt.tarif, label: opt.label, step: opt.step, unit: opt.unit}'
+                    [field]="field" [form]="form" [disableOptions]='true' [prestationName]='prestation.name' [optionName]='opt.name'></app-number>
+                </div>
+                </div>
+            </div>
+            <div [hidden]="!field.value">
+                <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+                *ngIf='field.prestations[i].options.length > displayItemsLimit'>
+                {{showMoreLabel|lowercase|translate|capitalizeFirstLetter}}
+                <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+                <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+                </button>
+            </div>
+            <div [hidden]="!field.value" style="margin-bottom: 1rem;"
+            *ngIf="prestation.name !== 'Maquillages' && prestation.name !=='' && prestation.name !== 'Type de massage'
+            && prestation.name !== 'Jambes' && prestation.name !== 'Visage' ">
+                <button class="ajout-btn" mat-stroked-button
+                (click)='addOption.emit({field: field, prestationName: prestation.name})'>
+                  <mat-icon  style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+                </button>
+                &nbsp;
+                <mat-label>{{addBtnLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+            </div>
+            <mat-divider *ngIf="showMoreOptions && i !== field.prestations.length - 1" style="margin-bottom: 1rem;"></mat-divider>
+            <mat-divider *ngIf="!showMoreOptions && i<displayItemsLimit" style="margin-bottom: 1rem;"></mat-divider>
+        </div>
+    </div>
+    <mat-divider *ngIf="!field.value" style="margin-bottom: 1rem;"></mat-divider>
+
+</div>

@@ -1,0 +1,51 @@
+mat-label {
+  margin-bottom: 0.9rem !important;
+}
+
+.cnl-title {
+  font-size: 15px;
+  color:#000;
+  margin-bottom: 0 !important;
+}
+
+.cnl-label{
+  font-family: Arial, Baskerville, monospace !important;
+  font-weight: 500;
+  font-size: 13.5px;
+  letter-spacing: normal;
+  margin-bottom: 0.9375rem;
+  color: #484848;
+}
+
+.toggle-dfb{
+  width: 100%;
+}
+
+::ng-deep{
+  .mat-form-field-appearance-legacy .mat-form-field-underline{
+    height: 0!important;
+  }
+}
+
+.ajout-btn {
+  width: 30px !important;
+  height: 30px !important;
+  min-width: unset!important;
+  padding: 0!important;
+  margin: 0!important;
+  margin-top: 1rem!important;
+}
+.ml-49 {
+  margin-left: 49% !important;
+}
+.ml-7 {
+  margin-left: 7.1rem !important;
+}
+.hide {
+  display: none !important;
+}
+
+.pd-top-bot {
+  padding-top: 1rem;
+    padding-bottom: 1rem;
+}

@@ -1,0 +1,28 @@
+<section>
+  <div class="container" fxLayout="column" fxLayoutAlign="center">
+    <h3 translate>calculate the cost of your wedding</h3>
+
+    <div fxLayout="column" fxLayoutAlign="center center">
+
+      <h4 class="header">
+        <img width="50px" class="icon" src="/assets/icons/svg/budget.svg" alt="check_icon">
+      </h4>
+      <p>
+        <span translate>before starting the study, tell us what would be the most ideal cost for a wedding</span>?
+      </p>
+      <mat-slider color="primary"
+                  [(ngModel)]="budget"
+                  [min]="1000"
+                  [max]="100000"
+                  [step]="500"
+                  [thumbLabel]="true"
+      ></mat-slider>
+
+      <h3>{{budget | currency:'EUR'}}</h3>
+      <a class="btn" mat-flat-button color="primary" routerLink="">
+        <span translate>simulate my budget</span>
+      </a>
+      <br>
+    </div>
+  </div>
+</section>

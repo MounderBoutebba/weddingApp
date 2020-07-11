@@ -1,0 +1,23 @@
+<section class="content">
+<div class="link-container">
+  <a routerLink="/faq" class="link">Centre d’aide</a>
+  &nbsp;
+  <a routerLink="/faq/{{type}}" class="link">{{type==='provider'?'Professionnel':'Client'}}</a>
+</div>
+
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center start" style="margin: 0 80px">
+    <app-faq-sidenav class="sidenav"></app-faq-sidenav>
+    <section fxLayout="column" class="content">
+      <h1>Aides {{type==='provider'?'Professionnel':'Client'}}</h1>
+      <ul *ngFor="let category of categories">
+        <li>
+          <a routerLink="/faq/{{type}}/{{category.libelle.replaceAll(' ','-')}}" routerLinkActive #vc="routerLinkActive">
+            {{category.libelle}}
+          </a>
+        </li>
+      </ul>
+
+    </section>
+  </div>
+</section>
+<app-footer></app-footer>

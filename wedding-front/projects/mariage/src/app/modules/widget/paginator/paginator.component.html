@@ -1,0 +1,16 @@
+<div fxLayout="row wrap" fxLayoutAlign="1rem">
+
+  <button style="z-index: 1" mat-mini-fab class="number-item" (click)="prevPage()">
+    <img class="ico prev" src="/assets/icons/svg/arrow-gauche.svg" alt="previous">
+  </button>
+
+  <button *ngFor="let item of items" mat-mini-fab class="number-item" (click)="goToPage(item)"
+          [ngClass]="{'active':item === pageIndex}">
+      <span style="position: absolute;top: 3px;left: 11px;">{{item}}</span>
+  </button>
+
+  <button style="z-index: 1" mat-mini-fab class="number-item" (click)="nextPage()">
+    <img class="ico next" src="/assets/icons/svg/arrow-point-to-right-grey.svg" alt="next">
+  </button>
+
+</div>

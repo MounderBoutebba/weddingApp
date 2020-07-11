@@ -1,0 +1,41 @@
+<section class="content">
+  <div class="link-container">
+    <a routerLink="/faq" class="link">Centre d’aide</a>
+    &nbsp;
+    <a routerLink="/faq/{{type}}" class="link">{{type==='provider'?'Professionnel':'Client'}}</a>
+    &nbsp;
+    <a routerLink="/faq/{{type}}/{{category}}" class="link">{{category?.replaceAll('-',' ')}}</a>
+    &nbsp;
+    <a routerLink="/faq/{{type}}/{{category}}/{{subCategory}}" class="link">{{subCategory?.replaceAll('-',' ')}}</a>
+    &nbsp;
+    <a routerLink="/faq/{{type}}/{{category}}/{{subCategory}}/{{((question?.question.replaceAll('?',' ')).trim()).replaceAll(' ','-')}}" class="link">{{question?.question}}</a>
+  </div>
+
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center start" style="margin: 0 80px">
+    <app-faq-sidenav class="sidenav"></app-faq-sidenav>
+    <section fxLayout="column" class="content">
+      <h1>{{question?.question}} ?</h1>
+      <ul>
+        <li>
+          <p>
+            <markdown [data]="question?.reponse">
+            </markdown>
+          </p>
+        </li>
+      </ul>
+      <br>
+      <mat-divider *ngIf="otherQts?.length>0"></mat-divider>
+      <br>
+      <ul>
+        <li *ngFor="let qts of otherQts">
+          <a
+            routerLink="/faq/{{type}}/{{category}}/{{subCategory}}/{{((qts.question.replaceAll('?',' ')).trim()).replaceAll(' ','-')}}"
+            routerLinkActive="active">
+            {{qts.question}} ?
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
+</section>
+<app-footer></app-footer>

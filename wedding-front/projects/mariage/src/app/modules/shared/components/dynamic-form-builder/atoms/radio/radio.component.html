@@ -1,0 +1,312 @@
+<div [formGroup]="form" class="app-radio">
+
+
+  <div fxLayout="column">
+
+    <mat-label class="cnl-title"
+               *ngIf="field.type === fieldTypeEnum.TOGGLE_NUMBER_RADIO_LIST &&
+      field.type !== fieldTypeEnum.TOGGLE_RADIO && field.type !== fieldTypeEnum.TOGGLE_NUMBER_RADIO
+        && field.type !== fieldTypeEnum.TOGGLE_CHECKBOX_NUMBER">
+      {{subField.numberOption.label|lowercase|translate|capitalizeFirstLetter}}
+    </mat-label>
+
+    <mat-label class='cnl-title'
+               *ngIf="field.type !== fieldTypeEnum.TOGGLE_RADIO && field.type !== fieldTypeEnum.TOGGLE_NUMBER_RADIO && field.type !== fieldTypeEnum.TOGGLE_NUMBER_RADIO_LIST
+        && field.type !== fieldTypeEnum.TOGGLE_CHECKBOX_NUMBER">
+      {{field.displayName|lowercase|translate|capitalizeFirstLetter}}
+    </mat-label>
+
+    <mat-label class="cnl-label"
+               *ngIf='field.label && field.type !== fieldTypeEnum.TOGGLE_RADIO  && field.type !== fieldTypeEnum.TOGGLE_NUMBER_RADIO &&
+      field.type !== fieldTypeEnum.TOGGLE_NUMBER_RADIO_LIST
+      && field.type !== fieldTypeEnum.TOGGLE_CHECKBOX_NUMBER'>
+      {{field.label|lowercase|translate|capitalizeFirstLetter}}
+    </mat-label>
+
+    <mat-label *ngIf='field.radioCriteriaLabel' class='cnl-label' style=" margin-top: 1rem;">
+      {{field.radioCriteriaLabel|lowercase|translate|capitalizeFirstLetter}}
+    </mat-label>
+
+  </div>
+
+
+  <mat-form-field class='radio-dfb'>
+    <input matInput [hidden]='true'>
+    <div *ngIf="field.type === fieldTypeEnum.TOGGLE_RADIO" [style.width]='wrapperWidth'>
+      <div formGroupName="{{field.name}}">
+        <mat-radio-group aria-label="Select an option" [formControlName]="field.radioCriteriaName" [id]="field.radioCriteriaName" matInput>
+          <div fxLayout='space between'>
+            <div *ngFor="let opt of field.options; let i=index" ngStyle.lt-md="width:100%"
+            [ngClass]='{"hide": !showMoreOptions && i>=displayItemsLimit}' [style.width]='elementWidth'>
+              <mat-radio-button color='primary' [value]="opt.value" *ngIf='i<displayItemsLimit'
+                                [disabled]='!disableOptions'>
+                {{opt.label|lowercase|translate|capitalizeFirstLetter}}</mat-radio-button>
+              <mat-radio-button color='primary' [value]="opt.value" [disabled]='!disableOptions'
+                                *ngIf='showMoreOptions && i>=displayItemsLimit'>
+                {{opt.label|lowercase|translate|capitalizeFirstLetter}}</mat-radio-button>
+            </div>
+          </div>
+          <div>
+            <div>
+              <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+                      *ngIf='field.options.length > displayItemsLimit'>
+                {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+                <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+              </button>
+            </div>
+            <div *ngIf='field.showAddFieldBtn'>
+              <button mat-stroked-button class='ajout-btn' (click)='addOption.emit(field)'>
+                <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+              </button>
+              &nbsp;
+              <mat-label class='add-btn-label'>{{addLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+            </div>
+          </div>
+        </mat-radio-group>
+      </div>
+      <br>
+      <!-- style=" !important"></!-- mat-divider -->
+    </div>
+    <div *ngIf="field.type === fieldTypeEnum.TOGGLE_CHECKBOX_NUMBER">
+      <div formGroupName="{{field.name}}">
+        <mat-radio-group aria-label="Select an option" [formControlName]="field.radioCriteriaName" [id]="field.radioCriteriaName" matInput>
+          <div>
+            <div *ngFor="let opt of field.options; let i=index">
+              <mat-radio-button color='primary' [value]="opt.value" *ngIf='i<displayItemsLimit'
+                                [disabled]='!disableOptions'>
+                {{opt.label|lowercase|translate|capitalizeFirstLetter}}</mat-radio-button>
+              <mat-radio-button color='primary' [value]="opt.value" [disabled]='!disableOptions'
+                                *ngIf='showMoreOptions && i>=displayItemsLimit'>
+                {{opt.label|lowercase|translate|capitalizeFirstLetter}}</mat-radio-button>
+            </div>
+          </div>
+          <div>
+            <div>
+              <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+                      *ngIf='field.options.length > displayItemsLimit'>
+                {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+                <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+              </button>
+            </div>
+            <div *ngIf='field.showAddFieldBtn'>
+              <button mat-stroked-button class='ajout-btn' (click)='addOption.emit(field)'>
+                <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+              </button>
+              &nbsp;
+              <mat-label class='add-btn-label'>{{addLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+            </div>
+          </div>
+        </mat-radio-group>
+      </div>
+      <br>
+      <mat-divider style=" !important"></mat-divider>
+    </div>
+
+    <div *ngIf="field.type === fieldTypeEnum.TOGGLE_NUMBER_RADIO" [style.width]='wrapperWidth'>
+      <div formGroupName="{{field.name}}">
+        <div formGroupName="{{field.radioCriteriaName}}">
+          <mat-radio-group aria-label="Select an option" [formControlName]="field.radioCriteriaName" [id]="field.radioCriteriaName" matInput
+                           (change)='radioChange($event)'>
+            <div>
+              <div *ngFor="let opt of field.options; let i=index" fxLayout='row wrap' fxFlex='40%'>
+                <mat-radio-button color='primary' [value]="opt.value" *ngIf='i<displayItemsLimit'
+                                  [disabled]='!disableOptions'>
+                  {{opt.label|lowercase|translate|capitalizeFirstLetter}}</mat-radio-button>
+                <mat-radio-button color='primary' [value]="opt.value" [disabled]='!disableOptions'
+                                  *ngIf='showMoreOptions && i>=displayItemsLimit'>
+                  {{opt.label|lowercase|translate|capitalizeFirstLetter}}</mat-radio-button>
+              </div>
+            </div>
+            <div>
+              <div>
+                <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+                        *ngIf='field.options.length > displayItemsLimit'>
+                  {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                  <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+                  <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+                </button>
+              </div>
+              <div *ngIf='field.showAddFieldBtn'>
+                <button mat-stroked-button class='ajout-btn' (click)='addOption.emit(field)'>
+                  <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+                </button>
+                &nbsp;
+                <mat-label class='add-btn-label'>{{addLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+              </div>
+            </div>
+          </mat-radio-group>
+          <div *ngIf='field.numberOptions' fxLayout='row wrap' fxLayoutAlign="flex-end">
+            <div fxFlex='50%'></div>
+            <div *ngFor="let opt of field.radioNumberOptions; let i=index" fxFlex='50%' style="display: flex;
+            justify-content: space-between; margin-top: 1rem;" >
+              <app-number [numberOption]='opt' [calledFromRadio]='true' style="width: 100%" [indexOption]="i" [optionsLength]="field.radioNumberOptions.length"
+                          [disableOptions]='!disableNumberOptions && disableOptions' [field]="field" [form]="form"></app-number>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+    </div>
+
+    <div *ngIf="field.type === fieldTypeEnum.RADIO" [style.width]='wrapperWidth'>
+      <mat-radio-group aria-label="Select an option" [formControlName]="field.name" [id]="field.name" matInput>
+        <div fxLayout="row wrap" fxLayoutAlign="start start">
+          <div *ngFor="let opt of field.options; let i=index" style="margin-bottom: 1rem" ngStyle.lt-md="width:100%"
+          [ngClass]='{"hide": !showMoreOptions && i>=displayItemsLimit}' [style.width]='elementWidth' [style.margin-right]='marginRight'>
+            <mat-radio-button color='primary' [value]="opt.value" *ngIf='i<displayItemsLimit && field.type === fieldTypeEnum.RADIO'
+                              [disabled]='!disableOptions'>
+              <span class="radio-label">{{opt.key}} {{opt.label|lowercase|translate}}</span>
+              </mat-radio-button>
+            <mat-radio-button color='primary' [value]="opt.value" [disabled]='!disableOptions'
+                              *ngIf='showMoreOptions && i>=displayItemsLimit && field.type === fieldTypeEnum.RADIO'>
+              <span class="radio-label">{{opt.key}} {{opt.label|lowercase|translate}}</span>
+            </mat-radio-button>
+            <mat-radio-button color='primary' [value]="opt.value" [disabled]='!disableOptions'
+                              *ngIf='i<displayItemsLimit && field.type === fieldTypeEnum.RADIO_STRING'>
+              <span class="radio-label">{{opt.label|lowercase|translate|capitalizeFirstLetter}}</span>
+            </mat-radio-button>
+            <mat-radio-button color='primary' [value]="opt.value" [disabled]='!disableOptions'
+                              *ngIf='showMoreOptions && i>=displayItemsLimit && field.type === fieldTypeEnum.RADIO_STRING'>
+              <span class="radio-label">{{opt.label|lowercase|translate|capitalizeFirstLetter}}</span>
+            </mat-radio-button>
+          </div>
+        </div>
+        <div>
+          <div>
+            <button mat-button color='primary' class="show-more"
+                    (click)='showMoreOptions = !showMoreOptions' *ngIf='field.options.length > displayItemsLimit'>
+              {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+              <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+              <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+            </button>
+          </div>
+          <div *ngIf='field.showAddFieldBtn'>
+            <button mat-stroked-button class='ajout-btn' (click)='addOption.emit(field)'>
+              <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+            </button>
+            &nbsp;
+            <mat-label class='add-btn-label'>{{addLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+          </div>
+        </div>
+      </mat-radio-group>
+      <br>
+      <mat-divider style=" !important"></mat-divider>
+    </div>
+
+    <div *ngIf="field.type === fieldTypeEnum.RADIO_STRING" [style.width]='wrapperWidth'>
+      <mat-radio-group aria-label="Select an option" [formControlName]="field.name" [id]="field.name" matInput>
+        <div fxLayout="row wrap" fxLayoutAlign="start start">
+          <div *ngFor="let opt of field.options; let i=index" style="margin-bottom: 1rem" ngStyle.lt-md="width:100%"
+          [ngClass]='{"hide": !showMoreOptions && i>=displayItemsLimit}' [style.width]='elementWidth' [style.margin-right]='marginRight'>
+            <mat-radio-button color='primary' [value]="opt.value" [disabled]='!disableOptions'
+                              *ngIf='i<displayItemsLimit && field.type === fieldTypeEnum.RADIO_STRING'>
+              <span class="radio-label">{{opt.label|lowercase|translate|capitalizeFirstLetter}}</span>
+            </mat-radio-button>
+            <mat-radio-button color='primary' [value]="opt.value" [disabled]='!disableOptions'
+                              *ngIf='showMoreOptions && i>=displayItemsLimit && field.type === fieldTypeEnum.RADIO_STRING'>
+              <span class="radio-label">{{opt.label|lowercase|translate|capitalizeFirstLetter}}</span>
+            </mat-radio-button>
+          </div>
+        </div>
+        <div>
+          <div>
+            <button mat-button color='primary' class="show-more"
+                    (click)='showMoreOptions = !showMoreOptions' *ngIf='field.options.length > displayItemsLimit'>
+              {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+              <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+              <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+            </button>
+          </div>
+          <div *ngIf='field.showAddFieldBtn'>
+            <button mat-stroked-button class='ajout-btn' (click)='addOption.emit(field)'>
+              <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+            </button>
+            &nbsp;
+            <mat-label class='add-btn-label'>{{addLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+          </div>
+        </div>
+      </mat-radio-group>
+      <br>
+      <mat-divider style=" !important"></mat-divider>
+    </div>
+    <div *ngIf="field.type === fieldTypeEnum.RADIO_NUMBER" [style.width]='wrapperWidth' formGroupName="{{field.name}}">
+        <mat-radio-group flexLayout='row' fxFlex='100%' [formControlName]="'type'" aria-label="Select an option"  [id]="field.name" matInput>
+        <div fxLayout="row wrap" fxLayoutAlign="start start">
+          <div *ngFor="let opt of field.options; let i=index" style="margin-bottom: 1rem" ngStyle.lt-md="width:100%"
+          [ngClass]='{"hide": !showMoreOptions && i>=displayItemsLimit}' [style.width]='elementWidth' [style.margin-right]='marginRight'>
+            <mat-radio-button color='primary' [value]='opt.key' [disabled]='!disableOptions'
+                              *ngIf='i<displayItemsLimit'>
+              <span class="radio-label">{{opt.label|lowercase|translate|capitalizeFirstLetter}}</span>
+            </mat-radio-button>
+            <mat-radio-button color='primary' [value]='opt.key' [disabled]='!disableOptions'
+                              *ngIf='showMoreOptions && i>=displayItemsLimit'>
+              <span class="radio-label">{{opt.label|lowercase|translate|capitalizeFirstLetter}}</span>
+            </mat-radio-button>
+          </div>
+        </div>
+        <div>
+          <div>
+            <button mat-button color='primary' class="show-more"
+                    (click)='showMoreOptions = !showMoreOptions' *ngIf='field.options.length > displayItemsLimit'>
+              {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+              <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+              <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+            </button>
+          </div>
+          <div *ngIf='field.showAddFieldBtn'>
+            <button mat-stroked-button class='ajout-btn' (click)='addOption.emit(field)'>
+              <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+            </button>
+            &nbsp;
+            <mat-label class='add-btn-label'>{{addLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+          </div>
+        </div>
+      </mat-radio-group>
+      <br>
+    </div>
+
+    <div *ngIf="field.type === fieldTypeEnum.RADIO_NUMBER" [style.width]='wrapperWidth' formGroupName="{{field.name}}">
+      <div *ngFor="let tarif of field.tarifs; let i=index" fxFlex='51%' style=" margin-top: 1rem;"  fxLayoutGap='2%'>
+                    <app-number *ngIf='i<displayItemsLimit' [numberOption]='tarif' [indexOption]="i" [optionsLength]="field.tarifs.length"
+                    [disableOptions]='tarif.label === "Tarif / Chambre" && form.get(field.name).get("type").value === "variable"
+                    || tarif.label === "Tarif / Personne" && form.get(field.name).get("type").value === "fixe"'
+                    [field]="field" [form]="form"></app-number>
+                    <app-number *ngIf='showMoreOptions && i>=displayItemsLimit' [numberOption]='tarif' [indexOption]="i"
+                    [disableOptions]='disableOptions' [field]="field" [form]="form" [optionsLength]="field.tarifs.length"></app-number>
+                  </div>
+      <mat-divider></mat-divider>
+    </div>
+
+    <div *ngIf="field.type === fieldTypeEnum.TOGGLE_NUMBER_RADIO_LIST">
+
+      <div formGroupName="{{field.name}}">
+        <div formGroupName="{{subField.name}}" fxLayout="column" fxLayoutGap="1.5rem">
+          <mat-radio-group aria-label="Select an option" [formControlName]="'inclusDansPrix'" [id]="subField.inclusDansPrix" matInput
+                           (change)='radioChange($event)'>
+
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <mat-radio-button color='primary' [value]="true"
+                                  [disabled]='!disableOptions' style="width: 50%">
+                  <span class="radio-label">{{'included'|lowercase|translate|capitalizeFirstLetter}}</span>
+                </mat-radio-button>
+                <mat-radio-button color='primary' [value]="false"
+                                  [disabled]='!disableOptions' style="width: 50%">
+                  <span class="radio-label">{{'as an option'|lowercase|translate|capitalizeFirstLetter}}</span>
+                </mat-radio-button>
+              </div>
+
+          </mat-radio-group>
+            <div fxLayout="row" fxLayoutAlign="end start">
+              <app-number [numberOption]='{value: subField.numberOption.value, label: "Tarif en option",
+              unit: subField.numberOption.unit, step: subField.numberOption.step}'
+              style="width: 50%" ngStyle.lt-md="width:100%" [longLabel]='true'
+              [disableOptions]='!disableNumberOptions' [field]="field" [form]="form" [subField]='subField'></app-number>
+            </div>
+        </div>
+      </div>
+    </div>
+
+  </mat-form-field>
+</div>

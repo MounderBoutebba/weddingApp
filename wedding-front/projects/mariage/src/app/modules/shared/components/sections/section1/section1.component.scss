@@ -1,0 +1,137 @@
+@import '../sections.scss';
+@media screen and (max-width: 3600px) {
+    .main-title {
+        width: 27.0625rem;
+        font-family: Arial;
+        font-size: 40px;
+        font-weight: bold;
+        text-align: left;
+        color: #000000;
+    }
+    .description {
+        width: 23.5rem;
+        height: 0.9375rem;
+        font-family: Arial;
+        font-size: 14px;
+        text-align: left;
+        color: #484848;
+        margin-bottom: 2rem;
+    }
+    .mr-banner {
+        margin-top: 0rem;
+    }
+    .banner-img {
+        width: 51.25rem;
+        height: 31rem;
+    }
+}
+@media screen and (max-width: 960px) {
+    .pl {
+        padding-left: 0rem;
+    }
+    .pr {
+        padding-right: 0rem;
+    }
+    .main-title {
+        width: 100%;
+        text-align: center;
+    }
+    .description {
+        width: 100%;
+        height: 0.9375rem;
+        font-size: 14px;
+        text-align: center;
+
+    }
+    .banner-img {
+        width: 100%;
+        height: 100%;
+    }
+    .mr-banner {
+        margin-top: 2rem;
+    }
+}
+.section1 {
+    padding-top: 1.6875rem;
+    padding-bottom: 1.6875rem;
+    .user-profile {
+        img {
+            width: 45px;
+            height: 45px;
+            border-radius: 2rem;
+        }
+        .user-name {
+            height: 15px;
+            font-family: Arial;
+            font-size: 15px;
+            text-align: left;
+            color: #000000;
+        }
+        .label {
+            height: 13px;
+            font-family: Arial;
+            font-size: 12px;
+            text-align: left;
+            color: #484848;
+            margin-top: 19px;
+        }
+    }
+    .sign-up {
+        margin-top: 1.4375rem;
+        .social-media-div {
+            width: 16.75rem;
+            height: 2.6875rem;
+            border-radius: 0.925rem;
+            border: solid 0.7px #e6e6e6;
+            background-color: #ffffff;
+            cursor: pointer;
+            .icon {
+                width: 0.8125rem;
+                height: 0.875rem;
+                margin: 0.875rem 0 0 0.875rem;
+            }
+            span {
+                width: 8.1875rem;
+                height: 0.5625rem;
+                margin-top: 0.875rem;
+                font-family: Arial;
+                font-size: 11px;
+                font-weight: normal;
+                font-stretch: normal;
+                font-style: normal;
+                line-height: normal;
+                letter-spacing: normal;
+                text-align: left;
+            }
+        }
+        .separator-div {
+            margin-top: 1.0625rem;
+            span {
+                font-family: Arial;
+                font-size: 11px;
+                color: #848484;
+                width: 1.0625rem;
+                height: 0.5625rem;
+                margin-left: 9rem;
+            }
+        }
+        .language-select {
+            width: 7.125rem;
+            height: 1.8125rem;
+            border-radius: 14.1px;
+            background-color: #f8f8f8;
+            font-size: 11px;
+            margin-top: 1.6875rem;
+        }
+
+    }
+    .label3-wrapper {
+        font-family: Arial;
+        font-size: 15px;
+        color: #484848;
+        span {
+            font-weight: bold;
+        }
+    }
+
+}

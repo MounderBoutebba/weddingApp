@@ -1,0 +1,70 @@
+mat-label {
+  margin-bottom: 0.9rem !important;
+}
+.element {
+  width: fit-content;
+  height: 2rem;
+}
+
+
+.number-control-btn{
+/*  width: 2rem;
+  min-width: 2rem;
+  height: 2rem;
+  min-height: 2rem;*/
+  background-color: transparent;
+  box-shadow: none;
+  border: var(--primary-color) 1px solid;
+  width: 2em !important;
+  height: 2em !important;
+}
+
+.plus-minus-btn {
+  position: absolute!important;
+  top: 50%!important;
+  left: 50%!important;
+  transform: translate(-50%, -50%)!important;
+}
+
+.input-space {
+  margin-right: 3px;
+  width: 4rem!important;
+  text-align: center;
+  margin-left: 3px;
+}
+
+.number-label{
+  font-family: Arial, Baskerville, monospace !important;
+  font-weight: 500;
+  font-size: 15px;
+  color: #000;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+}
+.number-value-unit {
+  font-size: 15px;
+}
+::ng-deep {
+  .mat-drawer-container {
+    color: #000 !important;
+  }
+}
+.top {
+  position: relative;
+  top: 0.3rem;
+}
+.toggle-number-radio {
+  padding-top: 0 !important;
+}
+.mr-5 {
+  margin-right: 5rem !important;
+}
+.m-auto {
+  margin-left: auto
+}
+.m-r-auto {
+  margin-right: auto
+}

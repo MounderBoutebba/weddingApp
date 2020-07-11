@@ -1,0 +1,547 @@
+<div *ngIf='field.type === fieldTypeEnum.TOGGLE_SIMPLE && showSimpleToggle'
+ngStyle.lt-md="width:91vw" [formGroup]="form" fxLayout="column" id='simple-toggle-template'>
+  <div fxLayout='row' fxLayoutAlign="space-between start" style="width: 100%" class="pd-top-bot">
+    <div fxLayout="column" fxLayoutAlign="center start">
+      <mat-label class='cnl-title'>
+        {{field.displayName|lowercase|translate|capitalizeFirstLetter}}
+      </mat-label>
+      <mat-label class='cnl-label'>
+        {{field.label|lowercase|translate|capitalizeFirstLetter}}
+      </mat-label>
+    </div>
+
+    <mat-slide-toggle [color]="color" (change)="toggle($event.checked)"
+                      [formControlName]="field.name"></mat-slide-toggle>
+  </div>
+
+
+  <mat-divider *ngIf="field.name !== 'enfants'"></mat-divider>
+</div>
+
+<div ngStyle.lt-md="width:91vw" [formGroup]="form" *ngIf='field.type !== fieldTypeEnum.TOGGLE_SIMPLE
+&& field.type !== fieldTypeEnum.TOGGLE_NUMBER_RADIO && field.type !== fieldTypeEnum.TOGGLE_NUMBER_TIME' >
+  <div formGroupName="{{field.name}}" class="pd-top-bot">
+
+        <div fxLayout='row' fxLayoutAlign="space-between start">
+          <div fxLayout="column" fxLayoutAlign="center start">
+            <mat-label class='cnl-title'>
+              {{field.displayName|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <mat-label class="cnl-label">
+              {{field.label|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+          </div>
+          <mat-slide-toggle *ngIf="!nameIncludEmpty" [color]="color" (change)="toggle($event.checked)" [formControlName]="field.name"></mat-slide-toggle>
+
+        </div>
+          <mat-form-field class="toggle-dfb" *ngIf="disableOptions">
+            <input matInput [hidden]='true'>
+
+            <div>
+                <div *ngIf='field.type === fieldTypeEnum.TOGGLE_NUMBER && disableOptions
+                && (field.name !== "weddingCake" && field.name !== "nakedCake" && field.name !== "vintageChic")'>
+                  <div *ngIf='field.numberOptions && field.numberOptions.length' style="justify-content: flex-end;">
+                      <div *ngFor="let opt of field.numberOptions; let i=index" fxLayout="row wrap" fxLayoutAlign="{{fxLayoutAlignToggleNumber}}"
+                      fxFlex='50%' ngStyle.lt-md="width:100%;margin-bottom: 1rem;margin-left: 0;" id="here1"
+                      [ngClass]='{"ml-49": this.field.numberOptions.length <= 1 && !this.nameIncludEmpty,
+                                  "ml-7": opt.label === "seanceEngagementDureeMinimumTarifHoraire" ||
+                                          opt.label === "seanceBrunchOuDejeunerDureeMinimumTarifHoraire" ||
+                                          opt.label === "seanceApresMariageDureeMinimumTarifHoraire"
+                                }'>
+                        <app-number *ngIf='i<displayItemsLimit && (opt.label !== "heureMinDeDebutLocation")'
+                        [numberOption]='opt' [disableOptions]='disableOptions' [field]="field" [form]="form" style="width: 100%;" [indexOption]="i" [optionsLength]="field.numberOptions.length">
+                        </app-number>
+                        <app-number-time *ngIf='i<displayItemsLimit && (opt.label === "debutLocation")'
+                        [numberOption]='{hourValue: opt.value, minValue: 0, label: opt.label, step: opt.step}'
+                        [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number-time>
+                        <app-number  *ngIf='showMoreOptions && i>=displayItemsLimit && (opt.label !== "debutLocation")'
+                          [numberOption]='opt' [disableOptions]='disableOptions' [field]="field" [form]="form" [indexOption]="i" [optionsLength]="field.numberOptions.length">
+                        </app-number>
+                        <div *ngIf='showMoreOptions && i>=displayItemsLimit && (opt.label === "debutLocation")'>div2</div>
+
+                      </div>
+                  </div>
+                </div>
+                <div *ngIf='field.type === fieldTypeEnum.TOGGLE_NUMBER && disableOptions
+                && (field.name === "weddingCake" || field.name === "nakedCake" || field.name === "vintageChic")'
+                style="margin-top: 1rem;">
+                  <div *ngIf='field.numberOptions && field.numberOptions.length'
+                  fxLayout="row wrap" fxLayoutAlign="{{fxLayoutAlignToggleNumber}}">
+                      <div *ngFor="let opt of field.numberOptions; let i=index"
+                      ngStyle.lt-md="width:100%;margin-bottom: 1.5rem;margin-left: 0;" id="here2"
+                      style="width: 50%;margin-bottom: 1.5rem;">
+                        <app-number *ngIf='i<displayItemsLimit' [numberOption]='opt'
+                        [disableOptions]='disableOptions' [field]="field" [form]="form">
+                        </app-number>
+
+                        <app-number  *ngIf='showMoreOptions && i>=displayItemsLimit' [numberOption]='opt'
+                        [disableOptions]='disableOptions' [field]="field" [form]="form">
+                        </app-number>
+
+                      </div>
+                  </div>
+                </div>
+
+
+              <div *ngIf='field.type === fieldTypeEnum.TOGGLE_CHECKBOX && disableOptions'>
+                  <div>
+                    <!--plus tard-->
+                    <app-checkbox *ngIf='field.options && field.options.length'
+                    [field]="field" [form]="form" [disableOptions]='disableOptions'></app-checkbox>
+                  </div>
+                </div>
+
+                <div *ngIf='field.type === fieldTypeEnum.TOGGLE_RADIO && disableOptions'>
+                  <div >
+                    <!--plus tard-->
+                    <app-radio *ngIf='field.options && field.options.length'
+                    [field]="field" [form]="form" [disableOptions]='disableOptions'></app-radio>
+                  </div>
+                </div>
+
+
+              <div>
+
+                <div *ngIf='field.type !== fieldTypeEnum.TOGGLE_CHECKBOX_NUMBER'>
+                  <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+                          *ngIf='field.numberOptions && field.numberOptions?.length > displayItemsLimit'>
+                    {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                    <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+                    <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+                  </button>
+                  <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+                          *ngIf='field.options && field.options?.length > displayItemsLimit'>
+                    {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                    <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+                    <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+                  </button>
+                </div>
+
+
+                <div *ngIf='field.type === fieldTypeEnum.TOGGLE_CHECKBOX_NUMBER && disableOptions'>
+                  <div *ngIf='field.nbrOpt'>
+                    <app-number [numberOption]='field.nbrOpt' [nbrOpt]='true'
+                                [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                  </div>
+
+                  <app-checkbox [field]="field" [form]="form" [disableOptions]='disableOptions'
+                                (checkBoxChange)='checkBoxChange.emit($event)'
+                                *ngIf='field.numberCheckBoxOptions.options.length'></app-checkbox>
+
+
+                  <div *ngIf="field.numberCheckBoxOptions.options.length"
+                              fxLayout="column">
+                    <mat-label class='cnl-title'>
+                      {{field.numberCheckBoxOptionsNumber.displayName|lowercase|translate|capitalizeFirstLetter}}
+                    </mat-label>
+                    <mat-label *ngIf='field.numberCheckBoxOptionsNumber.label' class="cnl-label">
+                      {{field.numberCheckBoxOptionsNumber.label|lowercase|translate|capitalizeFirstLetter}}
+                    </mat-label>
+                  </div>
+
+
+                  <div *ngIf='(field.name === "retouchesPhoto" || field.name === "remise") && field.numberCheckBoxOptionsNumber.options.length' fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <div *ngFor="let opt of field.numberCheckBoxOptionsNumber.options; let i=index" style="width: 48%;margin-bottom:1rem"
+                    ngStyle.lt-md="width:100%;" [ngClass]='{"hide": !showMoreOptionsToggleCheckBox && i>=displayItemsLimit}'>
+                      <mat-label class="cnl-title">{{opt.label | numberLabelDisplay}}</mat-label>
+                  <app-number *ngIf='i<displayItemsLimit' [numberOption]='opt'
+                      [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber"'
+                                  [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                      <app-number *ngIf='showMoreOptionsToggleCheckBox && i>=displayItemsLimit' [numberOption]='opt'
+                        [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber"'
+                                  [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                    </div>
+                  </div>
+
+                  <div *ngIf='(field.name !== "retouchesPhoto" && field.name !== "remise") && field.numberCheckBoxOptionsNumber.options.length' fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <div *ngFor="let opt of field.numberCheckBoxOptionsNumber.options; let i=index" style="width: 48%;margin-bottom:1rem"
+                    ngStyle.lt-md="width:100%;" [ngClass]='{"hide": !showMoreOptionsToggleCheckBox && i>=displayItemsLimit}'>
+                      <app-number *ngIf='i<displayItemsLimit' [numberOption]='opt' [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber"'
+                                  [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                      <app-number *ngIf='showMoreOptionsToggleCheckBox && i>=displayItemsLimit' [numberOption]='opt' [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber"'
+                                  [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                    </div>
+                  </div>
+
+
+                  <button mat-button color='primary'
+                          (click)='showMoreOptionsToggleCheckBox = !showMoreOptionsToggleCheckBox'
+                          *ngIf='field.numberCheckBoxOptionsNumber.options.length && field.numberCheckBoxOptionsNumber.options?.length > displayItemsLimit'>
+                    {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                    <mat-icon color='primary' *ngIf='!showMoreOptionsToggleCheckBox'>keyboard_arrow_down</mat-icon>
+                    <mat-icon color='primary' *ngIf='showMoreOptionsToggleCheckBox'>keyboard_arrow_up</mat-icon>
+                  </button>
+
+
+                  <div *ngIf='field.numberCheckBoxOptionsNumber.options.length && disableOptions && field.name !== "retouchesPhoto" && field.name !== "remise"'>
+                    <button mat-stroked-button class="ajout-btn"
+                            (click)='addOption.emit({field: field, list: "numberCheckBoxOptionsNumber"})'>
+                      <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+                    </button>
+                    &nbsp;
+                    <mat-label>{{'Add'|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+                  </div>
+
+
+                  <div *ngIf='field.numberCheckBoxOptionsNumber2.displayName' style="margin-top: 1rem;">
+                    <mat-label class='cnl-title'>
+                      {{field.numberCheckBoxOptionsNumber2.displayName|lowercase|translate|capitalizeFirstLetter}}
+                    </mat-label>
+                    <mat-label *ngIf='field.numberCheckBoxOptionsNumber2.label' class='cnl-label'>
+                      {{field.numberCheckBoxOptionsNumber2.label|lowercase|translate|capitalizeFirstLetter}}
+                    </mat-label>
+                  </div>
+                  <div *ngIf='field.numberCheckBoxOptionsNumber2.options.length' fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <div *ngFor="let opt of field.numberCheckBoxOptionsNumber2.options; let i=index"
+                    [ngClass]='{"hide": !showMoreOptionsToggleCheckBox2 && i>=displayItemsLimit}'  style="width: 48%;margin-bottom:1rem">
+                      <app-number *ngIf='i<displayItemsLimit' [numberOption]='opt' [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber2"'
+                                  [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                      <app-number *ngIf='showMoreOptionsToggleCheckBox2 && i>=displayItemsLimit' [numberOption]='opt' [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber2"'
+                                  [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                    </div>
+                  </div>
+                  <button mat-button color='primary' fxLayout='row wrap'
+                          (click)='showMoreOptionsToggleCheckBox2 = !showMoreOptionsToggleCheckBox2'
+                          *ngIf='field.numberCheckBoxOptionsNumber2.options.length && field.numberCheckBoxOptionsNumber2.options?.length > displayItemsLimit'>
+                    {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                    <mat-icon color='primary' *ngIf='!showMoreOptionsToggleCheckBox2'>keyboard_arrow_down</mat-icon>
+                    <mat-icon color='primary' *ngIf='showMoreOptionsToggleCheckBox2'>keyboard_arrow_up</mat-icon>
+                  </button>
+
+                  <div *ngIf='field.numberCheckBoxOptionsNumber2.options.length && disableOptions'>
+                    <button mat-stroked-button class="ajout-btn"
+                            (click)='addOption.emit({field: field, list: "numberCheckBoxOptionsNumber2"})'>
+                      <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+                    </button>
+                    <mat-label>{{'Add'|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+                  </div>
+
+                  <div *ngIf='field.numberCheckBoxOptionsNumber3.displayName'>
+                    <mat-label class='cnl-title'>
+                      {{field.numberCheckBoxOptionsNumber3.displayName|lowercase|translate|capitalizeFirstLetter}}
+                    </mat-label>
+                    <mat-label *ngIf='field.numberCheckBoxOptionsNumber3.label' class='cnl-label'>
+                      {{field.numberCheckBoxOptionsNumber3.label|lowercase|translate|capitalizeFirstLetter}}
+                    </mat-label>
+                  </div>
+                  <div *ngIf='field.numberCheckBoxOptionsNumber3.options.length'>
+                    <div *ngFor="let opt of field.numberCheckBoxOptionsNumber3.options; let i=index"
+                    [ngClass]='{"hide": !showMoreOptionsToggleCheckBox3 && i>=displayItemsLimit}'>
+                      <app-number *ngIf='i<displayItemsLimit' [numberOption]='opt' [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber3"'
+                                  [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                      <app-number *ngIf='showMoreOptionsToggleCheckBox3 && i>=displayItemsLimit' [numberOption]='opt' [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber3"'
+                                  [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                    </div>
+                  </div>
+                  <button mat-button color='primary'
+                          (click)='showMoreOptionsToggleCheckBox3 = !showMoreOptionsToggleCheckBox3'
+                          *ngIf='field.numberCheckBoxOptionsNumber3.options.length && field.numberCheckBoxOptionsNumber3.options?.length > displayItemsLimit'>
+                    {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                    <mat-icon color='primary' *ngIf='!showMoreOptionsToggleCheckBox3'>keyboard_arrow_down</mat-icon>
+                    <mat-icon color='primary' *ngIf='showMoreOptionsToggleCheckBox3'>keyboard_arrow_up</mat-icon>
+                  </button>
+                  <div *ngIf='field.numberCheckBoxOptionsNumber3.options.length && disableOptions'>
+                    <button mat-stroked-button class="ajout-btn"
+                            (click)='addOption.emit({field: field, list: "numberCheckBoxOptionsNumber3"})'>
+                      <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+                    </button>
+                    &nbsp;
+                    <mat-label>{{'Add'|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+                  </div>
+                  <div *ngIf='field.numberCheckBoxOptionsNumber4.displayName'>
+                    <mat-label class='cnl-title'>
+                      {{field.numberCheckBoxOptionsNumber4.displayName|lowercase|translate|capitalizeFirstLetter}}
+                    </mat-label>
+                    <mat-label *ngIf='field.numberCheckBoxOptionsNumber3.label' class='cnl-label'>
+                      {{field.numberCheckBoxOptionsNumber4.label|lowercase|translate|capitalizeFirstLetter}}
+                    </mat-label>
+                  </div>
+                  <div *ngIf='field.numberCheckBoxOptionsNumber4.options.length'>
+                    <div *ngFor="let opt of field.numberCheckBoxOptionsNumber4.options; let i=index"
+                    [ngClass]='{"hide": !showMoreOptionsToggleCheckBox4 && i>=displayItemsLimit}'>
+                      <app-number *ngIf='i<displayItemsLimit' [numberOption]='opt' [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber4"'
+                                  [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                      <app-number *ngIf='showMoreOptionsToggleCheckBox4 && i>=displayItemsLimit' [numberOption]='opt' [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber4"'
+                                  [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                    </div>
+                  </div>
+                  <button mat-button color='primary' fxLayout='row wrap'
+                          (click)='showMoreOptionsToggleCheckBox4 = !showMoreOptionsToggleCheckBox4'
+                          *ngIf='field.numberCheckBoxOptionsNumber4.options.length && field.numberCheckBoxOptionsNumber4.options?.length > displayItemsLimit'>
+                    {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                    <mat-icon color='primary' *ngIf='!showMoreOptionsToggleCheckBox4'>keyboard_arrow_down</mat-icon>
+                    <mat-icon color='primary' *ngIf='showMoreOptionsToggleCheckBox4'>keyboard_arrow_up</mat-icon>
+                  </button>
+                  <div *ngIf='field.numberCheckBoxOptionsNumber4.options.length && disableOptions'>
+                    <button mat-stroked-button class="ajout-btn"
+                            (click)='addOption.emit({field: field, list: "numberCheckBoxOptionsNumber4"})'>
+                      <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+                    </button>
+                    &nbsp;
+                    <mat-label>{{'Add'|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+                  </div>
+                  <div *ngIf="field.options.length && field.radioValue && field.radioCriteriaName">
+                    <app-radio [field]="field" [form]="form" [disableOptions]='disableOptions'></app-radio>
+                  </div>
+                </div>
+
+
+
+                <div *ngIf='field.type !== fieldTypeEnum.TOGGLE_CHECKBOX && field.showAddFieldBtn && disableOptions'>
+                  <button class="ajout-btn" mat-stroked-button (click)='addOption.emit(field)'>
+                    <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+                  </button>
+                  &nbsp;
+                  <mat-label>{{'Add'|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+                </div>
+
+              </div>
+
+
+            </div>
+          </mat-form-field>
+
+
+      </div>
+
+  <mat-divider></mat-divider>
+</div>
+<div ngStyle.lt-md="width:91vw"  [formGroup]="form" *ngIf='field.type === fieldTypeEnum.TOGGLE_NUMBER_TIME'>
+  <div fxLayout='row' fxLayoutAlign="space-between start" class="pd-top-bot">
+    <div fxLayout="column" fxLayoutAlign="center start">
+      <mat-label class='cnl-title'>
+        {{field.displayName|lowercase|translate|capitalizeFirstLetter}}
+      </mat-label>
+      <mat-label class="cnl-label">
+        {{field.label|lowercase|translate|capitalizeFirstLetter}}
+      </mat-label>
+    </div>
+    <mat-slide-toggle *ngIf='field.name === "limiteHoraire"' [color]="color" (change)="toggle($event.checked)" [(ngModel)]="disableOptionsTime" [ngModelOptions]="{standalone: true}"></mat-slide-toggle>
+
+  </div>
+  <div>
+          <mat-form-field class="toggle-dfb">
+            <input matInput [hidden]='true'>
+            <div>
+                <div >
+                  <div *ngIf='field.name !== "limiteHoraire" && field.numberOptionsTime && field.numberOptionsTime.length'
+                  fxLayout="row wrap" fxLayoutAlign="{{fxLayoutAlignToggleNumber}}">
+                      <div *ngFor="let opt of field.numberOptionsTime; let i=index"
+                      ngStyle.lt-md="width:100%;margin-bottom: 1.5rem;margin-left: 0;" id="here2"
+                      style="width: 50%;margin-bottom: 1.5rem;">
+                      <app-number-time *ngIf='i<displayItemsLimit'
+                      [numberOption]='{hourValue: opt.hourValue, minValue: opt.minValue, label: opt.label, step: opt.step}'
+                      [disableOptions]='!disableOptions' [field]="field" [form]="form"></app-number-time>
+                      <app-number-time *ngIf='showMoreOptions && i>=displayItemsLimit'
+                      [numberOption]='{hourValue: opt.hourValue, minValue: opt.minValue, label: opt.label, step: opt.step}'
+                      [disableOptions]='!disableOptions' [field]="field" [form]="form"></app-number-time>
+
+                      </div>
+                  </div>
+                  <div *ngIf='field.name === "limiteHoraire" && field.numberOptionsTime && field.numberOptionsTime.length && disableOptionsTime'
+                  fxLayout="row wrap" fxLayoutAlign="end start">
+                      <div *ngFor="let opt of field.numberOptionsTime; let i=index"
+                      ngStyle.lt-md="width:100%;margin-bottom: 1.5rem;margin-left: 0;" id="here2"
+                      style="width: 50%;margin-bottom: 1.5rem;">
+                      <app-number-time *ngIf='i<displayItemsLimit'
+                      [numberOption]='{hourValue: opt.hourValue, minValue: opt.minValue, label: opt.label, step: opt.step}'
+                      [disableOptions]='!disableOptions' [field]="field" [form]="form"></app-number-time>
+                      <app-number-time *ngIf='showMoreOptions && i>=displayItemsLimit'
+                      [numberOption]='{hourValue: opt.hourValue, minValue: opt.minValue, label: opt.label, step: opt.step}'
+                      [disableOptions]='!disableOptions' [field]="field" [form]="form"></app-number-time>
+
+                      </div>
+                  </div>
+                </div>
+              <div>
+              </div>
+
+
+            </div>
+          </mat-form-field>
+
+
+  </div>
+
+  <mat-divider ></mat-divider>
+</div>
+
+
+<div [formGroup]="form" *ngIf='field.type === fieldTypeEnum.TOGGLE_NUMBER_RADIO
+                               && field.type !== fieldTypeEnum.TOGGLE_NUMBER
+                               && field.type !== fieldTypeEnum.TOGGLE_CHECKBOX
+                               && field.type !== fieldTypeEnum.TOGGLE_RADIO
+                               && field.type !== fieldTypeEnum.TOGGLE_SIMPLE' >
+      <div formGroupName="{{field.name}}" class="pd-top-bot">
+        <div formGroupName="{{field.name}}">
+          <div fxLayout="row" fxLayout="row wrap">
+              <mat-label class='cnl-title' fxFlex='92%'>
+                {{field.displayName|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+              <mat-label *ngIf="!nameIncludComplex" class='cnl-label' fxFlex='92%' id="here-label">
+                {{field.label|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+              <div *ngIf="!nameIncludComplex" fxFlex='8%' fxLayoutAlign="flex-end">
+                <mat-slide-toggle  [color]="color" (change)="toggle($event.checked)"
+                [formControlName]="field.name"></mat-slide-toggle>
+              </div>
+          </div>
+
+          <div style="margin-top: 1rem;">
+              <div *ngIf='field.numberOptions && disableOptions' fxLayout='row wrap' fxLayoutAlign="flex-start">
+                  <div fxFlex='50%'>
+
+                  </div>
+                  <div *ngFor="let opt of field.numberOptions; let i=index" fxFlex='50%' style=" margin-top: 1rem;"  id='yyy'>
+                    <app-number *ngIf='i<displayItemsLimit' [numberOption]='opt'
+                    [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                    <app-number *ngIf='showMoreOptions && i>=displayItemsLimit' [numberOption]='opt'
+                    [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                  </div>
+                  <div  fxLayout="row" style="width: 100%;">
+                    <app-radio *ngIf='field.options && field.options.length' style="width: 100%;"
+                    [field]="field" [form]="form" [disableOptions]='disableOptions'></app-radio>
+                  </div>
+              </div>
+
+            <div>
+              <div *ngIf='field.type !== fieldTypeEnum.TOGGLE_CHECKBOX_NUMBER && disableOptions'>
+                  <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+                  *ngIf='field.numberOptions && field.numberOptions?.length > displayItemsLimit'>
+                  {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                  <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+                  <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+                  </button>
+                  <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+                  *ngIf='field.options && field.options?.length > displayItemsLimit'>
+                  {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                  <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+                  <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+                  </button>
+                </div>
+              <div *ngIf='field.type === fieldTypeEnum.TOGGLE_CHECKBOX_NUMBER && disableOptions'>
+                <div *ngIf='field.nbrOpt'>
+                  <app-number [numberOption]='field.nbrOpt' [nbrOpt]='true' [disableOptions]='disableOptions'
+                              [field]="field" [form]="form"></app-number>
+                  </div>
+                <app-checkbox [field]="field" [form]="form" [disableOptions]='disableOptions'
+                              (checkBoxChange)='checkBoxChange.emit($event)'
+                              *ngIf='field.numberCheckBoxOptions.options.length'></app-checkbox>
+                <div>
+                  <mat-label class='cnl-title'>
+                    {{field.numberCheckBoxOptionsNumber.displayName|lowercase|translate|capitalizeFirstLetter}}
+                  </mat-label>
+                  <mat-label *ngIf='field.numberCheckBoxOptionsNumber.label' class='cnl-label'>
+                    {{field.numberCheckBoxOptionsNumber.label|lowercase|translate|capitalizeFirstLetter}}
+                  </mat-label>
+                  </div>
+                <div *ngIf='field.numberCheckBoxOptionsNumber.options.length'>
+                  <div *ngFor="let opt of field.numberCheckBoxOptionsNumber.options; let i=index">
+                    <app-number *ngIf='i<displayItemsLimit' [numberOption]='opt' [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber"'
+                    [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                    <app-number *ngIf='showMoreOptions && i>=displayItemsLimit' [numberOption]='opt' [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber"'
+                    [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                    </div>
+                  </div>
+                <div *ngIf='field.numberCheckBoxOptionsNumber.options.length && disableOptions'>
+                  <button mat-stroked-button class="ajout-btn"
+                          (click)='addOption.emit({field: field, list: "numberCheckBoxOptionsNumber"})'>
+                    <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+                    </button>
+                    <mat-label>{{'Add'|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+                  </div>
+                <div >
+                  <mat-label class='cnl-title' *ngIf="field.numberCheckBoxOptionsNumber2.displayName">
+                    {{field.numberCheckBoxOptionsNumber2.displayName|lowercase|translate|capitalizeFirstLetter}}
+                  </mat-label>
+                  <mat-label *ngIf='field.numberCheckBoxOptionsNumber2.label' class='cnl-label'>
+                    {{field.numberCheckBoxOptionsNumber.label|lowercase|translate|capitalizeFirstLetter}}
+                  </mat-label>
+                  </div>
+
+                  <div *ngIf='field.numberCheckBoxOptionsNumber2.options.length' fxLayout='row wrap' fxLayout.xs="column"
+                  fxLayoutAlign="flex-start" fxLayoutGap="10%" fxLayoutGap.xs="0" style="display: flex">
+                    <div *ngFor="let opt of field.numberCheckBoxOptionsNumber2.options; let i=index" class='margin-bottom' style="width: 48%;margin-bottom:1rem">
+
+                    <app-number *ngIf='i<displayItemsLimit' [numberOption]='opt' [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber2"'
+                    [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                    <app-number *ngIf='showMoreOptionsToggleCheckBox2 && i>=displayItemsLimit' [numberOption]='opt' [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber2"'
+                    [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                    </div>
+                  </div>
+                  <div fxFlex="100%" class='margin-bottom'
+                  *ngIf='field.numberCheckBoxOptionsNumber2.options.length && disableOptions'>
+                    <button mat-stroked-button class='margin-right ajout-btn' (click)='addOption.emit({field: field, list: "numberCheckBoxOptionsNumber2"})'>
+                    <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+                    </button>
+                    <mat-label>{{'Add'|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+                  </div>
+                  <div fxFlex="100%" class="margin-bottom margin-top" *ngIf='field.numberCheckBoxOptionsNumber3.displayName'>
+                    <label for='name' class='display-flex bold-text'>
+                    {{field.numberCheckBoxOptionsNumber3.displayName|lowercase|translate|capitalizeFirstLetter}}
+                    </label>
+                    <label for='name' *ngIf='field.numberCheckBoxOptionsNumber3.label'
+                    class='display-flex margin-top'>
+                    {{field.numberCheckBoxOptionsNumber3.label|lowercase|translate|capitalizeFirstLetter}}
+                    </label>
+                  </div>
+                  <div *ngIf='field.numberCheckBoxOptionsNumber3.options.length' fxLayout='row wrap' fxLayout.xs="column"
+                  fxLayoutAlign="flex-start" fxLayoutGap="10%" fxLayoutGap.xs="0">
+                    <div *ngFor="let opt of field.numberCheckBoxOptionsNumber3.options; let i=index" fxFlex="40%" class='margin-bottom'>
+                    <app-number *ngIf='i<displayItemsLimit' [numberOption]='opt' [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber3"'
+                    [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                    <app-number *ngIf='showMoreOptionsToggleCheckBox3 && i>=displayItemsLimit' [numberOption]='opt' [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber3"'
+                    [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                    </div>
+                  </div>
+                  <div fxFlex="100%" class='margin-bottom'
+                  *ngIf='field.numberCheckBoxOptionsNumber3.options.length && disableOptions'>
+                    <button mat-stroked-button class='margin-right ajout-btn' (click)='addOption.emit({field: field, list: "numberCheckBoxOptionsNumber3"})'>
+                    <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+                    </button>
+                    <mat-label>{{'Add'|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+                  </div>
+                  <div fxFlex="100%" class="margin-bottom margin-top" *ngIf='field.numberCheckBoxOptionsNumber4.displayName'>
+                    <label for='name' class='display-flex bold-text'>
+                    {{field.numberCheckBoxOptionsNumber4.displayName|lowercase|translate|capitalizeFirstLetter}}
+                    </label>
+                    <label for='name' *ngIf='field.numberCheckBoxOptionsNumber3.label'
+                    class='display-flex margin-top'>
+                    {{field.numberCheckBoxOptionsNumber4.label|lowercase|translate|capitalizeFirstLetter}}
+                    </label>
+                  </div>
+                  <div *ngIf='field.numberCheckBoxOptionsNumber4.options.length' fxLayout='row wrap' fxLayout.xs="column"
+                  fxLayoutAlign="flex-start" fxLayoutGap="10%" fxLayoutGap.xs="0">
+                    <div *ngFor="let opt of field.numberCheckBoxOptionsNumber4.options; let i=index" fxFlex="40%" class='margin-bottom'>
+                    <app-number *ngIf='i<displayItemsLimit' [numberOption]='opt' [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber4"'
+                    [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                    <app-number *ngIf='showMoreOptionsToggleCheckBox4 && i>=displayItemsLimit' [numberOption]='opt' [numberCheckBoxOptionsNumber]= '"numberCheckBoxOptionsNumber4"'
+                    [disableOptions]='disableOptions' [field]="field" [form]="form"></app-number>
+                    </div>
+                  </div>
+                  <div fxFlex="100%" class='margin-bottom'
+                  *ngIf='field.numberCheckBoxOptionsNumber4.options.length && disableOptions'>
+                    <button mat-stroked-button class='margin-right ajout-btn' (click)='addOption.emit({field: field, list: "numberCheckBoxOptionsNumber4"})'>
+                    <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+                    </button>
+                    <mat-label>{{'Add'|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+                  </div>
+                  <div fxFlex="100%" *ngIf="field.options.length && field.radioValue && field.radioCriteriaName">
+                    <app-radio [field]="field" [form]="form" [disableOptions]='disableOptions'></app-radio>
+                  </div>
+                </div>
+
+
+                <div *ngIf='field.type !== fieldTypeEnum.TOGGLE_CHECKBOX && field.showAddFieldBtn && disableOptions'>
+                  <button mat-stroked-button class='ajout-btn' (click)='addOption.emit(field)'>
+                  <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+                  </button>
+                  &nbsp;
+                  <mat-label>{{'Add'|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+                </div>
+              </div>
+          </div>
+      </div>
+      </div>
+      <mat-divider ></mat-divider>
+</div>

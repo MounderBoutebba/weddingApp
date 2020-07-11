@@ -1,0 +1,1344 @@
+<form class="formTexture">
+    <!-- prestation propose -->
+	<div class="mrTop10">
+		<span class="accent-title" translate>
+			Services proposés
+		</span>
+	</div>
+    <div  class="prestationContainerBig" fxLayout fxLayoutAlign="space-between">
+        <div *ngIf="isCoiffure" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+          <div>
+            <mat-checkbox color="primary" translate [checked]='coiffureIsChecked'
+              (change)='initBookingObject($event.checked, maquillageIsChecked,esthetiqueIsChecked,soinIsChecked)'>
+              <span class="checkbox">Coiffure</span>
+            </mat-checkbox>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div>
+              <span translate class="greyText15">Nombre de coiffures</span>
+            </div>
+            <div fxLayout fxLayoutAlign="center center">
+              <button mat-mini-fab
+              (click)='numberInputChangeValue("coiffure","decrement", "coiffureNombre", 1, 1)'
+                class='margin-right number-control-btn number-control-btn-remove margin-left'>
+                <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+              </button>
+              <span matSuffix>{{bookingObject.coiffure.coiffureNombre || 1}} </span>
+              <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeValue("coiffure","increment", "coiffureNombre", 1)'>
+                <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+              </button>
+            </div>
+    
+          </div>
+        </div>
+        <div *ngIf="isMaquillage" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+          <div>
+            <mat-checkbox color="primary" translate [checked]='maquillageIsChecked'
+              (change)='initBookingObject(coiffureIsChecked, $event.checked,esthetiqueIsChecked,soinIsChecked)'>
+               <span class="checkbox">Maquillage</span>
+            </mat-checkbox>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div>
+              <span translate class="greyText15">Nombre de maquillages</span>
+            </div>
+            <div fxLayout fxLayoutAlign="center center">
+              <button mat-mini-fab
+              (click)='numberInputChangeValue("maquillage","decrement", "maquillageNombre", 1, 1)'
+                class='margin-right number-control-btn number-control-btn-remove margin-left'>
+                <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+              </button>
+              <span matSuffix>{{bookingObject.maquillage.maquillageNombre || 1}} </span>
+              <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeValue("maquillage","increment", "maquillageNombre", 1)'>
+                <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+              </button>
+            </div>
+    
+          </div>
+        </div>
+    </div>
+    <div class="container4rem" fxLayout fxLayoutAlign="space-between">
+        <div *ngIf="isEsthetique" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+          <div>
+            <mat-checkbox color="primary" translate [checked]='esthetiqueIsChecked'
+              (change)='initBookingObject(coiffureIsChecked, maquillageIsChecked,$event.checked,soinIsChecked)'>
+              <span class="checkbox">	Esthétique</span>
+            </mat-checkbox>
+          </div>
+        </div>
+        <div *ngIf="isSoin" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+          <div>
+            <mat-checkbox color="primary" translate [checked]='soinIsChecked'
+              (change)='initBookingObject(coiffureIsChecked, maquillageIsChecked,esthetiqueIsChecked,$event.checked)'>
+               <span class="checkbox">Soins</span>
+            </mat-checkbox>
+          </div>
+        </div>
+    </div>
+    <mat-divider class="matdividerForcedHeight"></mat-divider>
+    <!-- fin prestation propose -->
+
+  <!-- Coiffure -->
+  <!-- Coiffure title -->
+  <div *ngIf="isCoiffure && coiffureIsChecked" fxLayout fxLayoutAlign="space-between center" class="divided-title">
+    <div class="half-divider"></div> <span  class="metierTitle">Coiffure </span>
+    <div class="half-divider"></div>
+  </div>
+  <!-- Conseils/Essais -->
+  <div *ngIf="isCoiffure && coiffureIsChecked && (companyDescriptionInfo?.criteres?.coiffure_conseilsPersonnalises || companyDescriptionInfo?.criteres?.coiffure_essais)" class="margin10U30D">
+		<span class="accent-title" translate>
+			Conseils/Essais
+		</span>
+  </div>
+  
+  <div *ngIf="isCoiffure && coiffureIsChecked && companyDescriptionInfo?.criteres?.coiffure_conseilsPersonnalises"
+    fxLayout="column">
+    <div class="inline-container-4 margin-bottom">
+      <div>
+       <span translate class="boldText">Rendez-vous conseils</span>
+        <br>
+        <span translate class="greyText">Obtenir un rendez-vous conseil personnalisé</span>
+      </div>
+      <mat-slide-toggle color="primary" [checked]='bookingObject.coiffure?.conseilsPersonnalises'
+      (change)='toggleChange("coiffure","conseilsPersonnalises", $event.checked)'>
+      </mat-slide-toggle>
+   </div>
+    <div *ngIf="bookingObject.coiffure.conseilsPersonnalises" fxLayout="row"
+    fxLayoutAlign="space-between center"  class="margin-15U30D">
+      <div fxFlexOffset=53>
+        <span translate class="greyText15">Nombre d'heures</span>
+      </div>
+      <div fxLayout fxLayoutAlign="center center">
+        <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+          (click)='numberInputChangeValue("coiffure","decrement", "conseilsPersonnalisesDuree", 1, companyDescriptionInfo?.criteres?.coiffure_conseilsPersonnalisesDuree)'>
+          <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.coiffure.conseilsPersonnalisesDuree}}h </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+           (click)='numberInputChangeValue("coiffure","increment", "conseilsPersonnalisesDuree", 1)'>
+           <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+      </div>
+    </div>
+
+  </div>
+  <mat-divider  *ngIf="isCoiffure && coiffureIsChecked && companyDescriptionInfo?.criteres?.coiffure_conseilsPersonnalises"
+  class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isCoiffure && coiffureIsChecked && companyDescriptionInfo?.criteres?.coiffure_essais"
+    fxLayout="column">
+    <div class="inline-container-4 margin-bottom">
+      <div>
+       <span translate class="boldText">Essais</span>
+        <br>
+        <span translate class="greyText">Obtenir des essais coiffures</span>
+      </div>
+      <mat-slide-toggle color="primary" [checked]='bookingObject.coiffure?.essais'
+      (change)='toggleChange("coiffure","essais", $event.checked)'>
+      </mat-slide-toggle>
+   </div>
+    <div *ngIf="bookingObject.coiffure.essais" fxLayout="row"
+    fxLayoutAlign="space-between center"  class="margin-15U30D">
+      <div fxFlexOffset=53>
+        <span translate class="greyText15">Nombre d’essais</span>
+      </div>
+      <div fxLayout fxLayoutAlign="center center">
+        <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+          (click)='numberInputChangeValue("coiffure","decrement", "essaisNombre", 1, companyDescriptionInfo?.criteres?.coiffure_essaisNombre)'>
+          <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.coiffure.essaisNombre}}h </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+           (click)='numberInputChangeValue("coiffure","increment", "essaisNombre", 1)'>
+           <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+      </div>
+    </div>
+  </div>
+  <mat-divider  *ngIf="isCoiffure && coiffureIsChecked && companyDescriptionInfo?.criteres?.coiffure_essais"
+  class="margin-bottom"></mat-divider>
+  <!-- fin Conseils/Essais -->
+ 
+  <!-- Spécificités chevelure -->
+  <div *ngIf="isCoiffure && coiffureIsChecked && companyDescriptionInfo?.criteres?.coiffure_majorationTypeCheveux.value" class="titleSpacing">
+		<span class="accent-title" translate>
+			Spécificités chevelure
+		</span>
+  </div>
+  <div *ngIf="isCoiffure && coiffureIsChecked && companyDescriptionInfo?.criteres?.coiffure_majorationTypeCheveux.value"
+   class="container4rem" fxLayout fxLayoutAlign="space-between">
+    <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+      <div>
+        <mat-checkbox color="primary" translate
+        (change)='checkBoxChangeList("coiffure","majorationTypeCheveux", "cheveux long",$event.checked)' >
+          <span class="checkbox">	Cheveux long</span>
+        </mat-checkbox>
+      </div>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+      <div>
+        <mat-checkbox color="primary" translate
+        (change)='checkBoxChangeList("coiffure","majorationTypeCheveux", "cheveux bouclés",$event.checked)' >
+           <span class="checkbox">Cheveux bouclés</span>
+        </mat-checkbox>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isCoiffure && coiffureIsChecked && companyDescriptionInfo?.criteres?.coiffure_majorationTypeCheveux.value" 
+  class="container4rem" fxLayout fxLayoutAlign="space-between">
+    <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+      <div>
+        <mat-checkbox color="primary" translate
+        (change)='checkBoxChangeList("coiffure","majorationTypeCheveux", "cheveux crépus",$event.checked)'>
+          <span class="checkbox">Cheveux Crépus</span>
+        </mat-checkbox>
+      </div>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+      <div>
+        <mat-checkbox color="primary" translate
+        (change)='checkBoxChangeList("coiffure","majorationTypeCheveux", "cheveux frisés",$event.checked)'>
+           <span class="checkbox">Cheveux frisés</span>
+        </mat-checkbox>
+      </div>
+    </div>
+  </div>
+  <mat-divider *ngIf="isCoiffure && coiffureIsChecked && companyDescriptionInfo?.criteres?.coiffure_majorationTypeCheveux.value" class="matdividerForcedHeight"></mat-divider>
+  <!--fin Spécificités chevelure -->
+
+  <!-- Produits et Accessoires -->
+  <div *ngIf="isCoiffure && coiffureIsChecked && companyDescriptionInfo?.criteres?.coiffure_produitsEtAccessoires.value"
+    fxLayout="row wrap" fxLayoutAlign="start stretch">
+  <div  class="titleSpacing">
+		<span class="accent-title" translate>
+			Produits et Accessoires
+		</span>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex=100>
+        <div class="margin1rem" fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxFlex=100>
+          <div *ngFor="let produit of produitsList.coiffure;let i=index;let last= last"
+          [hidden]="!getShowMore('coiffure', 'produitsEtAccessoires')?.value && i>= 4" fxFlex=48>
+            <div *ngIf='i<4' class="padding10U10D">
+              <mat-checkbox color="primary" translate
+              (change)='checkBoxChangeList("coiffure","produitsEtAccessoires", produit.name,$event.checked)'>
+                <span class="checkbox"> {{produit.name}}</span> </mat-checkbox>
+            </div>
+            <div *ngIf='i<4' class="padding10U10D"
+              fxLayout="row" fxLayoutAlign="space-between center">
+              <div>
+                <span translate class="greyText15">Quantité</span>
+              </div>
+              <div fxLayout fxLayoutAlign="center center">
+                <button (click)='numberInputChangeValueComplexeObjects("coiffure","decrement","produitsEtAccessoires", produit.name,1 ,1)' mat-mini-fab
+                  class='margin-right number-control-btn number-control-btn-remove margin-left'
+                  [disabled]='!getProduct("coiffure", produit.name)?.checked'>
+                  <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                </button>
+                <span matSuffix> {{getProduct("coiffure", produit.name)?.quantity || 1}} </span>
+                <button (click)='numberInputChangeValueComplexeObjects("coiffure","increment","produitsEtAccessoires", produit.name, 1)' mat-mini-fab
+                  class='margin-left number-control-btn'
+                  [disabled]='!getProduct("coiffure", produit.name)?.checked'>
+                  <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div *ngIf="getShowMore('coiffure', 'produitsEtAccessoires')?.value && i>=4" class="padding10U10D">
+              <mat-checkbox color="primary" translate
+              (change)='checkBoxChangeList("coiffure","produitsEtAccessoires", produit.name,$event.checked)'>
+                <span class="checkbox"> {{produit.name}}</span> </mat-checkbox>
+            </div>
+            <div *ngIf="getShowMore('coiffure', 'produitsEtAccessoires')?.value && i>=4" class="padding10U10D"
+              fxLayout="row" fxLayoutAlign="space-between center">
+              <div>
+                <span translate class="greyText15">Quantité</span>
+              </div>
+              <div fxLayout fxLayoutAlign="center center">
+                <button (click)='numberInputChangeValueComplexeObjects("coiffure","decrement","produitsEtAccessoires", produit.name,1 ,1)' mat-mini-fab
+                  class='margin-right number-control-btn number-control-btn-remove margin-left'
+                  [disabled]='!getProduct("coiffure", produit.name)?.checked'>
+                  <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                </button>
+                <span matSuffix> {{getProduct("coiffure", produit.name)?.quantity || 1}} </span>
+                <button (click)='numberInputChangeValueComplexeObjects("coiffure","increment","produitsEtAccessoires", produit.name, 1)' mat-mini-fab
+                  class='margin-left number-control-btn'
+                  [disabled]='!getProduct("coiffure", produit.name)?.checked'>
+                  <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                </button>
+              </div>
+            </div>
+
+        </div>
+        </div>
+
+        <div>
+          <button mat-button color='primary' (click)="setShowMore('coiffure', 'produitsEtAccessoires')"
+              *ngIf="produitsList.coiffure.length > 4">
+              {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+              <mat-icon color='primary' *ngIf="!getShowMore('coiffure', 'produitsEtAccessoires')?.value">keyboard_arrow_down</mat-icon>
+              <mat-icon color='primary' *ngIf="getShowMore('coiffure', 'produitsEtAccessoires')?.value">keyboard_arrow_up</mat-icon>
+          </button>
+        </div>
+  </div>
+  <mat-divider class="matdividerForcedHeight" style="width: 100% !important;"></mat-divider>
+  </div>
+  <!-- fin Produits et Accessoires -->
+  <!-- prestation pour les invités -->
+  <div *ngIf="isCoiffure && coiffureIsChecked && companyDescriptionInfo?.criteres?.coiffure_prestationInvitesProches.value"
+  fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div  class="titleSpacing">
+      <span class="accent-title" translate>
+        Prestations pour les invités
+      </span>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex=100>
+      <div fxLayout="column" *ngFor="let prestation of companyDescriptionInfo?.criteres?.coiffure_prestationInvitesProches.prestations">
+        
+        <div class="titleSpacing">
+          <span class="light-title" translate>
+            {{prestation.name}}
+          </span>
+        </div>
+
+        <div fxLayout="column">
+          <div class="inline-container-4 margin-bottom">
+            <div>
+            <span *ngIf="prestation.name === 'Coiffure'" translate
+            class="boldText">Coiffures invités, famille, témoins</span>
+            <span *ngIf="prestation.name === 'Technique'" translate
+            class="boldText">Techniques invités, famille, témoins</span>
+              <br>
+              <span *ngIf="prestation.name === 'Coiffure'" translate
+              class="greyText">Obtenir des coiffures pour vos invités, famille ou témoins</span>
+              <span *ngIf="prestation.name === 'Technique'" translate
+              class="greyText">Obtenir des prestations techniques pour vos invités, famille ou témoins</span>
+            </div>
+            <mat-slide-toggle color="primary"
+            (change)='prestationToggleChange("coiffure","prestationInvitesProches", prestation.name, $event.checked)'>
+            </mat-slide-toggle>
+          </div>
+        </div>
+
+        <div *ngIf="getPrestation('coiffure', 'prestationInvitesProches', prestation.name)?.checked"
+        fxLayout="row wrap" fxLayoutAlign="space-between start" fxFlex=100>
+          <div *ngFor="let opt of getPrestation('coiffure', 'prestationInvitesProches', prestation.name).options; let i=index" fxFlex=48
+            class="margin1rem" [hidden]="!getShowMore('coiffure', 'prestationInvitesProches', prestation.name)?.value && i>= 4">
+
+              <div *ngIf='i<4' class="padding10U10D"
+                fxLayout="row" fxLayoutAlign="space-between center">
+                <div>
+                  <span translate class="greyText15">{{opt.name}}</span>
+                </div>
+                <div fxLayout fxLayoutAlign="center center">
+                  <button (click)='numberInputChangeValuePrestations("coiffure","decrement","prestationInvitesProches", prestation.name, opt.name, 1 ,1)' mat-mini-fab
+                    class='margin-right number-control-btn number-control-btn-remove margin-left'>
+                    <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                  </button>
+                  <span matSuffix> {{opt.value}} </span>
+                  <button (click)='numberInputChangeValuePrestations("coiffure","increment","prestationInvitesProches", prestation.name, opt.name, 1)' mat-mini-fab
+                    class='margin-left number-control-btn'>
+                    <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <div *ngIf="getShowMore('coiffure', 'prestationInvitesProches', prestation.name)?.value && i>=4" class="padding10U10D"
+                fxLayout="row" fxLayoutAlign="space-between center">
+                <div>
+                  <span translate class="greyText15">{{opt.name}}</span>
+                </div>
+                <div fxLayout fxLayoutAlign="center center">
+                  <button (click)='numberInputChangeValuePrestations("coiffure","decrement","prestationInvitesProches", prestation.name, opt.name, 1 ,1)' mat-mini-fab
+                    class='margin-right number-control-btn number-control-btn-remove margin-left'>
+                    <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                  </button>
+                  <span matSuffix> {{opt.value}} </span>
+                  <button (click)='numberInputChangeValuePrestations("coiffure","increment","prestationInvitesProches", prestation.name, opt.name, 1)' mat-mini-fab
+                    class='margin-left number-control-btn'>
+                    <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                  </button>
+                </div>
+              </div>
+  
+          </div>
+        </div>
+
+        <div *ngIf="getPrestation('coiffure', 'prestationInvitesProches', prestation.name)?.checked">
+            <button mat-button color='primary' (click)="setShowMore('coiffure', 'prestationInvitesProches', prestation.name)"
+                *ngIf="getPrestation('coiffure', 'prestationInvitesProches', prestation.name)?.options.length > 4">
+                {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                <mat-icon color='primary' *ngIf="!getShowMore('coiffure', 'prestationInvitesProches', prestation.name)?.value">keyboard_arrow_down</mat-icon>
+                <mat-icon color='primary' *ngIf="getShowMore('coiffure', 'prestationInvitesProches', prestation.name)?.value">keyboard_arrow_up</mat-icon>
+            </button>
+        </div>
+        <mat-divider class="matdividerForcedHeight" style="width: 100% !important;"></mat-divider>
+      </div>
+    </div>
+  </div>
+  <!-- fin prestation pour les invités -->
+
+
+  <!-- fin Coiffure -->
+  
+  <!-- maquillage -->
+  <!-- maquillage title -->
+  <div *ngIf="isMaquillage && maquillageIsChecked" fxLayout fxLayoutAlign="space-between center" class="divided-title">
+    <div class="half-divider"></div> <span  class="metierTitle">Maquillage </span>
+    <div class="half-divider"></div>
+  </div>
+
+    <!-- Conseils/Essais -->
+    <div *ngIf="isMaquillage && maquillageIsChecked && (companyDescriptionInfo?.criteres?.maquillage_conseilsPersonnalises || companyDescriptionInfo?.criteres?.coiffure_essais)" class="margin10U30D">
+      <span class="accent-title" translate>
+        Conseils/Essais
+      </span>
+    </div>
+
+    <div *ngIf="isMaquillage && maquillageIsChecked && companyDescriptionInfo?.criteres?.maquillage_conseilsPersonnalises"
+    fxLayout="column">
+    <div class="inline-container-4 margin-bottom">
+      <div>
+       <span translate class="boldText">Rendez-vous conseils</span>
+        <br>
+        <span translate class="greyText">Obtenir un rendez-vous conseil personnalisé</span>
+      </div>
+      <mat-slide-toggle color="primary" [checked]='bookingObject.maquillage.conseilsPersonnalises'
+      (change)='toggleChange("maquillage","conseilsPersonnalises", $event.checked)'>
+      </mat-slide-toggle>
+   </div>
+    <div *ngIf="bookingObject.maquillage.conseilsPersonnalises" fxLayout="row"
+    fxLayoutAlign="space-between center"  class="margin-15U30D">
+      <div fxFlexOffset=53>
+        <span translate class="greyText15">Nombre d'heures</span>
+      </div>
+      <div fxLayout fxLayoutAlign="center center">
+        <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+          (click)='numberInputChangeValue("maquillage","decrement", "conseilsPersonnalisesDuree", 1, companyDescriptionInfo?.criteres?.maquillage_conseilsPersonnalisesDuree)'>
+          <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.maquillage.conseilsPersonnalisesDuree}}h </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+           (click)='numberInputChangeValue("maquillage","increment", "conseilsPersonnalisesDuree", 1)'>
+           <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+      </div>
+    </div>
+
+  </div>
+  <mat-divider *ngIf="isMaquillage && maquillageIsChecked && companyDescriptionInfo?.criteres?.maquillage_conseilsPersonnalises"
+  class="margin-bottom"></mat-divider>
+  
+  <div *ngIf="isMaquillage && maquillageIsChecked && companyDescriptionInfo?.criteres?.maquillage_essais"
+    fxLayout="column">
+    <div class="inline-container-4 margin-bottom">
+      <div>
+       <span translate class="boldText">Essais</span>
+        <br>
+        <span translate class="greyText">Obtenir des essais maquillages</span>
+      </div>
+      <mat-slide-toggle color="primary" [checked]='bookingObject.maquillage.essais'
+      (change)='toggleChange("maquillage","essais", $event.checked)'>
+      </mat-slide-toggle>
+   </div>
+    <div *ngIf="bookingObject.maquillage.essais" fxLayout="row"
+    fxLayoutAlign="space-between center"  class="margin-15U30D">
+      <div fxFlexOffset=53>
+        <span translate>Nombre d’essais</span>
+      </div>
+      <div fxLayout fxLayoutAlign="center center">
+        <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+          (click)='numberInputChangeValue("maquillage","decrement", "essaisNombre", 1, companyDescriptionInfo?.criteres?.maquillage_essaisNombre)'>
+          <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.maquillage.essaisNombre}}h </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+           (click)='numberInputChangeValue("maquillage","increment", "essaisNombre", 1)'>
+           <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+      </div>
+    </div>
+  </div>
+  <mat-divider *ngIf="isMaquillage && maquillageIsChecked && companyDescriptionInfo?.criteres?.maquillage_essais"
+  class="margin-bottom"></mat-divider>
+  <!-- fin Conseils/Essais -->
+
+    <!-- Spécificités peau -->
+    <div *ngIf="isMaquillage && maquillageIsChecked && companyDescriptionInfo?.criteres?.maquillage_majorationTypeDePeau.value" class="titleSpacing">
+      <span class="accent-title" translate>
+         Spécificités peaux
+      </span>
+    </div>
+    <div *ngIf="isMaquillage && maquillageIsChecked && companyDescriptionInfo?.criteres?.maquillage_majorationTypeDePeau.value"
+     class="container4rem" fxLayout fxLayoutAlign="space-between">
+      <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+        <div>
+          <mat-checkbox color="primary" translate
+          (change)='checkBoxChangeList("maquillage","majorationTypeDePeau", "Sèche",$event.checked)' >
+            <span class="checkbox">Peau sèche</span>
+          </mat-checkbox>
+        </div>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+        <div>
+          <mat-checkbox color="primary" translate
+          (change)='checkBoxChangeList("maquillage","majorationTypeDePeau", "Grasse",$event.checked)' >
+             <span class="checkbox">Peau grace</span>
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="isMaquillage && maquillageIsChecked && companyDescriptionInfo?.criteres?.maquillage_majorationTypeDePeau.value" 
+    class="container4rem" fxLayout fxLayoutAlign="space-between">
+      <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+        <div>
+          <mat-checkbox color="primary" translate
+          (change)='checkBoxChangeList("maquillage","majorationTypeDePeau", "Peau mixte",$event.checked)'>
+            <span class="checkbox">	Peau mixte</span>
+          </mat-checkbox>
+        </div>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+        <div>
+          <mat-checkbox color="primary" translate
+          (change)='checkBoxChangeList("maquillage","majorationTypeDePeau", "Sensible",$event.checked)'>
+             <span class="checkbox"> Peau sensible</span>
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+    <mat-divider *ngIf="isMaquillage && maquillageIsChecked && companyDescriptionInfo?.criteres?.maquillage_majorationTypeDePeau.value" class="matdividerForcedHeight"></mat-divider>
+    <!--fin Spécificités peau -->
+
+
+<!-- Produits et Accessoires -->
+  <div *ngIf="isMaquillage && maquillageIsChecked && companyDescriptionInfo?.criteres?.maquillage_produits.value"
+    fxLayout="row wrap" fxLayoutAlign="start stretch">
+  <div  class="titleSpacing">
+		 <span class="accent-title" translate>
+			Produits et Accessoires
+		 </span>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex=100>
+    <div class="margin1rem" fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxFlex=100>
+        <div *ngFor="let produit of produitsList.maquillage;let i=index;let last= last" fxFlex=48
+          class="margin1rem" [hidden]="!getShowMore('maquillage', 'produits')?.value && i>= 4">
+          <div *ngIf='i<4' class="padding10U10D">
+            <mat-checkbox color="primary" translate
+            (change)='checkBoxChangeList("maquillage","produits", produit.name,$event.checked)'>
+              <span class="checkbox"> {{produit.name}}</span> </mat-checkbox>
+          </div>
+          <div *ngIf='i<4' class="padding10U10D"
+            fxLayout="row" fxLayoutAlign="space-between center">
+            <div>
+              <span translate class="greyText15">Quantité</span>
+            </div>
+            <div fxLayout fxLayoutAlign="center center">
+              <button (click)='numberInputChangeValueComplexeObjects("maquillage","decrement","produits", produit.name,1 ,1)' mat-mini-fab
+                class='margin-right number-control-btn number-control-btn-remove margin-left'
+                [disabled]='!getProduct("maquillage", produit.name)?.checked'>
+                <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+              </button>
+              <span matSuffix> {{getProduct("maquillage", produit.name)?.quantity || 1}} </span>
+              <button (click)='numberInputChangeValueComplexeObjects("maquillage","increment","produits", produit.name, 1)' mat-mini-fab
+                class='margin-left number-control-btn'
+                [disabled]='!getProduct("maquillage", produit.name)?.checked'>
+                <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="getShowMore('maquillage', 'produits')?.value && i>=4" class="padding10U10D">
+            <mat-checkbox color="primary" translate
+            (change)='checkBoxChangeList("maquillage","produits", produit.name,$event.checked)'>
+              <span class="checkbox"> {{produit.name}}</span> </mat-checkbox>
+          </div>
+          <div *ngIf="getShowMore('maquillage', 'produits')?.value && i>=4" class="padding10U10D"
+            fxLayout="row" fxLayoutAlign="space-between center">
+            <div>
+              <span translate class="greyText15">Quantité</span>
+            </div>
+            <div fxLayout fxLayoutAlign="center center">
+              <button (click)='numberInputChangeValueComplexeObjects("maquillage","decrement","produits", produit.name,1 ,1)' mat-mini-fab
+                class='margin-right number-control-btn number-control-btn-remove margin-left'
+                [disabled]='!getProduct("maquillage", produit.name)?.checked'>
+                <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+              </button>
+              <span matSuffix> {{getProduct("maquillage", produit.name)?.quantity || 1}} </span>
+              <button (click)='numberInputChangeValueComplexeObjects("maquillage","increment","produits", produit.name, 1)' mat-mini-fab
+                class='margin-left number-control-btn'
+                [disabled]='!getProduct("maquillage", produit.name)?.checked'>
+                <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+              </button>
+            </div>
+          </div>
+
+        </div>
+    </div>
+
+    <div>
+      <button mat-button color='primary' (click)="setShowMore('maquillage', 'produits')"
+          *ngIf="produitsList.maquillage.length > 4">
+          {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+          <mat-icon color='primary' *ngIf="!getShowMore('maquillage', 'produits')?.value">keyboard_arrow_down</mat-icon>
+          <mat-icon color='primary' *ngIf="getShowMore('maquillage', 'produits')?.value">keyboard_arrow_up</mat-icon>
+      </button>
+    </div>
+  </div>
+  <mat-divider class="matdividerForcedHeight" style="width: 100% !important;"></mat-divider>
+</div>
+  <!-- fin Produits et Accessoires -->    
+  <!-- fin Maquillage -->
+    <!-- prestation pour les invités -->
+    <div *ngIf="isMaquillage && maquillageIsChecked && companyDescriptionInfo?.criteres?.maquillage_prestationInvitesProches.value"
+    fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div  class="titleSpacing">
+        <span class="accent-title" translate>
+          Prestations pour les invités
+        </span>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex=100>
+        <div fxLayout="column" *ngFor="let prestation of companyDescriptionInfo?.criteres?.maquillage_prestationInvitesProches.prestations">
+          
+          <div class="titleSpacing">
+            <span class="light-title" translate>
+              {{prestation.name || 'Maquillages'}}
+            </span>
+          </div>
+  
+          <div fxLayout="column">
+            <div class="inline-container-4 margin-bottom">
+              <div>
+              <span *ngIf="prestation.name === ''" translate
+              class="boldText">Maquillages invités, famille, témoins</span>
+                <br>
+                <span *ngIf="prestation.name === ''" translate
+                class="greyText">Obtenir des prestations maquillages pour vos invités, famille ou témoins</span>
+              </div>
+              <mat-slide-toggle color="primary"
+              (change)='prestationToggleChange("maquillage","prestationInvitesProches", prestation.name, $event.checked)'>
+              </mat-slide-toggle>
+            </div>
+          </div>
+  
+          <div *ngIf="getPrestation('maquillage', 'prestationInvitesProches', prestation.name)?.checked"
+          fxLayout="row wrap" fxLayoutAlign="space-between start" fxFlex=100>
+            <div *ngFor="let opt of getPrestation('maquillage', 'prestationInvitesProches', prestation.name).options; let i=index" fxFlex=48
+              class="margin1rem" [hidden]="!getShowMore('maquillage', 'prestationInvitesProches', prestation.name)?.value && i>= 4">
+  
+                <div *ngIf='i<4' class="padding10U10D"
+                  fxLayout="row" fxLayoutAlign="space-between center">
+                  <div>
+                    <span translate class="greyText15">{{opt.name}}</span>
+                  </div>
+                  <div fxLayout fxLayoutAlign="center center">
+                    <button (click)='numberInputChangeValuePrestations("maquillage","decrement","prestationInvitesProches", prestation.name, opt.name, 1 ,1)' mat-mini-fab
+                      class='margin-right number-control-btn number-control-btn-remove margin-left'>
+                      <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                    </button>
+                    <span matSuffix> {{opt.value}} </span>
+                    <button (click)='numberInputChangeValuePrestations("maquillage","increment","prestationInvitesProches", prestation.name, opt.name, 1)' mat-mini-fab
+                      class='margin-left number-control-btn'>
+                      <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+  
+                <div *ngIf="getShowMore('maquillage', 'prestationInvitesProches', prestation.name)?.value && i>=4" class="padding10U10D"
+                  fxLayout="row" fxLayoutAlign="space-between center">
+                  <div>
+                    <span translate class="greyText15">{{opt.name}}</span>
+                  </div>
+                  <div fxLayout fxLayoutAlign="center center">
+                    <button (click)='numberInputChangeValuePrestations("maquillage","decrement","prestationInvitesProches", prestation.name, opt.name, 1 ,1)' mat-mini-fab
+                      class='margin-right number-control-btn number-control-btn-remove margin-left'>
+                      <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                    </button>
+                    <span matSuffix> {{opt.value}} </span>
+                    <button (click)='numberInputChangeValuePrestations("maquillage","increment","prestationInvitesProches", prestation.name, opt.name, 1)' mat-mini-fab
+                      class='margin-left number-control-btn'>
+                      <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+    
+            </div>
+          </div>
+  
+          <div *ngIf="getPrestation('maquillage', 'prestationInvitesProches', prestation.name)?.checked">
+              <button mat-button color='primary' (click)="setShowMore('maquillage', 'prestationInvitesProches', prestation.name)"
+                  *ngIf="getPrestation('maquillage', 'prestationInvitesProches', prestation.name)?.options.length > 4">
+                  {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                  <mat-icon color='primary' *ngIf="!getShowMore('maquillage', 'prestationInvitesProches', prestation.name)?.value">keyboard_arrow_down</mat-icon>
+                  <mat-icon color='primary' *ngIf="getShowMore('maquillage', 'prestationInvitesProches', prestation.name)?.value">keyboard_arrow_up</mat-icon>
+              </button>
+          </div>
+          <mat-divider class="matdividerForcedHeight" style="width: 100% !important;"></mat-divider>
+        </div>
+      </div>
+    </div>
+    <!-- fin prestation pour les invités -->
+  <!-- Esthetique -->
+  <!-- Esthetique title -->
+  <div *ngIf="isEsthetique && esthetiqueIsChecked" fxLayout fxLayoutAlign="space-between center" class="divided-title">
+    <div class="half-divider"></div> <span  class="metierTitle">Esthetique </span>
+    <div class="half-divider"></div>
+  </div>
+
+      <!-- Conseils/Essais -->
+      <div *ngIf="isEsthetique && esthetiqueIsChecked && (companyDescriptionInfo?.criteres?.esthetique_conseilsPersonnalises || companyDescriptionInfo?.criteres?.esthetique_essais)" class="margin10U30D">
+        <span class="accent-title" translate>
+          Conseils/Essais
+        </span>
+      </div>
+  
+      <div *ngIf="isEsthetique && esthetiqueIsChecked && companyDescriptionInfo?.criteres?.esthetique_conseilsPersonnalises"
+      fxLayout="column">
+      <div class="inline-container-4 margin-bottom">
+        <div>
+         <span translate class="boldText">Rendez-vous conseils</span>
+          <br>
+          <span translate class="greyText">Obtenir un rendez-vous conseil personnalisé</span>
+        </div>
+        <mat-slide-toggle color="primary" [checked]='bookingObject.esthetique.conseilsPersonnalises'
+        (change)='toggleChange("esthetique","conseilsPersonnalises", $event.checked)'>
+        </mat-slide-toggle>
+     </div>
+      <div *ngIf="bookingObject.esthetique.conseilsPersonnalises" fxLayout="row"
+      fxLayoutAlign="space-between center"  class="margin-15U30D">
+        <div fxFlexOffset=53>
+          <span translate class="greyText15">Nombre d'heures</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+            (click)='numberInputChangeValue("esthetique","decrement", "conseilsPersonnalisesDuree", 1, companyDescriptionInfo?.criteres?.esthetique_conseilsPersonnalisesDuree)'>
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{bookingObject.esthetique.conseilsPersonnalisesDuree}}h </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+             (click)='numberInputChangeValue("esthetique","increment", "conseilsPersonnalisesDuree", 1)'>
+             <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+        </div>
+      </div>
+  
+    </div>
+    <mat-divider *ngIf="isEsthetique && esthetiqueIsChecked && companyDescriptionInfo?.criteres?.esthetique_conseilsPersonnalises"
+    class="margin-bottom"></mat-divider>
+    
+    <div *ngIf="isEsthetique && esthetiqueIsChecked && companyDescriptionInfo?.criteres?.esthetique_essais"
+      fxLayout="column">
+      <div class="inline-container-4 margin-bottom">
+        <div>
+         <span translate class="boldText">Essais</span>
+          <br>
+          <span translate class="greyText">Obtenir des essais esthetiques</span>
+        </div>
+        <mat-slide-toggle color="primary" [checked]='bookingObject.esthetique.essais'
+        (change)='toggleChange("esthetique","essais", $event.checked)'>
+        </mat-slide-toggle>
+     </div>
+      <div *ngIf="bookingObject.esthetique.essais" fxLayout="row"
+      fxLayoutAlign="space-between center"  class="margin-15U30D">
+        <div fxFlexOffset=53>
+          <span translate class="greyText15">Nombre d’essais</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+            (click)='numberInputChangeValue("esthetique","decrement", "essaisNombre", 1, companyDescriptionInfo?.criteres?.esthetique_essaisNombre)'>
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{bookingObject.esthetique.essaisNombre}}h </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+             (click)='numberInputChangeValue("esthetique","increment", "essaisNombre", 1)'>
+             <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+        </div>
+      </div>
+    </div>
+    <mat-divider *ngIf="isEsthetique && esthetiqueIsChecked && companyDescriptionInfo?.criteres?.esthetique_essais"
+    class="margin-bottom"></mat-divider>
+    <!-- fin Conseils/Essais -->
+  <!-- Manucure et Pédicure -->
+  <div *ngIf="isEsthetique && esthetiqueIsChecked && companyDescriptionInfo?.criteres?.esthetique_manucureEtpedicure.value"
+  fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div  class="titleSpacing">
+      <span class="accent-title" translate>
+        Manucure et Pédicure
+      </span>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex=100>
+      <div fxLayout="column" *ngFor="let prestation of companyDescriptionInfo?.criteres?.esthetique_manucureEtpedicure.prestations">
+        
+        <div class="titleSpacing">
+          <span class="light-title" translate>
+            {{prestation.name}}
+          </span>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="space-between start" fxFlex=100>
+          <div *ngFor="let opt of getPrestation('esthetique', 'manucureEtpedicure', prestation.name).options; let i=index" fxFlex=48
+            class="margin1rem" [hidden]="!getShowMore('esthetique', 'manucureEtpedicure', prestation.name)?.value && i>= 4">
+
+              <div *ngIf='i<4' class="padding10U10D">
+                <mat-checkbox color="primary" translate
+                (change)='checkBoxChangeList("esthetique","manucureEtpedicure", opt.name, $event.checked, prestation.name)'>
+                  <span class="checkbox"> {{opt.name}}</span> </mat-checkbox>
+              </div>
+
+              <div *ngIf='i<4' class="padding10U10D"
+                fxLayout="row" fxLayoutAlign="space-between center">
+                <div>
+                  <span translate class="greyText15">Nombre</span>
+                </div>
+                <div fxLayout fxLayoutAlign="center center">
+                  <button (click)='numberInputChangeValuePrestations("esthetique","decrement","manucureEtpedicure", prestation.name, opt.name, 1 ,1)' mat-mini-fab
+                    class='margin-right number-control-btn number-control-btn-remove margin-left'
+                    [disabled]='!opt.checked'>
+                    <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                  </button>
+                  <span matSuffix> {{opt.value}} </span>
+                  <button (click)='numberInputChangeValuePrestations("esthetique","increment","manucureEtpedicure", prestation.name, opt.name, 1)' mat-mini-fab
+                    class='margin-left number-control-btn'
+                    [disabled]='!opt.checked'>
+                    <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <div *ngIf="getShowMore('esthetique', 'manucureEtpedicure', prestation.name)?.value && i>=4" class="padding10U10D">
+                <mat-checkbox color="primary" translate
+                (change)='checkBoxChangeList("esthetique","manucureEtpedicure", opt.name, $event.checked, prestation.name)'>
+                  <span class="checkbox"> {{opt.name}}</span> </mat-checkbox>
+              </div>
+
+              <div *ngIf="getShowMore('esthetique', 'manucureEtpedicure', prestation.name)?.value && i>=4" class="padding10U10D"
+                fxLayout="row" fxLayoutAlign="space-between center">
+                <div>
+                  <span translate class="greyText15">Nombre</span>
+                </div>
+                <div fxLayout fxLayoutAlign="center center">
+                  <button (click)='numberInputChangeValuePrestations("esthetique","decrement","manucureEtpedicure", prestation.name, opt.name, 1 ,1)' mat-mini-fab
+                    class='margin-right number-control-btn number-control-btn-remove margin-left'
+                    [disabled]='!opt.checked'>
+                    <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                  </button>
+                  <span matSuffix> {{opt.value}} </span>
+                  <button (click)='numberInputChangeValuePrestations("esthetique","increment","manucureEtpedicure", prestation.name, opt.name, 1)' mat-mini-fab
+                    class='margin-left number-control-btn'
+                    [disabled]='!opt.checked'>
+                    <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                  </button>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div>
+            <button mat-button color='primary' (click)="setShowMore('esthetique', 'manucureEtpedicure', prestation.name)"
+                *ngIf="getPrestation('esthetique', 'manucureEtpedicure', prestation.name)?.options.length > 4">
+                {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                <mat-icon color='primary' *ngIf="!getShowMore('esthetique', 'manucureEtpedicure', prestation.name)?.value">keyboard_arrow_down</mat-icon>
+                <mat-icon color='primary' *ngIf="getShowMore('esthetique', 'manucureEtpedicure', prestation.name)?.value">keyboard_arrow_up</mat-icon>
+            </button>
+        </div>
+        <mat-divider class="matdividerForcedHeight" style="width: 100% !important;"></mat-divider>
+      </div>
+    </div>
+  </div>
+  <!-- fin Manucure et Pédicure -->
+  <!-- épilation -->
+  <div *ngIf="isEsthetique && esthetiqueIsChecked && companyDescriptionInfo?.criteres?.esthetique_epilation.value"
+  fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div  class="titleSpacing">
+      <span class="accent-title" translate>
+        Épilation
+      </span>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex=100>
+      <div fxLayout="column" *ngFor="let prestation of companyDescriptionInfo?.criteres?.esthetique_epilation.prestations">
+        
+        <div class="titleSpacing">
+          <span class="light-title" translate>
+            {{prestation.name}}
+          </span>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="space-between start" fxFlex=100>
+          <div *ngFor="let opt of getPrestation('esthetique', 'epilation', prestation.name).options; let i=index" fxFlex=48
+            class="margin1rem" [hidden]="!getShowMore('esthetique', 'epilation', prestation.name)?.value && i>= 4">
+
+              <div *ngIf='i<4' class="padding10U10D">
+                <mat-checkbox color="primary" translate
+                (change)='checkBoxChangeList("esthetique","epilation", opt.name, $event.checked, prestation.name)'>
+                  <span class="checkbox"> {{opt.name}}</span> </mat-checkbox>
+              </div>
+
+              <div *ngIf='i<4' class="padding10U10D"
+                fxLayout="row" fxLayoutAlign="space-between center">
+                <div>
+                  <span translate class="greyText15">Nombre</span>
+                </div>
+                <div fxLayout fxLayoutAlign="center center">
+                  <button (click)='numberInputChangeValuePrestations("esthetique","decrement","epilation", prestation.name, opt.name, 1 ,1)' mat-mini-fab
+                    class='margin-right number-control-btn number-control-btn-remove margin-left'
+                    [disabled]='!opt.checked'>
+                    <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                  </button>
+                  <span matSuffix> {{opt.value}} </span>
+                  <button (click)='numberInputChangeValuePrestations("esthetique","increment","epilation", prestation.name, opt.name, 1)' mat-mini-fab
+                    class='margin-left number-control-btn'
+                    [disabled]='!opt.checked'>
+                    <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <div *ngIf="getShowMore('esthetique', 'epilation', prestation.name)?.value && i>=4" class="padding10U10D">
+                <mat-checkbox color="primary" translate
+                (change)='checkBoxChangeList("esthetique","epilation", opt.name, $event.checked, prestation.name)'>
+                  <span class="checkbox"> {{opt.name}}</span> </mat-checkbox>
+              </div>
+
+              <div *ngIf="getShowMore('esthetique', 'epilation', prestation.name)?.value && i>=4" class="padding10U10D"
+                fxLayout="row" fxLayoutAlign="space-between center">
+                <div>
+                  <span translate class="greyText15">Nombre</span>
+                </div>
+                <div fxLayout fxLayoutAlign="center center">
+                  <button (click)='numberInputChangeValuePrestations("esthetique","decrement","epilation", prestation.name, opt.name, 1 ,1)' mat-mini-fab
+                    class='margin-right number-control-btn number-control-btn-remove margin-left'
+                    [disabled]='!opt.checked'>
+                    <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                  </button>
+                  <span matSuffix> {{opt.value}} </span>
+                  <button (click)='numberInputChangeValuePrestations("esthetique","increment","epilation", prestation.name, opt.name, 1)' mat-mini-fab
+                    class='margin-left number-control-btn'
+                    [disabled]='!opt.checked'>
+                    <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                  </button>
+                </div>
+              </div>
+  
+          </div>
+        </div>
+
+        <div>
+            <button mat-button color='primary' (click)="setShowMore('esthetique', 'epilation', prestation.name)"
+                *ngIf="getPrestation('esthetique', 'epilation', prestation.name)?.options.length > 4">
+                {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                <mat-icon color='primary' *ngIf="!getShowMore('esthetique', 'epilation', prestation.name)?.value">keyboard_arrow_down</mat-icon>
+                <mat-icon color='primary' *ngIf="getShowMore('esthetique', 'epilation', prestation.name)?.value">keyboard_arrow_up</mat-icon>
+            </button>
+        </div>
+        <mat-divider class="matdividerForcedHeight" style="width: 100% !important;"></mat-divider>
+      </div>
+    </div>
+  </div>
+  <!-- fin épilation -->
+
+  <!-- fin Esthetique -->
+
+  <!-- soins -->
+  <!-- soins title -->
+  <div *ngIf="isSoin && soinIsChecked" fxLayout fxLayoutAlign="space-between center" class="divided-title">
+    <div class="half-divider"></div> <span  class="metierTitle">Soins </span>
+    <div class="half-divider"></div>
+  </div>
+
+  
+      <!-- Conseils/Essais -->
+      <div *ngIf="isSoin && soinIsChecked && (companyDescriptionInfo?.criteres?.soins_conseilsPersonnalises || companyDescriptionInfo?.criteres?.soins_essais)" class="margin10U30D">
+        <span class="accent-title" translate>
+          Conseils/Essais
+        </span>
+      </div>
+  
+      <div *ngIf="isSoin && soinIsChecked && companyDescriptionInfo?.criteres?.soins_conseilsPersonnalises"
+      fxLayout="column">
+      <div class="inline-container-4 margin-bottom">
+        <div>
+         <span translate class="boldText">Rendez-vous conseils</span>
+          <br>
+          <span translate class="greyText">Obtenir un rendez-vous conseil personnalisé</span>
+        </div>
+        <mat-slide-toggle color="primary" [checked]='bookingObject.soins.conseilsPersonnalises'
+        (change)='toggleChange("soins","conseilsPersonnalises", $event.checked)'>
+        </mat-slide-toggle>
+     </div>
+      <div *ngIf="bookingObject.soins.conseilsPersonnalises" fxLayout="row"
+      fxLayoutAlign="space-between center"  class="margin-15U30D">
+        <div fxFlexOffset=53>
+          <span translate class="greyText15">Nombre d'heures</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+            (click)='numberInputChangeValue("soins","decrement", "conseilsPersonnalisesDuree", 1, companyDescriptionInfo?.criteres?.soins_conseilsPersonnalisesDuree)'>
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{bookingObject.soins.conseilsPersonnalisesDuree}}h </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+             (click)='numberInputChangeValue("soins","increment", "conseilsPersonnalisesDuree", 1)'>
+             <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+        </div>
+      </div>
+  
+    </div>
+    <mat-divider *ngIf="isSoin && soinIsChecked && companyDescriptionInfo?.criteres?.soins_conseilsPersonnalises"
+    class="margin-bottom"></mat-divider>
+    
+    <div *ngIf="isSoin && soinIsChecked && companyDescriptionInfo?.criteres?.soins_essais"
+      fxLayout="column">
+      <div class="inline-container-4 margin-bottom">
+        <div>
+         <span translate class="boldText">Essais</span>
+          <br>
+          <span translate class="greyText">Obtenir des essais soins</span>
+        </div>
+        <mat-slide-toggle color="primary" [checked]='bookingObject.soins.essais'
+        (change)='toggleChange("soins","essais", $event.checked)'>
+        </mat-slide-toggle>
+     </div>
+      <div *ngIf="bookingObject.soins.essais" fxLayout="row"
+      fxLayoutAlign="space-between center"  class="margin-15U30D">
+        <div fxFlexOffset=53>
+          <span translate class="greyText15">Nombre d’essais</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+            (click)='numberInputChangeValue("soins","decrement", "essaisNombre", 1, companyDescriptionInfo?.criteres?.soins_essaisNombre)'>
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{bookingObject.soins.essaisNombre}}h </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+             (click)='numberInputChangeValue("soins","increment", "essaisNombre", 1)'>
+             <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+        </div>
+      </div>
+    </div>
+    <mat-divider *ngIf="isSoin && soinIsChecked && companyDescriptionInfo?.criteres?.soins_essais"
+    class="margin-bottom"></mat-divider>
+    <!-- fin Conseils/Essais -->
+    <!-- soins -->
+    <div *ngIf="isSoin && soinIsChecked && companyDescriptionInfo?.criteres?.soins_soins.value"
+    fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div  class="titleSpacing">
+        <span class="accent-title" translate>
+          Soins
+        </span>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex=100>
+        <div fxLayout="column" *ngFor="let prestation of companyDescriptionInfo?.criteres?.soins_soins.prestations">
+          
+          <div class="titleSpacing">
+            <span class="light-title" translate>
+              {{prestation.name | capitalizeFirstLetter}}
+            </span>
+          </div>
+
+          <div fxLayout="row wrap" fxLayoutAlign="space-between start" fxFlex=100>
+            <div *ngFor="let opt of getPrestation('soins', 'soins', prestation.name).options; let i=index" fxFlex=48
+              class="margin1rem" [hidden]="!getShowMore('soins', 'soins', prestation.name)?.value && i>= 4">
+
+                <div *ngIf='i<4' class="padding10U10D">
+                  <mat-checkbox color="primary" translate
+                  (change)='checkBoxChangeList("soins","soins", opt.name, $event.checked, prestation.name)'>
+                    <span class="checkbox"> {{opt.name}}</span> </mat-checkbox>
+                </div>
+
+                <div *ngIf='i<4' class="padding10U10D"
+                  fxLayout="row" fxLayoutAlign="space-between center">
+                  <div>
+                    <span translate class="greyText15">Nombre</span>
+                  </div>
+                  <div fxLayout fxLayoutAlign="center center">
+                    <button (click)='numberInputChangeValuePrestations("soins","decrement","soins", prestation.name, opt.name, 1 ,1)' mat-mini-fab
+                      class='margin-right number-control-btn number-control-btn-remove margin-left'
+                      [disabled]='!opt.checked'>
+                      <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                    </button>
+                    <span matSuffix> {{opt.value}} </span>
+                    <button (click)='numberInputChangeValuePrestations("soins","increment","soins", prestation.name, opt.name, 1)' mat-mini-fab
+                      class='margin-left number-control-btn'
+                      [disabled]='!opt.checked'>
+                      <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+
+                <div *ngIf="getShowMore('soins', 'soins', prestation.name)?.value && i>=4" class="padding10U10D">
+                  <mat-checkbox color="primary" translate
+                  (change)='checkBoxChangeList("soins","soins", opt.name, $event.checked, prestation.name)'>
+                    <span class="checkbox"> {{opt.name}}</span> </mat-checkbox>
+                </div>
+
+                <div *ngIf="getShowMore('soins', 'soins', prestation.name)?.value && i>=4" class="padding10U10D"
+                  fxLayout="row" fxLayoutAlign="space-between center">
+                  <div>
+                    <span translate class="greyText15">Nombre</span>
+                  </div>
+                  <div fxLayout fxLayoutAlign="center center">
+                    <button (click)='numberInputChangeValuePrestations("soins","decrement","soins", prestation.name, opt.name, 1 ,1)' mat-mini-fab
+                      class='margin-right number-control-btn number-control-btn-remove margin-left'
+                      [disabled]='!opt.checked'>
+                      <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                    </button>
+                    <span matSuffix> {{opt.value}} </span>
+                    <button (click)='numberInputChangeValuePrestations("soins","increment","soins", prestation.name, opt.name, 1)' mat-mini-fab
+                      class='margin-left number-control-btn'
+                      [disabled]='!opt.checked'>
+                      <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+    
+            </div>
+          </div>
+
+          <div>
+              <button mat-button color='primary' (click)="setShowMore('soins', 'soins', prestation.name)"
+                  *ngIf="getPrestation('soins', 'soins', prestation.name)?.options.length > 4">
+                  {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                  <mat-icon color='primary' *ngIf="!getShowMore('soins', 'soins', prestation.name)?.value">keyboard_arrow_down</mat-icon>
+                  <mat-icon color='primary' *ngIf="getShowMore('soins', 'soins', prestation.name)?.value">keyboard_arrow_up</mat-icon>
+              </button>
+          </div>
+          <mat-divider class="matdividerForcedHeight" style="width: 100% !important;"></mat-divider>
+        </div>
+      </div>
+    </div>
+    <!-- fin soins -->
+    <!-- massage -->
+    <div *ngIf="isSoin && soinIsChecked && companyDescriptionInfo?.criteres?.soins_massage  .value"
+    fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div  class="titleSpacing">
+        <span class="accent-title" translate>
+          Massage
+        </span>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex=100>
+        <div fxLayout="column" *ngFor="let prestation of companyDescriptionInfo?.criteres?.soins_massage.prestations">
+          
+          <div fxLayout="row wrap" fxLayoutAlign="space-between start" fxFlex=100>
+            <div *ngFor="let opt of getPrestation('soins', 'massage', prestation.name).options; let i=index" fxFlex=48
+              class="margin1rem" [hidden]="!getShowMore('soins', 'massage', prestation.name)?.value && i>= 4">
+
+                <div *ngIf='i<4' class="padding10U10D">
+                  <mat-checkbox color="primary" translate
+                  (change)='checkBoxChangeList("soins","massage", opt.name, $event.checked, prestation.name)'>
+                    <span class="checkbox"> {{opt.name}}</span> </mat-checkbox>
+                </div>
+
+                <div *ngIf='i<4' class="padding10U10D"
+                  fxLayout="row" fxLayoutAlign="space-between center">
+                  <div>
+                    <span translate class="greyText15">Nombre</span>
+                  </div>
+                  <div fxLayout fxLayoutAlign="center center">
+                    <button (click)='numberInputChangeValuePrestations("soins","decrement","massage", prestation.name, opt.name, 1 ,1)' mat-mini-fab
+                      class='margin-right number-control-btn number-control-btn-remove margin-left'
+                      [disabled]='!opt.checked'>
+                      <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                    </button>
+                    <span matSuffix> {{opt.value}} </span>
+                    <button (click)='numberInputChangeValuePrestations("soins","increment","massage", prestation.name, opt.name, 1)' mat-mini-fab
+                      class='margin-left number-control-btn'
+                      [disabled]='!opt.checked'>
+                      <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+
+                <div *ngIf="getShowMore('soins', 'massage', prestation.name)?.value && i>=4" class="padding10U10D">
+                  <mat-checkbox color="primary" translate
+                  (change)='checkBoxChangeList("soins","massage", opt.name, $event.checked, prestation.name)'>
+                    <span class="checkbox"> {{opt.name}}</span> </mat-checkbox>
+                </div>
+
+                <div *ngIf="getShowMore('soins', 'massage', prestation.name)?.value && i>=4" class="padding10U10D"
+                  fxLayout="row" fxLayoutAlign="space-between center">
+                  <div>
+                    <span translate class="greyText15">Nombre</span>
+                  </div>
+                  <div fxLayout fxLayoutAlign="center center">
+                    <button (click)='numberInputChangeValuePrestations("soins","decrement","massage", prestation.name, opt.name, 1 ,1)' mat-mini-fab
+                      class='margin-right number-control-btn number-control-btn-remove margin-left'
+                      [disabled]='!opt.checked'>
+                      <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                    </button>
+                    <span matSuffix> {{opt.value}} </span>
+                    <button (click)='numberInputChangeValuePrestations("soins","increment","massage", prestation.name, opt.name, 1)' mat-mini-fab
+                      class='margin-left number-control-btn'
+                      [disabled]='!opt.checked'>
+                      <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+    
+            </div>
+          </div>
+
+          <div>
+              <button mat-button color='primary' (click)="setShowMore('soins', 'massage', prestation.name)"
+                  *ngIf="getPrestation('soins', 'massage', prestation.name)?.options.length > 4">
+                  {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                  <mat-icon color='primary' *ngIf="!getShowMore('soins', 'massage', prestation.name)?.value">keyboard_arrow_down</mat-icon>
+                  <mat-icon color='primary' *ngIf="getShowMore('soins', 'massage', prestation.name)?.value">keyboard_arrow_up</mat-icon>
+              </button>
+          </div>
+          <mat-divider class="matdividerForcedHeight" style="width: 100% !important;"></mat-divider>
+        </div>
+      </div>
+    </div>
+    <!-- fin massage -->
+  <!-- fin soins -->
+  <!-- options divers -->
+  <div *ngIf="optionDivers?.length" class="margin40U40D">
+    <span class="accent-title" translate>Option Divers</span>
+  </div>
+  <div *ngIf="optionDivers?.length" fxLayout="column" fxLayoutAlign="space-around">
+    <div *ngFor="let opt of optionDivers ; let i = index">
+      <div *ngIf="isCoiffure && coiffureIsChecked && optionContainCategory(opt.id, 'coiffure')">
+        <div class="inline-container-4" class="margin30D margin20U" fxLayout fxLayoutAlign="space-between center">
+          <div>
+            <span translate class="boldText">{{opt.name}}</span>
+            <br>
+            <span translate class="lightGreyText">{{opt.feeType}}</span>
+            <br>
+            <span translate class="greyText">{{opt.description}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='optionDivers[i].checked'
+            (change)='toggleChangeOptionDivers($event.checked, opt)'>
+          </mat-slide-toggle>
+        </div>
+  
+        <div *ngIf="opt.feeType === feeType.UNIT_FEE && optionDivers[i].checked" fxLayout="row"
+          fxLayoutAlign="space-between center">
+          <div fxFlexOffset=53>
+            <span translate>Exemplaires</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+              (click)='numberInputChangeOptionDivers("decrement", 1, opt, 1)'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{opt.examplaire}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeOptionDivers("increment", 1, opt)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isMaquillage && maquillageIsChecked && optionContainCategory(opt.id, 'maquillage')
+      && !(isCoiffure && coiffureIsChecked && optionContainCategory(opt.id, 'coiffure'))">
+        <div class="inline-container-4" class="margin30D margin20U" fxLayout fxLayoutAlign="space-between center">
+          <div>
+            <span translate class="boldText">{{opt.name}}</span>
+            <br>
+            <span translate class="lightGreyText">{{opt.feeType}}</span>
+            <br>
+            <span translate class="greyText">{{opt.description}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='optionDivers[i].checked'
+            (change)='toggleChangeOptionDivers($event.checked, opt)'>
+          </mat-slide-toggle>
+        </div>
+  
+        <div *ngIf="opt.feeType === feeType.UNIT_FEE && optionDivers[i].checked" fxLayout="row"
+          fxLayoutAlign="space-between center">
+          <div fxFlexOffset=53>
+            <span translate>Exemplaires</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+              (click)='numberInputChangeOptionDivers("decrement", 1, opt, 1)'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{opt.examplaire}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeOptionDivers("increment", 1, opt)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isEsthetique && esthetiqueIsChecked && optionContainCategory(opt.id, 'esthetique')
+      && !(isCoiffure && coiffureIsChecked && optionContainCategory(opt.id, 'coiffure'))
+      && !(isMaquillage && maquillageIsChecked && optionContainCategory(opt.id, 'maquillage'))">
+        <div class="inline-container-4" class="margin30D margin20U" fxLayout fxLayoutAlign="space-between center">
+          <div>
+            <span translate class="boldText">{{opt.name}}</span>
+            <br>
+            <span translate class="lightGreyText">{{opt.feeType}}</span>
+            <br>
+            <span translate class="greyText">{{opt.description}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='optionDivers[i].checked'
+            (change)='toggleChangeOptionDivers($event.checked, opt)'>
+          </mat-slide-toggle>
+        </div>
+  
+        <div *ngIf="opt.feeType === feeType.UNIT_FEE && optionDivers[i].checked" fxLayout="row"
+          fxLayoutAlign="space-between center">
+          <div fxFlexOffset=53>
+            <span translate>Exemplaires</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+              (click)='numberInputChangeOptionDivers("decrement", 1, opt, 1)'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{opt.examplaire}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeOptionDivers("increment", 1, opt)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isSoin && soinIsChecked && optionContainCategory(opt.id, 'soins')
+      && !(isCoiffure && coiffureIsChecked && optionContainCategory(opt.id, 'coiffure'))
+      && !(isMaquillage && maquillageIsChecked && optionContainCategory(opt.id, 'maquillage'))
+      && !(isEsthetique && esthetiqueIsChecked && optionContainCategory(opt.id, 'esthetique'))">
+        <div class="inline-container-4" class="margin30D margin20U" fxLayout fxLayoutAlign="space-between center">
+          <div>
+            <span translate class="boldText">{{opt.name}}</span>
+            <br>
+            <span translate class="lightGreyText">{{opt.feeType}}</span>
+            <br>
+            <span translate class="greyText">{{opt.description}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='optionDivers[i].checked'
+            (change)='toggleChangeOptionDivers($event.checked, opt)'>
+          </mat-slide-toggle>
+        </div>
+  
+        <div *ngIf="opt.feeType === feeType.UNIT_FEE && optionDivers[i].checked" fxLayout="row"
+          fxLayoutAlign="space-between center">
+          <div fxFlexOffset=53>
+            <span translate>Exemplaires</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+              (click)='numberInputChangeOptionDivers("decrement", 1, opt, 1)'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{opt.examplaire}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeOptionDivers("increment", 1, opt)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <mat-divider *ngIf="companyDescriptionInfo?.company?.options?.length" class="margin-bottom" class="margin20T">
+  </mat-divider>
+  <!-- end options divers-->
+</form>

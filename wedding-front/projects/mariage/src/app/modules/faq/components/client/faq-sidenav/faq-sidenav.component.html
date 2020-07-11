@@ -1,0 +1,18 @@
+<div>
+
+  <div *ngFor="let category of categories">
+    <h1>
+      <a routerLink="/faq/{{type}}/{{category?.libelle?.replaceAll(' ','-')}}" routerLinkActive="active" [routerLinkActiveOptions]="{exact:false}" #vc="routerLinkActive">
+        {{category?.libelle}}
+      </a>
+    </h1>
+    <ul [fxShow]="vc.isActive" *ngFor="let subCategory of category.sous_categories">
+      <li>
+        <a routerLink="/faq/{{type}}/{{category?.libelle?.replaceAll(' ','-')}}/{{subCategory?.libelle?.replaceAll(' ','-')}}" routerLinkActive="active">
+          {{subCategory.libelle}}
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</div>

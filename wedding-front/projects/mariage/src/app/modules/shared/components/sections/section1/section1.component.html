@@ -1,0 +1,53 @@
+<div fxLayout='column' class="section1">
+    <div fxLayout='row wrap' class='pl'>
+        <div class="main-title">{{title}}</div>
+    </div>
+    <div fxLayout='row wrap' fxLayout.lt-md='column' fxLayoutAlign.lt-md='center center' class='pl'>
+        <div fxFlex='30%' class="sign-up" fxLayout='column' fxLayoutAlign.lt-md='center center'>
+            <span *ngIf="!isBecomePartner" class="description">{{description}}</span>
+            <span *ngIf="isBecomePartner" class="description"><strong>{{description.bold}}</strong>{{description.normal}}</span>
+            <div fxLayout='column' *ngIf="!isAuthenticated">
+                <div class="social-media-div" fxLayout='row wrap' fxLayoutGap='4.0625rem'
+                (click)="loginSocial('facebook')">
+                    <img class='icon' src="/assets/icons/social/facebook.svg" alt="facebook logo">
+                    <span style="color: #1877f2;">S’inscrire avec Facebook</span>
+                </div>
+                <div class="social-media-div" fxLayout='row wrap' fxLayoutGap='4.0625rem'
+                style="margin-top: 0.5625rem;" (click)="loginSocial('google-oauth2')">
+                    <img class='icon' src="/assets/icons/social/google.png" alt="facebook logo">
+                    <span style="color: #484848;">S’inscrire avec Google</span>
+                </div>
+                <div fxLayout='column' class="separator-div"><span>ou</span></div>
+                <app-signup-section1 *ngIf="showSignup" [isBecomePartner]='isBecomePartner' (login)='showSignup = !showSignup'></app-signup-section1>
+                <app-login-section1 *ngIf="!showSignup" [isBecomePartner]='isBecomePartner' (signup)='showSignup = !showSignup'></app-login-section1>
+            </div>
+            <div fxLayout='column' *ngIf="isAuthenticated" class="user-profile">
+                <div fxLayout='row wrap' fxLayoutGap='15px' fxLayoutAlign='start center'>
+                    <img [src]="user.photo" alt="user pic">
+                    <span class="user-name">{{user.name}}</span>
+                </div>
+                <div class="label">Vous êtes connecté avec ce compte.</div>
+            </div>
+            <div class="language-select">
+                <mat-select aria-label="language" (selectionChange)="changeLanguage()" [(value)]="language"
+                style="position: relative;top:0.5rem;">
+                  <mat-select-trigger fxFlexAlign="center center">
+                    <div fxLayout="row" fxFlexAlign="end end" *ngIf="language === 'fr'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Français &nbsp;&nbsp;<img width="11px" height="7px" style="position: relative;top:0.15rem;" src="/assets/icons/svg/france.svg" alt="fr"></div>
+                    <div fxLayout="row" fxFlexAlign="end end" *ngIf="language === 'en'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; English &nbsp;&nbsp;<img width="11px"height="7px" style="position: relative;top:0.15rem;" src="/assets/icons/svg/united-kingdom.svg" alt="en"></div>
+                  </mat-select-trigger>
+                  <mat-option value="en">
+                    English
+                  </mat-option>
+                  <mat-option value="fr">
+                    Français
+                  </mat-option>
+                </mat-select>
+            </div>
+        </div>
+        <div fxFlex='70%' class='mr-banner'><img [src]="imgSrc" alt="how it works" class="banner-img"></div>
+    </div>
+    <div fxLayout='row wrap' fxLayoutAlign.lt-md='center center' fxLayoutAlign='end center' class='pr label3-wrapper' fxLayoutGap='34px'>
+        <p fxFlex.lt-md='70%'>Plateforme assurée jusqu’à <span>9 millions d’euros</span>.</p>
+        <img src="/assets/images/axa_logo.jpg" alt="axa logo" width="30px" height="30px">
+    </div>
+</div>

@@ -1,0 +1,145 @@
+<section fxLayout="column" style="width: 100%">
+  <div fxLayout="row wrap" fxLayoutAlign="space-between center" style="background-color: #fbfbfb;padding: 1rem">
+
+    <section class="w100-lt-md" fxLayout="column" fxLayoutAlign.lt-md="space-between center" fxLayout.lt-md="row"
+             fxLayoutGap.lt-md="0" fxLayoutGap="1.5rem">
+      <mat-label class="title" translate>Demande de reservation N</mat-label>
+      <span translate class="sub-text">{{reservation.orderNumber}}</span>
+    </section>
+
+    <section class="w100-lt-md" fxLayout="column" fxLayoutAlign.lt-md="space-between center" fxLayout.lt-md="row"
+             fxLayoutGap.lt-md="0" fxLayoutGap="1.5rem">
+      <mat-label class="title" translate>Demande effectuee le</mat-label>
+      <span translate class="sub-text">{{reservation.createdAt}}</span>
+    </section>
+
+
+    <section class="w100-lt-md" fxLayout="column" fxLayoutAlign.lt-md="space-between center" fxLayout.lt-md="row"
+             fxLayoutGap.lt-md="0" fxLayoutGap="1.5rem">
+      <mat-label class="title" translate>Total</mat-label>
+      <span translate class="sub-text">{{(reservation.finalPrice).toFixed(2)}} €</span>
+    </section>
+
+
+  </div>
+
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="end center" fxLayoutAlign.lt-md="center center"
+       fxLayoutGap="1rem"  class="btn-container">
+    <button mat-flat-button class="action-btn" style="background-color: #e6e6e6;" (click)="cancel(reservation)">Rejeter la demande</button>
+    <button mat-flat-button class="action-btn" style="color:white" [color]="!reservation?.showMore?'accent':'primary'"
+            (click)="reservation.showMore=!reservation.showMore">
+      <span *ngIf="!reservation.showMore">Voir le devis detaillé</span>
+      <span *ngIf="reservation.showMore">Cacher le devis</span>
+    </button>
+  </div>
+</section>
+
+<section
+  fxLayoutAlign="space-between start"
+  fxLayout="row" fxLayout.lt-md="column"
+  *ngIf="reservation.showMore"
+  style="padding: 1rem;width: 100%;background-color: #f9f9f9;">
+
+  <article fxLayout="column" fxLayoutGap="2rem" class="price-card">
+    <mat-label class="title-card" translate>Informations générales</mat-label>
+    <section  fxLayout="column">
+      <div fxLayout="row" fxLayoutGap="1rem">
+        <mat-label class="title" translate>Date de l'événement :</mat-label>
+        <mat-label>{{reservation.start}} à {{reservation.end}}</mat-label>
+      </div>
+      <div fxLayout="row" fxLayoutGap="1rem">
+        <mat-label class="title" translate>Lieu de l'événement :</mat-label>
+        <mat-label>{{reservation.location.address}}</mat-label>
+      </div>
+      <div fxLayout="row" fxLayoutGap="1rem">
+        <mat-label class="title" translate>Nombre d'invités :</mat-label>
+        <mat-label>{{reservation.guestcount}}</mat-label>
+      </div>
+    </section>
+    <mat-divider></mat-divider>
+    <mat-label class="title-card" translate>Devis personnalisé</mat-label>
+
+    <section fxLayout="column">
+
+      <div fxLayout="row" fxLayoutAlign="start center" style="margin-bottom: 1.5rem">
+        <mat-label style="width: 70%;" class="list-title" translate>Détails</mat-label>
+        <mat-label style="width: 30%;" class="list-title">Coût</mat-label>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="1rem" *ngFor="let bill of reservation.bill">
+        <mat-label style="width: 70%;" translate>
+          {{bill.option}}
+          <span *ngIf="bill.qte > 1">x {{bill.qte}} {{bill.unit}}</span>
+        </mat-label>
+        <mat-label style="width: 30%;">{{(bill.total).toFixed(2)}} €</mat-label>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="1rem" *ngFor="let variation of reservation.variations">
+        <mat-label style="width: 70%;" translate>
+          {{variation.name || variation.type}}
+          <span *ngIf="variation.days > 1">x {{variation.days}} Jours</span>
+        </mat-label>
+        <mat-label style="width: 30%;">{{(variation.augmentedPrice).toFixed(2)}} €</mat-label>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" style="margin-top: 1rem">
+        <mat-label style="width: 70%;" class="list-title" translate>Total</mat-label>
+        <mat-label style="width: 30%;" class="list-title">{{(reservation.finalPrice).toFixed(2)}} €</mat-label>
+      </div>
+
+    </section>
+
+
+  </article>
+
+  <article fxLayout="column" fxLayoutGap="2rem" class="actions-card">
+
+    <section fxLayout="column" fxLayoutGap="1rem" class="cordinates-container">
+      <mat-label class="title-card" translate>Coordonnées du prestataire</mat-label>
+
+      <div fxLayout="column">
+        <div fxLayout="row" fxLayoutGap="1rem">
+          <mat-label style="width: 30%;" translate>Entreprise</mat-label>
+          <mat-label class="sub-text" style="width: 70%;">{{reservation.company.name}}</mat-label>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem">
+            <mat-label style="width: 30%;" translate>Prénom</mat-label>
+            <mat-label class="sub-text" style="width: 70%;">Disponible après confirmation par le client</mat-label>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutGap="1rem">
+          <mat-label style="width: 30%;" translate>Nom</mat-label>
+          <mat-label class="sub-text" style="width: 70%;">Disponible après confirmation par le client</mat-label>
+        </div>
+        <div fxLayout="row" fxLayoutGap="1rem">
+          <mat-label style="width: 30%;" translate>Téléphone</mat-label>
+          <mat-label class="sub-text" style="width: 70%;">Disponible après confirmation par le client</mat-label>
+        </div>
+        <div fxLayout="row" fxLayoutGap="1rem">
+          <mat-label style="width: 30%;" translate>Email</mat-label>
+          <mat-label class="sub-text" style="width: 70%;">Disponible après confirmation par le client</mat-label>
+        </div>
+      </div>
+
+    </section>
+
+    <div fxLayout="column">
+
+      <p style="color: var(--primary-color);cursor: pointer">Des questions ? Contactez votre conseiller Mariage
+        Serein</p>
+      <div fxLayout="row" fxLayoutGap="1rem">
+        <mat-label style="width: 30%;" translate>Téléphone</mat-label>
+        <mat-label class="sub-text" style="width: 70%;">01 45 91 90 00</mat-label>
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="1rem">
+        <mat-label style="width: 30%;" translate>Email</mat-label>
+        <mat-label class="sub-text" style="width: 70%;">partenalre@marlagesreln.fr</mat-label>
+      </div>
+
+    </div>
+
+  </article>
+
+</section>

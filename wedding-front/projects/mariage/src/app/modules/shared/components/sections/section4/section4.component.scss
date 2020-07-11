@@ -1,0 +1,71 @@
+@import '../sections.scss';
+@media screen and (max-width: 3600px) {
+    .section4 {
+        padding-top: 2rem;
+        padding-bottom: 3.75rem;
+        .column {
+            margin-bottom: 1rem;
+        }
+        .mr {
+            margin-right: 11.9375rem;
+        }
+        .pl_4 {
+            justify-content: center;
+        }
+        .mt-text-1 {
+            margin-top: 10%;
+        }
+        .mt-text-2 {
+            margin-top: 5%;
+        }
+        .mt-text-3 {
+            margin-top: 10%;
+        }
+        .text-column {
+            font-family: Arial;
+            text-align: left;
+            .title {
+                font-size: 25px;
+                font-weight: bold;
+                color: #000000;
+            }
+            .label {
+                font-size: 17px;
+                color: #333333;
+                margin-top: 1rem;
+            }
+        }
+        .img-column {
+            width: 31.5rem;
+        }
+    }
+}
+@media screen and (max-width: 960px) {
+    .section4 {
+        .column {
+            margin-bottom: 2rem;
+        }
+        .mr {
+            margin-right: 0rem;
+        }
+        .pl_4 {
+            padding-left: 0rem;
+        }
+        .mt-text-1 {
+            margin-top: 0%;
+        }
+        .mt-text-2 {
+            margin-top: 0%;
+        }
+        .mt-text-3 {
+            margin-top: 0%;
+        }
+        .text-column {
+            font-family: Arial;
+            text-align: center;
+        }
+        .img-column {
+            width: 100%;
+        }
+    }
+}

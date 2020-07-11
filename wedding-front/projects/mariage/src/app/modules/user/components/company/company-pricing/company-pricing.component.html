@@ -1,0 +1,52 @@
+<div class="stepper-container">
+  <div class="stepper-component">
+    <mat-toolbar-row>
+      <a mat-flat-button class="stepper stepper active" translate>Description</a>
+      <div class="circle active"></div>
+      <span class="spacer active"></span>
+      <a mat-flat-button class="stepper ml_min_1" translate>Détails</a>
+      <div class="circle active"></div>
+      <span class="spacer active"></span>
+      <a [routerLink]="['#']" mat-flat-button class="stepper active"
+         routerLinkActive="active">{{'pricing'|lowercase|translate|titlecase}}</a>
+      <div class="circle active"></div>
+      <span class="spacer active"></span>
+      <a mat-flat-button class="stepper">{{'settings'|lowercase|translate|titlecase}}</a>
+      <div class="circle "></div>
+      <span class="spacer"></span>
+      <div class="circle circle-end"></div>
+      <a mat-flat-button class="stepper ml_min_2">{{'billing'|lowercase|translate|titlecase}}</a>
+    </mat-toolbar-row>
+  </div>
+</div>
+
+  <div fxLayout="column" class="container company-details" *ngIf="showComponent && companyDetailsInfo">
+    <div [ngSwitch]='companyDetailsInfo.categories[0]'>
+      <app-photographe-pricing #comp *ngSwitchCase='categoryLabelEnum.PHOTOGRAPHE' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-photographe-pricing>
+      <app-videaste-pricing #comp *ngSwitchCase='categoryLabelEnum.VIDEALISTE' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-videaste-pricing>
+      <app-fleuriste-pricing #comp *ngSwitchCase='categoryLabelEnum.FLEURISTE' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-fleuriste-pricing>
+      <app-decorateur-pricing #comp *ngSwitchCase='categoryLabelEnum.DECORATUER' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-decorateur-pricing>
+      <app-bus-pricing #comp *ngSwitchCase='categoryLabelEnum.BUS' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-bus-pricing>
+      <app-voiture-pricing #comp *ngSwitchCase='categoryLabelEnum.VOITURE' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-voiture-pricing>
+      <app-lieu-pricing #comp *ngSwitchCase='categoryLabelEnum.LIEU' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-lieu-pricing>
+      <app-traiteur-pricing #comp *ngSwitchCase='categoryLabelEnum.TRAITEUR' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-traiteur-pricing>
+      <app-gateau-mariage-pricing #comp *ngSwitchCase='categoryLabelEnum.GATEAU_MARIAGE' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-gateau-mariage-pricing>
+      <app-dj-pricing #comp *ngSwitchCase='categoryLabelEnum.DJ' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-dj-pricing>
+      <app-groupe-pricing #comp *ngSwitchCase='categoryLabelEnum.GROUPE' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-groupe-pricing>
+      <app-musicien-pricing #comp *ngSwitchCase='categoryLabelEnum.MUSICIEN' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-musicien-pricing>
+      <app-animateur-adults-pricing #comp *ngSwitchCase='categoryLabelEnum.ANIMATEUR_ADULTS' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-animateur-adults-pricing>
+      <app-animateur-enfants-pricing #comp *ngSwitchCase='categoryLabelEnum.ANIMATEUR_ENFANTS' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-animateur-enfants-pricing>
+      <app-feu-artifices-pricing #comp *ngSwitchCase='categoryLabelEnum.FEU_ARTIFICES' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-feu-artifices-pricing>
+      <app-lachers-pricing #comp *ngSwitchCase='categoryLabelEnum.LACHERS' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-lachers-pricing>
+      <app-choregraphe-pricing #comp *ngSwitchCase='categoryLabelEnum.CHOREGRAPHE' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-choregraphe-pricing>
+      <app-coach-pricing #comp *ngSwitchCase='categoryLabelEnum.COACH' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-coach-pricing>
+      <app-officiant-pricing #comp *ngSwitchCase='categoryLabelEnum.OFFICIANT' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-officiant-pricing>
+      <app-coiffure-pricing #comp *ngSwitchCase='categoryLabelEnum.COIFFURE' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-coiffure-pricing>
+      <app-maquillage-pricing #comp *ngSwitchCase='categoryLabelEnum.MAQUILLAGE' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-maquillage-pricing>
+      <app-esthetique-pricing #comp *ngSwitchCase='categoryLabelEnum.ESTHETIQUE' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-esthetique-pricing>
+      <app-soin-pricing #comp *ngSwitchCase='categoryLabelEnum.SOIN' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-soin-pricing>
+      <app-hebergement-pricing #comp *ngSwitchCase='categoryLabelEnum.HEBERGEMENT' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-hebergement-pricing>
+      <app-faire-part-pricing #comp *ngSwitchCase='categoryLabelEnum.FAIRE_PART' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-faire-part-pricing>
+      <app-voyage-noces-pricing #comp *ngSwitchCase='categoryLabelEnum.VOYAGE_DE_NOCES' [criteres]="criteres" [categories]='companyDetailsInfo.categories'></app-voyage-noces-pricing>
+    </div>
+  </div>

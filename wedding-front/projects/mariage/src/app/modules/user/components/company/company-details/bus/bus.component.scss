@@ -1,0 +1,49 @@
+mat-label {
+    margin-bottom: 0.9rem !important;
+  }
+  
+  $btnTextColor: white;
+  $btnWidth: 20%;
+  $btnMarginTop: 2em;
+  .submit-btn {
+      color: $btnTextColor;
+      width: $btnWidth;
+      margin-top: $btnMarginTop;
+      width: 16.75rem;
+      height: 3.375rem;
+  }
+  .control-wrapper {
+      margin-bottom: 2em;
+  }
+  .hidden {
+      display: none;
+  }
+  ::ng-deep{
+      .mat-checkbox-inner-container {
+        width: 18px !important;
+        height: 18px !important;
+      }
+  }
+  .checkbox-label {
+      font-size: 13.5px !important;
+      ::ng-deep{
+          .mat-checkbox-label {
+              position: relative !important;
+              top: 0.22rem !important;
+          }
+      }
+  }
+  .mt-0 {
+      margin-top: 0 !important;
+  }
+  .mb-0 {
+      margin-bottom: 0 !important;
+  }
+  .sub-title {
+      font-size: 13.5px;
+      color: #484848;
+  }
+  .title {
+      color: #000;
+  }
+  

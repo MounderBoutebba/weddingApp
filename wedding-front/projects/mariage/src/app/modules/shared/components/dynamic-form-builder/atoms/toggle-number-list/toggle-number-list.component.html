@@ -1,0 +1,388 @@
+<div fxLayout="column">
+  <div *ngIf="field.type === fieldTypeEnum.TOGGLE_NUMBER_LIST_OPTIONS" [formGroup]="form" fxLayout='row'
+  fxLayoutAlign="space-between start" style="width: 37.6rem !important; margin-bottom: 1rem;">
+    <div fxLayout="column" fxLayoutAlign="center start">
+      <mat-label class='cnl-title'>
+        {{field.secondaryDisplayName|lowercase|translate|capitalizeFirstLetter}}
+      </mat-label>
+      <mat-label class='cnl-label'>
+        {{field.secondaryLabel|lowercase|translate|capitalizeFirstLetter}}
+      </mat-label>
+    </div>
+    <div formGroupName="{{field.name}}">
+      <mat-slide-toggle [color]="color" (change)="toggleValue($event.checked)"
+      [formControlName]="'value'"></mat-slide-toggle>
+    </div>
+
+  </div>
+  <mat-divider *ngIf="field.type === fieldTypeEnum.TOGGLE_NUMBER_LIST_OPTIONS" style="width: 37.6rem !important;; margin-bottom: 1rem;"></mat-divider>
+  <mat-label *ngIf="field.type !== fieldTypeEnum.TOGGLE_NUMBER_LIST_OPTIONS" class='cnl-title'>
+    {{field.displayName|lowercase|translate|capitalizeFirstLetter}}
+  </mat-label>
+  <mat-label *ngIf="field.type === fieldTypeEnum.TOGGLE_NUMBER_LIST_OPTIONS && field.value" class='cnl-title'>
+    {{field.displayName|lowercase|translate|capitalizeFirstLetter}}
+  </mat-label>
+  <br>
+
+  <div [formGroup]="form" *ngIf="field.type === fieldTypeEnum.TOGGLE_NUMBER_LIST" >
+    <div formGroupName="{{field.name}}">
+      <div *ngFor="let f of field.optionsToggleNumberList; let i=index" formGroupName="{{f.name}}" fxLayout="column"
+      [ngClass]='{"hide": !showMoreOptions && i>=displayItemsLimit}'>
+        <div *ngIf=' i < displayItemsLimit'>
+          <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-bottom: 1rem;">
+            <div fxLayout="column">
+              <mat-label class='cnl-sub-title'>
+                {{f.name|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+              <mat-label class="cnl-label">
+                {{f.label|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+            </div>
+            <mat-slide-toggle [color]="color" (change)="toggle($event.checked, f.name)"
+                              [formControlName]="'value'"></mat-slide-toggle>
+          </div>
+
+          <div *ngIf="f.value" class="toggle-dfb" fxLayout="row" fxLayoutAlign="end start">
+            <mat-form-field style="width: 50%">
+              <input matInput [hidden]='true'>
+              <div *ngIf='f.value' >
+                <app-number [field]="field" [form]="form" [disableOptions]='f.value' [subField]='f'
+                            [numberOption]='f.numberOption'></app-number>
+              </div>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div *ngIf='showMoreOptions && i>=displayItemsLimit'>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-bottom: 1rem;">
+            <div fxLayout="column">
+              <mat-label class='cnl-sub-title'>
+                {{f.name|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+              <mat-label class="cnl-label">
+                {{f.label|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+            </div>
+            <mat-slide-toggle [color]="color" (change)="toggle($event.checked, f.name)"
+                              [formControlName]="'value'"></mat-slide-toggle>
+          </div>
+          <div *ngIf="f.value" class="toggle-dfb" fxLayout="row" fxLayoutAlign="end start">
+            <mat-form-field style="width: 50%">
+              <input matInput [hidden]='true'>
+              <div *ngIf='f.value' >
+                <app-number [field]="field" [form]="form" [disableOptions]='f.value' [subField]='f'
+                            [numberOption]='f.numberOption'></app-number>
+              </div>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <mat-divider style="margin-bottom: 1rem;"></mat-divider>
+      </div>
+
+      <div>
+                <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+                *ngIf='field.optionsToggleNumberList?.length > displayItemsLimit'>
+                {{showMoreLabel|lowercase|translate|capitalizeFirstLetter}}
+                <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+                <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+                </button>
+      </div>
+
+      <div *ngIf="field.name !== 'dorures'">
+        <button  mat-stroked-button class='ajout-btn' (click)='addOption.emit(field)'>
+                <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+        </button>
+        &nbsp;
+        <mat-label class='add-btn-label'>{{addBtnLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+        <mat-divider style="margin-top: 1rem;"></mat-divider>
+      </div>
+
+    </div>
+  </div>
+  <div [formGroup]="form" *ngIf="field.type === fieldTypeEnum.TOGGLE_NUMBER_LIST_OPTIONS && field.value" style="width: 37.6rem !important;">
+    <div formGroupName="{{field.name}}">
+      <div *ngFor="let f of field.optionsToggleNumberListOptions; let i=index" formGroupName="{{f.name}}" fxLayout="column"
+      [ngClass]='{"hide": !showMoreOptions && i>=displayItemsLimit}'>
+        <div *ngIf=' i < displayItemsLimit'>
+          <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-bottom: 0.5rem;">
+            <div fxLayout="column">
+              <mat-label class='cnl-sub-title'>
+                {{f.name|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+              <mat-label class="cnl-label">
+                {{f.label|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+            </div>
+            <mat-slide-toggle [color]="color" (change)="toggle($event.checked, f.name)"
+                              [formControlName]="'value'"></mat-slide-toggle>
+          </div>
+
+          <div *ngIf="f.value" fxLayout='row wrap' fxLayoutAlign="flex-start">
+              <div *ngFor="let opt of f.opts" fxFlex='49%' style="margin-bottom: 1rem;"
+              [ngClass]='{"mr-2": opt.name === "Tarif par part" || opt.name === "Nbre de parts max"}'>
+                <app-number  [field]="field" [form]="form" [disableOptions]='f.value' [subField]='f'
+                            [numberOption]='{label: opt.name, value: opt.value, step: opt.step, unit: opt.unit}'></app-number>
+              </div>
+          </div>
+
+        </div>
+
+        <div *ngIf='showMoreOptions && i>=displayItemsLimit'>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" style="margin-bottom: 0.5rem;">
+            <div fxLayout="column">
+              <mat-label class='cnl-sub-title'>
+                {{f.name|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+              <mat-label class="cnl-label">
+                {{f.label|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+            </div>
+            <mat-slide-toggle [color]="color" (change)="toggle($event.checked, f.name)"
+                              [formControlName]="'value'"></mat-slide-toggle>
+          </div>
+
+          <div *ngIf="f.value" style="" fxLayout='row wrap' fxLayoutAlign="flex-start">
+            <div *ngFor="let opt of f.opts" fxFlex='49%' style="margin-bottom: 1rem;"
+            [ngClass]='{"mr-2": opt.name === "Tarif par part" || opt.name === "Nbre de parts max"}'>
+              <app-number  [field]="field" [form]="form" [disableOptions]='f.value' [subField]='f'
+                          [numberOption]='{label: opt.name, value: opt.value, step: opt.step, unit: opt.unit}'></app-number>
+            </div>
+        </div>
+
+        </div>
+
+        <mat-divider style=" !important; margin-bottom: 1rem;"></mat-divider>
+      </div>
+      <span *ngIf="!showErrMsg(field)" class="text-danger">Vous devez renseigner au minium un gâteau pour continuer</span>
+
+      <div style="margin-top: 1rem !important;">
+                <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+                *ngIf='field.optionsToggleNumberListOptions?.length > displayItemsLimit'>
+                {{showMoreLabel|lowercase|translate|capitalizeFirstLetter}}
+                <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+                <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+                </button>
+      </div>
+
+      <div>
+        <button mat-stroked-button class='ajout-btn' (click)='addOption.emit(field)'>
+                <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+        </button>
+        &nbsp;
+        <mat-label class='add-btn-label'>{{addBtnLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+        <mat-divider style=" !important; margin-top: 1rem;"></mat-divider>
+      </div>
+
+      <div fxLayout='row' fxLayoutAlign="space-between start" formGroupName="livraison" style="margin-top: 1rem;">
+          <div fxLayout="column" fxLayoutAlign="center start">
+            <mat-label class='cnl-title'>
+              {{field.livraison.displayName|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+            <mat-label class="cnl-label">
+              {{field.livraison.label|lowercase|translate|capitalizeFirstLetter}}
+            </mat-label>
+          </div>
+          <mat-slide-toggle [color]="color" (change)="toggleLivraison($event.checked)" [formControlName]="'value'"></mat-slide-toggle>
+
+        </div>
+        <div *ngIf='field.livraison.value'
+                style="width: 39.375rem !important; margin-top: 1rem;">
+                  <div fxLayout="row wrap" fxLayoutAlign="end start">
+                      <div ngStyle.lt-md="width:100%;margin-bottom: 1.5rem;margin-left: 0;" id="here"
+                      style="width: 50%;margin-bottom: 1.5rem;">
+                        <app-number
+                        [numberOption]="{value: field.livraison.tarif, label: numberLabel, step: 10, unit: '€'}"
+                        [disableOptions]='field.livraison.value' [field]="field" [form]="form" [livraison]='true'>
+                        </app-number>
+                      </div>
+                  </div>
+                </div>
+    </div>
+  </div>
+
+  <div [formGroup]="form" *ngIf="field.type === fieldTypeEnum.TOGGLE_LIST">
+    <div formGroupName="{{field.name}}">
+      <div *ngFor="let f of field.optionsToggleList; let i=index" formGroupName="{{f.name}}" fxLayout="column">
+
+        <div *ngIf=' i < displayItemsLimit'>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="column">
+              <mat-label class='cnl-title'>
+                {{f.name|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+              <mat-label class="cnl-label">
+                {{f.label|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+            </div>
+            <mat-slide-toggle [color]="color" (change)="toggle($event.checked, f.name)"
+                              [formControlName]="'value'"></mat-slide-toggle>
+          </div>
+          <mat-divider style="margin-bottom: 0.5rem;"></mat-divider>
+        </div>
+
+        <div *ngIf='showMoreOptions && i>=displayItemsLimit'>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="column">
+              <mat-label class='cnl-title'>
+                {{f.name|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+              <mat-label class="cnl-label">
+                {{f.label|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+            </div>
+            <mat-slide-toggle [color]="color" (change)="toggle($event.checked, f.name)"
+                              [formControlName]="'value'"></mat-slide-toggle>
+          </div>
+          <mat-divider style="margin-bottom: 0.5rem;"></mat-divider>
+        </div>
+
+      </div>
+
+      <div>
+                <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+                *ngIf='field.optionsToggleList?.length > displayItemsLimit'>
+                {{showMoreLabel|lowercase|translate|capitalizeFirstLetter}}
+                <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+                <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+                </button>
+      </div>
+
+      <div>
+        <button mat-stroked-button class="ajout-btn" (click)='addOption.emit(field)'>
+                <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+        </button>
+        &nbsp;
+        <mat-label class='add-btn-label'>{{addBtnLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+      </div>
+
+      </div>
+</div>
+
+  <div [formGroup]="form" *ngIf="field.type === fieldTypeEnum.TOGGLE_FORMATS_LIST">
+    <div formGroupName="{{field.name}}">
+      <div *ngFor="let f of field.optionsToggleFormatsList; let i=index" formGroupName="{{f.name}}" fxLayout="column">
+        <div *ngIf=' i < displayItemsLimit'>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="column">
+              <mat-label class='cnl-title'>
+                {{f.name|translate}}
+              </mat-label>
+              <mat-label class="cnl-label">
+                {{f.label|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+            </div>
+            <mat-slide-toggle [color]="color" (change)="toggle($event.checked, f.name)"
+                              [formControlName]="'value'"></mat-slide-toggle>
+          </div>
+          <mat-form-field class='toggle-dfb' >
+                    <input matInput [hidden]='true'>
+                    <div>
+                        <div>
+                          <div *ngIf='f.value'>
+                            <div *ngFor="let option of f.numberOption; let j=index">
+                              <div *ngIf=' j < displayItemsLimitModeles'>
+                                <mat-label class='cnl-label'>
+                                        {{option.name|lowercase|translate|capitalizeFirstLetter}}
+                                </mat-label>
+                                <app-number [field]="field" [form]="form" [disableOptions]='f.value'
+                                            [format]='f' [modele]='option'
+                                            [numberOption]='{label: option.label, unit: option.unit, step: option.step, value: option.value}'></app-number>
+                                </div>
+                                <div *ngIf=' j < displayItemsLimitModeles' class='margin-top mb-2' fxFlex="100%">
+                                  <mat-label class='cnl-label'>
+                                        {{option.name|lowercase|translate|capitalizeFirstLetter}}
+                                  </mat-label>
+                                  <app-number [field]="field" [form]="form" [disableOptions]='f.value'
+                                              [format]='f' [modele]='option'
+                                              [numberOption]='{label: option.label, unit: option.unit, step: option.step, value: option.value}'></app-number>
+                                </div>
+                              </div>
+                            <div>
+                                <button mat-button color='primary' (click)='showMoreOptionsModeles = !showMoreOptionsModeles'
+                                *ngIf='f.numberOption?.length > displayItemsLimitModeles'>
+                                {{showMoreLabel|lowercase|translate|capitalizeFirstLetter}}
+                                <mat-icon color='primary' *ngIf='!showMoreOptionsModeles'>keyboard_arrow_down</mat-icon>
+                                <mat-icon color='primary' *ngIf='showMoreOptionsModeles'>keyboard_arrow_up</mat-icon>
+                                </button>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                  </mat-form-field>
+                  </div>
+        <div *ngIf='showMoreOptions && i>=displayItemsLimit'>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="column">
+              <mat-label class='cnl-title'>
+                {{f.name|translate}}
+              </mat-label>
+              <mat-label class="cnl-label">
+                {{f.label|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+            </div>
+            <mat-slide-toggle [color]="color" (change)="toggle($event.checked, f.name)"
+                              [formControlName]="'value'"></mat-slide-toggle>
+          </div>
+          <mat-form-field class='toggle-dfb'>
+                    <input matInput [hidden]='true'>
+                    <div>
+                        <div>
+                          <div *ngIf='f.value'>
+                            <div *ngFor="let option of f.numberOption; let j=index">
+                              <div *ngIf=' j < displayItemsLimitModeles'>
+                                <label class="cnl-label">
+                                        {{option.name|lowercase|translate|capitalizeFirstLetter}}
+                                    </label>
+                                <app-number [field]="field" [form]="form" [disableOptions]='f.value'
+                                            [format]='f' [modele]='option'
+                                            [numberOption]='{label: option.label, unit: option.unit, step: option.step, value: option.value}'></app-number>
+                                </div>
+                              <div *ngIf='showMoreOptionsModeles && j>=displayItemsLimitModeles'>
+                                <mat-label class="cnl-label">
+                                        {{option.name|lowercase|translate|capitalizeFirstLetter}}
+                                </mat-label>
+                                <app-number [field]="field" [form]="form" [disableOptions]='f.value'
+                                            [format]='f' [modele]='option'
+                                            [numberOption]='{label: option.label, unit: option.unit, step: option.step, value: option.value}'></app-number>
+                                </div>
+                              </div>
+                            <div>
+                                <button mat-button color='primary' (click)='showMoreOptionsModeles = !showMoreOptionsModeles'
+                                *ngIf='f.numberOption?.length > displayItemsLimitModeles'>
+                                {{showMoreLabel|lowercase|translate|capitalizeFirstLetter}}
+                                <mat-icon color='primary' *ngIf='!showMoreOptionsModeles'>keyboard_arrow_down</mat-icon>
+                                <mat-icon color='primary' *ngIf='showMoreOptionsModeles'>keyboard_arrow_up</mat-icon>
+                                </button>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                  </mat-form-field>
+                  </div>
+          </div>
+      <div>
+            <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+            *ngIf='field.optionsToggleFormatsList?.length > displayItemsLimit'>
+            {{showMoreLabel|lowercase|translate|capitalizeFirstLetter}}
+            <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+            <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+            </button>
+          </div>
+      <div>
+        <button mat-stroked-button class='ajout-btn' (click)='addOption.emit(field)'>
+            <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+            </button>
+        &nbsp;
+            <mat-label class='add-btn-label'>{{addBtnLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+          </div>
+  </div>
+</div>
+
+</div>

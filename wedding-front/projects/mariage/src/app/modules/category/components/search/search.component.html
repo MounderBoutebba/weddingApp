@@ -1,0 +1,389 @@
+<div class="search-component-container">
+  <a routerLink="/">
+    <img  class="logo" src="/assets/images/logo-light-2.webp" alt="logo mariage serein">
+  </a>
+  <form [fxHide.lt-md]="hideSearchBar" class="search-form" (ngSubmit)="onSubmit()" [formGroup]="searchForm"
+        fxLayout.lt-md="column" fxLayout="row" fxLayoutAlign="space-between center">
+      <div style="display: flex;position: relative;" class="form-input type-search search-container-input">
+        <img width="21px" src="/assets/icons/svg/search.svg" alt="fr" class="search-icon">
+        <ng-select class="select"
+                   [items]="searchData"
+                   bindLabel="name"
+                   bindValue="value"
+                   groupBy="group"
+                   placeholder="{{'search'|translate}}"
+                   formControlName="search">
+          <ng-template ng-optgroup-tmp let-item="item">
+            {{item.group || 'Unnamed group'}}
+          </ng-template>
+        </ng-select>
+      </div>
+
+    <div class="border-fix"></div>
+
+    <mat-form-field class="form-input" appearance="fill">
+      <img class="img-ico" matPrefix src="../../../../../assets/icons/svg/location-input-icon.svg"
+           alt="{{'region,departement,ville'|translate}}">
+      <input matInput placeholder="{{'region,departement,ville'|translate}}" type="text"
+             formControlName="address"
+             (focusout)="locationFocusOut()"
+             (keyup.enter)="locationFocusOut()"
+             style="width: calc(100% - 71px);"
+             (blur)="getPlaceAutocomplete()"
+			 #autocompleteaddr>
+      <button mat-flat-button matSuffix color="primary" class="search" type="submit">
+        <img src="/assets/icons/svg/refresh.svg" width="25px" height="25px">
+      </button>
+    </mat-form-field>
+  </form>
+
+
+  <div fxFlexAlign="column" style="width: 100vw;background-color:#fff;">
+
+    <div class="background-filter-bar" fxLayout="row" fxLayoutAlign="start center">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center" style="width: 100%">
+        <div fxLayout="row wrap" fxLayoutGap="22px" fxLayoutGap.lt-md="5px" fxLayoutAlign="center center">
+          <img (click)="hideSearchBar = !hideSearchBar" width="32px" height="26px" src="/assets/icons/svg/settings.svg"
+               alt="settings-icon">
+          <div>
+            <button class="btn-search" (click)="moreFilter=false" [matMenuTriggerFor]="datePickerMenu" #datePicker="matMenuTrigger"
+                    mat-raised-button [ngStyle]="{'color':datePicker.menuOpen?'white':'black'}"
+                    [color]="datePicker.menuOpen?'primary':null">Date(s)
+            </button>
+            <mat-menu #datePickerMenu="matMenu">
+              <div (click)="$event.stopPropagation()" class="container__datepicker">
+
+                <ngx-daterangepicker-material
+                  [minDate]="minDate" [dateLimit]="null"
+                  [showClearButton]="true" (choosedDate)="choosedDate($event)"
+                  [locale]="locales"
+                ></ngx-daterangepicker-material>
+              </div>
+            </mat-menu>
+
+          </div>
+
+          <div>
+            <button class="btn-search" (click)="moreFilter=false" mat-flat-button [matMenuTriggerFor]="appMenu" #t="matMenuTrigger" mat-raised-button
+                    [ngStyle]="{'color':t.menuOpen?'white':'black'}" [color]="t.menuOpen?'primary':null">
+              <span translate>price</span>
+            </button>
+            <mat-menu #appMenu="matMenu">
+              <div fxLayout="column" fxFlexAlign="center center" (click)="$event.stopPropagation()" class="price-menu">
+                <div class="custom-slider">
+                  <ng5-slider style="width: 100%!important" color="primary" [(value)]="priceMin" [(highValue)]="priceMax"
+                              [options]="options"></ng5-slider>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                  <mat-form-field style="width: 159px;height: 55px;margin-bottom: 25px;" fxFlex="0 1 159px" appearance="outline">
+                    <mat-label class="min-max-label" translate>minimum price</mat-label>
+                    <img src="assets/icons/svg/euro_symbol.svg" matPrefix width="13px"
+                         style="transform: translateY(-3px);padding-right: 5px;">
+                    <input matInput type="number" [(ngModel)]="priceMin">
+                  </mat-form-field>
+                  <mat-form-field style="width: 159px;height: 55px;margin-bottom: 25px;" fxFlex="0 1 159px" appearance="outline">
+                    <mat-label class="min-max-label" translate>maximum price</mat-label>
+                    <img src="assets/icons/svg/euro_symbol.svg" matPrefix width="13px"
+                         style="transform: translateY(-3px);padding-right: 5px;">
+                    <input matInput type="number" [(ngModel)]="priceMax">
+                    <span matSuffix [fxShow]="priceMax >= 4000">+</span>
+                  </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <button mat-flat-button class="price__btn" (click)="resetPrice();t.closeMenu()">
+                    <span translate>delete</span>
+                  </button>
+                  <button mat-flat-button color="primary" class="price__btn" style="color:white;" (click)="searchWithPrice();t.closeMenu()">
+                    <span translate>save</span>
+                  </button>
+                </div>
+              </div>
+            </mat-menu>
+          </div>
+          <div>
+            <button class="btn-more-filter" mat-raised-button [ngClass]="{'btn--active':moreFilter}"
+                    (click)="toggleFilter()">
+              <span translate *ngIf="!moreFilter">more filters</span>
+              <span translate *ngIf="moreFilter">hide filters</span>
+            </button>
+          </div>
+        </div>
+        <div>
+          <mat-slide-toggle fxHide.lt-md color="primary" labelPosition="before" [(ngModel)]="showMap">
+            <span translate>show the map</span>
+          </mat-slide-toggle>
+        </div>
+
+
+      </div>
+    </div>
+
+    <div fxLayoutAlign="center start" fxLayout="row" fxLayout.lt-md="column" style="width: 100%">
+      <div fxLayout="column" fxLayoutAlign="start start" style="width: 100%;">
+        <div [hidden]="!moreFilter" class="filter-box" [ngSwitch]="true">
+          <app-decorateur-fleuriste-filter *ngSwitchCase="(type === 'fleuriste')"
+                                           (cancel)="cancelEv($event)"
+                                           (search)="search($event)"
+                                           [priceFilter]="priceFilter"
+                                           [hiddenSearchbar]="hideSearchBar">
+          </app-decorateur-fleuriste-filter>
+          <app-decorateur-fleuriste-filter *ngSwitchCase="(type === 'decorateur')"
+                                           (cancel)="cancelEv($event)"
+                                           (search)="search($event)"
+                                           [priceFilter]="priceFilter"
+                                           [hiddenSearchbar]="hideSearchBar">
+          </app-decorateur-fleuriste-filter>
+
+          <app-photographe-videaste-filter *ngSwitchCase="(type === 'photographe')"
+                                           (cancel)="cancelEv($event)"
+                                           (search)="search($event)"
+                                           [priceFilter]="priceFilter"
+                                           [hiddenSearchbar]="hideSearchBar">
+          </app-photographe-videaste-filter>
+          <app-photographe-videaste-filter *ngSwitchCase="(type === 'videaliste')"
+                                           (cancel)="cancelEv($event)"
+                                           (search)="search($event)"
+                                           [priceFilter]="priceFilter"
+                                           [hiddenSearchbar]="hideSearchBar">
+          </app-photographe-videaste-filter>
+
+          <app-voiture-bus-filter *ngSwitchCase="(type === 'bus')"
+                                  (cancel)="cancelEv($event)"
+                                  (search)="search($event)"
+                                  [priceFilter]="priceFilter"
+                                  [hiddenSearchbar]="hideSearchBar">
+          </app-voiture-bus-filter>
+          <app-voiture-bus-filter *ngSwitchCase="(type === 'voiture')"
+                                  (cancel)="cancelEv($event)"
+                                  (search)="search($event)"
+                                  [priceFilter]="priceFilter"
+                                  [hiddenSearchbar]="hideSearchBar">
+          </app-voiture-bus-filter>
+          <app-animateur-enfants-adultes-filter *ngSwitchCase="(type === 'animateurEnfants')"
+                                                (cancel)="cancelEv($event)"
+                                                (search)="search($event)"
+                                                [priceFilter]="priceFilter"
+                                                [hiddenSearchbar]="hideSearchBar">
+          </app-animateur-enfants-adultes-filter>
+
+          <app-animateur-enfants-adultes-filter *ngSwitchCase="(type === 'animateurAdultes')"
+                                                (cancel)="cancelEv($event)"
+                                                (search)="search($event)"
+                                                [priceFilter]="priceFilter"
+                                                [hiddenSearchbar]="hideSearchBar">
+          </app-animateur-enfants-adultes-filter>
+
+          <app-lieu-traiteur-gateau
+            *ngSwitchCase="(type === 'lieu')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-lieu-traiteur-gateau>
+
+          <app-lieu-traiteur-gateau
+            *ngSwitchCase="(type === 'gateaumariage')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-lieu-traiteur-gateau>
+
+          <app-lieu-traiteur-gateau
+            *ngSwitchCase="(type === 'traiteur')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-lieu-traiteur-gateau>
+
+          <app-dj-groupe-musicien-filter
+            *ngSwitchCase="(type === 'dj')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-dj-groupe-musicien-filter>
+
+          <app-dj-groupe-musicien-filter
+            *ngSwitchCase="(type === 'groupe')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-dj-groupe-musicien-filter>
+
+          <app-dj-groupe-musicien-filter
+            *ngSwitchCase="(type === 'musicien')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-dj-groupe-musicien-filter>
+
+          <app-lacher-feu-artifices-filter
+            *ngSwitchCase="(type === 'feuArtifices')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-lacher-feu-artifices-filter>
+
+          <app-lacher-feu-artifices-filter
+            *ngSwitchCase="(type === 'lacher')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-lacher-feu-artifices-filter>
+
+          <app-coach-filter
+            *ngSwitchCase="(type === 'choregrapheMariage')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-coach-filter>
+
+          <app-coach-filter
+            *ngSwitchCase="(type === 'coachSportif')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-coach-filter>
+
+          <app-coach-filter
+            *ngSwitchCase="(type === 'officiantCeremonie')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-coach-filter>
+
+          <app-soins-estetique-maquillage-coiffure-filter
+            *ngSwitchCase="(type === 'coiffure')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-soins-estetique-maquillage-coiffure-filter>
+
+          <app-soins-estetique-maquillage-coiffure-filter
+            *ngSwitchCase="(type === 'maquillage')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-soins-estetique-maquillage-coiffure-filter>
+
+          <app-soins-estetique-maquillage-coiffure-filter
+            *ngSwitchCase="(type === 'estetique')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-soins-estetique-maquillage-coiffure-filter>
+
+          <app-soins-estetique-maquillage-coiffure-filter
+            *ngSwitchCase="(type === 'soins')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-soins-estetique-maquillage-coiffure-filter>
+
+          <app-voyage-noces-filter
+            *ngSwitchCase="(type === 'voyageNoces')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-voyage-noces-filter>
+
+          <app-hebergement-filter
+            *ngSwitchCase="(type === 'hebergement')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-hebergement-filter>
+
+          <app-faire-part-filter
+            *ngSwitchCase="(type === 'faireparts')"
+            (cancel)="cancelEv($event)"
+            (search)="search($event)"
+            [priceFilter]="priceFilter"
+            [hiddenSearchbar]="hideSearchBar"></app-faire-part-filter>
+
+          <div *ngSwitchDefault>
+            <div class="spinner" fxLayout="row" fxLayoutAlign="center center">
+              <h2 translate>no filter was found</h2>
+            </div>
+          </div>
+
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="1rem" fxLayoutGap.lt-md="0"
+             class="container2" [ngClass.lt-md]="{'hidden-search-bar':hideSearchBar}">
+
+          <div *ngIf="!((results$ |async))" class="spinner" fxLayout="row" fxLayoutAlign="center center">
+            <mat-spinner diameter="200" strokeWidth="6" color="primary"></mat-spinner>
+          </div>
+
+          <mat-label class="count-result" *ngIf="(results$ |async) as results">
+            <span style="font-weight: bold">{{results.total}}</span>
+            &nbsp;
+            <span style="font-weight: normal" translate>results found</span>
+          </mat-label>
+
+          <div *ngIf="(results$ |async) as results" class="result-container" [fxLayout]="!showMap?'row wrap':'column'"
+               [fxLayoutGap]="!showMap?'30px':'0'" fxLayoutAlign="start center">
+
+            <div *ngFor="let result of (results.data),let i=index;" class="search-container"
+                 [ngClass]="{'search-container__hidden-map':!showMap}">
+              <app-search-result-widget
+                (mouseover)="isOpenInfo[i]=true" (mouseleave)="isOpenInfo[i]=false"
+                [data]="result"
+                [date]="date"
+                [mapOff]="!showMap">
+
+              </app-search-result-widget>
+            </div>
+
+            <div *ngIf="(results.data.length===0)" class="spinner" fxLayout="row" fxLayoutAlign="center center">
+              <h2 translate>no provider was found</h2>
+            </div>
+          </div>
+
+          <div fxLayout="row wrap" fxLayoutAlign="center center"
+               class="paginator" >
+            <app-paginator
+              [hidden]="!((results$|async))"
+              [length]="(results$|async)?.total"
+              [pageSize]="10"
+              (page)="searchPaginated($event)"
+			  #pageElement
+            ></app-paginator>
+          </div>
+
+
+        </div>
+
+      </div>
+
+      <span class="spacer"></span>
+
+      <div fxLayoutAlign="column" style="position: relative">
+        <div class="blur-filter"  *ngIf="((moreFilter) || (t.menuOpen)|| (datePicker.menuOpen))"></div>
+        <div class="map-checkbox">
+          <mat-checkbox [(ngModel)]="seachMapAuto" color="primary">
+            <span style="font-size: 14px;color: #484848;" translate>refresh search when I move the map</span>
+          </mat-checkbox>
+        </div>
+        <agm-map ngStyle.lt-md="width:100vw" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom"
+                 [streetViewControl]="false" (idle)="onIdle()"
+                 [hidden]="!showMap" class="map" [fitBounds]="templateBoudings" (boundsChange)="boundingChange($event)">
+          <agm-marker *ngFor="let result of ((results$ |async)?.data),let i=index;"
+                      [latitude]="result?.company?.location?.lat"
+                      [longitude]="result?.company?.location?.lng"
+                      iconUrl="/assets/icons/svg/map-placeholder.svg">
+
+            <agm-snazzy-info-window style="width: 263px;" [maxWidth]="263" [closeWhenOthersOpen]="true"
+                                    [(isOpen)]="isOpenInfo[i]"
+                                    (beforeOpen)="beforeOpen($event)" (afterClose)="afterClose($event)">
+              <ng-template>
+                <app-search-result-widget [data]="result" [date]="date" [mapWidget]="true"></app-search-result-widget>
+              </ng-template>
+            </agm-snazzy-info-window>
+
+          </agm-marker>
+        </agm-map>
+      </div>
+
+    </div>
+  </div>
+
+</div>

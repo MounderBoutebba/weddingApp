@@ -1,0 +1,189 @@
+[
+    {
+      "name":"Belgium",
+      "phoneCode":"+32",
+      "flag":"/assets/icons/country/belgium.svg"
+    },
+    {
+      "name":"France",
+      "phoneCode":"+33",
+      "flag":"/assets/icons/country/france.svg"
+    },
+    {
+      "name":"Switzerland",
+      "phoneCode":"+41",
+      "flag":"/assets/icons/country/switzerland.svg"
+    },
+    {
+      "name":"Spain",
+      "phoneCode":"+34",
+      "flag":"/assets/icons/country/spain.svg"
+    },
+    {
+      "name":"Italy",
+      "phoneCode":"+39",
+      "flag":"/assets/icons/country/italy.svg"
+    },
+    {
+      "name":"Portugal",
+      "phoneCode":"+351",
+      "flag":"/assets/icons/country/portugal.svg"
+       
+      },
+      {
+      "name":"Germany",
+      "phoneCode":"+49",
+      "flag":"/assets/icons/country/germany.svg"
+       
+      },
+      {
+      "name":"United Kingdom",
+      "phoneCode":"+44",
+      "flag":"/assets/icons/country/united-kingdom.svg"
+       
+      },
+      {
+      "name":"Greece",
+      "phoneCode":"+30",
+      "flag":"/assets/icons/country/greece.svg"
+       
+      },
+      {
+      "name":"Poland",
+      "phoneCode":"+48",
+      "flag":"/assets/icons/country/republic-of-poland.svg"
+       
+      },
+      {
+      "name":"Croatia",
+      "phoneCode":"+385",
+      "flag":"/assets/icons/country/croatia.svg"
+       
+      },
+      {
+      "name":"Austria",
+      "phoneCode":"+43",
+      "flag":"/assets/icons/country/austria.svg"
+       
+      },
+      {
+      "name":"United States",
+      "phoneCode":"+1",
+      "flag":"/assets/icons/country/united-states-of-america.svg"
+       
+      },
+      {
+      "name":"Canada",
+      "phoneCode":"+1",
+      "flag":"/assets/icons/country/canada.svg"
+       
+      },
+      {
+      "name":"Brazil",
+      "phoneCode":"+55",
+      "flag":"/assets/icons/country/brazil.svg"
+       
+      },
+       {
+      "name":"Mexico",
+      "phoneCode":"+52",
+      "flag":"/assets/icons/country/mexico.svg"
+       
+      },
+      {
+      "name":"Argentina",
+      "phoneCode":"+54",
+      "flag":"/assets/icons/country/argentina.svg"
+       
+      },
+      {
+      "name":"Algeria",
+      "phoneCode":"+213",
+      "flag":"/assets/icons/country/algeria.svg"
+       
+      },
+      {
+      "name":"Morocco",
+      "phoneCode":"+212",
+      "flag":"/assets/icons/country/morocco.svg"
+       
+      },
+      {
+      "name":"Tunisia",
+      "phoneCode":"+216",
+      "flag":"/assets/icons/country/tunisia.svg"
+       
+      },
+      {
+      "name":"Egypt",
+      "phoneCode":"+20",
+      "flag":"/assets/icons/country/egypt.svg"
+       
+      },
+      {
+      "name":"South Africa",
+      "phoneCode":"+27",
+      "flag":"/assets/icons/country/south-africa.svg"
+       
+      },
+      {
+      "name":"Namibia",
+      "phoneCode":"+264",
+      "flag":"/assets/icons/country/namibia.svg"
+       
+      },
+      {
+      "name":"Botswana",
+      "phoneCode":"+267",
+      "flag":"/assets/icons/country/botswana.svg"
+       
+      },
+      {
+      "name":"Nigeria",
+      "phoneCode":"+234",
+      "flag":"/assets/icons/country/nigeria.svg"
+       
+      },
+      {
+      "name":"Turkey",
+      "phoneCode":"+90",
+      "flag":"/assets/icons/country/turkey.svg"
+       
+      },
+      {
+      "name":"Russia",
+      "phoneCode":"+7",
+      "flag":"/assets/icons/country/russia.svg"
+       
+      },
+      {
+      "name":"Israel",
+      "phoneCode":"+972",
+      "flag":"/assets/icons/country/israel.svg"
+       
+      },
+      {
+      "name":"India",
+      "phoneCode":"+91",
+      "flag":"/assets/icons/country/india.svg"
+       
+      },
+      {
+      "name":"China",
+      "phoneCode":"+86",
+      "flag":"/assets/icons/country/china.svg"
+       
+      },
+      {
+      "name":"United Arab Emirates",
+      "phoneCode":"+971",
+      "flag":"/assets/icons/country/united-arab-emirates.svg"
+       
+      },
+      {
+      "name":"Australia",
+      "phoneCode":"+61",
+      "flag":"/assets/icons/country/australia.svg"
+       
+      }
+  ]

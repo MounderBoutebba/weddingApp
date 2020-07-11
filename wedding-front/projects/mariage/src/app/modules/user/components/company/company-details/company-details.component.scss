@@ -1,0 +1,43 @@
+mat-label {
+  margin-bottom: 0.9rem !important;
+}
+
+$companyDetailsPadding: 3em 1em;
+.company-details {
+  padding: $companyDetailsPadding;
+}
+.ml_min_1 {
+  margin-left: -1rem !important;
+}
+.ml_min_2 {
+  margin-left: -2rem;
+}
+
+.container {
+  width: 80%;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 65px;
+
+  @media screen and (max-width: 959px) {
+    width: 98%;
+    margin: auto;
+  }
+}
+
+.stepper-container {
+  @media screen and (max-width: 421px) {
+    font-size: 12px;
+  }
+}
+.stepper-component .stepper.stepper {
+  text-transform: capitalize !important;
+  @media screen and (max-width: 421px) {
+    font-size: 12px !important;
+  }
+}
+::ng-deep .mat-form-field {
+    width: 100%;
+}
+
+

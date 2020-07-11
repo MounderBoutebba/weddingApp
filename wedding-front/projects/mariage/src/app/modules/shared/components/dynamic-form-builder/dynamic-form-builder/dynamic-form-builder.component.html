@@ -1,0 +1,9 @@
+<form [formGroup]="form" *ngIf="form">
+  <div fxLayout="column" fxLayout='row wrap' fxLayout.xs="column"
+  fxLayoutAlign="flex-start" fxLayoutGap="10%" fxLayoutGap.xs="0">
+    <div *ngFor="let field of fields" fxFlex="65%">
+      <app-field-builder #appFieldBuilder *ngIf="field" [field]="field"
+      [form]="form" (addOption)='addOption.emit($event)' (checkBoxChange)='checkBoxChange.emit(this.field)'></app-field-builder>
+    </div>
+  </div>
+</form>

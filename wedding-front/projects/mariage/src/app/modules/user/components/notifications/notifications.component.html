@@ -1,0 +1,67 @@
+<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="2rem" class="container">
+  <h2 translate class='main-title'>Notifications</h2>
+  <section fxLayout="column" fxLayoutGap="0.5rem">
+    <mat-label class="title" translate>Gérez vos notifications</mat-label>
+    <span translate class="sub-text">Visualisez et gérez vos notifications </span>
+  </section>
+  <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0.6rem" style="width: 100%">
+    <section fxLayoutGap="1rem" fxLayout="row" fxLayoutAlign="end center" style="width: 100%;padding: 0 2rem">
+      <p class="mark-all-seen" (click)="refresh()">Actualiser</p>
+      <p (click)="markAllAsSeen()" class="mark-all-seen">Tout marquer comme lu</p>
+    </section>
+
+    <section fxLayout="row" fxLayoutAlign="center center" style="width: 100%;" *ngIf="loading">
+      <p class="loading-text">Chargement...</p>
+    </section>
+
+    <section fxLayout="row" fxLayoutAlign="center center" style="width: 100%;"
+             *ngIf="notifications.length<=0 && !loading">
+      <p style="font-size: 1.5rem">Vous n'avez aucune notification</p>
+    </section>
+
+    <section fxLayout="column" fxLayoutGap="1rem" style="width: 100%;">
+      <div
+        *ngFor="let notification of notifications"
+        class="notification-container" fxLayoutGap="1rem"
+        fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayoutAlign="start center" fxLayoutGap="1rem" fxLayout="row">
+          <div>
+            <img src="/assets/icons/svg/notification.svg" class="notification">
+          </div>
+          <a (click)="markAsSeen(notification)" *ngIf="notification?.url?.trim()?.length > 0" [routerLink]="notification.url" style="color:#000000;word-break: break-word" [ngClass]="{'bold':!notification.seen}">
+            {{notification.content}}
+          </a>
+
+          <div *ngIf="notification?.url?.trim()?.length <= 0" style="color:#000000;word-break: break-word" [ngClass]="{'bold':!notification.seen}">
+            {{notification.content}}
+          </div>
+
+        </div>
+        <div fxLayoutAlign="start center" fxLayoutGap="1rem" fxLayout="row">
+          <div>
+            <time>{{notification.createdAt}}</time>
+          </div>
+          <div>
+            <button mat-icon-button *ngIf="!notification.seen" (click)="markAsSeen(notification)">
+              <mat-icon class="seen-icons unseen-icon">done</mat-icon>
+            </button>
+            <button mat-icon-button *ngIf="notification.seen" (click)="markAsUnseen(notification)">
+              <mat-icon class="seen-icons">done_all</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section
+      [fxShow]="notifications.length>0"
+      fxLayout="row wrap" fxLayoutAlign="center center"
+      style="width: 100%;padding-top: 1rem">
+      <app-paginator
+        [length]="totalItems"
+        [pageSize]="10"
+        (page)="searchPaginated($event)"
+      ></app-paginator>
+    </section>
+  </div>
+  <br>
+</div>

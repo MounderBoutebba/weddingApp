@@ -1,0 +1,39 @@
+.number-item{
+  margin-left: 8px;
+  margin-right: 8px;
+  background-color: #ffffff;
+}
+
+
+.active {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.ico {
+  width: 10px;
+  height: 10px;
+}
+
+.next {
+  transform: translate(1px, -4px);
+  width: 10px;
+  height: 10px;
+}
+
+.prev {
+  transform: translate(-1px, -4px);
+  width: 10px;
+  height: 10px;
+}
+
+::ng-deep{
+  .mat-mini-fab .mat-button-wrapper {
+    padding: 0.3rem !important;
+  }
+}
+
+button{
+  width: 30px;
+  height: 30px;
+}

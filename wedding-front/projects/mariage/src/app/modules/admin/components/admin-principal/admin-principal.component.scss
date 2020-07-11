@@ -1,0 +1,22 @@
+.principal-container {
+    width: 98vw;
+    min-height: 100vh;
+    height: 100% !important;
+    overflow: hidden;
+}
+
+.sidenav-container {
+    width: 12%;
+    height: 100%;
+    min-height: 100vh;
+    background-color: #FAFAFA;
+}
+
+.content-container {
+    width: 88%;
+    min-height: 100vh;
+    height: 100%;
+    background-color: white;
+    padding-left: 1%;
+    overflow: hidden;
+}

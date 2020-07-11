@@ -1,0 +1,9 @@
+mat-label {
+  margin-bottom: 0.9rem !important;
+}
+
+.cell {
+  &:hover {
+    cursor: pointer;
+  }
+}

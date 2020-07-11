@@ -1,0 +1,112 @@
+<div [formGroup]="form">
+  <div [ngSwitch]="field.type" class="form-field-builder-item">
+    <div id='lieuTraiteurGateau'>
+        <h3 *ngIf="field.name === 'salleDeReception'" class="title">{{'available space'|lowercase|translate|capitalizeFirstLetter}}</h3>
+        <h3 *ngIf="field.name === 'vinHonneurCocktailBuffet'" class="title">{{'the menu'|lowercase|translate|capitalizeFirstLetter}}</h3>
+        <h3 *ngIf="field.name === 'normand'" class="title">{{'salty products'|lowercase|translate|capitalizeFirstLetter}}</h3>
+        <h3 *ngIf="field.name === 'miniCanneles'" class="title">{{'sweet products'|lowercase|translate|capitalizeFirstLetter}}</h3>
+        <h3 *ngIf="field.name === 'diner'" class="title">{{'menu(s)'|lowercase|translate|capitalizeFirstLetter}}</h3>
+        <h3 *ngIf="field.name === 'terrineDeSaumon'" class="title">{{'starters'|lowercase|translate|capitalizeFirstLetter}}</h3>
+        <h3 *ngIf="field.name === 'jarretAgneau'" class="title">{{'dishes'|lowercase|translate|capitalizeFirstLetter}}</h3>
+        <h3 *ngIf="field.name === 'trioDeLegume'" class="title">{{'side dishes'|lowercase|translate|capitalizeFirstLetter}}</h3>
+        <h3 *ngIf="field.name === 'brie'" class="title">{{'cheeses'|lowercase|translate|capitalizeFirstLetter}}</h3>
+        <h3 *ngIf="field.name === 'tarteletteAuFraises'" class="title">{{'desserts'|lowercase|translate|capitalizeFirstLetter}}</h3>
+        <h3 *ngIf="field.name === 'droitDeBouchon'" class="title">{{'drinks'|lowercase|translate|capitalizeFirstLetter}}</h3>
+        <h3 *ngIf="field.name === 'vinRougeChateauLagrange2016'" class="title">{{'alcoholic drinks'|lowercase|translate|capitalizeFirstLetter}}</h3>
+        <h3 *ngIf="field.name === 'jusOrange'" class="title">{{'not alcoholic drinks'|lowercase|translate|capitalizeFirstLetter}}</h3>
+        <h3 *ngIf="field.name === 'weddingCake'" class="title">{{'the cakes'|lowercase|translate|capitalizeFirstLetter}}</h3>
+    </div>
+    <div id='djGroupeMusicien'>
+      <h3 *ngIf="field.name === 'animateur'" class="title">{{'animations'|lowercase|translate|capitalizeFirstLetter}}</h3>
+      <h3 *ngIf="field.name === 'machineFummee'" class="title">{{'tools'|lowercase|translate|capitalizeFirstLetter}}</h3>
+    </div>
+    <div id='animateurEnfants'>
+      <h3 *ngIf="field.name === 'magie'" class="title">{{'animations'|lowercase|translate|capitalizeFirstLetter}}</h3>
+    </div>
+    <div id='choregraphe'>
+      <h3 *ngIf="field.name === 'creationChoregraphie'" class="title">{{'associate service'|lowercase|translate|capitalizeFirstLetter}}</h3>
+    </div>
+    <div id='coach'>
+      <h3 *ngIf="field.name === 'reequilibrageAlimentaire'" class="title">{{'associate service'|lowercase|translate|capitalizeFirstLetter}}</h3>
+    </div>
+    <div id='voitureBus'>
+      <h3 *ngIf="field.name === 'complex1'" class="title">{{'services'|lowercase|translate|capitalizeFirstLetter}}</h3>
+    </div>
+    <div id='voyageDeNoces'>
+      <h3 *ngIf="field.name === 'enfants'" class="title">{{'Admissions'|lowercase|translate|capitalizeFirstLetter}}</h3>
+    </div>
+    <div id='officiant'>
+      <h3 *ngIf="field.name === 'officierLaCeremonieLaiqueAvecRituel'" class="title">{{'associate service'|lowercase|translate|capitalizeFirstLetter}}</h3>
+    </div>
+    <div id='hebergement'>
+      <h3 *ngIf="field.name === 'cuisine'" class="title">{{'equipments'|lowercase|translate|capitalizeFirstLetter}}</h3>
+      <h3 *ngIf="field.name === 'petitDejeuner'" class="title">{{'services'|lowercase|translate|capitalizeFirstLetter}}</h3>
+    </div>
+    <div id='faire-parts'>
+      <h3 *ngIf="field.name === 'dore'" class="title">{{'gilding'|lowercase|translate|capitalizeFirstLetter}}</h3>
+    </div>
+    <div id='fleuristeDecorateur'>
+      <h3 *ngIf="field.name === 'decorationDeLaSalle'" class="title">{{'associate decoration'|lowercase|translate|capitalizeFirstLetter}}</h3>
+      <h3 *ngIf="field.name === 'livraisonDuMateriel'" class="title">{{'associate service'|lowercase|translate|capitalizeFirstLetter}}</h3>
+    </div>
+    <div id='feuArtificeLachers'>
+      <h3 *ngIf="field.name === 'jongleriesDePivoinesRouges'" class="title">{{'effects'|lowercase|translate|capitalizeFirstLetter}}</h3>
+      <h3 *ngIf="field.name === 'tableauxDeFontaines'" class="title">{{'programs'|lowercase|translate|capitalizeFirstLetter}}</h3>
+      <h3 *ngIf="field.name === 'ballons'" class="title">{{'releases'|lowercase|translate|capitalizeFirstLetter}}</h3>
+      <h3 *ngIf="field.name === 'machineAFumeeLourde'" class="title">{{'complements'|lowercase|translate|capitalizeFirstLetter}}</h3>
+    </div>
+    <app-textbox *ngSwitchCase="fieldTypeEnum.TEXT" [field]="field" [form]="form"></app-textbox>
+    <app-textbox *ngSwitchCase="fieldTypeEnum.PASSWORD" [field]="field" [form]="form"></app-textbox>
+    <app-textbox *ngSwitchCase="fieldTypeEnum.NUMBER" [field]="field" [form]="form"></app-textbox>
+    <app-dropdown *ngSwitchCase="fieldTypeEnum.DROP_DOWN" [field]="field" [form]="form"></app-dropdown>
+    <app-checkbox *ngSwitchCase="fieldTypeEnum.CHECK_BOX" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)' (checkBoxChange)='checkBoxChanged($event)'></app-checkbox>
+    <app-checkbox *ngSwitchCase="fieldTypeEnum.CHECK_BOX_NUMBER" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-checkbox>
+    <app-radio *ngSwitchCase="fieldTypeEnum.RADIO" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-radio>
+    <app-radio *ngSwitchCase="fieldTypeEnum.RADIO_STRING" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-radio>
+    <app-radio *ngSwitchCase="fieldTypeEnum.RADIO_NUMBER" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-radio>
+    <app-toggle *ngSwitchCase="fieldTypeEnum.TOGGLE_NUMBER" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle>
+    <app-toggle *ngSwitchCase="fieldTypeEnum.TOGGLE_NUMBER_TIME" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle>
+    <app-toggle *ngSwitchCase="fieldTypeEnum.TOGGLE_CHECKBOX" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle>
+    <app-toggle *ngSwitchCase="fieldTypeEnum.TOGGLE_CHECKBOX_NUMBER" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)' (checkBoxChange)='checkBoxChanged($event)'></app-toggle>
+    <app-toggle *ngSwitchCase="fieldTypeEnum.TOGGLE_SIMPLE" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle>
+    <app-toggle *ngSwitchCase="fieldTypeEnum.TOGGLE_RADIO" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle>
+    <app-toggle *ngSwitchCase="fieldTypeEnum.TOGGLE_NUMBER_RADIO" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle>
+    <app-toggle-products-list *ngSwitchCase="fieldTypeEnum.TOGGLE_VIN_HONNEUR_COCKTAIL_BUFFET" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle-products-list>
+    <app-toggle-products-list *ngSwitchCase="fieldTypeEnum.TOGGLE_DINNER" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle-products-list>
+    <app-toggle-number-radio-list *ngSwitchCase="fieldTypeEnum.TOGGLE_NUMBER_RADIO_LIST" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle-number-radio-list>
+    <app-toggle-number-list *ngSwitchCase="fieldTypeEnum.TOGGLE_NUMBER_LIST" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle-number-list>
+    <app-toggle-number-list *ngSwitchCase="fieldTypeEnum.TOGGLE_LIST" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle-number-list>
+    <app-toggle-number-list *ngSwitchCase="fieldTypeEnum.TOGGLE_FORMATS_LIST" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle-number-list>
+    <app-toggle-number-list *ngSwitchCase="fieldTypeEnum.TOGGLE_NUMBER_LIST_OPTIONS" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle-number-list>
+    <app-toggle-majoration *ngSwitchCase="fieldTypeEnum.TOGGLE_MAJORATION" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle-majoration>
+    <app-toggle-produits-accessoires *ngSwitchCase="fieldTypeEnum.TOGGLE_PRODUITS_ACCESSOIRES" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle-produits-accessoires>
+    <app-toggle-prestation-invites *ngSwitchCase="fieldTypeEnum.TOGGLE_PRESTATIONS" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle-prestation-invites>
+    <app-checkbox-number-list *ngSwitchCase="fieldTypeEnum.CHECKBOX_NUMBER_LIST" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)' (checkBoxChange)='checkBoxChanged($event)'></app-checkbox-number-list>
+    <app-toggle-voitures-list *ngSwitchCase="fieldTypeEnum.TOGGLE_VOITURE_LIST" [field]="field" [form]="form"
+    (addOption)='addOption.emit($event)'></app-toggle-voitures-list>
+    <div class="text-danger" *ngIf="!isValid && isDirty" translate>{{field.displayName|lowercase|translate|capitalizeFirstLetter}} {{'is required'|translate}}</div>
+  </div>
+</div>

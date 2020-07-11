@@ -1,0 +1,18 @@
+<div class="row" fxLayout="row wrap" fxLayoutAlign="space-evenly center" fxLayoutGap="2px" >
+  <div *ngFor="let service of services$ |async">
+    <a color="primary" mat-stroked-button class="links" [routerLink]="['/category']"
+       [queryParams]="{type:service.title}">
+      <mat-card fxFlexAlign="center center" style="width: auto">
+        <mat-card-content>
+          <img width="40px" [src]="service.icon" [alt]="service.title">
+        </mat-card-content>
+        <mat-card-footer fxFlexAlign="center center" style="text-transform: capitalize">
+          <span translate>{{service.title}}</span>
+        </mat-card-footer>
+        <mat-divider></mat-divider>
+      </mat-card>
+
+    </a>
+  </div>
+
+</div>

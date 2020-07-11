@@ -1,0 +1,32 @@
+<div fxLayout='column' class="section6">
+    <div fxLayout='row wrap' fxLayoutAlign='center start' style="margin-bottom: 1rem;">
+        <div class="main-title">Foire aux questions</div>
+    </div>
+    <div fxLayout='row wrap' fxLayoutAlign='center start' style="margin-bottom: 2rem;">
+        <div class="description">Jetez un œil à notre <a routerLink="">Centre d'aide</a> pour trouver des réponses.</div>
+    </div>
+    <div fxLayout='row wrap' fxLayout.lt-md='row wrap' fxLayoutAlign='start start' style="    width: 66%;
+    margin-left: auto !important;
+    margin-right: auto;"
+    fxLayoutAlign.lt-md='center center' class="column-wrapper ml-col-wrapper"
+    fxLayoutGap='4.875rem' fxLayoutGap.lt-md='0rem' fxFlex.lt-md='100%'>
+        <div fxLayout='column' fxFlex='32.625rem' fxFlex.lt-md='100%'
+        *ngFor="let column of columns" class="column">
+            <div style="margin-bottom: 1rem;" class="column-title">{{column.title}}</div>
+            <div style="margin-bottom: 1rem;" class="column-label" *ngFor="let label of column.labels">{{label}}</div>
+        </div>
+    </div>
+    <div fxLayout='row wrap' fxLayoutAlign='center start'>
+        <div class="sec-description" style="color: black;">Vous avez d'autres questions ?</div>
+    </div>
+    <div fxLayout='row wrap' fxLayoutAlign='center start'>
+        <div class="sec-description" style="color: #484848;">Vous avez encore des doutes ? Trouvez les réponses à vos questions dans notre <a routerLink="">FAQ</a>.</div>
+    </div>
+    <div fxLayout='row wrap' fxLayout.lt-md='column' fxLayoutAlign='center center' fxLayoutAlign.lt-md='center center'
+    class="bottom-btn-wrapper"
+    fxLayoutGap='6.125rem' fxLayoutGap.lt-md='0rem'>
+        <div fxFlex='39.75rem' fxFlex.lt-md='30%'>{{bottomLabel}}</div>
+        <button *ngIf="isBecomePartner" fxFlex='10.5rem' fxFlex.lt-md='30%' class="mat-raised-button mat-primary" (click)='clicked()'>Devenir partenaire</button>
+        <button *ngIf="!isBecomePartner" fxFlex='10.5rem' fxFlex.lt-md='30%' class="mat-raised-button mat-primary" routerLink='/become-a-partner'>Devenir partenaire</button>
+    </div>
+</div>

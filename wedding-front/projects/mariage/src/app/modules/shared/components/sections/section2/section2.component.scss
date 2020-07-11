@@ -1,0 +1,64 @@
+@import '../sections.scss';
+.section2 {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+    @media screen and (max-width: 3600px){
+        .pl-sec2 {
+            justify-content: center;
+        }
+        .mb-sec2 {
+            margin-bottom: 6.75rem;
+        }
+    }
+    @media screen and (max-width: 960px){
+        .pl-sec2 {
+            padding-left: 0rem;
+        }
+        .mb-sec2 {
+            margin-bottom: 2rem;
+        }
+    }
+    .main-title {
+        width: 18.125rem;
+        height: 1.5rem;
+        font-family: Arial;
+        font-stretch: normal;
+        font-style: normal;
+        letter-spacing: normal;
+        text-align: justify;
+        font-size: 26px;
+        font-weight: bold;
+        line-height: normal;
+        color: #000000;
+    }
+    .column {
+        width: 354px;
+        height: 175px;
+        font-family: Arial;
+        font-size: 14px;
+        color: #484848;
+        text-align: center;
+        .column-icon-pink {
+            width: 51px;
+            height: 52px;
+            padding: 2px;
+            background-color: #ff8697;
+            border-radius: 2rem;
+            margin-bottom: 28px;
+        }
+        .column-title {
+            font-size: 21px;
+            font-weight: bold;
+            color: #252525;
+            margin-bottom: 1rem;
+        }
+        .column-text1 {
+            margin-bottom: 1rem;
+        }
+        .column-text2 {
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+    }
+
+}

@@ -1,0 +1,165 @@
+<mat-accordion>
+    <mat-expansion-panel [expanded]="panelExpanded" (opened)="panelOpened()" (closed)="panelClosed()" class="mat-expansion-panel-reservation">
+        <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight] = "'50px'"
+        style="padding: 0 16px;" fxLayout fxLayoutAlign="center center">
+           <div fxLayout fxLayoutAlign="space-between" style="width: 95%;font-size: 15px;font-weight: bold;">
+               <span>Total</span> <span>{{prices.total}} €</span>
+           </div>
+        </mat-expansion-panel-header>
+        <mat-list class="devisList">
+            <!-- lieu -->
+            <mat-list-item *ngIf="bookingObj?.lieu.chambrePourLesMariee && !lieuObj.chambrePourLesMarieeInclusDansPrix">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Chambre pour les mariée</span>
+                    <span>{{lieuObj.chambrePourLesMarieeTarif}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj?.lieu.cuisinePourLeTraiteur && !lieuObj.cuisinePourLeTraiteurInclusDansPrix" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.lieu.cuisinePourLeTraiteur && !lieuObj.cuisinePourLeTraiteurInclusDansPrix">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Cusine pour le traiteur</span>
+                    <span>{{lieuObj.cuisinePourLeTraiteurTarif}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj?.lieu.terrasse && !lieuObj.terrasseInclusDansPrix" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.lieu.terrasse && !lieuObj.terrasseInclusDansPrix">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Terrasse</span>
+                    <span>{{lieuObj.terrasseTarif}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj?.lieu.jardin && !lieuObj.jardinInclusDansPrix" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.lieu.jardin && !lieuObj.jardinInclusDansPrix">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Jardin</span>
+                    <span>{{lieuObj.jardinTarif}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj?.lieu.chapiteau && !lieuObj.jardinInclusDansPrix" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.lieu.chapiteau && !lieuObj.jardinInclusDansPrix">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Chapiteau</span>
+                    <span>{{lieuObj.chapiteauTarif}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj?.lieu.parking && !lieuObj.parkingInclusDansPrix" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.lieu.parking && !lieuObj.parkingInclusDansPrix">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Parking</span>
+                    <span>{{lieuObj.parkingTarif}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj?.lieu?.hebergementInvites" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.lieu?.hebergementInvites">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Hebergement invités</span>
+                    <span>{{lieuObj.hebergementInvitesTarif
+                        * bookingObj.lieu.hebergementInvitesNbrDeNuits * bookingObj.lieu.hebergementInvitesNbrInvites}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj?.lieu?.decoration" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.lieu?.decoration">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Décoration</span>
+                    <span>{{lieuObj.decorationTarif}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj?.lieu?.vaiselleEtCouvert" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.lieu?.vaiselleEtCouvert">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Vaisselle et couverts</span>
+                    <span>{{lieuObj.laviselleEtCouvertTarif}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj?.lieu?.drapeDeTable" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.lieu?.drapeDeTable">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Drapé de table</span>
+                    <span>{{lieuObj.drapeDeTableTarif}} €</span>
+                </div>
+            </mat-list-item>
+            <!-- traiteur -->
+            <mat-divider *ngIf="!!prices.traiteur.vin" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.traiteur.vin">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Vin d'honneur / Cocktail / Buffet</span>
+                    <span>{{prices.traiteur.vin}} €</span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="!!prices.traiteur.Dinner" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.traiteur.Dinner">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Dîner</span>
+                    <span>{{prices.traiteur.Dinner}} €</span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj?.traiteur?.droitDeBouchon" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.traiteur?.droitDeBouchon">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Droit de bouchon</span>
+                    <span>{{bookingObj?.traiteur?.droitDeBouchonNbrBouteilles * traiteurObj.droitDeBouchonTarif}} €</span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="!!prices.traiteur.boissonAlcoolise" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.traiteur.boissonAlcoolise">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Boissons alcoolisées</span>
+                    <span>{{prices.traiteur.boissonAlcoolise}} €</span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="!!prices.traiteur.boissonNonAlcoolise" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.traiteur.boissonNonAlcoolise">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Boissons non alcoolisées</span>
+                    <span>{{prices.traiteur.boissonNonAlcoolise}} €</span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj?.traiteur?.serviceEnSalle" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.traiteur?.serviceEnSalle">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Service en salle</span>
+                    <span>{{traiteurObj.serviceEnSalleTarif}} €</span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj?.traiteur?.serviceDebarrassageEtNettoyage" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.traiteur?.serviceDebarrassageEtNettoyage">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Service débarrassage et nettoyage</span>
+                    <span>{{traiteurObj.serviceDebarrassageEtNettoyageTarif}} €</span>
+                </div>
+            </mat-list-item>
+            <!-- gateaux -->
+            <mat-divider *ngIf="!!prices.gateaux.gateaux" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.gateaux.gateaux">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Gâteaux</span>
+                    <span>{{prices.gateaux.gateaux}} €</span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj?.gateau?.livraison" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.gateau?.livraison">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Livraison (gâteaux)</span>
+                    <span>{{gateauxObj.gateaux.livraison.tarif}} €</span>
+                </div>
+            </mat-list-item>
+            <!-- option divers-->
+            <mat-divider  style="position: inherit;" *ngIf="bookingObj?.optionDivers?.length"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.optionDivers?.length">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Option divers</span>
+                    <span>{{prices.optionDivers}} €</span>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    </mat-expansion-panel>
+</mat-accordion>

@@ -1,0 +1,180 @@
+<mat-accordion>
+    <mat-expansion-panel [expanded]="panelExpanded" (opened)="panelOpened()" (closed)="panelClosed()" class="mat-expansion-panel-reservation">
+        <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight] = "'50px'"
+         style="padding: 0 16px;" fxLayout fxLayoutAlign="center center">
+            <div fxLayout fxLayoutAlign="space-between" style="width: 95%;font-size: 15px;font-weight: bold;">
+                <span>Total</span> <span>{{prices.total}} €</span>
+            </div>
+        </mat-expansion-panel-header>
+        <mat-list class="devisList">
+            <!-- coiffure -->
+            <mat-list-item *ngIf="bookingObj.coiffure.coiffureNombre">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>{{coiffureObj.tarif_horaire}}€ x {{bookingObj.coiffure.coiffureNombre}} coiffures</span>
+                    <span>{{coiffureObj.tarif_horaire * bookingObj.coiffure.coiffureNombre}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj.coiffure.conseilsPersonnalises" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj.coiffure.conseilsPersonnalises">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Conseils personnalisés (coiffure)</span>
+                    <span>{{coiffureObj.conseilsPersonnalisesTarif * bookingObj.coiffure.conseilsPersonnalisesDuree}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj.coiffure.essais" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj.coiffure.essais">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Essais (coiffure)</span>
+                    <span>{{coiffureObj.essaisTarif * bookingObj.coiffure.essaisNombre}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="!!bookingObj.coiffure?.produitsEtAccessoires?.length" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!bookingObj.coiffure?.produitsEtAccessoires?.length">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Produits et accessoires (coiffure)</span>
+                    <span>{{prices.coiffure.produits}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="!!prices.coiffure.majorations" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.coiffure.majorations">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Spécificités chevelure</span>
+                    <span>{{prices.coiffure.majorations}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="!!bookingObj.coiffure?.prestationInvitesProches?.length" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!bookingObj.coiffure?.prestationInvitesProches?.length">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Prestations invités proches (coiffure)</span>
+                    <span>{{prices.coiffure.prestationsInvites}} €</span>
+                </div>
+            </mat-list-item>
+
+            <!-- maquillage -->
+            <mat-divider *ngIf="bookingObj.maquillage.maquillageNombre" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj.maquillage.maquillageNombre">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>{{maquillageObj.tarif_horaire}}€ x {{bookingObj.maquillage.maquillageNombre}} maquillages</span>
+                    <span>{{maquillageObj.tarif_horaire * bookingObj.maquillage.maquillageNombre}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj.maquillage.conseilsPersonnalises" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj.maquillage.conseilsPersonnalises">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Conseils personnalisés (maquillage)</span>
+                    <span>{{maquillageObj.conseilsPersonnalisesTarif * bookingObj.maquillage.conseilsPersonnalisesDuree}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj.maquillage.essais" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj.maquillage.essais">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Essais (maquillage)</span>
+                    <span>{{maquillageObj.essaisTarif * bookingObj.maquillage.essaisNombre}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="!!bookingObj.maquillage?.produits?.length" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!bookingObj.maquillage?.produits?.length">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Produits et accessoires (maquillage)</span>
+                    <span>{{prices.maquillage.produits}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="!!prices.maquillage.majorations" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.maquillage.majorations">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Spécificités peaux</span>
+                    <span>{{prices.maquillage.majorations}} €</span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="!!bookingObj.maquillage?.prestationInvitesProches?.length" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!bookingObj.maquillage?.prestationInvitesProches?.length">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Prestations invités proches (maquillage)</span>
+                    <span>{{prices.maquillage.prestationsInvites}} €</span>
+                </div>
+            </mat-list-item>
+
+            <!-- Esthetique -->
+            <mat-divider *ngIf="bookingObj.esthetique.conseilsPersonnalises" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj.esthetique.conseilsPersonnalises">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Conseils personnalisés (esthetique)</span>
+                    <span>{{esthetiqueObj.conseilsPersonnalisesTarif * bookingObj.esthetique.conseilsPersonnalisesDuree}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj.esthetique.essais" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj.esthetique.essais">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Essais (esthetique)</span>
+                    <span>{{esthetiqueObj.essaisTarif * bookingObj.esthetique.essaisNombre}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="!!prices.esthetique.manucureEtpedicure" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.esthetique.manucureEtpedicure">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Manucure et pédicure</span>
+                    <span>{{prices.esthetique.manucureEtpedicure}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="!!prices.esthetique.epilation" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.esthetique.epilation">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Épilation</span>
+                    <span>{{prices.esthetique.epilation}} €</span>
+                </div>
+            </mat-list-item>
+            <!-- Soins -->
+            <mat-divider *ngIf="bookingObj.soins.conseilsPersonnalises" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj.soins.conseilsPersonnalises">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Conseils personnalisés (soins)</span>
+                    <span>{{soinsObj.conseilsPersonnalisesTarif * bookingObj.soins.conseilsPersonnalisesDuree}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="bookingObj.soins.essais" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="bookingObj.soins.essais">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Essais (soins)</span>
+                    <span>{{soinsObj.essaisTarif * bookingObj.soins.essaisNombre}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="!!prices.soins.soins" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.soins.soins">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Soins</span>
+                    <span>{{prices.soins.soins}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="!!prices.soins.massage" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.soins.massage">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Massage</span>
+                    <span>{{prices.soins.massage}} €</span>
+                </div>
+            </mat-list-item>
+            <!-- option divers-->
+            <mat-divider  style="position: inherit;" *ngIf="bookingObj?.optionDivers?.length"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.optionDivers?.length">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Option divers</span>
+                    <span>{{prices.optionDivers}} €</span>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    </mat-expansion-panel>
+</mat-accordion>

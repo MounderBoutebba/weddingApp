@@ -1,0 +1,40 @@
+.full-width {
+    width: 100%;
+}
+.pb-1 {
+    padding-bottom: 1rem;
+}
+.mt-1 {
+    margin-top: 1rem;
+}
+.mt-2 {
+    margin-top: 2rem;
+}
+.form-input {
+    min-width: 250px;
+    width: 100%;
+}
+.input-label {
+    margin-bottom: 0.2rem;
+    color: #000;
+}
+.drop-down-icon {
+    color: rgba($color: #000000, $alpha: 0.54) !important;
+}
+.info-outline-icon {
+    color: rgba($color: #000000, $alpha: 0.4) !important;
+    cursor: default;
+}
+.delete-icon {
+    color: rgba($color: #000000, $alpha: 0.54) !important;
+    cursor: pointer;
+}
+.add-file-btn {
+    width: 15.625rem;
+    height: 2.75rem;
+    margin-top: 0.5rem;
+    background-color: rgba($color: #000000, $alpha: .1);
+}
+.control-btn {
+    height: 2.75rem;
+}

@@ -1,0 +1,81 @@
+mat-label {
+  margin-bottom: 0.9rem !important;
+}
+
+.main-title {
+  font-weight: 500;
+  font-size: 18.5px;
+  margin-top: 2rem;
+}
+
+.container {
+  width: 97%;
+  margin:auto;
+  min-height: 100vh;
+
+  @media screen and (max-width: 959px) {
+    width: 98%;
+    margin: auto;
+  }
+}
+
+.title{
+  font-size: 15px;
+  color: #000000;
+  margin-bottom: unset !important;
+}
+
+.sub-text{
+  font-size: 13.5px !important;
+  color: #848484;
+}
+
+.notification-container {
+  background-color: #e6e6e63b;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.notification{
+  width: 1.188rem;
+  height: 1.438rem;
+}
+
+.bold{
+  font-weight: bold;
+}
+
+time{
+  font-size: 13.5px;
+  color: #848484;
+}
+
+.seen-icons{
+  font-size: 1.2rem !important;
+  color: #848484 !important;
+}
+
+.unseen-icon{
+  color: #484848 !important;
+}
+
+.mark-all-seen{
+  color: var(--primary-color);
+  cursor: pointer;
+  :hover{
+    color: var(--primary-darker-color);
+  }
+}
+
+.loading-text {
+  animation: loading infinite .900s alternate;
+}
+
+@keyframes loading {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,18 @@
+mat-card{
+  color:var(--white-color);
+  box-shadow: black 0 0 0 !important;
+  background: rgba(0,0,0,0);
+  width: 40px;
+  &.dark{
+    background-color: #fff;
+  }
+}
+
+.links:hover{
+  background: rgba(241, 112, 130, 0.7);
+}
+
+
+mat-card-actions,.links{
+  text-align: center;
+}

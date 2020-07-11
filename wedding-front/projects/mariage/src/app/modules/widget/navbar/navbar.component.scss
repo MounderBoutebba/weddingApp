@@ -1,0 +1,96 @@
+.sidenav-container {
+  min-height: 100vh;
+  height: auto;
+}
+.navbar{
+  background-color: var(--white-color);
+  border-bottom: solid 1px #e6e6e6;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+#mat-badge-content-0{
+  opacity: 0.90;
+  color: white;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.partner{
+  border-radius: 20px;
+  color: var(--white-color);
+  min-width: 25%;
+}
+
+.logo{
+  max-height: 900%;
+  width: 2.125rem;
+  height: 1.75rem;
+  margin: 1.375rem;
+}
+.logo-full{
+  max-height: 900%;
+  height: 1.75rem;
+  margin: 1.375rem;
+}
+
+.right{
+  text-align: right;
+}
+
+.mat-card-avatar {
+  object-fit: cover;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+}
+
+.notification {
+  width: 1.188rem;
+  height: 1.438rem;
+}
+
+
+.arrow {
+  width: 0.438rem;
+  height: 0.688rem;
+
+  margin-right: 0.313rem;
+}
+
+.return{
+  font-size: 13px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+
+  color: #484848;
+}
+
+.down-arrow {
+  width: 0.938rem;
+  height: 0.563rem;
+}
+
+::ng-deep{
+  .mat-badge .mat-badge-overlap .mat-badge-below .mat-badge-after .mat-badge-medium{
+    opacity: 0.90;
+  }
+}
+
+.returnLogo {
+  @media (max-width: 800px) {
+    float: left;
+    position: absolute;
+    margin-left: 2.4rem;
+}
+}

@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>{{description | lowercase | translate | capitalizeFirstLetter}}</h2>
+<mat-dialog-content [style.height]="dialogContentHeight">
+  <form [formGroup]="form">
+      <div *ngIf="fieldType === FieldTypeEnum.RADIO" class="pb-1" fxLayout='row wrap'
+      fxLayoutAlign="start center" fxLayoutGap='1rem'>
+          <mat-form-field appearance='outline' fxFlex='16%'>
+            <input matInput type="text" formControlName="value" style="width: 63%; margin-bottom: 0.4rem;"
+            onkeyup="this.value=this.value.replace(/[^\d]/,'')">
+            <mat-icon fxFlexAlign="end">keyboard_arrow_down</mat-icon>
+          </mat-form-field>
+          <mat-label class="mb1">{{numberLabel | lowercase | translate | capitalizeFirstLetter}}</mat-label>
+      </div>
+      <div *ngIf="fieldType === FieldTypeEnum.RADIO_STRING" class="pb-1"
+      fxLayout='row wrap' fxLayoutAlign="space-between start">
+          <mat-form-field class="form-input full-width" appearance="outline">
+            <input matInput placeholder="{{stringLabel| lowercase | translate | capitalizeFirstLetter}}"
+            type="text" formControlName="value" style='padding-bottom: 1rem;'>
+          </mat-form-field>
+      </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions  align='end'>
+          <button class="mat-raised-button"
+            (click)="cancel()">
+            {{'Cancel' | lowercase | translate | titlecase}}
+          </button>
+
+          <button style="margin-left: 1.4rem; color: white;" class="mat-raised-button mat-primary" type='submit' [disabled]='!form.valid' (click)='save()'>
+                  {{'Save' | lowercase | translate | titlecase}}
+          </button>
+</mat-dialog-actions>

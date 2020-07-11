@@ -1,0 +1,8 @@
+<div [class.dark]="((settings$ |async)?.dark)">
+  <ngx-loading-bar height="4px" color="#f17082" [includeSpinner]="true"></ngx-loading-bar>
+  <app-navbar>
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </app-navbar>
+</div>

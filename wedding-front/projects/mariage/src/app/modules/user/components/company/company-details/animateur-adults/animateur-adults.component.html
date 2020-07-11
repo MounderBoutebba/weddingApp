@@ -1,0 +1,7 @@
+<app-dynamic-form-builder [fields]="parsedCriteres" (addOption)='onAddOption($event)' *ngIf="showForm" #formBuilder></app-dynamic-form-builder>
+<h2 *ngIf="showAnimateurEnfantsComponent">{{'kids animator'|lowercase|translate|titlecase}}</h2>
+<app-animateur-enfants *ngIf="showAnimateurEnfantsComponent" [criteres]="animateurEnfantsInitCriteres"
+[primaryComponent]='false' #animateurEnfantsComponent></app-animateur-enfants>
+<button type='button' mat-flat-button color='primary'
+class='submit-btn' [disabled]='!formBuilder.form.valid' (click)='formSubmitted()' *ngIf="showSubmitBtn" [ngClass]="{'hidden': !primaryComponent}">
+{{'Next' | lowercase | translate | titlecase}}</button>

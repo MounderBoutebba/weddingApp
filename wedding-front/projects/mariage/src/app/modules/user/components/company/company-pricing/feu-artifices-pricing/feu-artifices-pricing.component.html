@@ -1,0 +1,8 @@
+<h2 *ngIf="primaryComponent" style="font-size: 18.5px !important;">{{'fireworks'|lowercase|translate|titlecase}}</h2>
+<app-dynamic-form-builder [fields]="parsedCriteres" (addOption)='onAddOption($event)' *ngIf="showForm" #formBuilder></app-dynamic-form-builder>
+<h2 *ngIf="showLachersComponent" style="font-size: 18.5px !important;">{{'release'|lowercase|translate|titlecase}}</h2>
+<app-lachers-pricing *ngIf="showLachersComponent" [criteres]="lachersInitCriteres"
+[primaryComponent]='false' #lachersComponent></app-lachers-pricing>
+<button type='button' mat-flat-button color='primary'
+class='submit-btn' [disabled]='!formBuilder.form.valid' (click)='formSubmitted()' *ngIf="showSubmitBtn" [ngClass]="{'hidden': !primaryComponent}">
+{{'Next' | lowercase | translate | titlecase}}</button>

@@ -1,0 +1,215 @@
+<div fxLayout="column" class="container" *ngIf='dataLoaded'>
+
+  <div class="informations-personnelles mat-title" translate>personal information</div>
+
+  <form style="width: 100%!important;" [formGroup]="userForm" (ngSubmit)="onSubmit()" fxLayout="column"
+          fxLayoutGap.lt-md="1rem"
+          fxLayoutAlign="space-evenly space-evenly"
+          fxFlexOrder="1">
+
+      <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between">
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="2.063rem" fxLayoutGap.lt-md="0px" fxLayout.lt-md="column">
+
+            <div fxLayout="column">
+              <mat-label translate class="mat-body-2 bold-600">firstname</mat-label>
+              <mat-form-field class="form-input full" floatLabel="always" appearance="outline">
+                <input matInput placeholder="{{'firstname'|translate}}" type="text" formControlName="firstname" class="input capitalize">
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="column">
+              <mat-label translate class="mat-body-2 bold-600">lastname</mat-label>
+              <mat-form-field class="form-input full" floatLabel="always" appearance="outline">
+                <input matInput placeholder="{{'lastname'|translate}}" type="text" formControlName="lastname" class="input capitalize">
+              </mat-form-field>
+            </div>
+
+          </div>
+          <div fxLayout="column" class="edit">
+            <mat-label translate class="mat-body-2 bold-600">email</mat-label>
+            <div fxLayout="row" fxLayoutGap="2.063rem" fxLayoutGap.lt-md="0px" fxLayoutAlign="start start" class="full">
+              <mat-form-field class="form-input full" floatLabel="always" appearance="outline">
+                <input matInput placeholder="{{'email'|translate}}" type="email" formControlName="email" class="input">
+                <img matSuffix class="input-icon" src="/assets/icons/svg/edit.svg">
+              </mat-form-field>
+              <button type="button" class="status" mat-flat-button [color]="user.emailVerified?'accent':'warn'"
+                      disableRipple>
+                <span translate>{{user.emailVerified ? 'confirmed' : 'waiting'}}</span>
+              </button>
+              <br fxShow.lt-md>
+
+            </div>
+          </div>
+        </div>
+        <div fxFlexAlign="end" fxLayout="column" fxFlexOrder="2" fxFlexOrder.lt-md="-1" fxFlexAlign.lt-md="center" style="transform: translateY(-11px);">
+          <mat-label translate class="mat-body-2 bold-600">profile photo</mat-label>
+          <div class="profile" style="width: 11.125rem;height: 11.125rem;border: rgba(0,0,0,0.3) solid 1px"
+               fxLayoutAlign="center center" (click)="fileInput.click()">
+            <input type="file" [hidden]="true" accept="image/*" #fileInput (change)="onFileChange($event)">
+        <span style="cursor: pointer;">
+          <img style="width: 11.125rem;height: 11.125rem;object-fit: cover" *ngIf="!!user.photo" [src]="user.photo">
+
+          <img style="width: 11.125rem;height: 11.125rem;object-fit: cover" *ngIf="!user.photo" [src]="previewImage">
+        </span>
+        <span class="profile-after">
+          <img style="width:1.75rem;height:1.375rem;" src="/assets/icons/svg/photo-camera.svg">
+          <span translate class="text">update</span>
+        </span>
+          </div>
+          <br>
+        </div>
+
+      </div>
+
+
+      <div fxLayout="row wrap" class="edit" fxLayoutAlign="start start" fxLayoutGap="2rem">
+        <div fxLayout="column" fxLayoutAlign="start start" formGroupName="phone">
+          <mat-label translate class="mat-body-2 bold-600">phone</mat-label>
+          <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="2rem">
+            <mat-form-field floatLabel="always" appearance="outline" class='full phone-prefix'>
+              <input type="text" placeholder="{{'dialing code'|translate}}" aria-label="Number" matInput formControlName="country"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let country of filteredCountries | async" [value]="country.phoneCode">
+                  <img class="option-img" aria-hidden [src]="country.flag" height="15">
+                  <span style="font-size: 10px;">{{country.name}}</span> |
+                  <small style="font-size: 10px;">{{country.phoneCode}}</small>
+                </mat-option>
+              </mat-autocomplete>
+              <img *ngIf="initCurrentCountrySourceFlag(userForm.get('phone').get('country').value)" matPrefix class="input-icon-2" style="margin-left: 10px"
+              [src]="initCurrentCountrySourceFlag(userForm.get('phone').get('country').value)">
+            </mat-form-field>
+           &nbsp;<mat-form-field fxFlexAlign="start" class="full form-input phone-input" floatLabel="always"
+                                 appearance="outline">
+              <input matInput placeholder="{{'phone'|translate}}" type="text" formControlName="phoneNumber">
+            <img (click)="modifyNum()" matSuffix class="input-icon pointer" src="/assets/icons/svg/edit.svg">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="2rem">
+
+          <div fxLayout="column" fxLayoutAlign="start start" *ngIf="((!!user.phoneToken)&&(!user.phoneVerified))&&(!showConfirmButton)">
+            <span translate class="mat-body-2 bold-600 confirmation-label">Confirmation code</span>
+            <div fxLayout="row wrap" fxLayoutAlign="start start">
+              <mat-form-field
+                class="full confirmation-input" appearance="outline">
+                <mat-label>XXXXXX</mat-label>
+                <input matInput type="text"  formControlName="phoneToken">
+              </mat-form-field>
+            </div>
+            <mat-hint class="validation-hint" translate>you will receive an SMS validation code</mat-hint>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start start"
+               *ngIf="(!!user.phone&&!user.phone.phoneNumber)||showConfirmButton">
+            <span translate class="mat-body-2 bold-600 confirmation-label validate-label">&nbsp;</span>
+            <div fxLayout="row wrap" fxLayoutAlign="start start">
+              <button (click)="onSubmit()" type="button" class="status full confirm-button" mat-flat-button
+                      color="primary">
+                <span translate>confirm number</span>
+              </button>
+
+            </div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start start"
+               *ngIf="((!!user.phoneToken)&&(!user.phoneVerified))&&(!showConfirmButton)">
+            <span translate class="mat-body-2 bold-600 confirmation-label validate-label">&nbsp;</span>
+            <div fxLayout="row wrap" fxLayoutAlign="start start">
+              <button (click)="validateNumber()" type="button" class="status send full validate-button" mat-flat-button
+                      color="primary">
+                <span translate>validate the code</span>
+              </button>
+
+            </div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start start"
+               *ngIf="((!!user.phoneToken)&&(!user.phoneVerified))&&(!showConfirmButton)">
+            <span translate class="mat-body-2 bold-600 confirmation-label resend-label">&nbsp;</span>
+            <div fxLayout="row wrap" fxLayoutAlign="start start">
+              <button (click)="resend()" type="button" class="status full resend-button" mat-flat-button
+                      color="warn">
+                <span translate>return the validation code</span>
+              </button>
+
+            </div>
+            <mat-hint class="resend-hint" translate>click on the button if you have not received an SMS containing a confirmation code</mat-hint>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start start" *ngIf="showConfirmButton">
+            <span translate class="mat-body-2 bold-600 confirmation-label">&nbsp;</span>
+            <div fxLayout="row wrap" fxLayoutAlign="start start">
+              <button (click)="cancel()" type="button" class="status full" style="width:6rem!important" mat-flat-button
+                      color="warn">
+                <span translate>cancel</span>
+              </button>
+
+            </div>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="start start" *ngIf="user.phoneVerified&&!showConfirmButton">
+            <span translate class="mat-body-2 bold-600 confirmation-label">&nbsp;</span>
+            <div fxLayout="row wrap" fxLayoutAlign="start start">
+              <button type="button" class="status full" style="width:6rem!important" mat-flat-button
+                      color="accent">
+                <span translate>confirmed</span>
+              </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+      <!----------------------------------------------------------->
+
+
+      <!-------------------------------------------------------------------->
+
+      <div fxLayout="column">
+        <mat-label translate class="mat-body-2 bold-600">address</mat-label>
+        <span translate class="secondary-text">{{'Fill in the address of your principal residence'}}</span>
+        <mat-form-field class="form-input " floatLabel="always" appearance="outline" style="width: 35.5rem;" >
+          <input matInput placeholder="{{'address'|translate}}" class='adress-input' (input)="getPlaceAutocomplete()"
+            [value]="location.value.address" #autocompleteaddr>
+        </mat-form-field>
+      </div>
+
+
+      <div fxLayout="column" *ngIf="user.role === 'provider'" class="delete">
+        <mat-label translate class="mat-body-2 bold-600">mastered languages</mat-label>
+        <div fxLayout="row wrap" fxLayoutGap="2.063rem" fxLayoutGap.lt-md="0px" fxLayoutAlign="start start">
+          <mat-form-field *ngFor="let language of languages.controls; let i=index"
+            class="form-input full langue-perso " floatLabel="always" appearance="outline">
+            <input matInput placeholder="{{'language'|translate}}" class="full" type="text" [formControl]="language" class="input">
+            <img (click)="removeLanguage(i)" matSuffix class="input-icon pointer" src="/assets/icons/svg/delete.svg">
+
+          </mat-form-field>
+          <button type="button" mat-flat-button (click)="addLanguage()" class="add-btn full">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div fxLayout="column">
+        <mat-label translate class="mat-body-2 bold-600">account settings</mat-label>
+        <p class="mat-body-2">
+          <a style="cursor: pointer" (click)="deleteAccount()" translate>permanently delete</a>&nbsp;
+          <span translate>my account</span>&nbsp;Winwez
+        </p>
+      </div>
+
+      <div fxFlexAlign.lt-md="center" class="full">
+        <button class="form-input full submit" mat-raised-button color="primary" type="submit"
+                [disabled]="userForm.invalid">
+          <span style="color: white" translate>save</span>
+        </button>
+      </div>
+
+      <br>
+      <br>
+    </form>
+</div>

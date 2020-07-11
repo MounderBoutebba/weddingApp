@@ -1,0 +1,230 @@
+<div *ngIf="field.type === fieldTypeEnum.TOGGLE_VIN_HONNEUR_COCKTAIL_BUFFET"
+ngStyle.lt-md="width:91vw" [formGroup]="form" fxLayout="column">
+    <div id="vinHonneurWrapper" fxLayout='row wrap' fxLayoutAlign="space-between start" style="width: 100%"
+    class="pd-top-bot" [formGroupName]='field.name'>
+        <div fxLayout="column" fxLayoutAlign="center start">
+            <mat-label class='cnl-title'>
+                {{field.displayName|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+              <mat-label class='cnl-label'>
+                {{field.label|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+        </div>
+        <mat-slide-toggle [color]="color" (change)="toggle($event.checked)"
+        [formControlName]="'value'"></mat-slide-toggle>
+        <div *ngIf="field.value" fxLayout="column" fxLayoutAlign="center start" style="margin-top: 1rem;">
+            <mat-label class='cnl-title'>
+                {{field.secondaryDisplayName|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+              <mat-label class='cnl-label' style="max-width: 89%;">
+                {{field.secondaryLabel|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+        </div>
+        <div *ngIf="field.value" fxLayout="column" fxLayoutAlign="center start" style="margin-top: 1rem;">
+            <app-number [numberOption]='{value: field.quantity, label: "Quantité minimum", unit: "", step: 1}'
+            [disableOptions]='true' [field]="field" [form]="form" [quantity]='true'></app-number>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div *ngIf="field.value" [formGroupName]='field.name'>
+        <div [formGroupName]='"products"'>
+            <div *ngFor="let product of field.products" [formGroupName]='product.name'
+            id="productsWrapper" fxLayout='column' fxLayoutAlign="space-between start" style="width: 100%">
+                <div fxLayout="column" fxLayoutAlign="center start">
+                    <mat-label class='cnl-title' style="margin-top: 0.9rem !important; margin-bottom: 2rem !important;">
+                        {{product.name|lowercase|translate|capitalizeFirstLetter}}
+                    </mat-label>
+                </div>
+                <div id="optionWrapper" *ngFor="let opt of product.options; let i=index" [formGroupName]='opt.name'
+                fxLayout="column" [ngClass]='{"hide": !showMoreOptions && i>=displayItemsLimit}' style="width: 100%">
+                  <div *ngIf=' i < displayItemsLimit'>
+                      <div fxLayout="row" fxLayoutAlign="start center" style="margin-bottom: 0.5rem;">
+                        <div fxLayout="column" fxFlex="90%">
+                          <mat-label class='cnl-sub-title'>
+                            {{opt.name|lowercase|translate|capitalizeFirstLetter}}
+                          </mat-label>
+                          <mat-label class="cnl-label">
+                            {{opt.label|lowercase|translate|capitalizeFirstLetter}}
+                          </mat-label>
+                        </div>
+                        <mat-slide-toggle fxFlex="10%" [color]="color" (change)="toggleOption($event.checked, product.name, opt.name)"
+                                          [formControlName]="'value'"></mat-slide-toggle>
+                      </div>
+
+                      <div fxLayout="row" fxLayoutAlign="end start" id="numberWrapper" style="margin-right: 0.6rem !important;">
+                        <mat-form-field style="width: 50%">
+                          <input matInput [hidden]='true'>
+                          <div *ngIf='opt.value' >
+                            <app-number [field]="field" [form]="form" [disableOptions]='opt.value' [product]='product' [option]='opt'
+                                        [numberOption]='{value: opt.tarif, label: "Tarif unitaire", step: opt.step, unit: opt.unit}'></app-number>
+                          </div>
+                        </mat-form-field>
+                      </div>
+
+                  </div>
+                  <div *ngIf='showMoreOptions && i>=displayItemsLimit'>
+                      <div fxLayout="row" fxLayoutAlign="start center" style="margin-bottom: 0.5rem;">
+                        <div fxLayout="column" fxFlex="90%">
+                          <mat-label class='cnl-sub-title'>
+                            {{opt.name|lowercase|translate|capitalizeFirstLetter}}
+                          </mat-label>
+                          <mat-label class="cnl-label">
+                            {{opt.label|lowercase|translate|capitalizeFirstLetter}}
+                          </mat-label>
+                        </div>
+                        <mat-slide-toggle fxFlex="10%" [color]="color" (change)="toggleOption($event.checked, product.name, opt.name)"
+                                          [formControlName]="'value'"></mat-slide-toggle>
+                      </div>
+
+                      <div fxLayout="row" fxLayoutAlign="end start" id="numberWrapper" style="margin-right: 0.6rem !important;">
+                        <mat-form-field style="width: 50%">
+                          <input matInput [hidden]='true'>
+                          <div *ngIf='opt.value' >
+                            <app-number [field]="field" [form]="form" [disableOptions]='opt.value' [product]='product' [option]='opt'
+                                        [numberOption]='{value: opt.tarif, label: "Tarif unitaire", step: opt.step, unit: opt.unit}'></app-number>
+                          </div>
+                        </mat-form-field>
+                      </div>
+
+                  </div>
+                  <mat-divider style=" !important; margin-bottom: 1rem;"></mat-divider>
+                </div>
+                <span *ngIf="!showErrMsg(product)" class="text-danger">Vous devez renseigner au minimum un produit</span>
+                <div>
+                    <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+                    *ngIf='product.options?.length > displayItemsLimit'>
+                    {{showMoreLabel|lowercase|translate|capitalizeFirstLetter}}
+                    <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+                    <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+                    </button>
+                </div>
+                <div style="width: 100%">
+                  <button  mat-stroked-button class='ajout-btn' (click)='addOption.emit({field: field, productName: product.name})'>
+                          <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+                  </button>
+                  &nbsp;
+                  <mat-label class='add-btn-label'>{{addBtnLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+                  <mat-divider style=" !important; margin-top: 1rem;"></mat-divider>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div *ngIf="field.type === fieldTypeEnum.TOGGLE_DINNER"
+ngStyle.lt-md="width:91vw" [formGroup]="form" fxLayout="column">
+    <div id="vinHonneurWrapper" fxLayout='row wrap' fxLayoutAlign="space-between start" style="width: 100%"
+    class="pd-top-bot" [formGroupName]='field.name'>
+        <div fxLayout="column" fxLayoutAlign="center start">
+            <mat-label class='cnl-title'>
+                {{field.displayName|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+              <mat-label class='cnl-label'>
+                {{field.label|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+        </div>
+        <mat-slide-toggle [color]="color" (change)="toggle($event.checked)"
+        [formControlName]="'value'"></mat-slide-toggle>
+        <div *ngIf="field.value" fxLayout="column" fxLayoutAlign="center start" style="margin-top: 1rem;">
+            <mat-label class='cnl-title'>
+                {{field.secondaryDisplayName|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+              <mat-label class='cnl-label' style="max-width: 89%;">
+                {{field.secondaryLabel|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+        </div>
+        <div *ngIf="field.value" fxLayout="row" fxLayoutAlign="space-around start" style="margin-top: 1rem;">
+            <app-number [numberOption]='{value: field.convivesMin, label: "Convives minimum", unit: "", step: 1}'
+            [disableOptions]='true' [field]="field" [form]="form" [convivesMin]='true'></app-number>
+            <app-number [numberOption]='{value: field.dinerCapacite, label: "Capacité de service", unit: "", step: 1}'
+            [disableOptions]='true' [field]="field" [form]="form" [dinerCapacite]='true'></app-number>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div *ngIf="field.value" [formGroupName]='field.name'>
+        <div [formGroupName]='"products"'>
+            <div *ngFor="let product of field.products" [formGroupName]='product.name'
+            id="productsWrapper" fxLayout='column' fxLayoutAlign="space-between start" style="width: 100%">
+                <div fxLayout="column" fxLayoutAlign="center start">
+                    <mat-label class='cnl-title' style="margin-top: 0.9rem !important; margin-bottom: 2rem !important;">
+                        {{product.name|lowercase|translate|capitalizeFirstLetter}}
+                    </mat-label>
+                </div>
+                <div id="optionWrapper" *ngFor="let opt of product.options; let i=index" [formGroupName]='opt.name'
+                fxLayout="column" [ngClass]='{"hide": !showMoreOptions && i>=displayItemsLimit}' style="width: 100%">
+                  <div *ngIf=' i < displayItemsLimit'>
+                      <div fxLayout="row" fxLayoutAlign="start center" style="margin-bottom: 0.5rem;">
+                        <div fxLayout="column" fxFlex="90%">
+                          <mat-label class='cnl-sub-title'>
+                            {{opt.name|lowercase|translate|capitalizeFirstLetter}}
+                          </mat-label>
+                          <mat-label class="cnl-label">
+                            {{opt.label|lowercase|translate|capitalizeFirstLetter}}
+                          </mat-label>
+                        </div>
+                        <mat-slide-toggle fxFlex="10%" [color]="color" (change)="toggleOption($event.checked, product.name, opt.name)"
+                                          [formControlName]="'value'"></mat-slide-toggle>
+                      </div>
+
+                      <div fxLayout="row" fxLayoutAlign="end start" id="numberWrapper" style="margin-right: 0.6rem !important;">
+                        <mat-form-field style="width: 50%">
+                          <input matInput [hidden]='true'>
+                          <div *ngIf='opt.value' >
+                            <app-number [field]="field" [form]="form" [disableOptions]='opt.value' [product]='product' [option]='opt'
+                                        [numberOption]='{value: opt.tarif, label: "Tarif unitaire", step: opt.step, unit: opt.unit}'></app-number>
+                          </div>
+                        </mat-form-field>
+                      </div>
+
+                  </div>
+                  <div *ngIf='showMoreOptions && i>=displayItemsLimit'>
+                      <div fxLayout="row" fxLayoutAlign="start center" style="margin-bottom: 0.5rem;">
+                        <div fxLayout="column" fxFlex="90%">
+                          <mat-label class='cnl-sub-title'>
+                            {{opt.name|lowercase|translate|capitalizeFirstLetter}}
+                          </mat-label>
+                          <mat-label class="cnl-label">
+                            {{opt.label|lowercase|translate|capitalizeFirstLetter}}
+                          </mat-label>
+                        </div>
+                        <mat-slide-toggle fxFlex="10%" [color]="color" (change)="toggleOption($event.checked, product.name, opt.name)"
+                                          [formControlName]="'value'"></mat-slide-toggle>
+                      </div>
+
+                      <div fxLayout="row" fxLayoutAlign="end start" id="numberWrapper" style="margin-right: 0.6rem !important;">
+                        <mat-form-field style="width: 50%">
+                          <input matInput [hidden]='true'>
+                          <div *ngIf='opt.value' >
+                            <app-number [field]="field" [form]="form" [disableOptions]='opt.value' [product]='product' [option]='opt'
+                                        [numberOption]='{value: opt.tarif, label: "Tarif unitaire", step: opt.step, unit: opt.unit}'></app-number>
+                          </div>
+                        </mat-form-field>
+                      </div>
+
+                  </div>
+                  <mat-divider style="margin-bottom: 1rem;"></mat-divider>
+                </div>
+                <span *ngIf="!showErrMsg(product)" class="text-danger">Vous devez renseigner au minimum un produit</span>
+                <div>
+                    <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+                    *ngIf='product.options?.length > displayItemsLimit'>
+                    {{showMoreLabel|lowercase|translate|capitalizeFirstLetter}}
+                    <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+                    <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+                    </button>
+                </div>
+                <div style="width: 100%">
+                  <button  mat-stroked-button class='ajout-btn' (click)='addOption.emit({field: field, productName: product.name})'>
+                          <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+                  </button>
+                  &nbsp;
+                  <mat-label class='add-btn-label'>{{addBtnLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+                  <mat-divider style=" !important; margin-top: 1rem;"></mat-divider>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

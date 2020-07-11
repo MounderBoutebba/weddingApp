@@ -1,0 +1,17 @@
+<mat-horizontal-stepper #stepper [linear]='true'>
+    <mat-step [stepControl]='firstStepFrm' flex='100' fxLayout="column">
+        <ng-template matStepLabel translate>first step</ng-template>
+        <div fxFlex="100" fxFill class='step-wrapper'>
+            <app-first-step [stepper]='stepper'></app-first-step>
+        </div>
+    </mat-step>
+    <mat-step flex='100' fxLayout="column">
+        <ng-template matStepLabel translate>second step</ng-template>
+    </mat-step>
+    <mat-step flex='100' fxLayout="column">
+        <ng-template matStepLabel translate>third step</ng-template>
+    </mat-step>
+    <mat-step flex='100' fxLayout="column">
+        <ng-template matStepLabel translate>fourth step</ng-template>
+    </mat-step>
+</mat-horizontal-stepper>

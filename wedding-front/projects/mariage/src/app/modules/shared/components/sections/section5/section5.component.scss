@@ -1,0 +1,69 @@
+@import '../sections.scss';
+@media screen and (max-width: 3600px) {
+    .section5 {
+        font-family: Arial;
+        .main-title {
+            font-size: 26px;
+            font-weight: bold;
+            color: #000000;
+            text-align: center;
+        }
+        .description {
+            text-align: center;
+            font-size: 21px;
+            color: #484848;
+        }
+        .pl_5 {
+                margin-left: auto;
+    margin-right: auto;
+        }
+        .two-columns-wrapper {
+            .column {
+                .mb-1 {
+                    margin-bottom: 1rem;
+                }
+                .title-col {
+                    font-size: 25px;
+                    font-weight: bold;
+                    color: #000000;
+                }
+                .description-col {
+                    font-size: 17px;
+                    color: #333333;
+                }
+                .link {
+                    font-size: 17px;
+                    color: #ff8697;
+                    text-decoration: underline;
+                }
+            }
+        }
+        .three-columns-wrapper {
+            .label-three-cols {
+                font-family: Arial;
+                font-size: 14px;
+                font-weight: bold;
+                text-align: left;
+                color: #484848;
+            }
+            .mr-2-percent {
+                margin-top: 2%;
+            }
+        }
+    }
+}
+@media screen and (max-width: 960px) {
+    .section5 {
+        .pl_5 {
+            padding-left: 0rem;
+        }
+        .two-columns-wrapper {
+            text-align: center;
+        }
+        .label-three-cols {
+            .mr-2-percent {
+                margin-top: 0%;
+            }
+        }
+    }
+}

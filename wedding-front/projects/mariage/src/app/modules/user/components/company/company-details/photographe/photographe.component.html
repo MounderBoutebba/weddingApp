@@ -1,0 +1,19 @@
+<div class='control-wrapper' fxLayout="row wrap" fxLayoutGap="10%" fxLayoutAlign="flex-start" fxLayoutGap.xs="0" fxLayout.xs="column"
+*ngIf='primaryComponent' style="width: 65%;">
+    <p translate fxFlex='100%' class='mb-0 title'>{{'advantages'|lowercase|translate|titlecase}}</p>
+    <p translate fxFlex='100%' class='mt-0 sub-title'>{{'indicate the services you offer'|lowercase|translate|capitalizeFirstLetter}}</p>
+    <div class='checkbox-wrapper' fxLayout="row wrap" fxLayoutGap="10%" fxFlex='100%'>
+        <mat-checkbox class='checkbox-label' [disabled]='true' [checked]='true' fxFlex='40%'>{{'Photograph'|lowercase|translate|titlecase}}</mat-checkbox>
+        <mat-checkbox class='checkbox-label' [disabled]='true' [checked]='true' fxFlex='40%' *ngIf="isVideaste">{{'Videographer'|lowercase|translate|titlecase}}</mat-checkbox>
+        <mat-checkbox class='checkbox-label' fxFlex='40%' *ngIf="!isVideaste" color='primary'
+        (change)='videasteIsChecked($event.checked)'>{{'Videographer'|lowercase|translate|titlecase}}</mat-checkbox>
+    </div>
+</div>
+<mat-divider style="width: 65%;margin-bottom: 1rem;"></mat-divider>
+<app-dynamic-form-builder [fields]="parsedCriteres" (addOption)='onAddOption($event)' *ngIf="showForm" #formBuilder></app-dynamic-form-builder>
+<h2 *ngIf="showVideasteComponent" style="font-size: 18.5px !important;">{{'Videographer'|lowercase|translate|titlecase}}</h2>
+<app-videaste *ngIf="showVideasteComponent" [criteres]="videasteInitCriteres"
+[primaryComponent]='false' #videasteComponent></app-videaste>
+<button type='button' mat-flat-button color='primary'
+class='submit-btn' [disabled]='!formBuilder.form.valid' (click)='formSubmitted()' *ngIf="showSubmitBtn" [ngClass]="{'hidden': !primaryComponent}">
+{{'Next' | lowercase | translate | titlecase}}</button>

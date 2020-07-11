@@ -1,0 +1,458 @@
+<div class="stepper-container">
+  <div class="stepper-component">
+    <mat-toolbar-row>
+      <a mat-flat-button class="stepper" class="stepper active" translate>description</a>
+      <div class="circle active"></div>
+      <span class="spacer active"></span>
+      <a mat-flat-button class="stepper" translate>details</a>
+      <div class="circle active"></div>
+      <span class="spacer active"></span>
+      <a [routerLink]="['#']" mat-flat-button class="stepper" class="stepper active"
+         routerLinkActive="active">{{'pricing'|lowercase|translate|titlecase}}</a>
+      <div class="circle active"></div>
+      <span class="spacer active"></span>
+      <a mat-flat-button class="stepper">{{'settings'|lowercase|translate|titlecase}}</a>
+      <div class="circle active"></div>
+      <span class="spacer active"></span>
+      <div class="circle circle-end"></div>
+      <a mat-flat-button class="stepper">{{'billing'|lowercase|translate|titlecase}}</a>
+    </mat-toolbar-row>
+  </div>
+</div>
+
+<div class="container">
+  <form [formGroup]="companyForm" class="general-container" *ngIf="company">
+    <span class="first-title" translate>Pricing Adjustment</span>
+    <div class="increase-weekend-container">
+      <div class="container-1">
+        <div class="container-1-1">
+          <span class="second-title" translate>Weekend variation</span>
+          <span class="third-title" translate>Are your rates variable if the service takes place during the week or the weekend?</span>
+        </div>
+        <div class="container-1-2">
+          <mat-slide-toggle [color]="color" [checked]="companyForm.get('weekendVariation').value"
+                            (change)="this.companyForm.get('weekendVariation').setValue(!companyForm.get('weekendVariation').value);"></mat-slide-toggle>
+        </div>
+      </div>
+      <div *ngIf="companyForm.get('weekendVariation').value" class="container-2">
+        <span [ngStyle]="{'color':companyForm.get('weekendVariation').value?'#000000':'#606060'}" translate>Percentage increase on weekends</span>
+        <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+                (click)="onDecrementValue($event, 'weekendVariationPercentage')" color=''
+                [disabled]="!companyForm.get('weekendVariation').value">
+          <mat-icon color='primary' class='icon-disabled display-grid'
+                    *ngIf="!companyForm.get('weekendVariation').value">remove
+          </mat-icon>
+          <mat-icon color='primary' class='display-grid' *ngIf="companyForm.get('weekendVariation').value">remove
+          </mat-icon>
+        </button>
+        <input readonly matInput type="number" class="custom-input" formControlName="weekendVariationPercentage">
+        <span matSuffix>%</span>
+        <button mat-mini-fab class='margin-left number-control-btn' color=''
+                (click)="onIncrementValue($event, 'weekendVariationPercentage')"
+                [disabled]="!companyForm.get('weekendVariation').value">
+          <mat-icon color='primary' class='icon-disabled display-grid'
+                    *ngIf="!companyForm.get('weekendVariation').value">add
+          </mat-icon>
+          <mat-icon color='primary' class='display-grid' *ngIf="companyForm.get('weekendVariation').value">add
+          </mat-icon>
+        </button>
+      </div>
+      <mat-error
+        *ngIf="companyForm.get('weekendVariationPercentage').status === 'INVALID' && companyForm.get('weekendVariation').value"
+        translate>
+        <span translate>Please enter at least 1%</span>
+      </mat-error>
+    </div>
+    <mat-divider class='custom-divider'></mat-divider>
+    <div class="period-variation-container">
+      <div class="container-1">
+        <div class="container-1-1">
+          <span class="second-title" translate>Period variation</span>
+          <span class="third-title" translate>Do your rates vary according to the periods?</span>
+        </div>
+        <div class="container-1-2">
+          <mat-slide-toggle [color]="color" [checked]="companyForm.get('periodeVariation').value"
+                            (change)="onChangePeriodVariation($event)"></mat-slide-toggle>
+        </div>
+      </div>
+      <div *ngIf="companyForm.get('periodeVariation').value" class="custom-margin-top">
+            <span class="title-4" *ngIf="SETTINGS_DATA.length > 0" translate>Saved settings</span>
+        <div *ngIf="SETTINGS_DATA.length > 0">
+          <div class="inline-container-3 margin-bottom on-hover-selector" *ngFor="let element of SETTINGS_DATA"
+               (click)="clickOnSettingRow(element)">
+            <div class="columns-container">
+              <div class="case-container">
+                <span translate>Period</span>
+                <span>{{changeDateFormat(element.periodStartDate)}} à {{changeDateFormat(element.periodEndDate)}}</span>
+              </div>
+              <div class="case-container">
+                <span translate>Weekly increase</span>
+                <span>{{element.increaseWeek}}%</span>
+              </div>
+              <div class="case-container">
+                <span translate>Weekend increase</span>
+                <span>{{element.increaseWeekend}}%</span>
+              </div>
+              <div class="case-container">
+                <span translate>Auto application</span>
+                <span>{{element.autoApplication ? 'Oui' : 'Non'}}</span>
+              </div>
+            </div>
+            <div class="remove-button-container">
+              <button mat-stroked-button (click)="onDeleteSetting(element)">
+                <span translate>Delete</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <form class="period-save-container" [formGroup]="settingForm">
+                <span class="title-5" [ngStyle]="{'margin-top': SETTINGS_DATA.length > 0 ? '2.375rem' : '0'}" translate>Add a period</span>
+          <div class="container-3">
+            <input class="period-calendar-option-input" #periodInput type="text" ngxDaterangepickerMd
+                   (change)="changePeriodDate($event)"
+                   [minDate]="minDate"
+                   value="{{changeDateFormat(this.settingForm.get('periodStartDate').value)}} à {{changeDateFormat(this.settingForm.get('periodEndDate').value)}}"
+                   [locale]="locale"/>
+
+
+
+          </div>
+          <div class="container-4">
+            <div class="container-4-1">
+              <span [ngStyle]="{'color':companyForm.get('periodeVariation').value?'#000000':'#606060'}" translate>Weekly increase</span>
+              <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+                      (click)="onDecrementValue($event, 'increaseWeek')" color=''
+                      [disabled]="!companyForm.get('periodeVariation').value">
+                <mat-icon color='primary' class='icon-disabled display-grid'
+                          *ngIf="!companyForm.get('periodeVariation').value">remove
+                </mat-icon>
+                <mat-icon color='primary' class='display-grid' *ngIf="companyForm.get('periodeVariation').value">remove</mat-icon>
+              </button>
+              <input readonly matInput type="number" class="custom-input" formControlName="increaseWeek">
+              <span matSuffix>%</span>
+              <button mat-mini-fab class='margin-left number-control-btn' color=''
+                      (click)="onIncrementValue($event, 'increaseWeek')"
+                      [disabled]="!companyForm.get('periodeVariation').value">
+                <mat-icon color='primary' class='icon-disabled display-grid'
+                          *ngIf="!companyForm.get('periodeVariation').value">add
+                </mat-icon>
+                <mat-icon color='primary' class='display-grid' *ngIf="companyForm.get('periodeVariation').value">add
+                </mat-icon>
+              </button>
+            </div>
+            <div class="container-4-2">
+              <span [ngStyle]="{'color':companyForm.get('periodeVariation').value?'#000000':'#606060'}" translate>Weekend increase</span>
+              <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+                      (click)="onDecrementValue($event, 'increaseWeekend')" color=''
+                      [disabled]="!companyForm.get('periodeVariation').value">
+                <mat-icon color='primary' class='icon-disabled display-grid'
+                          *ngIf="!companyForm.get('periodeVariation').value">remove
+                </mat-icon>
+                <mat-icon color='primary' class='display-grid' *ngIf="companyForm.get('periodeVariation').value">
+                  remove
+                </mat-icon>
+              </button>
+              <input readonly matInput type="number" formControlName="increaseWeekend" class="custom-input">
+              <span matSuffix>%</span>
+              <button mat-mini-fab class='margin-left number-control-btn' color=''
+                      (click)="onIncrementValue($event, 'increaseWeekend')"
+                      [disabled]="!companyForm.get('periodeVariation').value">
+                <mat-icon color='primary' class='icon-disabled display-grid'
+                          *ngIf="!companyForm.get('periodeVariation').value">add
+                </mat-icon>
+                <mat-icon color='primary' class='display-grid' *ngIf="companyForm.get('periodeVariation').value">add
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+          <div class="container-1 custom-margin-bottom" style="margin-top: 2rem;">
+            <div class="container-1-1">
+              <span class="second-title" translate>Setting application</span>
+              <span class="third-title" translate>Voulez vous appliquer ce paramétrage tarifaire pour toutes les années suivantes ?</span>
+            </div>
+            <div class="container-1-2">
+              <mat-slide-toggle [color]="color" formControlName="autoApplication"></mat-slide-toggle>
+            </div>
+          </div>
+
+          <div class="save-setting-container">
+            <button mat-raised-button color="primary" (click)="OnSaveSetting($event)" class="button-save-setting"
+                    [disabled]="settingForm.invalid || !companyForm.get('periodeVariation').value">
+              <span translate>Save settings</span>
+            </button>
+          </div>
+          <mat-error *ngIf="settingForm.invalid && SETTINGS_DATA.length<=0" class="save-setting-container" translate>
+            <span translate>Please enter a period and at least 1%</span>
+          </mat-error>
+        </form>
+      </div>
+    </div>
+    <mat-divider class='custom-divider'></mat-divider>
+    <div>
+      <div class="container-1">
+        <div class="container-1-1">
+          <span class="second-title" translate>Options</span>
+          <span class="third-title" translate>Do you have other options?</span>
+        </div>
+        <div class="container-1-2">
+          <mat-slide-toggle [color]="color" [checked]="companyForm.get('optionsProposed').value"
+                            (change)="onChangeOptionProposed($event)"></mat-slide-toggle>
+        </div>
+      </div>
+      <div *ngIf="companyForm.get('optionsProposed').value" class="custom-margin-top"
+           style="display: flex; flex-direction:column">
+        <span class="title-4" *ngIf="OPTIONS_DATA.length > 0" translate>Saved options</span>
+        <div class="inline-container-3 margin-bottom on-hover-selector" *ngFor="let element of OPTIONS_DATA"
+             (click)="clickOnOptionRow(element)">
+          <div class="columns-container">
+            <div class="case-container">
+              <span translate>Name</span>
+              <span>{{element.name}}</span>
+            </div>
+            <div class="case-container">
+              <span translate>Description</span>
+              <span>{{element.description}}</span>
+            </div>
+            <div class="case-container">
+              <span translate>price of the option</span>
+              <span>{{element.optionRate}} € </span>
+            </div>
+            <div class="case-container">
+              <span translate>Fee type</span>
+              <span>{{element.feeType}}</span>
+            </div>
+            <div class="case-container">
+              <span translate>Categories</span>
+              <span translate *ngFor="let c of element.categories">{{c}}</span>
+            </div>
+          </div>
+          <div class="remove-button-container">
+            <button mat-stroked-button (click)="onDeleteOption(element)">
+              <span translate>Delete</span>
+            </button>
+          </div>
+        </div>
+        <form class="period-save-container" [formGroup]="optionForm">
+          <div class="container-5 title-5" [ngStyle]="{'margin-top': OPTIONS_DATA.length > 0 ? '2.375rem' : '0'}">
+            <mat-form-field floatLabel="always" appearance="outline" class="option-name-input">
+              <input matInput type="text" formControlName="name" placeholder="{{'Option name'|translate}}"
+                     maxlength="44">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="option-description-input description">
+              <textarea matInput formControlName="description" placeholder="{{'Option description'|translate}}"
+                        maxlength="90"></textarea>
+            </mat-form-field>
+          </div>
+          <div class="inline-container-4 margin-bottom margin-top">
+            <div class="container-6">
+              <div style="width: 11rem">
+                <span class="title-9" translate>Option pricing</span>
+              </div>
+              <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+                      (click)="onDecrementValue($event, 'optionRate')" color=''
+                      [disabled]="!companyForm.get('optionsProposed').value">
+                <mat-icon color='primary' class='icon-disabled display-grid'
+                          *ngIf="!companyForm.get('optionsProposed').value">remove
+                </mat-icon>
+                <mat-icon color='primary' class='display-grid' *ngIf="companyForm.get('optionsProposed').value">remove
+                </mat-icon>
+              </button>
+              <input readonly class="custom-input" matInput type="number" formControlName="optionRate">
+              <span class="title-9" matSuffix>€</span>
+              <button mat-mini-fab class='margin-left number-control-btn' color=''
+                      (click)="onIncrementValue($event, 'optionRate')"
+                      [disabled]="!companyForm.get('optionsProposed').value">
+                <mat-icon color='primary' class='icon-disabled display-grid'
+                          *ngIf="!companyForm.get('optionsProposed').value">add
+                </mat-icon>
+                <mat-icon color='primary' class='display-grid' *ngIf="companyForm.get('optionsProposed').value">add
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+          <div class="title-9" class="margin-bottom">
+            <span style="font-size: 15px; color: black" translate>Fee type</span>
+          </div>
+          <mat-radio-group [color]="color" formControlName="feeType" class="custom-margin-bottom custom-radio-group">
+            <mat-radio-button [checked]="optionForm.get('feeType').value==feeType.SINGLE_FEE"
+                              [value]="feeType.SINGLE_FEE">
+              <span translate>Single fee</span>
+            </mat-radio-button>
+            <mat-radio-button [checked]="optionForm.get('feeType').value==feeType.UNIT_FEE" [value]="feeType.UNIT_FEE">
+              <span translate>Unit fee</span>
+            </mat-radio-button>
+            <mat-radio-button [checked]="optionForm.get('feeType').value==feeType.GUEST_FEE"
+                              [value]="feeType.GUEST_FEE">
+              <span translate>Guest fee</span>
+            </mat-radio-button>
+          </mat-radio-group>
+
+          <div style="padding-bottom: 1rem" fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="1rem">
+            <section fxLayout="column" fxLayoutGap="0.4rem">
+              <mat-label class="title" translate>Assigner l'option</mat-label>
+              <span translate class="sub-text">Indiquez le(s) métier(s) concerné(s) par cette option</span>
+            </section>
+            <section fxLayout="row wrap" fxLayoutAlign="start center" formGroupName="categories" style="width: 100%">
+              <mat-checkbox fxFlex="0 1 50%" fxFlex.lt-md="1 0 100%" color="primary" class="checkbox"
+                            *ngFor="let cat of company.categories"
+                            [formControlName]="cat">
+                <span translate>{{cat}}</span>
+              </mat-checkbox>
+            </section>
+          </div>
+
+          <div class="save-setting-container">
+            <button mat-raised-button color="primary" (click)="OnSaveOption($event)" class="button-save-setting"
+                    [disabled]="optionForm.invalid || !companyForm.get('optionsProposed').value">
+              <span translate>Save option</span>
+            </button>
+          </div>
+          <mat-error *ngIf="optionForm.invalid && OPTIONS_DATA.length <=0" class="save-setting-container" translate>
+            <span translate>Please enter a name, description, fee a least 1% and type</span>
+          </mat-error>
+        </form>
+      </div>
+    </div>
+    <mat-divider class='custom-divider'></mat-divider>
+    <div>
+      <div class="increase-weekend-container">
+        <div class="container-1">
+          <div class="container-1-1">
+            <span class="second-title" translate>Travelling expenses</span>
+            <span class="third-title" translate>Do you apply travelling expenses?</span>
+          </div>
+          <div class="container-1-2">
+            <mat-slide-toggle [color]="color" [checked]="companyForm.get('tripExpences').value"
+                              (change)="onChangeTripExpences($event)"></mat-slide-toggle>
+          </div>
+        </div>
+        <div *ngIf="companyForm.get('tripExpences').value" class="custom-margin-top">
+          <div class="container-7" style="margin-bottom: 2.563rem">
+            <div class="container-7-1">
+              <span style="width: 10.875rem;" class="second-title" translate>fees</span>
+              <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+                      (click)="onDecrementValue($event, 'tripExpencesTypePrice')" color=''
+                      [disabled]="!companyForm.get('tripExpences').value">
+                <mat-icon color='primary' class='icon-disabled display-grid'
+                          *ngIf="!companyForm.get('tripExpences').value">remove
+                </mat-icon>
+                <mat-icon color='primary' class='display-grid' *ngIf="companyForm.get('tripExpences').value">remove
+                </mat-icon>
+              </button>
+              <input readonly matInput type="number" formControlName="tripExpencesTypePrice" class="custom-input">
+              <span class="title-9" matSuffix>€</span>
+              <button mat-mini-fab class='margin-left number-control-btn' color=''
+                      (click)="onIncrementValue($event, 'tripExpencesTypePrice')"
+                      [disabled]="!companyForm.get('tripExpences').value">
+                <mat-icon color='primary' class='icon-disabled display-grid'
+                          *ngIf="!companyForm.get('tripExpences').value">add
+                </mat-icon>
+                <mat-icon color='primary' class='display-grid' *ngIf="companyForm.get('tripExpences').value">add
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+          <span translate>Fee type</span>
+          <mat-radio-group class="container-8 margin-top" formControlName="tripExpencesRateType" [color]="color"
+                           [disabled]="!companyForm.get('tripExpences').value">
+            <mat-radio-button [value]="tripFeeType.SINGLE_FEE">
+              <span translate>Single fee</span>
+            </mat-radio-button>
+            <mat-radio-button [value]="tripFeeType.FEE_PER_KM">
+              <span translate>Fee per kilometer</span>
+            </mat-radio-button>
+          </mat-radio-group>
+          <div *ngIf="companyForm.get('tripExpencesRateType').value === tripFeeType.FEE_PER_KM" class="container-7"
+               style="margin-top: 2.625rem;">
+            <div class="container-7-1">
+              <span style="width: 13.706rem;" class="second-title" translate>Au déla de</span>
+              <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+                      (click)="onDecrementValue($event, 'tripExpencesDistance')" color=''
+                      [disabled]="!companyForm.get('tripExpences').value">
+                <mat-icon color='primary' class='icon-disabled display-grid'
+                          *ngIf="!companyForm.get('tripExpences').value">remove
+                </mat-icon>
+                <mat-icon color='primary' class='display-grid' *ngIf="companyForm.get('tripExpences').value">remove
+                </mat-icon>
+              </button>
+              <input readonly matInput type="number" formControlName="tripExpencesDistance" class="custom-input">
+              <span class="title-9" matSuffix>KM</span>
+              <button mat-mini-fab class='margin-left number-control-btn' color=''
+                      (click)="onIncrementValue($event, 'tripExpencesDistance')"
+                      [disabled]="!companyForm.get('tripExpences').value">
+                <mat-icon color='primary' class='icon-disabled display-grid'
+                          *ngIf="!companyForm.get('tripExpences').value">add
+                </mat-icon>
+                <mat-icon color='primary' class='display-grid' *ngIf="companyForm.get('tripExpences').value">add
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+          <mat-error
+            *ngIf="companyForm.get('tripExpencesTypePrice').status === 'INVALID' || companyForm.get('tripExpencesRateType').status === 'INVALID'"
+            class="save-setting-container" translate>
+            <span translate>Please enter a correct fee</span>
+          </mat-error>
+          <mat-error
+            *ngIf="companyForm.get('tripExpencesRateType').value === tripFeeType.FEE_PER_KM && companyForm.get('tripExpencesDistance').status === 'INVALID'"
+            class="save-setting-container" translate>
+            <span translate>Please enter a correct distance</span>
+          </mat-error>
+        </div>
+      </div>
+    </div>
+    <mat-divider class='custom-divider'></mat-divider>
+    <div class="increase-weekend-container">
+      <div class="container-1">
+        <div class="container-1-1">
+          <span class="second-title" translate>Supp hours</span>
+          <span class="third-title" translate>Do you agree to work overtime?</span>
+        </div>
+        <div class="container-1-2">
+          <mat-slide-toggle [color]="color" [checked]="companyForm.get('suppHours').value"
+                            (change)="onChangeSuppHours($event)"></mat-slide-toggle>
+        </div>
+      </div>
+      <div *ngIf="companyForm.get('suppHours').value" class="container-7 custom-margin-top">
+        <div class="container-7-1">
+          <span class="second-title" style="width: 10.875rem;" translate>Fee per hour</span>
+          <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+                  (click)="onDecrementValue($event, 'suppHoursRate')" color=''
+                  [disabled]="!companyForm.get('suppHours').value">
+            <mat-icon color='primary' class='icon-disabled display-grid' *ngIf="!companyForm.get('suppHours').value">
+              remove
+            </mat-icon>
+            <mat-icon color='primary' class='display-grid' *ngIf="companyForm.get('suppHours').value">remove</mat-icon>
+          </button>
+          <input readonly matInput type="number" formControlName="suppHoursRate" class="custom-input">
+          <span class="title-9" matSuffix>€</span>
+          <button mat-mini-fab class='margin-left number-control-btn' color=''
+                  (click)="onIncrementValue($event, 'suppHoursRate')" [disabled]="!companyForm.get('suppHours').value">
+            <mat-icon color='primary' class='icon-disabled display-grid' *ngIf="!companyForm.get('suppHours').value">
+              add
+            </mat-icon>
+            <mat-icon color='primary' class='display-grid' *ngIf="companyForm.get('suppHours').value">add</mat-icon>
+          </button>
+        </div>
+      </div>
+      <mat-error
+        *ngIf="companyForm.get('suppHoursRate').status === 'INVALID'"
+        class="save-setting-container" translate>
+        <span translate>Please enter a correct fee</span>
+      </mat-error>
+    </div>
+    <mat-divider class='custom-divider'></mat-divider>
+    <button mat-raised-button color="primary" class="save-button" (click)="formSubmitted()" [disabled]='!companyForm.valid || !settingsValid || !optionsValid'>
+      <span translate>Next</span>
+    </button>
+    <mat-error *ngIf="companyForm.status === 'INVALID'" translate>
+      <span translate>Please fill the correct value in the form</span>
+    </mat-error>
+    <mat-error *ngIf="!settingsValid" translate>
+      <span translate>Please enter at least 1 period setting</span>
+    </mat-error>
+    <mat-error *ngIf="!optionsValid" translate>
+      <span translate>Please enter at least 1 option</span>
+    </mat-error>
+  </form>
+</div>

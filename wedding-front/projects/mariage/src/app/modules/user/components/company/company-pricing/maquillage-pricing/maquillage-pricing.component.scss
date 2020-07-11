@@ -1,0 +1,17 @@
+$btnTextColor: white;
+$btnWidth: 20%;
+$btnMarginTop: 2em;
+.submit-btn {
+    color: $btnTextColor;
+    width: $btnWidth;
+    margin-top: $btnMarginTop;
+}
+.control-wrapper {
+    h2 {
+        line-height: 0em !important;
+        margin-bottom: 3em;
+    }
+}
+.hidden {
+    display: none;
+}

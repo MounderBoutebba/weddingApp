@@ -1,0 +1,352 @@
+<div class="stepper-container">
+  <div class="stepper-component">
+    <mat-toolbar-row >
+      <a mat-flat-button class="stepper" class="stepper active" translate>description</a>
+      <div class="circle active"></div>
+      <span class="spacer active"></span>
+      <a mat-flat-button class="stepper" translate>details</a>
+      <div class="circle active"></div>
+      <span class="spacer active"></span>
+      <a [routerLink]="['#']" mat-flat-button class="stepper" class="stepper active"
+         routerLinkActive="active">{{'pricing'|lowercase|translate|titlecase}}</a>
+      <div class="circle active"></div>
+      <span class="spacer active"></span>
+      <a mat-flat-button class="stepper">{{'settings'|lowercase|translate|titlecase}}</a>
+      <div class="circle active"></div>
+      <span class="spacer active"></span>
+      <div class="circle circle-end active"></div>
+      <a mat-flat-button class="stepper active">{{'billing'|lowercase|translate|titlecase}}</a>
+    </mat-toolbar-row>
+  </div>
+</div>
+<div class="container">
+  <form class="general-container" [formGroup]="generalForm" *ngIf="display">
+    <div class="payment-preference-container">
+      <div class="sub-container">
+        <span class="first-title" translate>Payment preferences</span>
+        <div class="inline-container-1 custom-margin-top">
+          <div class="inline-container-2">
+            <span class="custom-color-1" style="margin-bottom: 5px;" translate>100% secure payment for my clients</span>
+            <span class="second-title" translate>The total penalty of the customer is blocked in the escrow account of the platform until full realization of the mission. The funds are deposited into your account 24 hours after the end of your mission.</span>
+          </div>
+          <mat-slide-toggle [color]="color" [checked]="this.generalForm.get('paymentSecure').value"
+                            (change)="onTogglePaymentSecure($event)"></mat-slide-toggle>
+        </div>
+        <mat-divider class="custom-mat-divider"></mat-divider>
+        <div class="inline-container-1">
+          <div class="inline-container-3">
+            <span class="custom-color-1" style="margin-bottom: 5px;" translate>I impose the payment of a deposit upon confirmation of the reservation</span>
+            <span class="second-title" translate>A deposit will be unblocked and transmitted as soon as your customer confirms and pays. The remaining funds remain sequestered and will be paid into your account 24 hours after the end of your mission. Your service will not bear the mention 'Payment 100% secure'</span>
+          </div>
+          <mat-slide-toggle [color]="color" [checked]="this.generalForm.get('depositPayment').value"
+                            (change)="onTogglePaymentSecure({checked:!this.generalForm.get('paymentSecure').value})"></mat-slide-toggle>
+        </div>
+        <section class="section-1" *ngIf="this.generalForm.get('depositPayment').value">
+          <mat-radio-group formControlName="depositPercentage" [disabled]="!generalForm.value.depositPayment">
+            <span class="custom-bold" style="font-size: 15px;" translate>Pourcentage de l'acompte imposé</span>
+            <div class="flexbox-container">
+              <div>
+                <mat-radio-button class="item" [color]="color" [checked]='this.generalForm.value.depositPercentage == 5'
+                                  value="5">5%
+                </mat-radio-button>
+              </div>
+              <div>
+                <mat-radio-button class="item" [color]="color"
+                                  [checked]='this.generalForm.value.depositPercentage == 10' value="10">10%
+                </mat-radio-button>
+              </div>
+              <div>
+                <mat-radio-button class="item margin-top" [color]="color"
+                                  [checked]='this.generalForm.value.depositPercentage == 20' value="20">20%
+                </mat-radio-button>
+              </div>
+              <div>
+                <mat-radio-button class="item margin-top" [color]="color"
+                                  [checked]='this.generalForm.value.depositPercentage == 30' value="30">30%
+                </mat-radio-button>
+              </div>
+              <div *ngIf="percentCriterai1">
+                <mat-radio-button class="item margin-top" [color]="color"
+                                  [checked]='this.generalForm.value.depositPercentage == 40' value="40">40%
+                </mat-radio-button>
+              </div>
+              <div *ngIf="percentCriterai1">
+                <mat-radio-button class="item margin-top" [color]="color"
+                                  [checked]='this.generalForm.value.depositPercentage == 50' value="50">50%
+                </mat-radio-button>
+              </div>
+            </div>
+            <button mat-button color='primary' class="panel-header" *ngIf="!percentCriterai1"
+                    (click)="percentCriterai1 = true" ng-reflect-color="primary">
+              <span translate>Afficher plus de critères</span>
+              <mat-icon color='primary'>keyboard_arrow_down</mat-icon>
+            </button>
+            <button mat-button color='primary' class="panel-header" *ngIf="percentCriterai1"
+                    (click)="percentCriterai1 = false" ng-reflect-color="primary">
+              <span translate>Afficher moins de critères</span>
+              <mat-icon color='primary'>keyboard_arrow_up</mat-icon>
+            </button>
+          </mat-radio-group>
+        </section>
+      </div>
+      <mat-divider class="custom-mat-divider"
+                   *ngIf="this.generalForm.get('depositPayment').value && this.generalForm.value.depositPercentage"></mat-divider>
+      <div *ngIf="this.generalForm.get('depositPayment').value && this.generalForm.value.depositPercentage">
+        <div class="headers-align">
+          <div #panel1>
+            <div class="inline-container-4">
+              <span class="inline-4-span-1 custom-bold" translate>Condition of refund of the down payment</span>
+              <span class="inline-4-span-1 custom-bold" translate>In case of cancellation by the client</span>
+              <section>
+                <mat-radio-group formControlName="condRefundDepositClient"
+                                 [disabled]="!generalForm.value.depositPayment"
+                                 (change)="onChangeRepaymentMethod($event, 'client')">
+                  <div class="flexbox-container-2">
+                    <div class="item">
+                      <mat-radio-button class="item" [color]="color"
+                                        [checked]='this.generalForm.value.condRefundDepositClient == condRefundDepositType.SYSTEMATIC_REFUND'
+                                        [value]='condRefundDepositType.SYSTEMATIC_REFUND'>
+                        <span translate>Systematic repayment</span>
+                      </mat-radio-button>
+                    </div>
+                    <div class="item margin-top-media">
+                      <mat-radio-button class="item" [color]="color"
+                                        [checked]='this.generalForm.value.condRefundDepositClient == condRefundDepositType.CONDITIONAL_REFUND'
+                                        [value]='condRefundDepositType.CONDITIONAL_REFUND'>
+                        <span translate>Exceptional refund</span>
+                      </mat-radio-button>
+                    </div>
+                  </div>
+                </mat-radio-group>
+              </section>
+            </div>
+            <section
+              *ngIf="this.generalForm.value.condRefundDepositClient === condRefundDepositType.CONDITIONAL_REFUND">
+              <mat-radio-group formControlName="condRefundDepositClientCause"
+                               [disabled]="!generalForm.value.depositPayment">
+                <div class="flexbox-left-container">
+                  <div class="item small-margin-bottom">
+                    <mat-radio-button [color]="color"
+                                      [checked]='this.generalForm.value.condRefundDepositClientCause == condRefundDepositCause.GRIEVOUS_FAMILY_EVENT'
+                                      [value]="condRefundDepositCause.GRIEVOUS_FAMILY_EVENT">
+                      <span translate>Serious family event</span>
+                    </mat-radio-button>
+                  </div>
+                  <div class="item small-margin-bottom">
+                    <mat-radio-button [color]="color"
+                                      [checked]='this.generalForm.value.condRefundDepositClientCause == condRefundDepositCause.EVENT_PREVENTING_UNFOLDING'
+                                      [value]="condRefundDepositCause.EVENT_PREVENTING_UNFOLDING">
+                      <span translate>Any event preventing the unfolding of the marriage</span>
+                    </mat-radio-button>
+                  </div>
+                  <div class="item">
+                    <mat-radio-button [color]="color"
+                                      [checked]='this.generalForm.value.condRefundDepositClientCause == condRefundDepositCause.PERSONAL_JUDGMENT'
+                                      [value]="condRefundDepositCause.PERSONAL_JUDGMENT">
+                      <span translate>In my personal judgment of the situation</span>
+                    </mat-radio-button>
+                  </div>
+                </div>
+              </mat-radio-group>
+            </section>
+            <div style="margin-top: 1.875rem;" *ngIf="this.generalForm.value.condRefundDepositClient">
+              <span class="inline-4-span-1" translate>Percentage of refund of down payment</span>
+              <section>
+                <mat-radio-group formControlName="percentageRefundDepositClient"
+                                 [disabled]="!generalForm.value.depositPayment">
+                  <div class="flexbox-container">
+                    <div class="item">
+                      <mat-radio-button [color]="color"
+                                        [checked]='this.generalForm.value.percentageRefundDepositClient == 100'
+                                        value="100">100%
+                      </mat-radio-button>
+                    </div>
+                    <div class="item">
+                      <mat-radio-button [color]="color"
+                                        [checked]='this.generalForm.value.percentageRefundDepositClient == 90'
+                                        value="90">90%
+                      </mat-radio-button>
+                    </div>
+                    <div class="item margin-top">
+                      <mat-radio-button [color]="color"
+                                        [checked]='this.generalForm.value.percentageRefundDepositClient == 80'
+                                        value="80">80%
+                      </mat-radio-button>
+                    </div>
+                    <div class="item margin-top">
+                      <mat-radio-button [color]="color"
+                                        [checked]='this.generalForm.value.percentageRefundDepositClient == 70'
+                                        value="70">70%
+                      </mat-radio-button>
+                    </div>
+                    <div *ngIf="percentCriterai2">
+                      <mat-radio-button class="item margin-top" [color]="color"
+                                        [checked]='this.generalForm.value.percentageRefundDepositClient == 40'
+                                        value="40">60%
+                      </mat-radio-button>
+                    </div>
+                    <div *ngIf="percentCriterai2">
+                      <mat-radio-button class="item margin-top" [color]="color"
+                                        [checked]='this.generalForm.value.percentageRefundDepositClient == 50'
+                                        value="50">50%
+                      </mat-radio-button>
+                    </div>
+                  </div>
+                  <button mat-button color='primary' class="panel-header" *ngIf="!percentCriterai2"
+                          (click)="percentCriterai2 = true" ng-reflect-color="primary">
+                    <span translate>Afficher plus de critères</span>
+                    <mat-icon color='primary'>keyboard_arrow_down</mat-icon>
+                  </button>
+                  <button mat-button color='primary' class="panel-header" *ngIf="percentCriterai2"
+                          (click)="percentCriterai2 = false" ng-reflect-color="primary">
+                    <span translate>Afficher moins de critères</span>
+                    <mat-icon color='primary'>keyboard_arrow_up</mat-icon>
+                  </button>
+                </mat-radio-group>
+              </section>
+            </div>
+          </div>
+          <mat-divider class="custom-mat-divider"></mat-divider>
+          <div #panel2>
+            <div class="inline-container-4">
+              <span class="inline-4-span-1 custom-bold" translate>In case of cancellation by your fact</span>
+              <section>
+                <mat-radio-group formControlName="condRefundDepositCompany"
+                                 [disabled]="!generalForm.value.depositPayment"
+                                 (change)="onChangeRepaymentMethod($event, 'pro')">
+                  <div class="flexbox-container-2">
+                    <div class="item">
+                      <mat-radio-button [color]="color"
+                                        [checked]='this.generalForm.value.condRefundDepositCompany == condRefundDepositType.SYSTEMATIC_REFUND'
+                                        [value]="condRefundDepositType.SYSTEMATIC_REFUND">
+                        <span translate>Systematic repayment</span>
+                      </mat-radio-button>
+                    </div>
+                    <div class="item margin-top-media">
+                      <mat-radio-button [color]="color"
+                                        [checked]='this.generalForm.value.condRefundDepositCompany == condRefundDepositType.CONDITIONAL_REFUND'
+                                        [value]="condRefundDepositType.CONDITIONAL_REFUND">
+                        <span translate>Exceptional refund</span>
+                      </mat-radio-button>
+                    </div>
+                  </div>
+                </mat-radio-group>
+              </section>
+            </div>
+            <section
+              *ngIf="this.generalForm.value.condRefundDepositCompany == condRefundDepositType.CONDITIONAL_REFUND">
+              <mat-radio-group formControlName="condRefundDepositCompanyCause"
+                               [disabled]="!generalForm.value.depositPayment">
+                <div class="flexbox-left-container">
+                  <div class="item small-margin-bottom">
+                    <mat-radio-button [color]="color"
+                                      [checked]='this.generalForm.value.condRefundDepositCompanyCause == condRefundDepositCause.GRIEVOUS_FAMILY_EVENT'
+                                      [value]="condRefundDepositCause.GRIEVOUS_FAMILY_EVENT">
+                      <span translate>Serious family event</span>
+                    </mat-radio-button>
+                  </div>
+                  <div class="item small-margin-bottom">
+                    <mat-radio-button [color]="color"
+                                      [checked]='this.generalForm.value.condRefundDepositCompanyCause == condRefundDepositCause.EVENT_PREVENTING_UNFOLDING'
+                                      [value]="condRefundDepositCause.EVENT_PREVENTING_UNFOLDING">
+                      <span translate>Any event preventing the unfolding of the marriage</span>
+                    </mat-radio-button>
+                  </div>
+                  <div class="item small-margin-bottom">
+                    <mat-radio-button [color]="color"
+                                      [checked]='this.generalForm.value.condRefundDepositCompanyCause == condRefundDepositCause.PERSONAL_JUDGMENT'
+                                      [value]="condRefundDepositCause.PERSONAL_JUDGMENT">
+                      <span translate>In my personal judgment of the situation</span>
+                    </mat-radio-button>
+                  </div>
+                </div>
+              </mat-radio-group>
+            </section>
+            <div style="margin-top: 1.875rem;" *ngIf="this.generalForm.value.condRefundDepositCompany">
+              <span class="inline-4-span-1" translate>Percentage of refund of down payment</span>
+              <section>
+                <mat-radio-group formControlName="percentageRefundDepositCompany"
+                                 [disabled]="!generalForm.value.depositPayment">
+                  <div class="flexbox-container ">
+                    <div class="item">
+                      <mat-radio-button [color]="color"
+                                        [checked]='this.generalForm.value.percentageRefundDepositCompany == 100'
+                                        value="100">100%
+                      </mat-radio-button>
+                    </div>
+                    <div class="item">
+                      <mat-radio-button [color]="color"
+                                        [checked]='this.generalForm.value.percentageRefundDepositCompany == 90'
+                                        value="90">90%
+                      </mat-radio-button>
+                    </div>
+                    <div class="item margin-top">
+                      <mat-radio-button [color]="color"
+                                        [checked]='this.generalForm.value.percentageRefundDepositCompany == 80'
+                                        value="80">80%
+                      </mat-radio-button>
+                    </div>
+                    <div class="item margin-top">
+                      <mat-radio-button [color]="color"
+                                        [checked]='this.generalForm.value.percentageRefundDepositCompany == 70'
+                                        value="70">70%
+                      </mat-radio-button>
+                    </div>
+                    <div class="item margin-top" *ngIf="percentCriterai3">
+                      <mat-radio-button [color]="color"
+                                        [checked]='this.generalForm.value.percentageRefundDepositCompany == 40'
+                                        value="40">60%
+                      </mat-radio-button>
+                    </div>
+                    <div class="item margin-top" *ngIf="percentCriterai3">
+                      <mat-radio-button [color]="color"
+                                        [checked]='this.generalForm.value.percentageRefundDepositCompany == 50'
+                                        value="50">50%
+                      </mat-radio-button>
+                    </div>
+                  </div>
+                  <button mat-button color='primary' class="panel-header" *ngIf="!percentCriterai3"
+                          (click)="percentCriterai3 = true" ng-reflect-color="primary">
+                    <span translate>Afficher plus de critères</span>
+                    <mat-icon color='primary'>keyboard_arrow_down</mat-icon>
+                  </button>
+                  <button mat-button color='primary' class="panel-header" *ngIf="percentCriterai3"
+                          (click)="percentCriterai3 = false" ng-reflect-color="primary">
+                    <span translate>Afficher moins de critères</span>
+                    <mat-icon color='primary'>keyboard_arrow_up</mat-icon>
+                  </button>
+                </mat-radio-group>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <mat-divider class="custom-mat-divider"></mat-divider>
+     <div class="banc-container-1">
+        <span class="custom-color-1" translate>Moyen d'encaissement - RIB</span>
+        <span translate>Indiquez le compte bancaire sur lequel vous souhaitez recevoir les paiements de vos clients</span>
+    </div>
+    <div class="banc-container-2" style="margin-top: 32px;">
+        <span class="custom-color-1" translate>Compte bancaire</span>
+    </div>
+    <div class="banc-container-3" style="margin-top: 13px;">
+        <button class="form-input full" style="width: 314px; height: 3.313rem;background-color: #f2f2f2;" mat-raised-button class="button-save margin-top margin-bottom">
+            {{ iban ? '**** **** **** **** ' + iban : 'Numéro de votre IBAN '}}
+        </button>
+        <button (click)='openPaymentInfoDialog()' class="form-input full" style="width: 21.75rem; height: 3.313rem;" mat-raised-button color="primary" class="button-save margin-top margin-bottom">
+            <span color="white" translate>Mettre a jour mes informations bancaire</span>
+        </button>
+    </div>
+    <div fxFlexAlign.lt-md="center" class="full">
+      <button class="form-input full" style="width: 16.5rem; height: 3.375rem;" mat-raised-button color="primary"
+              class="button-save margin-top margin-bottom" (click)="formSubmitted()"
+              [disabled]="!this.generalForm.valid">
+        <span style="color: white" translate>Finished</span>
+      </button>
+    </div>
+    <mat-error *ngIf="generalForm.status === 'INVALID'" translate>
+      <span translate>Please fill the correct value in the form</span>
+    </mat-error>
+  </form>
+</div>

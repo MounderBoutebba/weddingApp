@@ -1,0 +1,645 @@
+<div style="width: 95%;margin: auto">
+
+  <form [formGroup]="filterForm" (ngSubmit)="submit()" enctype="multipart/form-data">
+    <div
+      fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly"
+      class="btn-container" [ngClass.lt-md]="{'btn-container--hidden-search-bar':hiddenSearchbar}">
+
+      <div fxLayout="column">
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>verified providers</mat-label>
+              <span translate>a selection of providers verified according to quality criteria</span>
+            </section>
+            <mat-slide-toggle style="float: right" color="primary"
+                              formControlName="verifiedProvider"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>100% secure services without down payment</mat-label>
+              <span translate>professionals who agree to receive the full payment after completion of the service</span>
+            </section>
+            <mat-slide-toggle style="float: right" color="primary"
+                              formControlName="securePayment"></mat-slide-toggle>
+          </div>
+          <mat-divider [fxShow]="showMore"></mat-divider>
+        </div>
+        <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common"
+             [fxShow]="showMore">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>top rated providers</mat-label>
+            <span translate>display only the providers with the best scores, ie a score higher than 3/5</span>
+          </section>
+          <mat-slide-toggle color="primary" formControlName="topRatedProviders"></mat-slide-toggle>
+        </div>
+
+        <a class="view-more" (click)="showMore=!showMore">
+          <span translate [fxHide]="showMore">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="showMore">keyboard_arrow_down</mat-icon>
+
+          <span translate [fxShow]="showMore">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="showMore">keyboard_arrow_up</mat-icon>
+        </a>
+        <mat-divider></mat-divider>
+
+      </div>
+
+      <div fxLayout="column" formGroupName="categories">
+        <mat-label translate style="font-weight: bold">Proposed services</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="dj">
+            <span translate>dj</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="groupe">
+            <span translate>group</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="musicien">
+            <span translate>musicians</span>
+          </mat-checkbox>
+        </section>
+      </div>
+      <mat-divider></mat-divider>
+
+      <div *ngIf="dj" fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly">
+        <mat-label translate style="font-weight: bold">dj</mat-label>
+        <br>
+        <div fxLayout="column"  formGroupName="dj_specialite">
+          <mat-label translate style="font-weight: bold">specialties</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="generaliste">
+              <span translate>general</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="musique_actuelles">
+              <span translate>current music</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="oriental">
+              <span translate>eastern</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="africain">
+              <span translate>african</span>
+            </mat-checkbox>
+          </section>
+          <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="djSpecialiteShow">
+            <mat-checkbox color="primary" class="checkbox" formControlName="indien">
+              <span translate>Indian</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="latino">
+              <span translate>Latino</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="antillais">
+              <span translate>Antillais</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="pop">
+              <span translate>Pop</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="hip_hop_rap_rnb">
+              <span translate>Hip-Hop/Rap/RnB</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="electronic_dance_House">
+              <span translate>Electronic/Dance/House</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="annees_80_disco">
+              <span translate>Années 80/Disco</span>
+            </mat-checkbox>
+          </section>
+          <a class="view-more" (click)="djSpecialiteShow=!djSpecialiteShow">
+            <span translate [fxHide]="djSpecialiteShow">view more questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxHide]="djSpecialiteShow">keyboard_arrow_down</mat-icon>
+
+            <span translate [fxShow]="djSpecialiteShow">view less questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxShow]="djSpecialiteShow">keyboard_arrow_up</mat-icon>
+          </a>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column"  formGroupName="dj_instruments">
+          <mat-label translate style="font-weight: bold">instruments</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="table_de_mixage">
+              <span translate>mix table</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="piano">
+              <span translate>piano</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="batterie">
+              <span translate>drums</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="guitare">
+              <span translate>guitar</span>
+            </mat-checkbox>
+          </section>
+          <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="djInstrumentsShow">
+            <mat-checkbox color="primary" class="checkbox" formControlName="saxophone">
+              <span translate>Saxophone</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="violon">
+              <span translate>violin</span>
+            </mat-checkbox>
+          </section>
+          <a class="view-more" (click)="djInstrumentsShow=!djInstrumentsShow">
+            <span translate [fxHide]="djInstrumentsShow">view more questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxHide]="djInstrumentsShow">keyboard_arrow_down</mat-icon>
+
+            <span translate [fxShow]="djInstrumentsShow">view less questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxShow]="djInstrumentsShow">keyboard_arrow_up</mat-icon>
+          </a>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column" formGroupName="dj_materiels">
+          <mat-label translate style="font-weight: bold">materials</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="video_projecteur">
+              <span translate>video projector</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="lasers">
+              <span translate>lasers</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="machineFummee">
+              <span translate>smoke machine</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="jeuxDeLumiere">
+              <span translate>light effects</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column" formGroupName="dj_animations">
+          <mat-label translate style="font-weight: bold">animation</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="animateur">
+              <span translate>animator</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="karaoke">
+              <span translate>karaoke</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="derbouka">
+              <span translate>derbouka</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="danseurs">
+              <span translate>dancers</span>
+            </mat-checkbox>
+          </section>
+          <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="djAnimationsShow">
+            <mat-checkbox color="primary" class="checkbox" formControlName="chanteurs">
+              <span translate>singers</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="deguisements">
+              <span translate>disguises</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="machineFummee">
+              <span translate>smoke machine</span>
+            </mat-checkbox>
+          </section>
+          <a class="view-more" (click)="djAnimationsShow=!djAnimationsShow">
+            <span translate [fxHide]="djAnimationsShow">view more questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxHide]="djAnimationsShow">keyboard_arrow_down</mat-icon>
+
+            <span translate [fxShow]="djAnimationsShow">view less questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxShow]="djAnimationsShow">keyboard_arrow_up</mat-icon>
+          </a>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column"  formGroupName="dj_typePublic">
+          <mat-label translate style="font-weight: bold">type of audience</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="adultes_et_enfants">
+              <span translate>adults and children</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="adultes_seulement">
+              <span translate>adults only</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column"  formGroupName="dj_adaptabiliteLieu">
+          <mat-label translate style="font-weight: bold">adaptability of the event venue</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="interieur_et_exterieur">
+              <span translate>interior and exterior</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="interieur_seul">
+              <span translate>interior only</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="exterieur_seul">
+              <span translate>exterior only</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+
+      <div *ngIf="groupe" fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly">
+        <mat-label translate style="font-weight: bold">group</mat-label>
+        <br>
+        <div fxLayout="column" formGroupName="groupe_specialite">
+          <mat-label translate style="font-weight: bold">specialties</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="generaliste">
+              <span translate>general</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="musique_actuelles">
+              <span translate>current music</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="oriental">
+              <span translate>eastern</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="africain">
+              <span translate>african</span>
+            </mat-checkbox>
+          </section>
+          <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="groupeSpecialiteShow">
+            <mat-checkbox color="primary" class="checkbox" formControlName="indien">
+              <span translate>Indian</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="latino">
+              <span translate>Latino</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="antillais">
+              <span translate>Antillais</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="pop">
+              <span translate>Pop</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="hip_hop_rap_rnb">
+              <span translate>Hip-Hop/Rap/RnB</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="electronic_dance_House">
+              <span translate>Electronic/Dance/House</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="annees_80_disco">
+              <span translate>Années 80/Disco</span>
+            </mat-checkbox>
+          </section>
+          <a class="view-more" (click)="groupeSpecialiteShow=!groupeSpecialiteShow">
+            <span translate [fxHide]="groupeSpecialiteShow">view more questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxHide]="groupeSpecialiteShow">keyboard_arrow_down</mat-icon>
+
+            <span translate [fxShow]="groupeSpecialiteShow">view less questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxShow]="groupeSpecialiteShow">keyboard_arrow_up</mat-icon>
+          </a>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column" formGroupName="groupe_instruments">
+          <mat-label translate style="font-weight: bold">instruments</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="table_de_mixage">
+              <span translate>mix table</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="piano">
+              <span translate>piano</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="batterie">
+              <span translate>drums</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="guitare">
+              <span translate>guitar</span>
+            </mat-checkbox>
+          </section>
+          <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="groupeInstrumentsShow">
+            <mat-checkbox color="primary" class="checkbox" formControlName="saxophone">
+              <span translate>Saxophone</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="violon">
+              <span translate>violin</span>
+            </mat-checkbox>
+          </section>
+          <a class="view-more" (click)="groupeInstrumentsShow=!groupeInstrumentsShow">
+            <span translate [fxHide]="groupeInstrumentsShow">view more questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxHide]="groupeInstrumentsShow">keyboard_arrow_down</mat-icon>
+
+            <span translate [fxShow]="groupeInstrumentsShow">view less questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxShow]="groupeInstrumentsShow">keyboard_arrow_up</mat-icon>
+          </a>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column" formGroupName="groupe_materiels">
+          <mat-label translate style="font-weight: bold">materials</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="video_projecteur">
+              <span translate>video projector</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="lasers">
+              <span translate>lasers</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="machineFummee">
+              <span translate>smoke machine</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="jeuxDeLumiere">
+              <span translate>light effects</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column" formGroupName="groupe_animations">
+          <mat-label translate style="font-weight: bold">animation</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="animateur">
+              <span translate>animator</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="karaoke">
+              <span translate>karaoke</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="derbouka">
+              <span translate>derbouka</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="danseurs">
+              <span translate>dancers</span>
+            </mat-checkbox>
+          </section>
+          <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="groupeAnimationsShow">
+            <mat-checkbox color="primary" class="checkbox" formControlName="chanteurs">
+              <span translate>singers</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="deguisements">
+              <span translate>disguises</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="machineFummee">
+              <span translate>smoke machine</span>
+            </mat-checkbox>
+          </section>
+          <a class="view-more" (click)="groupeAnimationsShow=!groupeAnimationsShow">
+            <span translate [fxHide]="groupeAnimationsShow">view more questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxHide]="groupeAnimationsShow">keyboard_arrow_down
+            </mat-icon>
+
+            <span translate [fxShow]="groupeAnimationsShow">view less questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxShow]="groupeAnimationsShow">keyboard_arrow_up
+            </mat-icon>
+          </a>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column" formGroupName="groupe_typePublic">
+          <mat-label translate style="font-weight: bold">type of audience</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="adultes_et_enfants">
+              <span translate>adults and children</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="adultes_seulement">
+              <span translate>adults only</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column" formGroupName="groupe_adaptabiliteLieu">
+          <mat-label translate style="font-weight: bold">adaptability of the event venue</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="interieur_et_exterieur">
+              <span translate>interior and exterior</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="interieur_seul">
+              <span translate>interior only</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="exterieur_seul">
+              <span translate>exterior only</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+
+      <div *ngIf="musicien" fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly">
+        <mat-label translate style="font-weight: bold">musicien</mat-label>
+        <br>
+        <div fxLayout="column" formGroupName="musicien_specialite">
+          <mat-label translate style="font-weight: bold">specialties</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="generaliste">
+              <span translate>general</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="musique_actuelles">
+              <span translate>current music</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="oriental">
+              <span translate>eastern</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="africain">
+              <span translate>african</span>
+            </mat-checkbox>
+          </section>
+          <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="musicienSpecialiteShow">
+            <mat-checkbox color="primary" class="checkbox" formControlName="indien">
+              <span translate>Indian</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="latino">
+              <span translate>Latino</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="antillais">
+              <span translate>Antillais</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="pop">
+              <span translate>Pop</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="hip_hop_rap_rnb">
+              <span translate>Hip-Hop/Rap/RnB</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="electronic_dance_House">
+              <span translate>Electronic/Dance/House</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="annees_80_disco">
+              <span translate>Années 80/Disco</span>
+            </mat-checkbox>
+          </section>
+          <a class="view-more" (click)="musicienSpecialiteShow=!musicienSpecialiteShow">
+            <span translate [fxHide]="musicienSpecialiteShow">view more questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxHide]="musicienSpecialiteShow">keyboard_arrow_down</mat-icon>
+
+            <span translate [fxShow]="musicienSpecialiteShow">view less questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxShow]="musicienSpecialiteShow">keyboard_arrow_up</mat-icon>
+          </a>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column" formGroupName="musicien_instruments">
+          <mat-label translate style="font-weight: bold">instruments</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="table_de_mixage">
+              <span translate>mix table</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="piano">
+              <span translate>piano</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="batterie">
+              <span translate>drums</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="guitare">
+              <span translate>guitar</span>
+            </mat-checkbox>
+          </section>
+          <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="musicienInstrumentsShow">
+            <mat-checkbox color="primary" class="checkbox" formControlName="saxophone">
+              <span translate>Saxophone</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="violon">
+              <span translate>violin</span>
+            </mat-checkbox>
+          </section>
+          <a class="view-more" (click)="musicienInstrumentsShow=!musicienInstrumentsShow">
+            <span translate [fxHide]="musicienInstrumentsShow">view more questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxHide]="musicienInstrumentsShow">keyboard_arrow_down</mat-icon>
+
+            <span translate [fxShow]="musicienInstrumentsShow">view less questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxShow]="musicienInstrumentsShow">keyboard_arrow_up</mat-icon>
+          </a>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column" formGroupName="musicien_materiels">
+          <mat-label translate style="font-weight: bold">materials</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="video_projecteur">
+              <span translate>video projector</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="lasers">
+              <span translate>lasers</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="machineFummee">
+              <span translate>smoke machine</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="jeuxDeLumiere">
+              <span translate>light effects</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column" formGroupName="musicien_animations">
+          <mat-label translate style="font-weight: bold">animation</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="animateur">
+              <span translate>animator</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="karaoke">
+              <span translate>karaoke</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="derbouka">
+              <span translate>derbouka</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="danseurs">
+              <span translate>dancers</span>
+            </mat-checkbox>
+          </section>
+          <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="musicienAnimationsShow">
+            <mat-checkbox color="primary" class="checkbox" formControlName="chanteurs">
+              <span translate>singers</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="deguisements">
+              <span translate>disguises</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="machineFummee">
+              <span translate>smoke machine</span>
+            </mat-checkbox>
+          </section>
+          <a class="view-more" (click)="musicienAnimationsShow=!musicienAnimationsShow">
+            <span translate [fxHide]="musicienAnimationsShow">view more questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxHide]="musicienAnimationsShow">keyboard_arrow_down
+            </mat-icon>
+
+            <span translate [fxShow]="musicienAnimationsShow">view less questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxShow]="musicienAnimationsShow">keyboard_arrow_up
+            </mat-icon>
+          </a>
+
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column" formGroupName="musicien_typePublic">
+          <mat-label translate style="font-weight: bold">type of audience</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="adultes_et_enfants">
+              <span translate>adults and children</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="adultes_seulement">
+              <span translate>adults only</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column" formGroupName="musicien_adaptabiliteLieu">
+          <mat-label translate style="font-weight: bold">adaptability of the event venue</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="interieur_et_exterieur">
+              <span translate>interior and exterior</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="interieur_seul">
+              <span translate>interior only</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="exterieur_seul">
+              <span translate>exterior only</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+
+    </div>
+
+    <div
+      fxFlexAlign.lt-md="center" fxLayout="row wrap"  fxLayout.lt-md="column" fxLayoutAlign="end center" fxLayoutGap="1rem"
+      class="group-btn full">
+      <button class="form-input full" mat-raised-button type="button" (click)="cancelForm()">
+        <span translate>cancel</span>
+      </button>
+      <button class="form-input full"  mat-raised-button type="button" (click)="reset()">
+        <span translate>delete selected filters</span>
+      </button>
+      <button class="form-input full"  mat-raised-button color="primary" type="submit">
+        <span style="color: white" translate>show results</span>
+      </button>
+    </div>
+  </form>
+
+</div>

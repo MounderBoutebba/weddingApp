@@ -1,0 +1,8 @@
+$stepPadding: 2em 0;
+/* disable stepper's header navigation */
+::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}
+.step-wrapper {
+    padding: $stepPadding;
+}

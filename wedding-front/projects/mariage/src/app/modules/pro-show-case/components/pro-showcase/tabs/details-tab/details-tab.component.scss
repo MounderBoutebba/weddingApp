@@ -1,0 +1,67 @@
+@import '../../pro-showcase.component.scss';
+.inline-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 3%;
+    align-items: center;
+}
+
+.sub-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0.8%;
+    margin-left: 3%;
+}
+
+mat-icon {
+    margin-right: 1%;
+    font-size: 23px;
+}
+
+.section {
+    display: flex;
+    margin-top: 1%;
+}
+
+mat-slide-toggle {
+    float: right;
+}
+
+.mat-expansion-panel:not([class*='mat-elevation-z']) {
+    box-shadow: none;
+    border-bottom: solid;
+    border-width: 0.5px;
+}
+
+mat-expansion-panel-header {
+    padding: 0.2%;
+}
+
+.headers-align .mat-expansion-panel-header-title {
+    color: #F17082;
+}
+
+.icon-img{
+    width: 23px;
+    height: 21px; 
+    margin-right: 6px;
+}
+
+.ml-30{
+    margin-left: 30px;
+}
+
+.m-3{
+    margin: 3px 0;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.ml-25{
+    margin-left: 25px;
+}
+.m-10{
+    margin: 10px 0;
+}

@@ -1,0 +1,133 @@
+<div id='wrapper' *ngIf="field" fxLayout="row" fxLayoutAlign="{{fxLayoutAlign}}" fxLayoutGap="{{fxLayoutGap}}"
+  [style.margin-left]='marginLeft' [style.width]='width'>
+  <div id='here' style="width:fit-content;font-family: Arial, monospace;padding-top: 0.4rem;"
+    [ngClass]='{"m-auto": indexOption % 2 > 0 && optionsLength > 1, "top": field.type === fieldTypeEnum.TOGGLE_NUMBER_RADIO
+  &&
+  (numberOption.label === "chambrePourLesMarieeSurface"
+  || numberOption.label === "chambrePourLesMarieeTarif"
+  || numberOption.label === "cuisinePourLeTraiteurSurface"
+  || numberOption.label === "cuisinePourLeTraiteurTarif"
+  || numberOption.label === "terrasseSurface"
+  || numberOption.label === "terrasseTarif"
+  || numberOption.label === "jardinSurface"
+  || numberOption.label === "jardinTarif"
+  || numberOption.label === "chapiteauSurface"
+  || numberOption.label === "chapiteauTarif"
+  || numberOption.label === "parkingSurface"
+  || numberOption.label === "parkingTarif"
+  ), "toggle-number-radio": field.type === "toggle-number-radio"
+  }'>
+    <div *ngIf='field.name === "retouchesPhoto" || field.name === "remise"'>
+      <mat-label class='number-label' *ngIf='!disableOptions'>
+        {{'Tarif par unité' | lowercase | translate  | capitalizeFirstLetter}}</mat-label>
+      <mat-label *ngIf='disableOptions' class='number-label'>
+        {{'Tarif par unité' | lowercase | translate  | capitalizeFirstLetter }}</mat-label>
+    </div>
+
+    <div id="TOGGLE_NUMBER_RADIO_LIST_TOGGLE_NUMBER_RADIO_LIST"
+      *ngIf='field.name !== "retouchesPhoto" && field.name !== "remise" &&
+      (field.type === fieldTypeEnum.TOGGLE_NUMBER_LIST && field.type !== fieldTypeEnum.TOGGLE_NUMBER_LIST_OPTIONS)'>
+      <mat-label class='number-label' *ngIf='!disableOptions'>{{label | lowercase | translate  | capitalizeFirstLetter}}
+      </mat-label>
+      <mat-label *ngIf='disableOptions' class='number-label'>{{label | lowercase | translate  | capitalizeFirstLetter }}
+      </mat-label>
+    </div>
+
+    <div *ngIf='field.name !== "retouchesPhoto" && field.name !== "remise" && field.type !== fieldTypeEnum.TOGGLE_CHECKBOX_NUMBER
+        && field.type !== fieldTypeEnum.TOGGLE_NUMBER_RADIO_LIST && field.type !== fieldTypeEnum.TOGGLE_NUMBER_LIST && field.type !== fieldTypeEnum.TOGGLE_NUMBER_LIST_OPTIONS
+        || nbrOpt' >
+      <mat-label class='number-label' *ngIf='!disableOptions'>
+        {{numberOption.label|companyLabel | capitalizeFirstLetter}}</mat-label>
+      <mat-label *ngIf='disableOptions' class='number-label'
+      [ngClass]='{"mr-5": field.type === fieldTypeEnum.TOGGLE_PRESTATIONS && numberOption.label === "Tarif"}'>
+        {{numberOption.label|companyLabel | capitalizeFirstLetter}}
+      </mat-label>
+    </div>
+    <div *ngIf='field.type === fieldTypeEnum.TOGGLE_NUMBER_LIST_OPTIONS' id="TOGGLE_NUMBER_LIST_OPTIONS">
+      <mat-label class='number-label' *ngIf='!disableOptions'>
+        {{numberOption.label|companyLabel | capitalizeFirstLetter}}</mat-label>
+      <mat-label *ngIf='disableOptions' class='number-label'>{{numberOption.label|companyLabel | capitalizeFirstLetter}}
+      </mat-label>
+    </div>
+
+    <div
+      *ngIf='field.name !== "retouchesPhoto" && field.name !== "remise" && field.type === fieldTypeEnum.TOGGLE_CHECKBOX_NUMBER && !nbrOpt'>
+      <mat-label class='number-label' *ngIf='!disableOptions'>{{numberOption.label|numberLabelDisplay}}</mat-label>
+      <mat-label *ngIf='disableOptions' class='number-label'>{{numberOption.label|numberLabelDisplay}}</mat-label>
+    </div>
+    <div id="TOGGLE_NUMBER_RADIO_LIST"
+    *ngIf='field.type === fieldTypeEnum.TOGGLE_NUMBER_RADIO_LIST'>
+    <mat-label class='number-label' *ngIf='!disableOptions'>{{numberOption.label | lowercase | translate  | capitalizeFirstLetter}}
+    </mat-label>
+    <mat-label *ngIf='disableOptions' class='number-label'>{{numberOption.label | lowercase | translate  | capitalizeFirstLetter }}
+    </mat-label>
+  </div>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="flex-end center" [ngClass]=" {'m-r-auto': indexOption % 2 === 0 && optionsLength > 1}" >
+    <div style="margin-left: 2rem;">
+      <button mat-mini-fab class='number-control-btn' (click)='decrementValue()' [disabled]='!disableOptions'>
+        <mat-icon color='primary' class='icon-disabled plus-minus-btn' *ngIf='!disableOptions'>remove</mat-icon>
+        <mat-icon color='primary' class='plus-minus-btn' *ngIf='disableOptions'>remove</mat-icon>
+      </button>
+    </div>
+
+    <div class="input-space">
+      <mat-label *ngIf='!disableOptions' class="number-value-unit">{{numberOption.value}}{{numberOption.unit}}
+      </mat-label>
+      <app-toggle-number-result *ngIf='disableOptions' style="word-break: break-word;" [data]='numberOption.value' [baseValue]='baseValue'
+        [unit]='numberOption.unit' (focusOut)='valueWasEdited($event)'></app-toggle-number-result>
+    </div>
+
+    <div>
+      <button mat-mini-fab class='number-control-btn' (click)='incrementValue()' id="here" [disabled]='!disableOptions'>
+        <mat-icon color='primary' class='icon-disabled plus-minus-btn' *ngIf='!disableOptions'>add</mat-icon>
+        <mat-icon color='primary' class='plus-minus-btn' *ngIf='disableOptions'>add</mat-icon>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+
+<div *ngIf="!field" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="{{fxLayoutGapVehicle}}">
+
+  <div style="width:fit-content;font-family: Arial, monospace;text-align: left; margin-left: 15rem;">
+    <div *ngIf="!longLabel">
+      <mat-label *ngIf='addVehicle && disableOptions' class='number-label'>
+        {{numberOption.label | lowercase | translate   | lowercase | capitalizeFirstLetter}}</mat-label>
+      <mat-label style="margin-left: 17.4rem;" *ngIf='!addVehicle && disableOptions' class='number-label'>
+        {{numberOption.label | lowercase | translate   | lowercase | capitalizeFirstLetter}}</mat-label>
+    </div>
+    <div *ngIf="longLabel">
+      <mat-label *ngIf='addVehicle && disableOptions' class='number-label'>
+        {{numberOption.label | lowercase | translate   | lowercase | capitalizeFirstLetter}}</mat-label>
+      <mat-label style="margin-left: 12.1rem;" *ngIf='!addVehicle && disableOptions' class='number-label'>
+        {{numberOption.label | lowercase | translate   | lowercase | capitalizeFirstLetter}}</mat-label>
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div>
+      <button mat-mini-fab class='number-control-btn' (click)='decrementValue()' [disabled]='!disableOptions'>
+        <mat-icon color='primary' class='icon-disabled plus-minus-btn' *ngIf='!disableOptions'>remove</mat-icon>
+        <mat-icon color='primary' class='plus-minus-btn' *ngIf='disableOptions'>remove</mat-icon>
+      </button>
+    </div>
+
+    <div class="input-space">
+      <mat-label *ngIf='!disableOptions'>{{numberOption.value}}{{numberOption.unit}}</mat-label>
+      <app-toggle-number-result *ngIf='disableOptions' style="word-break: break-word;" [data]='numberOption.value' [baseValue]='1'
+        [unit]='numberOption.unit' (focusOut)='valueWasEdited($event)'></app-toggle-number-result>
+    </div>
+
+    <div>
+      <button style="margin-right: 1rem" mat-mini-fab class='number-control-btn' (click)='incrementValue()'
+        [disabled]='!disableOptions'>
+        <mat-icon color='primary' class='icon-disabled plus-minus-btn' *ngIf='!disableOptions'>add</mat-icon>
+        <mat-icon color='primary' class='plus-minus-btn' *ngIf='disableOptions'>add</mat-icon>
+      </button>
+    </div>
+  </div>
+
+</div>

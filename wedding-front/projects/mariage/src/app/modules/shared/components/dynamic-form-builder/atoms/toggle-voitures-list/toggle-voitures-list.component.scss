@@ -1,0 +1,45 @@
+mat-label {
+  margin-bottom: 0.9rem !important;
+}
+
+.cnl-title {
+  font-size: 15px;
+  font-weight: 600;
+  color:#484848;
+}
+
+.cnl-label{
+  font-family: Arial, Baskerville, monospace !important;
+  font-weight: 500;
+  font-size: 13.5px;
+  letter-spacing: normal;
+  margin-bottom: 0.9375rem;
+  color: #484848;
+}
+
+.toggle-dfb{
+  width: 100%;
+}
+
+::ng-deep{
+  .mat-form-field-appearance-legacy .mat-form-field-underline{
+    height: 0!important;
+  }
+}
+
+.ajout-btn {
+  width: 2.5rem !important;
+  min-width: unset!important;
+  height: unset!important;
+  padding: 0!important;
+  margin: 0!important;
+  margin-top: 1rem!important;
+}
+
+.radio-label{
+  font-family: Arial, Baskerville, monospace !important;
+  font-weight: 500;
+  font-size: 13.5px;
+  letter-spacing: normal;
+  color: #484848;
+}

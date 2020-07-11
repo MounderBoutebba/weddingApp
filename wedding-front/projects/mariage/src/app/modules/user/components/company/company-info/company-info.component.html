@@ -1,0 +1,305 @@
+<div class="stepper-container">
+  <div class="stepper-component">
+    <mat-toolbar-row>
+      <a mat-flat-button class="stepper stepper active" translate>Description</a>
+      <div class="circle active"></div>
+      <span class="spacer active"></span>
+      <a mat-flat-button class="stepper ml_min_1" translate>Détails</a>
+      <div class="circle"></div>
+      <span class="spacer"></span>
+      <a [routerLink]="['#']" mat-flat-button class="stepper stepper active" routerLinkActive="active">{{'pricing'|lowercase|translate|titlecase}}</a>
+      <div class="circle"></div>
+      <span class="spacer"></span>
+      <a mat-flat-button class="stepper">{{'settings'|lowercase|translate|titlecase}}</a>
+      <div class="circle "></div>
+      <span class="spacer"></span>
+      <div class="circle circle-end"></div>
+      <a mat-flat-button class="stepper ml_min_2">{{'billing'|lowercase|translate|titlecase}}</a>
+    </mat-toolbar-row>
+  </div>
+</div>
+
+
+<div fxLayout="column" class="container">
+  <h2 translate class='main-title'>company information</h2>
+  <form #company [formGroup]="companyForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="1rem"
+    fxLayoutAlign="space-evenly space-evenly" enctype="multipart/form-data">
+
+    <div fxLayout="column">
+      <mat-label translate class="secondary-title">company name</mat-label>
+      <span translate class="label">enter the name of your company</span>
+      <mat-form-field class="date full name-input" floatLabel="always" appearance="outline">
+        <input matInput placeholder="{{'example: prestige picture' | translate}}" type="text" formControlName="name" >
+      </mat-form-field>
+      <mat-error  *ngIf="!!companyForm.get('name').errors && companyForm.get('name').touched" class='mt-1'>
+        <span translate>You must add your company's name</span>
+      </mat-error>
+    </div>
+
+
+    <div fxLayout="column" style="margin-bottom: 0!important">
+      <mat-label translate class="secondary-title">description</mat-label>
+      <span translate class="label">present your company (services, added value, experience and references)</span>
+      <mat-form-field class="form-input full description-input" floatLabel="always" appearance="outline">
+        <textarea rows="7" matInput placeholder="{{'description'|translate}}..." formControlName="description"
+          ></textarea>
+      </mat-form-field>
+      <mat-error *ngIf="!!companyForm.get('description').errors && companyForm.get('description').touched" class='mt-1'>
+        <span translate>Please detail your company and activity</span>
+      </mat-error>
+    </div>
+
+    <div fxLayout="column">
+      <mat-label translate class="secondary-title">categories</mat-label>
+      <span translate class="label">fill in your main activity</span>
+      <div fxLayout="row wrap" fxLayoutGap="1rem" fxLayoutAlign="start start"
+           class="select"
+           *ngFor="let category of categories.controls; let i=index">
+        <ng-select
+                   class="full form-input categories-input "
+                   [items]="searchData"
+                   (change)="selectCategorie(category.value)"
+                   bindLabel="name"
+                   bindValue="value"
+                   groupBy="group"
+                   placeholder="{{'category'|translate}}"
+                   [formControl]="category">
+          <ng-template ng-optgroup-tmp let-item="item">
+            {{item.group || 'Unnamed group'}}
+          </ng-template>
+        </ng-select>
+
+     <!--   <mat-form-field *ngFor="let category of categories.controls; let i=index"
+          class="full form-input categories-input" floatLabel="always" appearance="outline">
+          <mat-select [formControl]="category" (selectionChange)="selectCategorie(category.value)">
+            <mat-optgroup label="{{'category'|translate}}"></mat-optgroup>
+            <mat-divider style="width: 95%;margin: auto"></mat-divider>
+            <mat-optgroup label="{{'animator'|translate}}"></mat-optgroup>
+            <mat-optgroup label="{{'music'|translate}}">
+                <mat-option value="dj"><span translate>Dj</span></mat-option>
+                <mat-option value="musicien"><span translate>musician</span></mat-option>
+                <mat-option value="groupe"><span translate>band</span></mat-option>
+            </mat-optgroup>
+            <mat-optgroup label="{{'animator'|translate}}">
+                <mat-option value="animateurAdultes"><span translate>adult animator</span></mat-option>
+                <mat-option value="animateurEnfants"><span translate>kids animator</span></mat-option>
+            </mat-optgroup>
+
+            <mat-optgroup label="{{'visual'|translate}}">
+                <mat-option value="{{categoryLabelEnum.FEU_ARTIFICES}}"><span translate>fireworks</span></mat-option>
+                <mat-option value="{{categoryLabelEnum.LACHERS}}"><span translate>release</span></mat-option>
+            </mat-optgroup>
+
+            <mat-optgroup label="{{'reception'|translate}}">
+                <mat-option value="lieu"><span translate>place</span></mat-option>
+                <mat-option value="traiteur"><span translate>caterer</span></mat-option>
+                <mat-option value="gateaumariage"><span translate>cake</span></mat-option>
+              </mat-optgroup>
+
+            <mat-optgroup label="{{'memories'|translate}}">
+              <mat-option value="photographe"><span translate>photographer</span></mat-option>
+              <mat-option value="videaliste"><span translate>videographer</span></mat-option>
+            </mat-optgroup>
+
+            <mat-optgroup label="{{'beauty'|translate}}">
+                <mat-option value="{{categoryLabelEnum.COIFFURE}}"><span translate>barber</span></mat-option>
+                <mat-option value="{{categoryLabelEnum.MAQUILLAGE}}"><span translate>makeup</span></mat-option>
+                <mat-option value="{{categoryLabelEnum.ESTHETIQUE}}"><span translate>aesthetic</span></mat-option>
+                <mat-option value="{{categoryLabelEnum.SOIN}}"><span translate>care</span></mat-option>
+              </mat-optgroup>
+
+              <mat-optgroup label="{{'coach' | translate}}">
+                  <mat-option value="{{categoryLabelEnum.CHOREGRAPHE}}"><span translate>choreography</span></mat-option>
+                  <mat-option value="{{categoryLabelEnum.COACH}}"><span translate>sports coach</span></mat-option>
+                  <mat-option value="{{categoryLabelEnum.OFFICIANT}}"><span translate>ceremonial officer</span></mat-option>
+                </mat-optgroup>
+
+            <mat-optgroup label="{{'decoration'|translate}}">
+              <mat-option value="decorateur"><span translate>decorator</span></mat-option>
+              <mat-option value="fleuriste"><span translate>florist</span></mat-option>
+            </mat-optgroup>
+
+            <mat-optgroup label="{{'guests'|translate}}">
+                <mat-option value="{{categoryLabelEnum.HEBERGEMENT}}"><span translate>accommodation</span></mat-option>
+                <mat-option value="{{categoryLabelEnum.FAIRE_PART}}"><span translate>invitations</span></mat-option>
+            </mat-optgroup>
+
+            <mat-optgroup label="{{'transport'|translate}}">
+              <mat-option value="voiture"><span translate>car</span></mat-option>
+              <mat-option value="bus"><span translate>bus</span></mat-option>
+            </mat-optgroup>
+
+            <mat-optgroup label="{{'honeymoon'|translate}}">
+              <mat-option value="{{categoryLabelEnum.VOYAGE_DE_NOCES}}"><span translate>honeymoons</span></mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+
+-->
+      </div>
+      <div fxLayout="row wrap" fxLayoutGap="1rem" fxLayoutAlign="start start">
+        <mat-error *ngIf="!hasCategories" translate class='mt-1'>
+          <span translate>Please define your main activity</span>
+        </mat-error>
+      </div>
+      <br>
+
+      <div fxLayout="column">
+        <mat-label translate class="secondary-title">Images</mat-label>
+        <span translate class="label">upload 3 photos minimum to present your company, services and products</span>
+        <br>
+        <div fxLayout="row wrap" fxLayoutGap="1rem" fxLayout.lt-md="column" fxLayoutGap.lt-md="3px">
+
+          <div *ngFor="let img of companyInfo.images; let i=index">
+            <div style="position: relative">
+              <img class="img-fluid" [src]="img.path" [alt]="img.description">
+              <mat-icon svgIcon="star-empty" class="star-icon"(click)="changeFavorite(img)" *ngIf="!img.favorite"></mat-icon>
+              <mat-icon svgIcon="star-full" class="star-icon" (click)="changeFavorite(img)" *ngIf="img.favorite"></mat-icon>
+              <mat-icon svgIcon="custom-delete" class="delete-icon" (click)="deleteImage(img,i)"></mat-icon>
+            </div>
+          </div>
+
+          <div *ngFor="let prevImg of previewImages; let i=index">
+            <div style="position: relative">
+              <img [src]="prevImg.src" class='img-fluid'>
+              <mat-icon svgIcon="custom-delete" class="delete-icon" (click)="deleteImageBeforeUpload(i)"></mat-icon>
+            </div>
+          </div>
+          <div fxLayoutAlign="center center"
+            (click)="fileInput.click()" class="pointer add-pic-wrapper">
+            <input type="file" [hidden]="true" accept="image/*" #fileInput (change)="onFileChange($event)" multiple>
+            <span style="text-align: center">
+              <mat-icon mat-icon-button svgIcon="picture" class='picture-icon'></mat-icon>
+              <br>
+              <span translate>add images</span>
+            </span>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="column mb-0" *ngIf="(previewImages.length<3 && !companyInfo.id)">
+      <mat-error  translate>Please upload at least 3 photos related to your activity</mat-error>
+    </div>
+    <div fxLayout="column mb-0">
+      <mat-label translate class="secondary-title">Videos</mat-label>
+      <span translate class="label">you can insert up to 3 videos that showcases your business</span>
+      <div fxLayout="row wrap" fxLayoutGap="2.125rem" fxLayoutAlign="start start" class="company-edit">
+
+        <mat-form-field *ngFor="let link of links.controls; let i=index" class="form-input full media-input"
+          floatLabel="always" appearance="outline">
+          <input matInput placeholder="{{'YouTube link'|translate}}" type="url" [formControl]="link">
+          <mat-icon matSuffix (click)="removeLinks(i)" class="input-icon pointer" svgIcon="custom-delete" color='#000'></mat-icon>
+          <mat-error style="color:red;" *ngIf="links.controls[i].invalid">
+            <span translate>insert a valid youtube link</span>
+          </mat-error>
+        </mat-form-field>
+
+
+        <button *ngIf="links.length < 3" type="button" mat-stroked-button (click)="addLink()" class="add-btn-youtube">
+          <mat-icon class="add-icon">add</mat-icon>
+        </button>
+      </div>
+
+      <div fxLayout="column" style="display: block;">
+        <mat-label translate class="secondary-title-mt-0">location</mat-label>
+        <span translate class="label">fill in the full address of your company</span>
+        <mat-form-field class="form-input full location-input" floatLabel="always" appearance="outline" style="margin-bottom: 1rem !important;">
+          <input matInput placeholder="{{'address'|translate}}" class='adress-input' (input)="getPlaceAutocomplete()"
+                 [value]="location.value.address" #autocompleteaddr>
+        </mat-form-field>
+        <mat-error  *ngIf="!location.value.address" class='mt-1'>
+          <span translate>Please fill in the main location of your company</span>
+        </mat-error>
+      </div>
+
+      <mat-label translate class="network-title">networks</mat-label>
+      <span translate class="label">fill in the links of your professional pages on social networks</span>
+      <div fxLayout="row wrap" fxLayoutGap="2.125rem" fxLayoutAlign="start start" class="company-edit">
+          <mat-form-field *ngFor="let social of networks.controls; let i=index"
+                          class="form-input full media-input" floatLabel="always" appearance="outline">
+            <input matInput placeholder="{{'network'|translate}}" type="text" [formControl]="social">
+            <mat-icon matSuffix (click)="removeSocial(i)" class="input-icon pointer ico" svgIcon="custom-delete" color='#000'></mat-icon>
+            <mat-error style="color:red;" *ngIf="networks.controls[i].invalid">
+              <span translate>insert a valid url</span>
+            </mat-error>
+          </mat-form-field>
+          <button class='add-btn-social' type="button" mat-stroked-button (click)="addSocial()" style="height: 50px;transform: translateY(5px);">
+            <mat-icon class='add-icon'>add</mat-icon>
+          </button>
+        </div>
+
+      <div fxLayout="column" fxLayoutGap="0.5rem" formGroupName="questions">
+        <h3 translate class="secondary-title-mt-0">questions / answers</h3>
+        <span translate class="label">this information allows future brides to know your services better</span>
+        <br>
+        <div fxLayout="column">
+          <mat-label translate class="question">what do you like most about your job?</mat-label>
+          <mat-form-field class="form-input full question-input" floatLabel="always" appearance="outline">
+            <input matInput placeholder="{{'answer'|translate}}" type="text" formControlName="question1">
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column">
+          <mat-label translate class="question">how many years of experience do you have in this business?</mat-label>
+          <mat-form-field class="form-input full question-input" floatLabel="always" appearance="outline">
+            <input matInput placeholder="{{'answer'|translate}}" type="text" formControlName="question2">
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column">
+          <mat-label translate class="question">what material do you use?</mat-label>
+          <mat-form-field class="form-input full question-input" floatLabel="always" appearance="outline">
+            <input matInput placeholder="{{'answer'|translate}}" type="text" formControlName="question3">
+          </mat-form-field>
+            <mat-error  *ngIf="(!!companyForm.get('questions').get('question1').errors)
+            || (!!companyForm.get('questions').get('question2').errors)
+            || (!!companyForm.get('questions').get('question3').errors)" class='mb-1'>
+              <span translate>Please answer all questions</span>
+            </mat-error>
+        </div>
+
+      </div>
+    </div>
+
+    <!-------------------------------------------------------------------------------->
+
+    <div [hidden]="!showMoreQts">
+      <div fxLayout="column" fxLayoutGap="0.5rem" formArrayName="dynamiqueQts"
+            *ngFor="let item of dynamiqueQts.controls; let i = index;">
+        <div fxLayout="column" [formGroupName]="i">
+          <mat-label translate class="question">{{item.controls.label.value}}</mat-label>
+          <mat-form-field class="form-input full question-input" floatLabel="always" appearance="outline">
+            <input matInput placeholder="{{'answer'|translate}}" type="text" formControlName="response">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <!-------------------------------------------------------------------------------->
+
+    <div class="panel-header mt-0" (click)="showMoreQts=!showMoreQts">
+        <span translate class="show-more" [hidden]="showMoreQts">show more questions</span>
+      <mat-icon [fxHide]="showMoreQts">keyboard_arrow_down</mat-icon>
+
+      <span translate class="show-more" [hidden]="!showMoreQts">show less questions</span>
+      <mat-icon [fxHide]="!showMoreQts">keyboard_arrow_up</mat-icon>
+
+    </div>
+
+    <br>
+    <div fxFlexAlign.lt-md="center" class="full">
+      <button class="form-input full" style="width: 16.75rem; height: 3.375rem;" mat-raised-button color="primary" type="submit"
+        [disabled]="companyForm.invalid || (previewImages.length<3 && !companyInfo.images)">
+        <span style="color: white" translate>save</span>
+      </button>
+      <mat-error *ngIf="companyForm.invalid || (previewImages.length<3 && !companyInfo.images)" class='mt-1'>
+        <span translate>Please fill in the missing fields to continue</span>
+      </mat-error>
+    </div>
+
+
+  </form>
+  <br>
+
+</div>

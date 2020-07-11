@@ -1,0 +1,84 @@
+<mat-card>
+    <mat-card-content style="margin-bottom: 0">
+        &nbsp;
+        <mat-grid-list cols="3" rowHeight="110px" style="width:25rem;">
+
+            <mat-grid-tile *ngIf="(((auth$|async)?.user)?.role !== 'admin')">
+                <a [routerLink]="['/user/',((auth$|async)?.user)?.email]" routerLinkActive="active" fxLayout="column" fxLayoutAlign="center center">
+                    <img width="35px" src="/assets/icons/svg/user.svg">
+                    <h4 translate>profile</h4>
+                </a>
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="(((auth$|async)?.user)?.role === 'provider')">
+                <a  [routerLink]="['/user',(auth$|async)?.user.email,'edit','company']" routerLinkActive="active" fxLayout="column" fxLayoutAlign="center center">
+                    <img width="35px" src="/assets/icons/svg/check-list.svg">
+                    <h4 translate>company</h4>
+                </a>
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="(((auth$|async)?.user)?.role === 'provider')">
+                <a routerLink="/user/availabilities" routerLinkActive="active" fxLayout="column" fxLayoutAlign="center center">
+                    <img width="35px" src="/assets/icons/svg/calendar.svg">
+                    <h4 translate>calendar</h4>
+                </a>
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="(((auth$|async)?.user)?.role === 'client')">
+                <a routerLink="/user/favorites" routerLinkActive="active" fxLayout="column" fxLayoutAlign="center center">
+                    <img width="35px" src="/assets/icons/svg/heart.svg">
+                    <h4 translate>favorites</h4>
+                </a>
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="(((auth$|async)?.user)?.role !== 'admin')">
+                <a routerLink="/user/notification" routerLinkActive="active" fxLayout="column" fxLayoutAlign="center center">
+                    <img width="35px" src="/assets/icons/svg/notification.svg">
+                    <h4 translate>notifications</h4>
+                </a>
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="(((auth$|async)?.user)?.role === 'provider')">
+                <a [routerLink]="['/user/reservation/validate-client-requests']" routerLinkActive="active" fxLayout="column" fxLayoutAlign="center center">
+                    <img width="35px" src="/assets/icons/svg/folder.svg">
+                    <h4 translate>booking</h4>
+                </a>
+            </mat-grid-tile>
+
+          <mat-grid-tile *ngIf="(((auth$|async)?.user)?.role === 'client')">
+                <a [routerLink]="['/user/reservation/awaiting-validation-provider']" routerLinkActive="active" fxLayout="column" fxLayoutAlign="center center">
+                    <img width="35px" src="/assets/icons/svg/folder.svg">
+                    <h4 translate>booking</h4>
+                </a>
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="(((auth$|async)?.user)?.role === 'provider')">
+                <a routerLink="/user/reservation/avis-pro" routerLinkActive="active" fxLayout="column" fxLayoutAlign="center center">
+                    <img width="35px" src="/assets/icons/svg/copy.svg">
+                    <h4 translate>Avis</h4>
+                </a>
+            </mat-grid-tile>
+          <mat-grid-tile *ngIf="(((auth$|async)?.user)?.role === 'client')">
+                <a routerLink="/user/reservation/avis-client" routerLinkActive="active" fxLayout="column" fxLayoutAlign="center center">
+                    <img width="35px" src="/assets/icons/svg/copy.svg">
+                    <h4 translate>Avis</h4>
+                </a>
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="(((auth$|async)?.user)?.role === 'admin')">
+                <a routerLink="/administration/auth?.user?.email" routerLinkActive="active" fxLayout="column" fxLayoutAlign="center center">
+                    <img width="35px" src="/assets/icons/svg/controls.svg">
+                    <h4 translate>Admin panel</h4>
+                </a>
+            </mat-grid-tile>
+
+        </mat-grid-list>
+
+    </mat-card-content>
+    <mat-card-actions fxLayoutAlign="end end">
+        <button style="text-align: right" (click)="logout()" mat-button>
+      <img width="15px" src="/assets/icons/svg/turn-off.svg">&nbsp;
+      <span translate>logout</span>
+    </button>
+    </mat-card-actions>
+</mat-card>

@@ -1,0 +1,103 @@
+<div class="container" fxLayout.lt-md="column" [fxLayout]="mapWidget || mapOff?'column':'row'" fxLayoutAlign="start center"
+     fxLayoutGap="1.5rem">
+
+  <div class="container__scroll-container"
+       [ngClass]="{'container__scroll-container-map':mapWidget,
+                   'container__scroll-container__map-off':mapOff}">
+
+    <button style="z-index: 1" mat-mini-fab class="btn btn-left" (click)="moveLeft()">
+      <img class="ico" src="/assets/icons/svg/arrow-gauche.svg" alt="previous">
+    </button>
+
+    <drag-scroll class="scroll-container"
+                 (click)="showGallery()"
+                 [ngClass]="{'scroll-container-map':mapWidget,'scroll-container__map-off':mapOff}"
+                 drag-scroll-disabled="true"
+				 #scrollable>
+
+      <div *ngIf="data?.company?.images?.length === 0" drag-scroll-item>
+        <img src="https://via.placeholder.com/250" class="image">
+      </div>
+      <div *ngFor="let image of data?.company?.images" drag-scroll-item>
+        <img  [src]="image.path" class="image" (error)="loadPlaceholder($event)" >
+      </div>
+    </drag-scroll>
+
+    <button style="z-index: 1"  mat-mini-fab class="btn btn-right" (click)="moveRight()">
+      <img class="ico" src="/assets/icons/svg/arrow-point-to-right-grey.svg" alt="next">
+    </button>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="start start"
+       class="details-container" [ngClass]="{'details-container__map':mapWidget,'details-container__map-off':mapOff}"
+       style="width: 100%">
+    <div fxLayout="column" style="width: 100%;height: 100%" fxLayoutAlign="space-between start">
+
+      <div fxLayout="row" fxLayoutAlign="start start" style="width: 100%">
+        <div fxLayout="column" fxLayoutAlign="start start" style="width: 100%">
+
+          <div fxLayout="row" fxLayoutAlign="space-between start" style="width: 100%">
+            <a fxLayout="row" fxLayoutGap="22px" [routerLink]="'/pro-showcase/'+data.email+'/booking/'+type">
+              <ngx-avatar [src]="data.photo" [name]="data.firstname +' '+data.lastname" size="56" class="search__avatar" [ngClass]="{'search__avatar__map':mapWidget}"></ngx-avatar>
+              <div fxLayout="column" style="width: 100%" [ngClass]="{'w150':mapOff,'w125':mapWidget}">
+                <mat-label class="title">{{data.company.name}}</mat-label>
+                <div class="address">
+                  <mat-icon class="icon">room</mat-icon>
+                  {{(data?.company?.location?.address?.split(',')[1])?.split(' ')[2]}},{{data?.company?.location?.address?.split(',')[2]}}
+                </div>
+              </div>
+            </a>
+            <div (click)="clickHeart()" class="heart"
+                 [ngClass]="{
+                 'heart--clicked':data?.favorite || favorite,
+                 'heart__map':mapWidget,
+                 'heart__map-off':mapOff
+                 }"></div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+      <div class="description-text" *ngIf="(!mapWidget && !mapOff)">
+        {{data.company.description.substr(0,113)}} ...
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="space-between center" style="width: 100%" [ngClass]="{'h40':mapWidget,'mb26':mapOff}" >
+
+        <div fxLayout="row">
+          <ngx-stars class="rating" [readonly]="true" [maxStars]="5" [initialStars]="data.company.totalNotes"
+                     color="#f17082"></ngx-stars>
+          <small class="votes">{{data.company.totalNotes.toFixed(3)}} / 5</small>
+        </div>
+
+        <div [fxShow]="showInDispoTag" class="not-available" [ngClass]="{'op0':mapWidget,'not-available__map--off':mapOff}">
+          <span translate>not available on the dates indicated</span>
+        </div>
+
+        <div *ngIf="!favorite" fxLayout="column" class="price" [ngClass]="{'price__map':mapWidget,'price__map-off':mapOff}">
+          <small style="font-size: 10.5px;font-weight: normal" translate>from</small>
+          <span>{{data.criteres[type+'_tarif_horaire']|currency:'EUR'}}</span>
+        </div>
+
+        <div *ngIf="favorite" fxLayout="column" class="price" [ngClass]="{'price__map':mapWidget,'price__map-off':mapOff}">
+          <small style="font-size: 10.5px;font-weight: normal" translate>from</small>
+          <span>{{data.criteres[data.company.categories[0]+'_tarif_horaire']|currency:'EUR'}}</span>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+
+</div>
+
+<app-gallery (close)="galleryVisible = false" [fxShow]="galleryVisible" [data]="data?.company?.images">
+</app-gallery>

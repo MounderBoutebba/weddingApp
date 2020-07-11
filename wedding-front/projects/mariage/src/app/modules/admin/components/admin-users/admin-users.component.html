@@ -1,0 +1,218 @@
+<div class="general-container">
+    <div class="search-bar-container margin-bottom margin-top">
+        <mat-form-field appearance="none" class="appearance-outline">
+            <input matInput class="small-span" [(ngModel)]="globalFilter.value" placeholder="{{'Search by keywords'|translate}}">
+        </mat-form-field>
+        <button mat-stroked-button (click)="onChangeSelect(globalFilter.value, 'global')">
+            <img class="icon" src="/assets/icons/svg/search.svg" style="width: 15px;">
+        </button>
+        <button mat-stroked-button class="button-delete" (click)="onClearFilters($event)">
+            <span translate>Clear</span>
+        </button>
+    </div>
+    <div class="bars-container margin-bottom">
+        <mat-form-field appearance="none">
+            <mat-select (selectionChange)="onChangeSelect($event, 'role')" [(value)]="roleFilter.value" placeholder="{{'Select role'|translate}}" class="small-span">
+                <mat-option value="client">
+                    <span translate>Client</span>
+                </mat-option>
+                <mat-option value="provider">
+                    <span translate>Provider</span>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="none">
+            <mat-select (selectionChange)="onChangeSelect($event, 'status')" [(value)]="statusFilter.value" placeholder="{{'Select status'|translate}}" class="small-span">
+                <mat-option value="PUBLISHED">
+                    <span translate>Published</span>
+                </mat-option>
+                <mat-option value="UNPUBLISHED">
+                    <span translate>Unpublished</span>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="none" class="appearance-outline-2">
+            <mat-label class="small-span" translate>Creation period</mat-label>
+            <input #inputCreateDate matInput 
+                [matDatepicker]="dp" 
+                (dateChange)="onChangeSelect($event, 'creationDate')" 
+                [(value)]="creationDateFilter.value"
+                style="padding-top: 10px;">
+            <mat-datepicker-toggle matSuffix [for]="dp">
+                <mat-icon style="margin-right: -10px; margin-top: 25px; font-size: 25px;" matDatepickerToggleIcon>arrow_drop_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #dp></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="none" class="appearance-outline-2">
+            <mat-label class="small-span" translate>Last connexion period</mat-label>
+            <input #inputLastConnexionDate matInput 
+                [matDatepicker]="dp2" 
+                (dateChange)="onChangeSelect($event, 'lastConnexion')" 
+                [(value)]="lastConnexionFilter.value"
+                style="padding-top: 10px">
+            <mat-datepicker-toggle matSuffix [for]="dp2">
+                <mat-icon style="margin-right: -10px; margin-top: 25px; font-size: 25px;" matDatepickerToggleIcon>arrow_drop_down</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #dp2></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="none">
+            <mat-select (selectionChange)="onChangeSelect($event, 'state')" [(value)]="stateFilter.value" placeholder="{{'Select status'|translate}}" class="small-span">
+                <mat-option value="COMPLETED">
+                    <span translate></span>Completed
+                </mat-option>
+                <mat-option value="UNCOMPLETED">
+                    <span translate></span>Uncompleted
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="filters-container margin-bottom">
+        <button mat-button class="custom-link-1" (click)="refrechDataSource()" #btnRef cdkFocusInitial>
+            <span translate>All</span>
+            <span>({{numberOfUsers}})</span>
+        </button>
+        <span>|</span>
+        <a mat-button class="custom-link-2" (click)="onChangeSelect({value:'PUBLISHED'}, 'status')" translate>
+            <span translate>Published</span>
+            <span>({{numberOfPublishedUsers}})</span>
+        </a>
+        <span>|</span>
+        <a mat-button class="custom-link-2" (click)="onChangeSelect({value:'ARCHIVED'}, 'status')" translate>
+            <span translate>Archived</span>
+            <span>({{numberOfArchivedUsers}})</span>
+        </a>
+        <span>|</span>
+        <a mat-button class="custom-link-2" (click)="onChangeSelect({value:'UNPUBLISHED'}, 'status')" translate>
+            <span translate>Unpublished</span>
+            <span>({{numberOfUnpublishedUsers}})</span>
+        </a>
+    </div>
+    <div class="table-container margin-bottom" *ngIf="dataSource">
+        <div class="paginator-container">
+            <button mat-flat-button color="accent" class="icon-button" (click)="openCreateUserDialog($event)">
+                <mat-icon class="icon-1">add_circle_outline</mat-icon>
+                <span translate>Créer</span>
+            </button>
+            <button mat-stroked-button class="stroked-button" [disabled]="!selectedUser" (click)="openUpdateUserDialog($event)">
+                <mat-icon class="icon-1">create</mat-icon>
+                <span translate>Modify</span>
+            </button>
+            <button mat-stroked-button class="stroked-button" [disabled]="!selectedUser" (click)="onDuplicateUser($event)">
+                <img class="icon-1" src="/assets/icons/svg/copy.svg" style="width: 15px;">
+                <span translate>Duplicate</span>
+            </button>
+            <button mat-stroked-button class="stroked-button" [disabled]="!selectedUser" (click)="onPublishUser($event)">
+                <img class="icon-1" src="/assets/icons/svg/checked (1).svg" style="width: 15px;">
+                <span translate>Publish</span>
+            </button>
+            <button mat-stroked-button class="stroked-button" [disabled]="!selectedUser" (click)="onUnpublishUser($event)">
+                <mat-icon class="icon-1">block</mat-icon>
+                <span translate>Unpublish</span>
+            </button>
+            <button mat-stroked-button class="stroked-button" [disabled]="!selectedUser" (click)="onArchiveUser($event)">
+                <mat-icon class="icon-1">archive</mat-icon>
+                <span translate>Archive</span>
+            </button>
+            <button mat-stroked-button class="stroked-button" [disabled]="!selectedUser" (click)="onDeleteUser($event)">
+                <mat-icon class="icon-1">delete_outline</mat-icon>
+                <span translate>Delete</span>
+            </button>
+            <div>
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+        </div>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z1" class="mat-table">
+            <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                    </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <mat-checkbox (click)="$event.stopPropagation()" (change)="onSelectRow($event, row)" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                    </mat-checkbox>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="firstname">
+                <th mat-header-cell *matHeaderCellDef translate> Firstname </th>
+                <td mat-cell *matCellDef="let element"> {{element.firstname}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lastname">
+                <th mat-header-cell *matHeaderCellDef translate> Lastname </th>
+                <td mat-cell *matCellDef="let element"> {{element.lastname}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef translate> Email </th>
+                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="emailVerified">
+                <th mat-header-cell *matHeaderCellDef translate> Email verified </th>
+                <td mat-cell *matCellDef="let element"> {{element.emailVerified ? 'OUI' : 'NON'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="tel">
+                <th mat-header-cell *matHeaderCellDef translate> Phone number </th>
+                <td mat-cell *matCellDef="let element"> {{element.phone.phoneNumber}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="phoneVerified">
+                <th mat-header-cell *matHeaderCellDef translate> Phone number verified </th>
+                <td mat-cell *matCellDef="let element"> {{element.phoneVerified ? 'OUI' : 'NON'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="role">
+                <th mat-header-cell *matHeaderCellDef translate> Role </th>
+                <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef translate> Status </th>
+                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="state">
+                <th mat-header-cell *matHeaderCellDef translate> State </th>
+                <td mat-cell *matCellDef="let element"> {{element.state}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="creation-date">
+                <th mat-header-cell *matHeaderCellDef translate> Creation date </th>
+                <td mat-cell *matCellDef="let element"> {{moment(element.createdAt)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="last-connexion">
+                <th mat-header-cell *matHeaderCellDef translate> Last connexion date </th>
+                <td mat-cell *matCellDef="let element"> {{moment(element.lastConnexionDate)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Id">
+                <th mat-header-cell *matHeaderCellDef> Id </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="IdCompany">
+                <th mat-header-cell *matHeaderCellDef translate> Id company </th>
+                <td mat-cell *matCellDef="let element"> {{element.__company__?.id}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onSelectRow($event, row)" class="table-row">
+            </tr>
+        </table>
+    </div>
+    <div class="wrapper">
+        <div class="company-details-button-container">
+            <button mat-stroked-button class="stroked-button" [disabled]="!selectedUser || (selectedUser ? selectedUser.role !== 'provider' : true)" (click)="onCompanyDetails($event)">
+                <mat-icon class="icon-button-2">chrome_reader_mode</mat-icon>
+                <span translate>Company details</span>
+            </button>
+            <button mat-stroked-button class="stroked-button" [disabled]="!selectedUser || (selectedUser ? selectedUser.role !== 'provider' : true)" (click)="openJobsDetailsDialog($event)">
+                <mat-icon class="icon-button-2">recent_actors</mat-icon>
+                <span translate>Job details</span>
+            </button>
+        </div>
+    </div>
+</div>

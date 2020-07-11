@@ -1,0 +1,163 @@
+:host {
+
+  mat-icon {
+    height: unset !important;
+    width: unset !important;
+  }
+  ::ng-deep {
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+      background-color: #ffffff !important;
+    }
+
+  }
+
+  mat-label {
+    margin-bottom: 0.9rem !important;
+  }
+
+  .main-title {
+    font-weight: 500;
+    font-size: 18.5px;
+    margin-top: 2rem;
+  }
+
+  .validate-btn{
+    height: 3rem;
+    color: #ffffff;
+    width: 50%;
+    align-self: end;
+    @media screen and (max-width: 960px) {
+      width: 100%;
+    }
+  }
+
+  .container {
+    width: 97%;
+    margin: auto;
+    min-height: 100vh;
+
+    @media screen and (max-width: 959px) {
+      width: 98%;
+      margin: auto;
+    }
+  }
+
+  .reservation-container {
+    box-shadow: 0 0 3px 0 #c4c4c4;
+    //padding: 1rem;
+    border: 10px;
+  }
+
+  .sub-table-container {
+    width: 100%;
+    padding: 0 0 0 1rem !important;
+    @media screen and (max-width: 960px) {
+      padding: 0 1rem !important;
+    }
+  }
+
+  .title {
+    font-size: 15px;
+    color: #000000;
+    margin-bottom: 13px !important;
+  }
+
+  .sub-text {
+    font-size: 15px !important;
+    color: #848484;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+  .refresh {
+    color: var(--primary-color);
+    cursor: pointer;
+    :hover {
+      color: var(--primary-darker-color);
+    }
+  }
+
+  .action-btn{
+    padding: 0.3rem 1rem;
+    max-width: unset;
+    height: 3rem;
+    @media screen and (max-width: 960px) {
+      width: 100%;
+    }
+  }
+
+  .price-card{
+    width: 50%;
+    @media screen and(max-width: 960px) {
+      width: 100%;
+    }
+    box-shadow: 0 0 2px 0 #848484;
+    border-radius: 10px;
+    padding: 1rem;
+    background-color: #ffffff;
+  }
+
+  .btn-container {
+    padding: 1rem;
+    width: 100%;
+    @media screen and (max-width: 960px) {
+      width: 100%;
+    }
+  }
+
+  .w100-lt-md {
+    @media screen and (max-width: 960px) {
+      width: 100%;
+    }
+  }
+
+  .actions-card{
+    width: 47%;
+    @media screen and(max-width: 960px) {
+      width: 100%;
+    }
+    border-radius: 10px;
+    padding: 1rem;
+  }
+
+  .title-card{
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 2rem !important;
+  }
+
+  .title-plus {
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  .paragraphe {
+    margin: 0 !important;
+  }
+
+  .list-title{
+    font-weight: bold;
+  }
+
+  .cordinates-container {
+    border: 1px solid #d7d7d7;
+    padding: 1rem;
+    border-radius: 7px;
+  }
+
+  .loading-text {
+    animation: loading infinite .900s alternate;
+  }
+
+  @keyframes loading {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+}

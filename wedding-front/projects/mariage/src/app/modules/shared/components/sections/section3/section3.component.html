@@ -1,0 +1,20 @@
+<div fxLayout='column' class="section3 pt">
+    <div fxLayout='column' fxLayoutAlign='center center' class="main-title-wrapper">
+        <div class="main-title">{{title}}</div>
+    </div>
+    <div fxLayout='column' fxLayoutAlign='center center' style="margin-bottom: 2rem;">
+        <div class="description description-width">{{description}}</div>
+    </div>
+    <div fxLayout='row wrap'  fxLayoutAlign.lt-md='center center'
+    fxLayoutGap.lt-md='0rem' class="pl">
+        <div fxFlex='31.0625rem' fxLayout.lt-md='column' fxLayoutAlign.lt-md='center center'style="margin-right: 4rem;"
+        fxLayout='row wrap' fxLayoutGap='1.8125rem' fxLayoutGap.lt-md='0rem'
+        *ngFor="let column of columns">
+            <img [src]="column.icon" alt="icon" class="column-icon-transparent">
+            <div class="column-text text-width">{{column.text}}</div>
+        </div>
+    </div>
+    <div class='btn-wrapper' fxLayout='row wrap' fxLayoutAlign='center start'>
+        <button class="mat-raised-button mat-primary" (click)='clicked()'>{{btnLabel}}</button>
+    </div>
+</div>

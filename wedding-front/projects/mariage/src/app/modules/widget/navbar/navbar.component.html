@@ -1,0 +1,181 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav (click)="drawer.close()"
+               [fxShow]="(isHandset$ | async)"
+               (swipeleft)="drawer.close()"
+               #drawer class="sidenav"
+               fixedInViewport="true"
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="false">
+    <mat-toolbar (swipeleft)="drawer.close()"  style="height: 4.375rem;">
+      <span style="color:var(--black-color);">Menu</span>
+    </mat-toolbar>
+    <mat-nav-list (swipeleft)="drawer.close()"  style="height: 90%" *ngIf="hideNavBar$ | async">
+
+      <div *ngIf="((auth$|async)?.user) as user; else guestMenu">
+
+        <div fxLayoutAlign="center center" fxLayout="column" *ngIf="(currentUser|async) as apiUser">
+
+            <img *ngIf="!!apiUser.photo" [alt]="apiUser.firstname+' '+apiUser.lastname" [src]="apiUser.photo"
+                 class="mat-card-avatar">
+          <img *ngIf="!apiUser.photo" [alt]="user.given_name" [src]="user.picture" class="mat-card-avatar">
+          <br>
+            <span *ngIf="!!apiUser.firstname">{{apiUser.firstname+' '+apiUser.lastname}}</span>&nbsp;
+            <span *ngIf="!apiUser.firstname">{{user.given_name}}</span>&nbsp;
+          <br>
+        </div>
+
+
+        <a [routerLink]="['/user/',user.email]" mat-list-item routerLinkActive="active">
+          <mat-icon color="primary">account_box</mat-icon>
+          <span translate>profile</span>
+        </a>
+        <a mat-list-item routerLink="/user/notification" routerLinkActive="active">
+          <mat-icon color="primary">notifications</mat-icon>
+          <span translate>notifications</span>
+        </a>
+        <a *ngIf="user.role === 'provider'" mat-list-item routerLink="/user/reservation/avis-pro" routerLinkActive="active">
+          <mat-icon color="primary">library_books</mat-icon>
+          <span translate>Avis</span>
+        </a>
+        <a *ngIf="user.role === 'client'" mat-list-item routerLink="/user/reservation/avis-client" routerLinkActive="active">
+          <mat-icon color="primary">library_books</mat-icon>
+          <span translate>Avis</span>
+        </a>
+        <a mat-list-item *ngIf="user.role === 'provider'" [routerLink]="['/user/reservation/validate-client-requests']" routerLinkActive="active">
+          <mat-icon color="primary">folder</mat-icon>
+          <span translate>booking</span>
+        </a>
+
+        <a mat-list-item *ngIf="user.role === 'client'" [routerLink]="['/user/reservation/awaiting-validation-provider']"  routerLinkActive="active">
+          <mat-icon color="primary">folder</mat-icon>
+          <span translate>booking</span>
+        </a>
+
+        <div *ngIf="user.role === 'client'">
+          <a mat-list-item routerLink="/user/favorites" routerLinkActive="active">
+            <mat-icon color="primary">favorite</mat-icon>
+            <span translate>favorites</span>
+          </a>
+        </div>
+
+        <div *ngIf="user.role === 'provider'">
+          <a mat-list-item [routerLink]="['/user',user.email,'edit','company']" routerLinkActive="active">
+            <mat-icon color="primary">assignment</mat-icon>
+            <span translate>company</span>
+          </a>
+          <a mat-list-item  routerLink="/user/availabilities" routerLinkActive="active">
+            <mat-icon color="primary">today</mat-icon>
+            <span translate>calendar</span>
+          </a>
+        </div>
+
+        <a (click)="logout()" mat-list-item routerLinkActive="active">
+          <mat-icon color="primary">exit_to_app</mat-icon>
+          <span translate>logout</span>
+        </a>
+      </div>
+
+      <ng-template #guestMenu>
+        <a mat-list-item routerLink="/auth/login" routerLinkActive="active">
+          <mat-icon color="primary">people</mat-icon>
+          <span translate>signin</span>
+        </a>
+
+        <a mat-list-item routerLink="/auth/signup" routerLinkActive="active">
+          <mat-icon color="primary">assignment</mat-icon>
+          <span translate>signup</span>
+        </a>
+      </ng-template>
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-toolbar class="navbar" (swiperight)="drawer.open()" (swipeleft)="drawer.close()" *ngIf="hideNavBar$ | async">
+    <mat-toolbar-row style="height: 4.375rem;padding: 0 6px 0 0!important;">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="(isHandset$ | async)">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span [class.spacer]="(isHandset$ | async)"></span>
+      <a routerLink="/">
+        <picture>
+          <img *ngIf="!showFullLogo" class="logo" src="/assets/icons/svg/winwez-icon.svg" alt="logo mariage serein">
+          <img *ngIf="showFullLogo" class="logo-full" src="/assets/icons/svg/Logo-winwez.png" alt="logo mariage serein">
+
+          <!--          <img *ngIf="!((settings$ |async)?.dark)" class="logo" src="assets/images/logo-light.jpg" alt="logo mariage serein">
+                    <img *ngIf="((settings$ |async)?.dark)" class="logo" src="assets/images/logo-dark.jpg" alt="logo mariage serein">-->
+        </picture>
+      </a>
+
+      <a routerLink="/" *ngIf="!showFullLogo" class="returnLogo">
+        <img class="arrow" src="/assets/icons/svg/arrow-gauche.svg" alt="logo mariage serein">
+        <span class="return text-bold" translate>Return to home</span>
+      </a>
+      <span [class.spacer]="!(isHandset$ | async)"></span>
+      <div *ngIf="!(isHandset$ | async)">
+        <div *ngIf="((auth$|async)?.user) as user; else guestBar">
+
+          <a class="text-bold" mat-button routerLink="/how-it-works" >
+            <span class="text-bold" translate>how it works</span><span class="text-bold">?</span>
+          </a>
+
+          <a mat-button routerLink="/user/notification" routerLinkActive="active" >
+            <img class="notification" src="/assets/icons/svg/notification.svg">
+            <span style="color: white!important;width: 1.5rem;height: 1.5rem;font-size: 12px" matBadgeColor [matBadge]="notificationCount" matBadgePosition="below after"></span>
+          </a>
+
+          <button [matMenuTriggerFor]="profileMenu" mat-button  *ngIf="(currentUser|async) as apiUser">
+            <img  style="width: 2.5rem; height: 2.5rem;" *ngIf="!!apiUser.photo" [alt]="apiUser.firstname+' '+apiUser.lastname" [src]="apiUser.photo"
+                 mat-card-avatar>
+            <img style="width: 2.5rem; height: 2.5rem;"  *ngIf="!apiUser.photo" [alt]="user.given_name" [src]="user.picture" mat-card-avatar>
+            &nbsp;
+            <span class="text text-bold" *ngIf="!!apiUser.firstname">{{apiUser.firstname}}</span>&nbsp;
+            <span class="text text-bold" *ngIf="!apiUser.firstname">{{user.given_name}}</span>&nbsp;
+            <img src="/assets/icons/svg/arrow-noir-bas.svg" class="down-arrow">
+          </button>
+
+          <mat-menu #profileMenu="matMenu">
+            <app-menu-user (click)="$event.stopPropagation()"></app-menu-user>
+          </mat-menu>
+
+        </div>
+
+        <ng-template #guestBar>
+
+          <a mat-button routerLink="/how-it-works" class=" text-bold">
+            <span translate>how it works</span>?
+          </a>
+
+          <mat-menu #signupMenu="matMenu">
+            <app-signup (click)="$event.stopPropagation()"></app-signup>
+          </mat-menu>
+
+          <button [matMenuTriggerFor]="signupMenu" mat-button>
+            <span translate>signup</span>
+          </button>
+
+          <mat-menu #loginMenu="matMenu">
+            <app-login (click)="$event.stopPropagation()"></app-login>
+          </mat-menu>
+
+          <button [matMenuTriggerFor]="loginMenu" mat-button>
+            <span translate>login</span>
+          </button>
+
+          <button routerLink='/become-a-partner' class="partner" color="primary" mat-flat-button>
+            <span translate>become a partner</span>
+          </button>
+
+        </ng-template>
+
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+<div style="margin-top: 4.38rem"></div>
+  <ng-content></ng-content>
+</mat-sidenav-container>
+

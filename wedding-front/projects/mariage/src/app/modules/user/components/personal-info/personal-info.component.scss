@@ -1,0 +1,273 @@
+.informations-personnelles {
+  margin-bottom: 1.6875rem;
+  margin-top: 2.625rem;
+}
+
+.status {
+  min-width: 7.313rem;
+  height: 3.375rem;
+  color: white;
+  transform: translateY(4px);
+}
+
+.resend {
+  min-width: 7.313rem;
+  height: 3.375rem;
+  color: white;
+}
+
+.send {
+  width: 9.1875rem!important;
+  min-width: 9.1875rem!important;
+  height: 3.375rem;
+  color: white;
+}
+
+.confirm-button{
+  width: 11.1875rem!important;
+  min-width: 11.1875rem!important;
+  height: 3.375rem;
+  color: white;
+}
+
+.country{
+  object-fit: cover;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+}
+
+
+
+.profile {
+  position: relative;
+}
+
+.fix-status {
+  transform: translateY(4px) !important;
+}
+
+.profile-after {
+  position: absolute;
+  z-index: 1111;
+  bottom: 0;
+  left: 0;
+  color: white;
+  width: 11.125rem;
+  background-color: #000000;
+  opacity: 0.5;
+  height: 4.438rem !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+
+
+.date {
+  width: 50%;
+}
+
+
+
+a {
+  color: black;
+  text-decoration: underline;
+}
+
+
+.container {
+  width: 90%;
+  margin-left: 1rem;
+  margin-right: 1rem;
+
+  @media screen and (max-width: 959px) {
+    width: 98%;
+    margin: auto;
+  }
+}
+
+.token {
+  width: 130px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.ico {
+  /*
+  transform: translateY(15%);
+  */
+}
+
+
+
+
+.submit {
+  width: 16.75rem;
+  height: 3.375rem;
+  background-color: #f27082;
+  margin-top: 3.188rem;
+}
+
+
+.add-btn {
+  transform: translateY(3px);
+  height: 3.375rem;
+  width: 3.375rem;
+    border: lightgray solid 1px;
+}
+
+.input-icon {
+  width: 1rem;
+  position: relative;
+  top: 30%;
+  left: 30%;
+}
+
+.input-icon-2 {
+  width: 1rem;
+  position: relative;
+  top: 30%;
+  right: 30%;
+}
+
+.capitalize{
+  text-transform: capitalize;
+}
+
+.bold-600 {
+  font-weight: 600;
+}
+.secondary-text {
+  margin-bottom: 15px;
+  color: #484848;
+}
+.icon-wrapper {
+  width: 2.5rem !important;
+  height: 3.375rem !important;
+}
+.mat-form-field-suffix {
+  top: -0.73rem !important;
+  right: -0.6rem !important;
+}
+.input {
+  width: 16.75rem!important;
+  // height: 3.375rem!important;
+}
+.adress-input {
+  width: 568rem;
+  // height: 3.375rem!important;
+}
+.phone-input {
+  width: 12.563rem!important;
+  height: 3.375rem!important;
+}
+.phone-prefix {
+  width: 7.438rem!important;
+  height: 3.375rem!important;
+}
+.confirmation-input {
+  width: 11.438rem!important;
+  height: 3.375rem!important;
+}
+.confirmation-secondary-text {
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 19.2rem;
+}
+
+.confirmation-label {
+  margin-bottom: 0.875rem;
+}
+.resend-code {
+  width: 14.5rem!important;
+  height: 3.375rem!important;
+}
+
+.option-img {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+[dir='rtl'] .option-img {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+
+
+@media screen and (max-width: 1183px) and (min-width: 960px){
+  .resend-label{
+    margin-bottom: 0!important;
+    height: 0!important;
+  }
+  .resend-button{
+    transform: translateY(-0.635rem);
+  }
+}
+
+@media screen and (max-width: 650px){
+  .resend-label{
+    margin-bottom: 0!important;
+    height: 0!important;
+  }
+  .resend-button{
+    transform: translateY(-0.635rem);
+  }
+}
+
+@media screen and (max-width: 406px){
+  .validate-label{
+    margin-bottom: 0!important;
+    height: 0!important;
+  }
+  .validate-button{
+    transform: translateY(-0.635rem);
+  }
+}
+
+::ng-deep{
+  .confirmation-input.mat-form-field-appearance-outline .mat-form-field-outline{
+    background-color: #e6e6e6;
+  }
+}
+
+.validation-hint {
+  width: 10.75rem;
+  transform: translateY(-1rem);
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #43b77a;
+}
+
+.resend-hint {
+  width: 14rem;
+  margin-top: 1rem;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #f9ae64;
+  @media screen and (max-width: 650px) {
+    margin-top: 0;
+  }
+}
+
+mat-label{
+  margin-bottom: 0.9rem !important;
+}
+.mat-form-field {
+    width: auto;
+}

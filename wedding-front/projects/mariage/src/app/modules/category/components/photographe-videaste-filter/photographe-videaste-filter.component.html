@@ -1,0 +1,309 @@
+  <div style="width: 95%;margin: auto">
+
+    <form [formGroup]="filterForm" (ngSubmit)="submit()" enctype="multipart/form-data">
+      <div
+        fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly"
+        class="btn-container" [ngClass.lt-md]="{'btn-container--hidden-search-bar':hiddenSearchbar}">
+
+        <div fxLayout="column">
+          <div fxLayout="column">
+            <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+              <section fxLayout="column">
+                <mat-label class="bold" translate>verified providers</mat-label>
+                <span translate>a selection of providers verified according to quality criteria</span>
+              </section>
+              <mat-slide-toggle style="float: right" color="primary"
+                                formControlName="verifiedProvider"></mat-slide-toggle>
+            </div>
+            <mat-divider></mat-divider>
+          </div>
+
+          <div fxLayout="column">
+            <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+              <section fxLayout="column">
+                <mat-label class="bold" translate>100% secure services without down payment</mat-label>
+                <span translate>professionals who agree to receive the full payment after completion of the service</span>
+              </section>
+              <mat-slide-toggle style="float: right" color="primary"
+                                formControlName="securePayment"></mat-slide-toggle>
+            </div>
+            <mat-divider [fxShow]="showMore"></mat-divider>
+          </div>
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common"
+               [fxShow]="showMore">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>top rated providers</mat-label>
+              <span translate>display only the providers with the best scores, ie a score higher than 3/5</span>
+            </section>
+            <mat-slide-toggle color="primary" formControlName="topRatedProviders"></mat-slide-toggle>
+          </div>
+
+          <a class="view-more" (click)="showMore=!showMore">
+            <span translate [fxHide]="showMore">view more questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxHide]="showMore">keyboard_arrow_down</mat-icon>
+
+            <span translate [fxShow]="showMore">view less questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxShow]="showMore">keyboard_arrow_up</mat-icon>
+          </a>
+          <mat-divider></mat-divider>
+
+        </div>
+
+        <div fxLayout="column" formGroupName="categories">
+          <mat-label translate style="font-weight: bold">Proposed services</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="photographe">
+              <span translate>photo</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="videaliste">
+              <span translate>video</span>
+            </mat-checkbox>
+          </section>
+        </div>
+        <mat-divider></mat-divider>
+
+      <div fxLayout="column" *ngIf="photographe" formGroupName="photographe_styleDePhoto">
+          <mat-label translate style="font-weight: bold">photography styles</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="traditionnel">
+              <span translate>traditional</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="artistique">
+              <span translate>artistic</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="photojournalisme">
+              <span translate>Photojournalisme</span>
+            </mat-checkbox>
+          </section>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="videaste" formGroupName="videaliste_styleDeVideo">
+          <mat-label translate class="bold">videography styles</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="traditionnel">
+              <span translate>traditional</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="artistique">
+              <span translate>artistic</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="videojournalisme">
+              <span translate>Vidéojournalisme</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="cinematographique">
+              <span translate>cinematographic</span>
+            </mat-checkbox>
+          </section>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+        <div fxLayout="column" *ngIf="photographe" >
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>photo duo</mat-label>
+              <span translate>providers who offers the opportunity to cover the event with two photographers</span>
+            </section>
+            <mat-slide-toggle formControlName="photographe_duoPhoto" color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div fxLayout="column" *ngIf="videaste">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>video duo</mat-label>
+              <span translate>providers who offers the opportunity to cover the event with two videographers</span>
+            </section>
+            <mat-slide-toggle formControlName="videaliste_duoVideo" color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div fxLayout="column" *ngIf="photographe">
+        <mat-label translate style="font-weight: bold">photo services</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="photographe_photomaton">
+              <span translate>photobooth</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="photographe_photocall">
+              <span translate>photocall</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="photographe_seanceEngagement">
+              <span translate>engagement session</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="photographe_seanceBrunchOuDejeuner">
+              <span translate>brunch session the next day</span>
+            </mat-checkbox>
+          </section>
+        <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="photographePhotoServicesMore">
+          <mat-checkbox color="primary" class="checkbox" formControlName="photographe_seanceApresMariage">
+            <span translate>session after the wedding</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="photographe_livraisonHauteResolution">
+            <span translate>delivery of high resolution originals</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="photographe_tiragePapier">
+            <span translate>printed paper</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="photographe_creationAlbum">
+            <span translate>album creation</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="photographe_galeriePrive">
+            <span translate>private gallery online</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="photographe_remise">
+            <span translate>data under DVD or USB key</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="photographe_retouchesPhoto">
+            <span translate>Photo retouching</span>
+          </mat-checkbox>
+        </section>
+        <a class="view-more" (click)="photographePhotoServicesMore=!photographePhotoServicesMore">
+          <span translate [fxHide]="photographePhotoServicesMore">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="photographePhotoServicesMore">keyboard_arrow_down
+          </mat-icon>
+
+          <span translate [fxShow]="photographePhotoServicesMore">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="photographePhotoServicesMore">keyboard_arrow_up
+          </mat-icon>
+        </a>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="videaste">
+        <mat-label translate style="font-weight: bold">video services</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="videaliste_bandeAnnonce">
+              <span translate>creating a trailer</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="videaliste_filmCourt">
+              <span class="text-wrap" translate>realization of a short film (clip)</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="videaliste_filmLong">
+              <span translate>making a long film</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="videaliste_courtMetrage">
+              <span class="text-wrap" translate>realization of a short film (animation)</span>
+            </mat-checkbox>
+          </section>
+        <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="videasteVideoServicesMore">
+          <mat-checkbox color="primary" class="checkbox" formControlName="videaliste_etalonnageVideo">
+            <span translate>video Calibration</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="videaliste_videoAerienne">
+            <span translate>shooting in drone</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="videaliste_livraisonOriginauxHauteResolution">
+            <span class="text-wrap" translate>delivery of high resolution originals</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="videaliste_remisesDVDUSB">
+            <span translate>data under DVD or USB key</span>
+          </mat-checkbox>
+        </section>
+        <a class="view-more" (click)="videasteVideoServicesMore=!videasteVideoServicesMore">
+          <span translate [fxHide]="videasteVideoServicesMore">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="videasteVideoServicesMore">keyboard_arrow_down</mat-icon>
+
+          <span translate [fxShow]="videasteVideoServicesMore">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="videasteVideoServicesMore">keyboard_arrow_up</mat-icon>
+        </a>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div *ngIf="photographe">
+        <div fxLayout="column" formGroupName="photographe_delaisDeLivraisonJours">
+          <mat-label translate style="font-weight: bold">delivery time photos</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="lt30">
+              <span translate>less than 30 days</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="lt45gt30">
+              <span translate>between 30 and 45 Days</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="lt70gt46">
+              <span translate>between 46 and 70 Days</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="gt70">
+              <span translate>more than 70 days</span>
+            </mat-checkbox>
+          </section>
+        </div>
+        <br>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>express delivery photos</mat-label>
+              <span translate>providers who offer the possibility to deliver the photos in 7 to 15 days</span>
+            </section>
+            <mat-slide-toggle color="primary" formControlName="photographe_livraisonExpress"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+
+      <div *ngIf="videaste">
+        <div fxLayout="column" formGroupName="videaliste_delaisDeLivraisonJours">
+          <mat-label translate style="font-weight: bold">delivery times videos</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="lt30">
+              <span translate>less than 30 days</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="lt45gt30">
+              <span translate>between 30 and 45 Days</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="lt70gt46">
+              <span translate>between 46 and 70 Days</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="gt70">
+              <span translate>more than 70 days</span>
+            </mat-checkbox>
+          </section>
+        </div>
+        <br>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>express delivery videos</mat-label>
+              <span translate>providers who offer the possibility to deliver the photos in 7 to 15 days</span>
+            </section>
+            <mat-slide-toggle color="primary" formControlName="videaliste_livraisonExpress"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+
+      </div>
+      </div>
+
+      <div
+        fxFlexAlign.lt-md="center" fxLayout="row wrap"  fxLayout.lt-md="column" fxLayoutAlign="end center" fxLayoutGap="1rem"
+        class="group-btn full">
+          <button class="form-input full" mat-raised-button type="button" (click)="cancelForm()">
+            <span translate>cancel</span>
+          </button>
+          <button class="form-input full"  mat-raised-button type="button" (click)="reset()">
+            <span translate>delete selected filters</span>
+          </button>
+          <button class="form-input full"  mat-raised-button color="primary" type="submit">
+            <span style="color: white" translate>show results</span>
+          </button>
+        </div>
+      </form>
+
+  </div>

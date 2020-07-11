@@ -1,0 +1,29 @@
+<section fxLayout="row" fxLayoutAlign="center center"
+         class="gallery-overlay"
+         (mouseover)="$event.stopPropagation()">
+
+  <button class="close-btn"
+          (click)="closeGallery()"
+          mat-icon-button>
+    <mat-icon>close</mat-icon>
+  </button>
+
+  <main fxLayout="row" fxLayoutAlign="center center">
+    <button class="next-btn"
+            mat-icon-button
+            (click)="next()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+    <div>
+      <img (panleft)="log($event)"
+           (panright)="log($event)"
+           class="image" [src]="data[currentIndex]?.path" alt="image">
+    </div>
+    <button class="prev-btn"
+            mat-icon-button
+            (click)="prev()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+  </main>
+
+</section>

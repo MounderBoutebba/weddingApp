@@ -1,0 +1,140 @@
+<div fxLayout="column" class="margin20U20D">
+    <div *ngIf="companyDescriptionInfo.verifiedProvider" fxLayout fxLayoutAlign="start center">
+        <img src="/assets/icons/svg/qualityColored.svg" class="icon-img">
+        <span style="color:#F17082" translate>Vérifié</span>
+    </div>
+    <div *ngIf="companyDescriptionInfo.languages != null" fxLayout="column" fxLayoutAlign="space-evenly start" class="margin20U20D">
+        <div fxLayout fxLayoutAlign="start center">
+            <img src="/assets/icons/svg/speech-bubble.svg" class="icon-img">
+            <span translate class="bold">Langues</span>
+        </div>
+        <div class="ml-30">
+            <span translate>{{langues}}</span>
+        </div>
+    </div>
+    <mat-divider *ngIf="companyDescriptionInfo.languages != null || companyDescriptionInfo.verifiedProvider" style="height: 2px;margin-top: 1em;margin-bottom: 1em;"></mat-divider>
+    <div *ngIf="companyDescriptionInfo.company.billing" fxLayout="column" fxLayoutAlign="space-evenly" style="height: 9rem;" >
+        <div fxLayout fxLayoutAlign="start center">
+            <img src="/assets/icons/svg/card.svg" class="icon-img">
+            <span translate class="bold">Processus de règlement choisi par le prestataire</span>
+        </div>
+        <div fxLayout="column" class="ml-30">
+            <div fxLayout class="m-3">
+                <span translate fxFlex=40>Paiement bloqué à 100%</span>
+                <span translate fxFlex=50>{{billing.paymentSecure ?  'Oui' : 'Non'}}</span>
+            </div>
+            <div fxLayout class="m-3">
+                <span translate fxFlex=40>Demande déblocage acompte</span>
+                <span translate fxFlex=50>{{billing.depositPayment ?  'Oui' : 'Non'}}</span>
+            </div>
+            <div *ngIf="billing.depositPayment" fxLayout class="m-3">
+                <span translate fxFlex=40>Pourcentage de l'acompte</span>
+                <span translate fxFlex=50>{{billing.depositPercentage}}%</span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="companyDescriptionInfo.company.billing && !billing.paymentSecure"  fxLayout="column" class="margin-top">
+        <div fxLayout fxLayoutAlign="start center">
+            <img src="/assets/icons/svg/term.svg" class="icon-img">
+            <span translate class="bold m-10">Conditions de remboursement de l’acompte par le
+                prestataire</span>
+        </div>
+        <div class="ml-30" fxLayout="column" fxLayoutAlign="space-evenly">
+            <span translate class="bold m-10">En cas d'annulation par le client</span>
+            <div *ngIf="billing.condRefundDepositClient == condRefundDepositType.CONDITIONAL_REFUND" fxLayout="column" fxLayoutGap="5px" class="ml-25 m-10">
+                <span translate>Situations :</span>
+                <div fxLayout>
+                    <span translate fxFlex=80>En cas d'évenement familial grave</span>
+                    <span translate fxFlex>{{billing.condRefundDepositClientCause==condRefundDepositCause.GRIEVOUS_FAMILY_EVENT ? 'Oui' : 'Non'}}</span>
+                </div>
+                <div fxLayout>
+                    <span translate fxFlex=80>Tout évenement empêchant le déroulement du mariage</span>
+                    <span translate fxFlex>{{billing.condRefundDepositClientCause==condRefundDepositCause.EVENT_PREVENTING_UNFOLDING ? 'Oui' : 'Non'}}</span>
+                </div>
+                <div fxLayout>
+                    <span translate fxFlex=80>Selon jugement personnel et bon vouloir du prestataire</span>
+                    <span translate fxFlex>{{billing.condRefundDepositClientCause==condRefundDepositCause.PERSONAL_JUDGMENT ? 'Oui' : 'Non'}}</span>
+                </div>
+            </div>
+            <div fxLayout="column" fxLayoutGap="5px" class="ml-25 m-10">
+                <span translate>Taux de remboursement :</span>
+                <div fxLayout>
+                    <span translate fxFlex=80>Remboursement total</span>
+                    <span translate fxFlex>{{billing.percentageRefundDepositClient == 100 ? 'Oui' : 'Non'}}</span>
+                </div>
+                <div fxLayout>
+                    <span translate fxFlex=80>Remboursement partiel</span>
+                    <span translate fxFlex>{{billing.percentageRefundDepositClient == 100 ?
+                         'Non' : 'Oui(' + billing.percentageRefundDepositClient+'%)'}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="ml-30" fxLayout="column" fxLayoutAlign="space-evenly">
+            <span translate class="bold m-10">En cas d'annulation par le prestataire</span>
+            <div *ngIf="billing.condRefundDepositCompany == condRefundDepositType.CONDITIONAL_REFUND" fxLayout="column" fxLayoutGap="5px" class="ml-25 m-10">
+                <span translate style="margin-bottom: 0.8%;">Situations :</span>
+                <div fxLayout>
+                    <span translate fxFlex=80>En cas d'évenement familial grave</span>
+                    <span translate fxFlex>{{billing.condRefundDepositCompanyCause==condRefundDepositCause.GRIEVOUS_FAMILY_EVENT ? 'Oui' : 'Non'}}</span>
+                </div>
+                <div fxLayout>
+                    <span translate fxFlex=80>Tout évenement empêchant de réaliser la mission</span>
+                    <span translate fxFlex>{{billing.condRefundDepositCompanyCause==condRefundDepositCause.EVENT_PREVENTING_UNFOLDING ? 'Oui' : 'Non'}}</span>
+                </div>
+                <div fxLayout>
+                    <span translate fxFlex=80>Selon jugement personnel et bon vouloir du prestataire</span>
+                    <span translate fxFlex>{{billing.condRefundDepositCompanyCause==condRefundDepositCause.PERSONAL_JUDGMENT ? 'Oui' : 'Non'}}</span>
+                </div>
+            </div>
+            <div fxLayout="column" fxLayoutGap="5px" class="ml-25 m-10">
+                <span translate>Taux de remboursement :</span>
+                <div fxLayout>
+                    <span translate fxFlex=80>Remboursement total</span>
+                    <span translate fxFlex>{{billing.percentageRefundDepositCompany == 100 ? 'Oui' : 'Non'}}</span>
+                </div>
+                <div fxLayout>
+                    <span translate fxFlex=80>Remboursement partiel</span>
+                    <span translate fxFlex>{{billing.percentageRefundDepositCompany == 100 ?
+                        'Non' : 'Oui(' + billing.percentageRefundDepositCompany+'%)'}}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <mat-divider *ngIf="companyDescriptionInfo.company.billing" style="height: 2px;margin-top: 1em;margin-bottom: 1em;"></mat-divider>
+
+    <div [ngSwitch]='searchedCategory'>
+        <app-photographe-videaste-details [searchedCategory]='searchedCategory'
+            [companyDescriptionInfo]='companyDescriptionInfo'
+            *ngSwitchCase='categoryLabelEnum.PHOTOGRAPHE'>
+        </app-photographe-videaste-details>
+        <app-photographe-videaste-details [searchedCategory]='searchedCategory'
+        [companyDescriptionInfo]='companyDescriptionInfo'
+        *ngSwitchCase='categoryLabelEnum.VIDEALISTE'>
+        </app-photographe-videaste-details>
+    </div>
+
+    <div class="margin20U" fxLayout="column" fxLayoutGap="30px">
+        <div fxLayout fxLayoutAlign="start center">
+            <img src="/assets/icons/svg/conversation.svg" class="icon-img">
+            <span translate class="bold">Questions / Réponse</span>
+        </div>
+        <div *ngIf="reponses['question1']" fxLayout="column" fxLayoutGap="10px">
+            <span translate>1. Qu'aimez vous le plus dans votre métier ?</span>
+            <span translate>{{reponses['question1']}}</span>
+        </div>
+        <div *ngIf="reponses['question2']" fxLayout="column" fxLayoutGap="10px">
+            <span translate>2. Combien d'année d'expérience cumulez vous dans ce métier ?</span>
+            <span translate>{{reponses['question2']}}</span>
+        </div>
+        <div *ngIf="reponses['question3']" fxLayout="column" fxLayoutGap="10px">
+            <span translate>3. Quel est le matériels que vous utilisez ?</span>
+            <span translate>{{reponses['question3']}}.</span>
+        </div>
+        <div *ngFor="let opt of dynamiqueQsts ; let i = index" fxLayout="column" fxLayoutGap="10px">
+            <span translate>{{i+4}} . {{opt.label | translate}}</span>
+            <span translate>{{opt.response}}</span>
+        </div>
+    </div>
+
+</div>

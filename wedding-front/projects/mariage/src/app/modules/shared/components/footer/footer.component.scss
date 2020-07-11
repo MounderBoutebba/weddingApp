@@ -1,0 +1,47 @@
+.footer {
+  width: 100%;
+  overflow: hidden;
+  background-color: rgb(255, 169, 182);
+}
+.pt {
+  padding-top: 4.75rem;
+}
+.mb {
+  margin-bottom: 6.5rem;
+}
+.container {
+  text-align: center;
+  width: 90%;
+  margin: auto;
+}
+.column {
+  text-align: left;
+  width: 90%;
+  font-family: Arial;
+  font-size: 14px;
+  color: #484848;
+  h4 {
+    font-size: 17.5px;
+    font-weight: bold;
+  }
+  .nav-list {
+    list-style: none;
+    .li-mb {
+      margin-bottom: 0.2rem;
+    }
+    .li-img-mb {
+      margin-bottom: 1.3125rem;
+    }
+    .li-social-mb {
+      margin-bottom: 0.625rem;
+    }
+    a {
+      color: #484848 !important;
+    }
+  }
+}
+
+.align-middle {
+  vertical-align: middle;
+  margin-right: 11px;
+}

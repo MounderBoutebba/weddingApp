@@ -1,0 +1,56 @@
+<mat-accordion>
+    <mat-expansion-panel [expanded]="panelExpanded" (opened)="panelOpened()" (closed)="panelClosed()" class="mat-expansion-panel-reservation">
+        <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight] = "'50px'"
+        style="padding: 0 16px;" fxLayout fxLayoutAlign="center center">
+           <div fxLayout fxLayoutAlign="space-between" style="width: 95%;font-size: 15px;font-weight: bold;">
+               <span>Total</span> <span>{{prices.total}} €</span>
+           </div>
+        </mat-expansion-panel-header>
+        <mat-list class="devisList">
+            <mat-list-item *ngIf="bookingObj.animateur.dureeMissionAnimateur">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>{{animateurObj.tarif_horaire}}€ x {{bookingObj.animateur.dureeMissionAnimateur}} heures </span>
+                    <span>{{animateurObj.tarif_horaire * bookingObj.animateur.dureeMissionAnimateur * bookingObj.animateur.NombreAnimateurs}} €</span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.animateur.dureeMissionAnimateur" style="position: inherit;"></mat-divider>
+            <mat-divider *ngIf="!!prices.periodeMaj"
+            style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.periodeMaj">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Majoration pèriode</span>
+                    <span>{{prices.periodeMaj}} € </span>
+                </div>
+            </mat-list-item>
+            
+            <mat-divider *ngIf="!!prices.weekEndMaj"
+            style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.weekEndMaj">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Majoration weekend</span>
+                    <span>{{prices.weekEndMaj}} € </span>
+                </div>
+            </mat-list-item>
+            
+            <mat-divider *ngIf="!!prices.animateur.animations" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.animateur.animations">
+                <div fxLayout fxLayoutAlign="space-between" style="width: 100%;font-family: Arial;
+            font-size: 13px;">
+                    <span>Animations proposés</span>
+                    <span>{{prices.animateur.animations}} €</span>
+                </div>
+            </mat-list-item>
+
+
+            <!-- option divers-->
+            <mat-divider  style="position: inherit;" *ngIf="bookingObj?.optionDivers?.length"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.optionDivers?.length">
+                <div fxLayout fxLayoutAlign="space-between" style="width: 100%;font-family: Arial;
+            font-size: 13px;">
+                    <span>Option divers</span>
+                    <span>{{prices.optionDivers}} €</span>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    </mat-expansion-panel>
+</mat-accordion>

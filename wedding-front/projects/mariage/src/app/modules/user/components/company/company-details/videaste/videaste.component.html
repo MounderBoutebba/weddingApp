@@ -1,0 +1,18 @@
+<div class='control-wrapper' fxLayout="row wrap" fxLayoutGap="10%" fxLayoutAlign="flex-start" fxLayoutGap.xs="0" fxLayout.xs="column"
+*ngIf='primaryComponent' style="width: 58%;">
+    <p translate fxFlex='100%'  class='mb-0 title'>{{'advantages'|lowercase|translate|titlecase}}</p>
+    <p translate fxFlex='100%' class='mt-0 sub-title'>{{'indicate the services you offer'|lowercase|translate|titlecase}}</p>
+    <div class='checkbox-wrapper' fxLayout="row wrap" fxLayoutGap="10%" fxFlex='100%'>
+        <mat-checkbox class='checkbox-label' [disabled]='true' [checked]='true' fxFlex='40%'>{{'Videographer'|lowercase|translate|titlecase}}</mat-checkbox>
+        <mat-checkbox class='checkbox-label' [disabled]='true' [checked]='true' fxFlex='40%' *ngIf="isPhotographe">{{'Photograph'|lowercase|translate|titlecase}}</mat-checkbox>
+        <mat-checkbox class='checkbox-label' fxFlex='40%' *ngIf="!isPhotographe" color='primary'
+        (change)='photographIsChecked($event.checked)'>{{'Photograph'|lowercase|translate|titlecase}}</mat-checkbox>
+    </div>
+</div>
+<app-dynamic-form-builder [fields]="parsedCriteres" (addOption)='onAddOption($event)' *ngIf="showForm" #formBuilder></app-dynamic-form-builder>
+<h2 *ngIf="showPhotographComponent" style="font-size: 18.5px !important;">{{'Photograph'|lowercase|translate|titlecase}}</h2>
+<app-photographe *ngIf="showPhotographComponent" [criteres]="photographInitCriteres"
+[primaryComponent]='false' #photographComponent></app-photographe>
+<button type='button' mat-flat-button color='primary'
+class='submit-btn' [disabled]='!formBuilder.form.valid' (click)='formSubmitted()' *ngIf="showSubmitBtn" [ngClass]="{'hidden': !primaryComponent}">
+{{'Next' | lowercase | translate | titlecase}}</button>

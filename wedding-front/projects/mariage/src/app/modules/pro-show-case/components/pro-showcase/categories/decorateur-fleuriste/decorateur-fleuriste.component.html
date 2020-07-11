@@ -1,0 +1,449 @@
+<form class="formTexture">
+  <div class="mrTop10">
+    <span class="accent-title" translate>Services proposés</span>
+  </div>
+  <div class="prestationContainerBig" fxLayout fxLayoutAlign="space-between">
+    <div *ngIf="isDecorateur" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+      <div>
+        <mat-checkbox color="primary" translate [checked]='decorateurIsChecked'
+          (change)='initBookingObject($event.checked, fleuristIsChecked)'><span class="checkbox">Decorateur</span>
+        </mat-checkbox>
+      </div>
+      <div *ngIf="decorateurIsChecked" fxLayout="row" fxLayoutAlign="space-between center">
+        <div>
+          <span translate>Durée de la mission</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab
+            (click)='numberInputChangeValue("decorateur","decrement", "dureeMissionDecorateur", 1, 1)'
+            class='margin-right number-control-btn number-control-btn-remove margin-left'
+            [disabled]='!decorateurIsChecked'>
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.decorateur.dureeMissionDecorateur}}h </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+            (click)='numberInputChangeValue("decorateur","increment", "dureeMissionDecorateur", 1)'
+            [disabled]='!decorateurIsChecked'>
+            <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+        </div>
+
+      </div>
+    </div>
+    <div *ngIf="isFleurist" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+      <div>
+        <mat-checkbox color="primary" translate [checked]='fleuristIsChecked'
+          (change)='initBookingObject(decorateurIsChecked, $event.checked)'> <span class="checkbox">Fleuriste</span>
+        </mat-checkbox>
+      </div>
+      <div  *ngIf="fleuristIsChecked" fxLayout="row" fxLayoutAlign="space-between center">
+        <div>
+          <span translate>Durée de la mission</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab (click)='numberInputChangeValue("fleurist","decrement", "dureeMissionFleurist", 1, 1)'
+            class='margin-right number-control-btn number-control-btn-remove margin-left'
+            [disabled]='!fleuristIsChecked'>
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.fleurist.dureeMissionFleurist}}h </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+            (click)='numberInputChangeValue("fleurist","increment", "dureeMissionFleurist", 1)'
+            [disabled]='!fleuristIsChecked'>
+            <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-divider class="matdividerForcedHeight"></mat-divider>
+  
+  <!-- decorateur -->
+  
+  <!-- decorateur title -->
+  <div *ngIf="isDecorateur && decorateurIsChecked" fxLayout fxLayoutAlign="space-between center" class="divided-title">
+    <div class="half-divider"></div> <span  class="metierTitle">Decorateur </span>
+    <div class="half-divider"></div>
+  </div>
+
+ <!-- conseil -->
+
+ <div *ngIf="isDecorateur && decorateurIsChecked && companyDescriptionInfo?.criteres?.decorateur_conseilPersonalises" class="margin10U30D">
+  <span class="accent-title" translate>
+    Conseils/Essais
+  </span>
+ </div>
+
+ <div *ngIf=" isDecorateur && decorateurIsChecked && companyDescriptionInfo?.criteres?.decorateur_conseilPersonalises"
+   class="inline-container-4 margin-bottom">
+   <div>
+     <span translate
+       class="boldText">{{'Rendez-vous conseils' | lowercase | translate | capitalizeFirstLetter}}</span>
+     <br>
+     <span translate
+       class="greyText">{{'Obtenir le service de conseils personnalisés' | lowercase | translate | capitalizeFirstLetter}}</span>
+   </div>
+   <mat-slide-toggle color="primary" [checked]='bookingObject?.decorateur?.conseilsPersonnalises'
+     (change)='toggleChange("decorateur","conseilsPersonnalises", $event.checked)'></mat-slide-toggle>
+ </div>
+ <mat-divider *ngIf="isDecorateur && decorateurIsChecked && companyDescriptionInfo?.criteres?.decorateur_conseilPersonalises"
+   class="matdividerForcedHeight"></mat-divider>
+ <!-- fin conseil -->
+
+
+<!-- decorations -->
+<div *ngIf="isDecorateur && decorateurIsChecked">
+  <div *ngIf="!!decorationsAssocies?.length" class="margin40T">
+    <span class="accent-title" translate>Decorations proposés</span>
+  </div>
+  <div *ngFor="let decoration of decorationsAssocies;let i = index;let lastDecoration = last" class="margin10U10D">
+    <div *ngIf="i<=1 || showmoreDecorations" class="inline-container-4 margin30UD0LR">
+      <div>
+        <span translate class="boldText">{{decoration.name | lowercase | translate | capitalizeFirstLetter}}</span>
+        <br />
+        <span translate class="greyText">Obtenir ce service
+        </span>
+      </div>
+      <mat-slide-toggle color="primary" [checked]='decoration.checked' (change)='toggleChangeDecoration($event.checked,i)'>
+      </mat-slide-toggle>
+    </div>
+    <button mat-button color='primary' class="padding0" *ngIf="!showmoreDecorations && i==1 && decorationsAssocies.length > 1"
+      (click)="showmoreDecorations = true" ng-reflect-color="primary">
+      <span translate class="bold18">Afficher plus de decorations</span>
+      <mat-icon color='primary' class="margin10L">keyboard_arrow_down</mat-icon>
+    </button>
+    <button mat-button color='primary' class="padding0" *ngIf="showmoreDecorations && i>1 && lastDecoration"
+      (click)="showmoreDecorations = false" ng-reflect-color="primary">
+      <span translate class="bold18">Afficher moins de decorations</span>
+      <mat-icon color='primary' class="margin10L">keyboard_arrow_up</mat-icon>
+    </button>
+    <mat-divider *ngIf="i <= 1 || showmoreDecorations" class="margin1rem"></mat-divider>
+  </div>
+</div>
+
+<!--fin Decorations -->
+
+<!-- servicesassocies -->
+<div *ngIf="isDecorateur && decorateurIsChecked && (companyDescriptionInfo.criteres.decorateur_montageDemontage || companyDescriptionInfo.criteres.decorateur_livraisonDuMateriel)" class="margin40T">
+  <span class="accent-title" translate>Services associés</span>
+</div>
+
+<div *ngIf="isDecorateur && decorateurIsChecked && companyDescriptionInfo.criteres.decorateur_livraisonDuMateriel" class="inline-container-4 margin30UD0LR">
+  <div>
+    <span translate class="boldText">Livraison du matériel</span>
+    <br />
+    <span translate class="greyText">Obtenir ce service</span>
+  </div>
+  <mat-slide-toggle color="primary" [checked]='bookingObject.decorateur.livraisonDuMateriel'
+    (change)='toggleChange("decorateur","livraisonDuMateriel",$event.checked)'>
+  </mat-slide-toggle>
+</div>
+<mat-divider *ngIf="isDecorateur && decorateurIsChecked && companyDescriptionInfo.criteres.decorateur_livraisonDuMateriel" class="margin1rem"></mat-divider>
+
+<div *ngIf="isDecorateur && decorateurIsChecked && companyDescriptionInfo.criteres.decorateur_montageDemontage" class="inline-container-4 margin30UD0LR">
+  <div>
+    <span translate class="boldText">Montage/Démontage</span>
+    <br />
+    <span translate class="greyText">Obtenir ce service</span>
+  </div>
+  <mat-slide-toggle color="primary" [checked]='bookingObject.decorateur.montageDemontage'
+    (change)='toggleChange("decorateur","montageDemontage",$event.checked)'>
+  </mat-slide-toggle>
+</div>
+<mat-divider *ngIf="isDecorateur && decorateurIsChecked && companyDescriptionInfo.criteres.decorateur_montageDemontage" class="margin1rem"></mat-divider>
+<!--fin servicesassocies -->
+<!-- fin decorateur -->
+
+
+  <!-- fleuriste -->
+  
+  <!-- fleuriste title -->
+  <div *ngIf="isFleurist && fleuristIsChecked" fxLayout fxLayoutAlign="space-between center" class="divided-title">
+    <div class="half-divider"></div> <span  class="metierTitle">Fleuriste </span>
+    <div class="half-divider"></div>
+  </div>
+
+  <!-- Compositions florales -->
+  <div *ngIf="isFleurist && fleuristIsChecked && (companyDescriptionInfo.criteres.fleuriste_decoration?.value || companyDescriptionInfo.criteres.fleuriste_feuillages?.value || companyDescriptionInfo.criteres.fleuriste_fleurs?.value)" class="margin40T">
+    <span class="accent-title" translate>Compositions florales</span>
+  </div>
+  
+    <!-- fleurs -->
+    <div *ngIf="isFleurist && fleuristIsChecked && companyDescriptionInfo?.criteres?.fleuriste_fleurs.value"
+      fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div class="margin40T">
+        <span class="light-title" translate>
+          Fleurs
+        </span>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex=100>
+        <div class="margin1rem" fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxFlex=100>
+          <div *ngFor="let fleur of fleursList;let i=index;let last= last" fxFlex=48>
+            <div *ngIf='i<4 || showmoreFleurs' class="padding10U10D margin10U10D">
+              <mat-checkbox color="primary" translate
+                (change)='checkBoxChangeList("fleurist","fleurs", fleur.name,$event.checked)'>
+                <span class="checkbox"> {{fleur.name}}</span> </mat-checkbox>
+            </div>
+            <div *ngIf='i<4 || showmoreFleurs' class="padding10U10D margin10U10D" fxLayout="row" fxLayoutAlign="space-between center">
+              <div>
+                <span translate class="greyText15">Quantité</span>
+              </div>
+              <div fxLayout fxLayoutAlign="center center">
+                <button
+                  (click)='numberInputChangeValueComplexeObjects("fleurist","decrement","fleurs", fleur.name,1 ,1)'
+                  mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+                  [disabled]='!getFleur("fleurist", fleur.name)?.checked'>
+                  <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                </button>
+                <span matSuffix> {{getFleur("fleurist", fleur.name)?.quantity || 1}} </span>
+                <button (click)='numberInputChangeValueComplexeObjects("fleurist","increment","fleurs", fleur.name, 1)'
+                  mat-mini-fab class='margin-left number-control-btn'
+                  [disabled]='!getFleur("fleurist", fleur.name)?.checked'>
+                  <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                </button>
+              </div>
+            </div>
+            <div>
+              <button mat-button color='primary' class="padding0"
+              *ngIf="!showmoreFleurs && i==4 && fleursList.length > 4"
+              (click)="showmoreFleurs = true" ng-reflect-color="primary">
+              <span translate class="bold18">Afficher plus de fleurs</span>
+              <mat-icon color='primary' class="margin10L">keyboard_arrow_down</mat-icon>
+            </button>
+            <button mat-button color='primary' class="padding0" *ngIf="showmoreFleurs && i>4 && last"
+              (click)="showmoreFleurs = false" ng-reflect-color="primary">
+              <span translate class="bold18">Afficher moins de fleurs</span>
+              <mat-icon color='primary' class="margin10L">keyboard_arrow_up</mat-icon>
+            </button>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <mat-divider class="matdividerForcedHeight" style="width: 100% !important;"></mat-divider>
+    </div>
+    <!-- fin fleurs -->
+   
+   <!-- feuillage -->
+   <div *ngIf="isFleurist && fleuristIsChecked && companyDescriptionInfo?.criteres?.fleuriste_decoration.value"
+     fxLayout="row wrap" fxLayoutAlign="start stretch">
+     <div class="margin40T">
+       <span class="light-title" translate>
+        Feuillages
+       </span>
+     </div>
+     <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex=100>
+       <div class="margin1rem" fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxFlex=100>
+         <div *ngFor="let feuillage of feuillagesList;let i=index;let last= last" fxFlex=48>
+           <div *ngIf='i<4 || showmoreFeuillages' class="padding10U10D margin10U10D">
+             <mat-checkbox color="primary" translate
+               (change)='checkBoxChangeList("fleurist","feuillages", feuillage.name,$event.checked)'>
+               <span class="checkbox"> {{feuillage.name}}</span> </mat-checkbox>
+           </div>
+           <div *ngIf='i<4 || showmoreFeuillages' class="padding10U10D margin10U10D" fxLayout="row"
+             fxLayoutAlign="space-between center">
+             <div>
+               <span translate class="greyText15">Quantité</span>
+             </div>
+             <div fxLayout fxLayoutAlign="center center">
+               <button
+                 (click)='numberInputChangeValueComplexeObjects("fleurist","decrement","feuillages", feuillage.name,1 ,1)'
+                 mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+                 [disabled]='!getFeuillage("fleurist", feuillage.name)?.checked'>
+                 <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+               </button>
+               <span matSuffix> {{getFeuillage("fleurist", feuillage.name)?.quantity || 1}} </span>
+               <button
+                 (click)='numberInputChangeValueComplexeObjects("fleurist","increment","feuillages", feuillage.name, 1)'
+                 mat-mini-fab class='margin-left number-control-btn'
+                 [disabled]='!getFeuillage("fleurist", feuillage.name)?.checked'>
+                 <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+               </button>
+             </div>
+           </div>
+           <div>
+             <button mat-button color='primary' class="padding0"
+               *ngIf="!showmoreFeuillages && i==4 && feuillagesList.length > 4" (click)="showmoreFeuillages = true"
+               ng-reflect-color="primary">
+               <span translate class="bold18">Afficher plus de feuillages</span>
+               <mat-icon color='primary' class="margin10L">keyboard_arrow_down</mat-icon>
+             </button>
+             <button mat-button color='primary' class="padding0" *ngIf="showmoreFeuillages && i>4 && last"
+               (click)="showmoreFeuillages = false" ng-reflect-color="primary">
+               <span translate class="bold18">Afficher moins de feuillages</span>
+               <mat-icon color='primary' class="margin10L">keyboard_arrow_up</mat-icon>
+             </button>
+           </div>
+         </div>
+       </div>
+
+
+     </div>
+     <mat-divider class="matdividerForcedHeight" style="width: 100% !important;"></mat-divider>
+   </div>
+   <!-- fin feuillages -->
+
+
+  <!-- decoration -->
+  <div *ngIf="isFleurist && fleuristIsChecked && companyDescriptionInfo?.criteres?.fleuriste_decoration.value"
+    fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div class="margin40T">
+      <span class="light-title" translate>
+        Décorations
+      </span>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex=100>
+      <div class="margin1rem" fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxFlex=100>
+        <div *ngFor="let decoration of decorationsList;let i=index;let last= last" fxFlex=48>
+          <div *ngIf='i<4 || showmoreDecorations' class="padding10U10D margin10U10D">
+            <mat-checkbox color="primary" translate
+              (change)='checkBoxChangeList("fleurist","decorations", decoration.name,$event.checked)'>
+              <span class="checkbox"> {{decoration.name}}</span> </mat-checkbox>
+          </div>
+          <div *ngIf='i<4 || showmoreDecorations' class="padding10U10D margin10U10D" fxLayout="row"
+            fxLayoutAlign="space-between center">
+            <div>
+              <span translate class="greyText15">Quantité</span>
+            </div>
+            <div fxLayout fxLayoutAlign="center center">
+              <button
+                (click)='numberInputChangeValueComplexeObjects("fleurist","decrement","decorations", decoration.name,1 ,1)'
+                mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+                [disabled]='!getDecoration("fleurist", decoration.name)?.checked'>
+                <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+              </button>
+              <span matSuffix> {{getDecoration("fleurist", decoration.name)?.quantity || 1}} </span>
+              <button
+                (click)='numberInputChangeValueComplexeObjects("fleurist","increment","decorations", decoration.name, 1)'
+                mat-mini-fab class='margin-left number-control-btn'
+                [disabled]='!getDecoration("fleurist", decoration.name)?.checked'>
+                <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div>
+            <button mat-button color='primary' class="padding0"
+              *ngIf="!showmoreDecorations && i==4 && decorationsList.length > 4" (click)="showmoreDecorations = true"
+              ng-reflect-color="primary">
+              <span translate class="bold18">Afficher plus de decorations</span>
+              <mat-icon color='primary' class="margin10L">keyboard_arrow_down</mat-icon>
+            </button>
+            <button mat-button color='primary' class="padding0" *ngIf="showmoreDecorations && i>4 && last"
+              (click)="showmoreDecorations = false" ng-reflect-color="primary">
+              <span translate class="bold18">Afficher moins de decorations</span>
+              <mat-icon color='primary' class="margin10L">keyboard_arrow_up</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <mat-divider class="matdividerForcedHeight" style="width: 100% !important;"></mat-divider>
+  </div>
+  <!-- fin decorations -->
+  <!--fin Compositions florales -->
+ 
+  <!-- servicesassocies -->
+  <div *ngIf="isFleurist && fleuristIsChecked &&  companyDescriptionInfo.criteres.fleuriste_livraison"
+    class="margin40T">
+    <span class="accent-title" translate>Services associés</span>
+  </div>
+  <div *ngIf="isFleurist && fleuristIsChecked && companyDescriptionInfo.criteres.fleuriste_livraison"
+    class="inline-container-4 margin30UD0LR">
+    <div>
+      <span translate class="boldText">Livraison</span>
+      <br />
+      <span translate class="greyText">Obtenir ce service</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.fleurist.livraison'
+      (change)='toggleChange("fleurist","livraison",$event.checked)'>
+    </mat-slide-toggle>
+  </div>
+  <mat-divider
+    *ngIf="isFleurist && fleuristIsChecked && companyDescriptionInfo.criteres.fleuriste_livraison"
+    class="margin1rem"></mat-divider>
+
+  <!--fin servicesassocies -->
+
+  <!--fin fleuriste -->
+
+  <!-- options divers -->
+  <div *ngIf="optionDivers?.length && (decorateurIsChecked || fleuristIsChecked)" class="margin40U40D">
+    <span class="accent-title" translate>Option Divers</span>
+  </div>
+  <div *ngIf="optionDivers?.length" fxLayout="column" fxLayoutAlign="space-around">
+    <div *ngFor="let opt of optionDivers ; let i = index">
+      <div *ngIf="isDecorateur && decorateurIsChecked && optionContainCategory(opt.id, 'decorateur')">
+        <div class="inline-container-4" class="margin30D margin20U" fxLayout fxLayoutAlign="space-between center">
+          <div>
+            <span translate class="boldText">{{opt.name}}</span>
+            <br>
+            <span translate class="lightGreyText">{{opt.feeType}}</span>
+            <br>
+            <span translate class="greyText">{{opt.description}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='optionDivers[i].checked'
+            (change)='toggleChangeOptionDivers($event.checked, opt)'>
+          </mat-slide-toggle>
+        </div>
+
+        <div *ngIf="opt.feeType === feeType.UNIT_FEE && optionDivers[i].checked" fxLayout="row"
+          fxLayoutAlign="space-between center">
+          <div fxFlexOffset=53>
+            <span translate>Exemplaires</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+              (click)='numberInputChangeOptionDivers("decrement", 1, opt, 1)'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{opt.examplaire}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeOptionDivers("increment", 1, opt)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="isFleurist && fleuristIsChecked && optionContainCategory(opt.id, 'fleurist')
+      && !(isDecorateur && decorateurIsChecked && optionContainCategory(opt.id, 'decorateur'))">
+        <div class="inline-container-4" class="margin30D margin20U" fxLayout fxLayoutAlign="space-between center">
+          <div>
+            <span translate class="boldText">{{opt.name}}</span>
+            <br>
+            <span translate class="lightGreyText">{{opt.feeType}}</span>
+            <br>
+            <span translate class="greyText">{{opt.description}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='optionDivers[i].checked'
+            (change)='toggleChangeOptionDivers($event.checked, opt)'>
+          </mat-slide-toggle>
+        </div>
+
+        <div *ngIf="opt.feeType === feeType.UNIT_FEE && optionDivers[i].checked" fxLayout="row"
+          fxLayoutAlign="space-between center">
+          <div fxFlexOffset=53>
+            <span translate>Exemplaires</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+              (click)='numberInputChangeOptionDivers("decrement", 1, opt, 1)'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{opt.examplaire}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeOptionDivers("increment", 1, opt)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <mat-divider *ngIf="companyDescriptionInfo?.company?.options?.length" class="margin-bottom" class="margin20T">
+  </mat-divider>
+  <!-- end options divers-->
+</form>

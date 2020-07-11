@@ -1,0 +1,5 @@
+<app-dynamic-form-builder [fields]="parsedCriteres" (addOption)='onAddOption($event)' (checkBoxChange)='checkBoxChangesAreChecked()'
+*ngIf="showForm" #formBuilder></app-dynamic-form-builder>
+<button type='button' mat-flat-button color='primary'
+class='submit-btn' [disabled]='!formBuilder.form.valid || !checkBoxIsRequired' (click)='formSubmitted()' *ngIf="showSubmitBtn">
+{{'Next' | lowercase | translate | titlecase}}</button>

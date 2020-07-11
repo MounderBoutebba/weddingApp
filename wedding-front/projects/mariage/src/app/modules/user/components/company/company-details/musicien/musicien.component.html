@@ -1,0 +1,10 @@
+<app-dynamic-form-builder [fields]="parsedCriteres" (addOption)='onAddOption($event)' *ngIf="showForm" #formBuilder></app-dynamic-form-builder>
+<h2 *ngIf="showDjComponent">{{'dj'|lowercase|translate|titlecase}}</h2>
+<app-dj *ngIf="showDjComponent" [criteres]="DjInitCriteres"
+[primaryComponent]='false' #djComponent></app-dj>
+<h2 *ngIf="showGroupeComponent">{{'band'|lowercase|translate|titlecase}}</h2>
+<app-groupe *ngIf="showGroupeComponent" [criteres]="groupeInitCriteres"
+[primaryComponent]='false' #groupeComponent></app-groupe>
+<button type='button' mat-flat-button color='primary'
+class='submit-btn' [disabled]='!formBuilder.form.valid' (click)='formSubmitted()' *ngIf="showSubmitBtn" [ngClass]="{'hidden': !primaryComponent}">
+{{'Next' | lowercase | translate | titlecase}}</button>

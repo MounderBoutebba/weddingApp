@@ -1,0 +1,16 @@
+<div fxLayout='column' class="section2">
+    <div fxLayout='column' fxLayoutAlign='center center' class="mb-sec2">
+        <div *ngIf="!isBecomePartner" class="main-title">{{title}}</div>
+        <div *ngIf="isBecomePartner" class="main-title" style="width: 30.875rem">{{title}}</div>
+    </div>
+    <div fxLayout='row wrap' fxLayout.lt-md='column' fxLayoutAlign.lt-md='center center'
+    fxLayoutGap='4.8125rem' fxLayoutGap.lt-md='0rem' class="pl-sec2">
+        <div fxFlex='21.875rem' fxLayout='column' fxLayoutAlign='center center' *ngFor="let column of columns" class="column">
+            <img [src]="column.icon" alt="icon" class="column-icon-pink">
+            <div class="column-title">{{column.title}}</div>
+            <div class="column-text1">{{column.text1}}</div>
+            <div *ngIf="!isBecomePartner" class="column-text1">{{column.text2}}</div>
+            <div *ngIf="isBecomePartner" class="column-text2">{{column.text2}}</div>
+        </div>
+    </div>
+</div>

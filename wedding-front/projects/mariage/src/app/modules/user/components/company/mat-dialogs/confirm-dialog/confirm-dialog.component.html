@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>{{description |translate}}</h2>
+<mat-dialog-content >
+    <span translate>You didn't finish yet. Do you want to exit without saving ?</span>
+</mat-dialog-content>
+<br>
+<mat-dialog-actions fxLayoutAlign="center center" fxLayout="row wrap">
+          <button mat-raised-button
+            (click)="cancel()">
+            {{'Stay on this page' | translate}}
+          </button>
+
+          <button mat-raised-button color="primary" type='submit' style="color:#fff;" (click)='save()'>
+                  {{'Exit this page' | translate}}
+          </button>
+</mat-dialog-actions>
+<br>

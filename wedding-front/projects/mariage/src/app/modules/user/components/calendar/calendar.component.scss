@@ -1,0 +1,163 @@
+:host {
+
+  ::ng-deep {
+    .md-drppicker.shown {
+      width: max-content !important;
+      @media screen and (max-width: 599px) {
+          width: calc(100vw - 50px) !important;
+          height: calc(100vh - 300px) !important;
+      }
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-wrapper{
+      margin: unset!important;
+    }
+
+    .mat-form-field-wrapper{
+     padding-bottom: unset!important;
+    }
+
+  }
+
+  mat-label {
+    margin-bottom: 0.9rem !important;
+  }
+
+  .w100-lt-md{
+    @media screen and (max-width: 960px) {
+      width: 100%;
+    }
+  }
+
+  .main-title {
+    font-weight: 500;
+    font-size: 18.5px;
+    margin-top: 2rem;
+  }
+
+  .container {
+    width: 97%;
+    margin: auto;
+    min-height: 150vh;
+
+    @media screen and (max-width: 959px) {
+      width: 98%;
+      margin: auto;
+    }
+  }
+
+  .save-btn {
+    height: 100%;
+    color: #ffffff;
+    @media screen and (max-width: 960px) {
+      height: auto;
+    }
+  }
+
+  .title {
+    font-size: 15px;
+    color: #000000;
+    margin-bottom: 0.6rem !important;
+  }
+  .title-table {
+    font-size: 15px;
+    color: #000000;
+    margin-bottom: 0.6rem !important;
+  }
+
+  .sub-text {
+    font-size: 15px !important;
+    color: #848484;
+  }
+
+  .sub-text-table {
+    font-size: 15px !important;
+    color: #484848;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+
+  .action-btn{
+    padding: 0.3rem 1rem;
+    max-width: unset;
+  }
+
+  .title-card{
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 2rem !important;
+  }
+
+  .list-title{
+    font-weight: bold;
+  }
+
+  .loading-text {
+    animation: loading infinite .900s alternate;
+  }
+
+  @keyframes loading {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  .indispos-container{
+    width: 75%;
+    @media screen and (max-width: 960px) {
+      width: 100%;
+    }
+  }
+
+  .indispo-container{
+    width: 100%;
+    background-color: #f7f7f7;
+    padding: 0.5rem 1.5rem;
+    border-radius: 7px;
+  }
+
+  .delete-btn{
+    background-color: #f7f7f7;
+    height: 100%;
+    border-radius: 7px;
+    @media screen and (max-width: 960px){
+      width: 100%;
+      height: auto;
+      background-color: var(--primary-color);
+      color: white;
+    }
+  }
+
+  .delete-btn-container{
+    @media screen and (max-width: 960px){
+      width: 100%;
+    }
+  }
+
+  .input-img {
+    transform: translateY(5px);
+    width: 24px;
+    height: 24px;
+  }
+
+  .date-range {
+    height: 3.5rem;
+    width: 21rem;
+    @media screen and (max-width: 960px) {
+      width: 100%;
+    }
+  }
+
+  button{
+    @media screen and (max-width: 960px){
+      height: 3rem!important;
+    }
+  }
+
+}

@@ -1,0 +1,237 @@
+<div style="width: 95%;margin: auto">
+
+  <form [formGroup]="filterForm" (ngSubmit)="submit()" enctype="multipart/form-data">
+    <div
+      fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly"
+      class="btn-container" [ngClass.lt-md]="{'btn-container--hidden-search-bar':hiddenSearchbar}">
+
+      <div fxLayout="column">
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>verified providers</mat-label>
+              <span translate>a selection of providers verified according to quality criteria</span>
+            </section>
+            <mat-slide-toggle style="float: right" color="primary"
+                              formControlName="verifiedProvider"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>100% secure services without down payment</mat-label>
+              <span translate>professionals who agree to receive the full payment after completion of the service</span>
+            </section>
+            <mat-slide-toggle style="float: right" color="primary"
+                              formControlName="securePayment"></mat-slide-toggle>
+          </div>
+          <mat-divider [fxShow]="showMore"></mat-divider>
+        </div>
+        <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common"
+             [fxShow]="showMore">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>top rated providers</mat-label>
+            <span translate>display only the providers with the best scores, ie a score higher than 3/5</span>
+          </section>
+          <mat-slide-toggle color="primary" formControlName="topRatedProviders"></mat-slide-toggle>
+        </div>
+
+        <a class="view-more" (click)="showMore=!showMore">
+          <span translate [fxHide]="showMore">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="showMore">keyboard_arrow_down</mat-icon>
+
+          <span translate [fxShow]="showMore">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="showMore">keyboard_arrow_up</mat-icon>
+        </a>
+        <mat-divider></mat-divider>
+
+      </div>
+
+      <mat-label class="capitalize" translate style="font-weight: bold">accommodation</mat-label>
+      <br>
+
+      <div fxLayout="column" formGroupName="hebergement_typeHebergement">
+        <mat-label class="capitalize" translate style="font-weight: bold">accommodation's type</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="hotel">
+            <span class="capitalize" translate>hotel</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="chambre_hotel">
+            <span class="capitalize" translate>hotel room</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="camping">
+            <span class="capitalize" translate>camping</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="appartement_Maison">
+            <span class="capitalize" translate>apartment / house</span>
+          </mat-checkbox>
+        </section>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column"  formGroupName="hebergement_nombreDeChambre">
+        <mat-label class="capitalize" translate style="font-weight: bold">accommodation capacity</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="lte5gt1">
+            <span class="capitalize" translate>1 to 5</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lte10gt5">
+            <span class="capitalize" translate>6 to 10</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lte20gt10">
+            <span class="capitalize" translate>11 to 20</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="gt20">
+            <span class="capitalize" translate>more than 20</span>
+          </mat-checkbox>
+        </section>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+
+      <div fxLayout="column"  formGroupName="hebergement_equipements">
+        <mat-label class="capitalize" translate style="font-weight: bold">equipment</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="chauffage">
+            <span class="capitalize" translate>heater</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="cuisine">
+            <span class="capitalize" translate>Cuisine</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="climatisation">
+            <span class="capitalize" translate>air conditioner</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="television">
+            <span class="capitalize" translate>television</span>
+          </mat-checkbox>
+        </section>
+        <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="hebergementEquipementsMore">
+          <mat-checkbox color="primary" class="checkbox" formControlName="salle_deau">
+            <span translate>Salle d'eau</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="wc">
+            <span translate>WC</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="piscine">
+            <span translate>Piscine</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="fer_a_repasser">
+            <span translate>Fer à repasser</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="acces_handicapes">
+            <span translate>Accès Handicapés</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="bar_lounge">
+            <span translate>Bar/lounge</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="casino_et_jeux_dargent">
+            <span translate>Casino et jeux d'argent</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="salle_de_sport">
+            <span translate>Salle de sport</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="kitchenette">
+            <span translate>Kitchenette</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="restaurant">
+            <span translate>Restaurant</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="parking">
+            <span translate>Parking</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="sauna">
+            <span translate>Sauna</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="spa">
+            <span translate>Spa</span>
+          </mat-checkbox>
+        </section>
+        <a class="view-more" (click)="hebergementEquipementsMore=!hebergementEquipementsMore">
+          <span translate [fxHide]="hebergementEquipementsMore">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="hebergementEquipementsMore">keyboard_arrow_down</mat-icon>
+
+          <span translate [fxShow]="hebergementEquipementsMore">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="hebergementEquipementsMore">keyboard_arrow_up</mat-icon>
+        </a>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column"  formGroupName="hebergement_services">
+        <mat-label class="capitalize" translate style="font-weight: bold">services</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="breakfast">
+            <span class="capitalize" translate>breakfast</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lunch">
+            <span class="capitalize" translate>lunch</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="dinner">
+            <span class="capitalize" translate>dinner</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="room_service">
+            <span class="capitalize" translate>room_service</span>
+          </mat-checkbox>
+        </section>
+        <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="hebergementServicesMore">
+          <mat-checkbox color="primary" class="checkbox" formControlName="parking">
+            <span class="capitalize" translate>parking</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="wifi">
+            <span class="capitalize" translate>wifi</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="bus_service">
+            <span class="capitalize" translate>bus service</span>
+          </mat-checkbox>
+        </section>
+        <a class="view-more" (click)="hebergementServicesMore=!hebergementServicesMore">
+          <span translate [fxHide]="hebergementServicesMore">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="hebergementServicesMore">keyboard_arrow_down
+          </mat-icon>
+
+          <span translate [fxShow]="hebergementServicesMore">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="hebergementServicesMore">keyboard_arrow_up
+          </mat-icon>
+        </a>
+
+        <mat-divider></mat-divider>
+      </div>
+
+
+
+
+
+
+    </div>
+
+    <div
+      fxFlexAlign.lt-md="center" fxLayout="row wrap"  fxLayout.lt-md="column" fxLayoutAlign="end center" fxLayoutGap="1rem"
+      class="group-btn full">
+      <button class="form-input full" mat-raised-button type="button" (click)="cancelForm()">
+        <span class="capitalize" translate>cancel</span>
+      </button>
+      <button class="form-input full"  mat-raised-button type="button" (click)="reset()">
+        <span class="capitalize" translate>delete selected filters</span>
+      </button>
+
+      <button class="form-input full"  mat-raised-button color="primary" type="submit">
+        <span class="capitalize" style="color: white" translate>show results</span>
+      </button>
+    </div>
+  </form>
+
+</div>

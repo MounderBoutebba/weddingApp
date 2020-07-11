@@ -1,0 +1,167 @@
+<mat-drawer-container style="width: 99vw; min-height:100vh;font-size: 15px">
+    <mat-drawer [fxHide.lt-md]="true" mode="side" opened class="drawer mat-elevation-z0" style="width: 17.063rem;">
+
+        <div *ngIf="((auth$|async)?.user) as user" class="drawer-fixed">
+            <br>
+            <div style="height:120px;margin-top: 2.625rem;margin-bottom: calc(2.25rem - 8px)" fxLayoutAlign="center center" fxLayout="column" *ngIf="(currentUser|async) as apiUser">
+
+              <img style="object-fit: cover;width: 5.75rem;height:5.75rem;border-radius: 50%" *ngIf="!!apiUser.photo"
+                   [alt]="apiUser.firstname+' '+apiUser.lastname" [src]="apiUser.photo" mat-card-sm-image
+                   mat-card-avatar>
+              <img style="object-fit: cover;width: 5.75rem;height: 5.75rem; border-radius: 50%" *ngIf="!apiUser.photo"
+                   [alt]="user.given_name" [src]="user.picture" mat-card-sm-image mat-card-avatar>
+                <br>
+              <span class="text-bold" *ngIf="!!apiUser.firstname">{{apiUser.firstname}}</span>&nbsp;
+                <span class="text-bold" *ngIf="!apiUser.firstname">{{user.given_name}}</span>&nbsp;
+                <br>
+            </div>
+
+            <a class="text-bold" [routerLink]="['/user',user.email,'edit','company']" mat-list-item routerLinkActive="active">
+            </a>
+
+            <mat-nav-list style="padding-top: 0!important;" class="text-bold">
+                <mat-expansion-panel *ngIf="user.role === 'client'" mat-list-item hideToggle class="mat-elevation-z0 opened">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title fxLayoutGap="1rem">
+                            <img width="20px" src="/assets/icons/svg/user.svg" fxFlexAlign="start">
+                            <span fxFlexAlign="end" class="text-bold" translate>profile</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div>
+                        <mat-nav-list style="height: 90%;padding-top: 0!important;" >
+                            <a class="nav-link-font-size" [routerLink]="['/user/',user.email]" mat-list-item routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                                <span translate>profile</span>
+                            </a>
+                            <a class="nav-link-font-size" *ngIf="user.role === 'client'" [routerLink]="['/user',user.email,'edit','wedding']" mat-list-item routerLinkActive="active">
+                                <span translate>wedding information</span>
+                            </a>
+                            <a class="nav-link-font-size" [routerLink]="['/user/payment/']" mat-list-item routerLinkActive="active">
+                                <span translate>means of payment</span>
+                            </a>
+                        </mat-nav-list>
+                    </div>
+
+
+                </mat-expansion-panel>
+
+                <a mat-list-item [routerLink]="['/user/',user.email]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="text-bold item mat-body opened" *ngIf="user.role === 'provider'">
+                    <img width="20px" src="/assets/icons/svg/user.svg"> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="nav-link-font-size" translate>profile</span>
+                </a>
+
+                <mat-expansion-panel *ngIf="user.role === 'provider'" mat-list-item hideToggle class="mat-elevation-z0 opened"
+                [expanded]='thisIsAnEnterpriseLink()' (closed)='toggleIconEnterprise = false' (opened)='toggleIconEnterprise = true'>
+                    <mat-expansion-panel-header>
+                        <md-icon *ngIf="toggleIconEnterprise" class="mat-icon mat-list-icon material-icons">keyboard_arrow_up</md-icon>
+                        <md-icon *ngIf="!toggleIconEnterprise" class="mat-icon mat-list-icon material-icons">keyboard_arrow_down</md-icon>
+                        <mat-panel-title fxLayoutGap="1rem">
+                            <img width="20px" src="/assets/icons/svg/suitcase.svg" fxFlexAlign="start">
+                            <span class="nav-link-font-size" fxFlexAlign="end" translate>company</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div>
+                        <mat-nav-list style="height: 90%">
+                            <a [routerLink]="['/user',user.email,'edit','company']" mat-list-item routerLinkActive="active">
+                                <span class="nav-link-font-size" translate>description</span>
+                            </a>
+                            <a mat-list-item routerLinkActive="active" id='dummyDetailLink' *ngIf="!hasCategory">
+                                <span class="nav-link-font-size" translate>details</span>
+                            </a>
+                            <a mat-list-item routerLinkActive="active" [routerLink]="['/user',user.email,'edit','company-details', category]" *ngIf="hasCategory">
+                                <span class="nav-link-font-size" translate>details</span>
+                            </a>
+                            <a mat-list-item routerLinkActive="active" id='dummyPricingLink' *ngIf="!hasCategory">
+                                <span class="nav-link-font-size" translate>pricing</span>
+                            </a>
+                            <a mat-list-item routerLinkActive="active" [routerLink]="['/user',user.email,'edit','company-pricing', category]" *ngIf="hasCategory">
+                                <span class="nav-link-font-size" translate>pricing</span>
+                            </a>
+                            <a [routerLink]="['/user',user.email,'edit','company-settings']" mat-list-item routerLinkActive="active">
+                                <span class="nav-link-font-size" translate>settings</span>
+                            </a>
+                            <a [routerLink]="['/user',user.email,'edit','company-billing']" mat-list-item routerLinkActive="active">
+                                <span class="nav-link-font-size" translate>billing</span>
+                            </a>
+
+
+                        </mat-nav-list>
+                    </div>
+
+                </mat-expansion-panel>
+
+                <a mat-list-item routerLink="/user/availabilities" routerLinkActive="active" class="nav-link-font-size text-bold item opened" *ngIf="user.role === 'provider'">
+                    <img width="20px" src="/assets/icons/svg/calendar.svg"> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="nav-link-font-size" translate>calendar</span>
+
+                </a>
+
+              <a class="text-bold nav-link-font-size" mat-list-item routerLink="/user/favorites" routerLinkActive="active" class="item opened" *ngIf="user.role === 'client'">
+                    <img width="20px" src="/assets/icons/svg/heart.svg"> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="nav-link-font-size" translate>favorites</span>
+                </a>
+
+                <mat-expansion-panel mat-list-item hideToggle class="mat-elevation-z0 opened"
+                [expanded]='toggleIconReservation' (closed)='toggleIconReservation = false' (opened)='toggleIconReservation = true'>
+                    <mat-expansion-panel-header>
+                        <md-icon *ngIf="toggleIconReservation" class="mat-icon mat-list-icon material-icons">keyboard_arrow_up</md-icon>
+                        <md-icon *ngIf="!toggleIconReservation" class="mat-icon mat-list-icon material-icons">keyboard_arrow_down</md-icon>
+                        <mat-panel-title fxLayoutGap="1rem">
+                            <img width="20px" src="/assets/icons/svg/folder.svg" fxFlexAlign="start">
+                            <span fxFlexAlign="end" class="nav-link-font-size" translate>booking</span>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div>
+                        <mat-nav-list *ngIf="user.role === 'provider'">
+                            <a class="nav-link-font-size" [routerLink]="['/user/reservation/validate-client-requests']" mat-list-item routerLinkActive="active">
+                                <span translate>awaiting validation</span>
+                            </a>
+                  <!--          <a class="nav-link-font-size" [routerLink]="['/user/edit/wedding/']" mat-list-item routerLinkActive="active">
+                                <span translate>awaiting payment</span>
+                            </a>-->
+                            <a class="nav-link-font-size" [routerLink]="['/user/reservation/payment']" mat-list-item routerLinkActive="active">
+                                <span translate>awaiting payment</span>
+                            </a>
+                            <a class="nav-link-font-size" [routerLink]="['/user/reservation/payed-confirmed-provider']" mat-list-item routerLinkActive="active">
+                                <span translate>confirmed and paid</span>
+                            </a>
+                        </mat-nav-list>
+                        <mat-nav-list *ngIf="user.role === 'client'">
+                            <a class="nav-link-font-size" [routerLink]="['/user/reservation/awaiting-validation-provider']" mat-list-item routerLinkActive="active">
+                                <span translate>awaiting validation</span>
+                            </a>
+
+                            <a class="nav-link-font-size" [routerLink]="['/user/reservation/payment']" mat-list-item routerLinkActive="active">
+                                <span translate>awaiting payment</span>
+                            </a>
+                            <a class="nav-link-font-size" [routerLink]="['/user/reservation/payed-confirmed-provider']" mat-list-item routerLinkActive="active">
+                                <span translate>confirmed and paid</span>
+                            </a>
+                        </mat-nav-list>
+                    </div>
+
+                </mat-expansion-panel>
+                <a *ngIf="user.role === 'provider'" class="nav-link-font-sizeS item opened" mat-list-item routerLink="/user/reservation/avis-pro" routerLinkActive="active">
+                    <img width="20px" src="/assets/icons/svg/copy.svg"> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="nav-link-font-size" translate>Avis</span>
+                </a>
+              <a *ngIf="user.role === 'client'" class="nav-link-font-sizeS item opened" mat-list-item routerLink="/user/reservation/avis-client" routerLinkActive="active">
+                    <img width="20px" src="/assets/icons/svg/copy.svg"> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="nav-link-font-size" translate>Avis</span>
+                </a>
+                <a class="nav-link-font-size" mat-list-item routerLink="/user/notification" routerLinkActive="active" class="item opened">
+                    <img width="20px" src="/assets/icons/svg/notification.svg"> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="nav-link-font-size" translate>notification</span>
+                </a>
+                <a (click)="logout()" mat-list-item routerLinkActive="active" class="item opened">
+                    <img width="20px" src="/assets/icons/svg/turn-off.svg">&nbsp; &nbsp;&nbsp;
+                    <span class="nav-link-font-size" translate>logout</span>
+                </a>
+            </mat-nav-list>
+
+
+        </div>
+    </mat-drawer>
+    <mat-drawer-content >
+        <ng-content></ng-content>
+    </mat-drawer-content>
+</mat-drawer-container>

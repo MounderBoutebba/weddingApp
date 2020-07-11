@@ -1,0 +1,56 @@
+<div *ngIf="field.type === fieldTypeEnum.TOGGLE_PRODUITS_ACCESSOIRES" ngStyle.lt-md="width:91vw"
+[formGroup]="form" fxLayout="column">
+    <div fxLayout='row wrap' fxLayoutAlign="space-between start" style="width: 100%"
+    class="pd-top-bot" [formGroupName]='field.name'>
+        <div fxLayout="column" fxLayoutAlign="center start">
+            <mat-label class='cnl-title'>
+                {{field.displayName|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+              <mat-label class='cnl-label'>
+                {{field.label|lowercase|translate|capitalizeFirstLetter}}
+              </mat-label>
+        </div>
+        <mat-slide-toggle [color]="color" (change)="toggle($event.checked)"
+        [formControlName]="'value'"></mat-slide-toggle>
+    </div>
+    <div *ngIf="field.value" fxLayout='row wrap' fxLayoutAlign="space-between start" style="width: 100%"
+    class="pd-top-bot" [formGroupName]='field.name'>
+        <div [formGroupName]='"options"' fxLayout='row wrap' fxLayoutAlign="space-between start" style="margin-bottom: 1rem;">
+            <div *ngFor="let opt of field.produitsOptions; let i=index"  [formGroupName]='opt.name'
+            style="margin-bottom: 1rem;" [ngClass]='{"ml-auto": i === displayItemsLimit - 1}'>
+                <div [hidden]="i>= displayItemsLimit">
+                    <mat-checkbox [formControlName]="'checked'" color='primary'
+                    (change)='checkBoxChanged($event.checked, opt.name)'>{{opt.name |translate}}</mat-checkbox>
+                    <app-number [numberOption]='{value: opt.tarif, label: opt.label, step: opt.step, unit: opt.unit}'
+                    [field]="field" [form]="form" [disableOptions]='true' [optKey]='opt.name'></app-number>
+                </div>
+                <div [hidden]='!showMoreOptions || i < displayItemsLimit'>
+                    <mat-checkbox [formControlName]="'checked'" color='primary'
+                    (change)='checkBoxChanged($event.checked, opt.name)'>{{opt.name |translate}}</mat-checkbox>
+                    <app-number [numberOption]='{value: opt.tarif, label: opt.label, step: opt.step, unit: opt.unit}'
+                    [field]="field" [form]="form" [disableOptions]='true' [optKey]='opt.name'></app-number>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <span *ngIf="!showErrorMsg && field.value" class="text-danger">Merci de séléctionner au moin un modèle</span>
+    <span *ngIf="!field.value && field.name === 'fleurs'" class="text-danger">Ce champ est requis</span>
+    <div *ngIf="field.value">
+        <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+        *ngIf='field.produitsOptions?.length > displayItemsLimit'>
+        {{showMoreLabel|lowercase|translate|capitalizeFirstLetter}}
+        <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+        <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+        </button>
+    </div>
+    <div *ngIf="field.value" style="width: 100%">
+        <button  mat-stroked-button class='ajout-btn' (click)='addOption.emit(field)'>
+                <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+        </button>
+        &nbsp;
+        <mat-label class='add-btn-label'>{{addBtnLabel|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+        <mat-divider style=" !important; margin-top: 1rem;"></mat-divider>
+    </div>
+    <mat-divider></mat-divider>
+</div>

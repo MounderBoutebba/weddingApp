@@ -1,0 +1,27 @@
+
+<div class='control-wrapper' fxLayout="row wrap" fxLayoutGap="10%" fxLayoutAlign="flex-start" fxLayoutGap.xs="0" fxLayout.xs="column"
+*ngIf='primaryComponent' style="width: 58%;">
+    <p translate fxFlex='100%' class='mb-0 title'>{{'advantages'|lowercase|translate|titlecase}}</p>
+    <p translate fxFlex='100%' class='mt-0 sub-title'>{{'indicate the services you offer'|lowercase|translate|titlecase}}</p>
+    <div class='checkbox-wrapper' fxLayout="row wrap" fxLayoutGap="10%" fxFlex='100%'>
+        <mat-checkbox [disabled]='true' [checked]='true' fxFlex='40%' class='first-checkbox checkbox-label'>{{'Gâteau mariage'|lowercase|translate|titlecase}}</mat-checkbox>
+        <mat-checkbox class='checkbox-label' [disabled]='true' [checked]='true' fxFlex='40%' *ngIf="isTraiteur">{{'Caterer'|lowercase|translate|titlecase}}</mat-checkbox>
+        <mat-checkbox class='checkbox-label' [disabled]='true' [checked]='true' fxFlex='40%' *ngIf="isLieu">{{'Place'|lowercase|translate|titlecase}}</mat-checkbox>
+        <mat-checkbox class='checkbox-label' fxFlex='40%' *ngIf="!isTraiteur" color='primary'
+        (change)='traiteurIsChecked($event.checked)'>{{'Caterer'|lowercase|translate|titlecase}}</mat-checkbox>
+        <mat-checkbox class='checkbox-label' fxFlex='40%' *ngIf="!isLieu" color='primary'
+        (change)='lieuIsChecked($event.checked)'>{{'Place'|lowercase|translate|titlecase}}</mat-checkbox>
+    </div>
+<mat-divider style="width: 65%;margin-bottom: 1rem;"></mat-divider>
+</div>
+<h2 *ngIf='primaryComponent' style="width: 58%;" style="font-size: 18.5px !important;">{{'Gâteau de mariage'|lowercase|translate|capitalizeFirstLetter}}</h2>
+<app-dynamic-form-builder [fields]="parsedCriteres" (addOption)='onAddOption($event)' *ngIf="showForm" #formBuilder></app-dynamic-form-builder>
+<h2 *ngIf="showTraiteurComponent" style="font-size: 18.5px !important; margin-top: -1rem;">{{'Caterer'|lowercase|translate|titlecase}}</h2>
+<app-traiteur *ngIf="showTraiteurComponent" [criteres]="traiteurInitCriteres"
+[primaryComponent]='false' #traiteurComponent></app-traiteur>
+<h2 *ngIf="showLieuComponent" style="font-size: 18.5px !important; margin-top: -1rem;">{{'place'|lowercase|translate|titlecase}}</h2>
+<app-lieu *ngIf="showLieuComponent" [criteres]="lieuInitCriteres"
+[primaryComponent]='false' #lieuComponent></app-lieu>
+<button type='button' mat-flat-button color='primary'
+class='submit-btn' [disabled]='!formBuilder.form.valid' (click)='formSubmitted()' *ngIf="showSubmitBtn" [ngClass]="{'hidden': !primaryComponent}">
+{{'Next' | lowercase | translate | titlecase}}</button>

@@ -1,0 +1,49 @@
+<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="2rem" class="container">
+  <h2 translate class='main-title'>Favories</h2>
+  <section fxLayout="column" fxLayoutGap="0.5rem">
+    <mat-label class="title" translate>Les services favories</mat-label>
+    <span translate class="sub-text">Retrouvez tous les services que vous avez ajouter dans vos favories</span>
+  </section>
+  <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0.6rem" style="width: 100%">
+    <section fxLayoutGap="1rem" fxLayout="row" fxLayoutAlign="end center" style="width: 100%;padding: 0 2rem">
+      <p class="refresh" (click)="refresh()">Actualiser</p>
+    </section>
+
+    <section fxLayout="row" fxLayoutAlign="center center" style="width: 100%;" *ngIf="loading">
+      <p class="loading-text">Chargement...</p>
+    </section>
+
+    <section fxLayout="row" fxLayoutAlign="center center" style="width: 100%;"
+             *ngIf="favorites.length<=0 && !loading">
+      <p style="font-size: 1.5rem">Vous n'avez aucune favoris</p>
+    </section>
+
+    <section fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="2rem" style="width: 100%;">
+      <div
+        *ngFor="let favoris of favorites"
+        class="search-container">
+
+        <app-search-result-widget
+          [data]="favoris"
+          [favorite]="true"
+          [mapOff]="true"
+          (favorisChange)="onFavorisChange($event)">
+        </app-search-result-widget>
+
+      </div>
+
+    </section>
+
+    <section
+      [fxShow]="favorites.length>0"
+      fxLayout="row wrap" fxLayoutAlign="center center"
+      style="width: 100%;padding-top: 1rem">
+      <app-paginator
+        [length]="totalPage"
+        [pageSize]="10"
+        (page)="searchPaginated($event)"
+      ></app-paginator>
+    </section>
+  </div>
+  <br>
+</div>

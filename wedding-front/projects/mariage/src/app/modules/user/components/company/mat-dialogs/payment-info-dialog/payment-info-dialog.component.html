@@ -1,0 +1,150 @@
+<h2 mat-dialog-title>{{description | lowercase | translate | capitalizeFirstLetter}}</h2>
+<mat-dialog-content style="height: 60vh !important;">
+  <form [formGroup]="form" fxLayout='column' fxLayoutAlign='start space-around'>
+      <div class="mt-1" fxLayout='row wrap' fxLayoutAlign='start center' fxLayoutGap='5%'>
+          <div fxLayout='column' fxFlex='20%'>
+            <mat-label class='input-label'>Prénom</mat-label>
+            <mat-form-field class="form-input full-width" appearance="outline">
+                <input matInput type="text" formControlName="firstname">
+            </mat-form-field>
+          </div>
+          <div fxLayout='column' fxFlex='20%'>
+            <mat-label class='input-label'>Nom</mat-label>
+            <mat-form-field class="form-input full-width" appearance="outline">
+                <input matInput type="text" formControlName="lastname">
+            </mat-form-field>
+          </div>
+      </div>
+      <div class="mt-1" fxLayout='row wrap' fxLayoutAlign='start center' fxLayoutGap='8%'>
+          <div fxLayout='column' fxFlex='71%' formGroupName='location'>
+            <mat-label class='input-label'>Adresse</mat-label>
+            <mat-form-field class="form-input full-width" appearance="outline">
+                <input matInput type="text" #autocompleteaddr formControlName="address" placeholder="Entrez une adresse">
+            </mat-form-field>
+          </div>
+      </div>
+        <div class="mt-1" fxLayout='row wrap' fxLayoutAlign='start center' fxLayoutGap='8%'>
+          <div fxLayout='column' fxFlex='71%'>
+             <mat-label class='input-label'>Date de naissance</mat-label>
+             <mat-form-field class="date" floatLabel="always" appearance="outline">
+              <input matInput
+              [matDatepicker]="dateOfBirth"
+               placeholder="Date de naissance"
+               formControlName="dateOfBirth">
+              <mat-datepicker-toggle color="primary" matSuffix [for]="dateOfBirth"></mat-datepicker-toggle>
+          <mat-datepicker #dateOfBirth ></mat-datepicker>
+      </mat-form-field>
+          </div>
+      </div>
+      <div class="mt-1" fxLayout='row wrap' fxLayoutAlign='start center' fxLayoutGap='18%'>
+        <div fxLayout='column' fxFlex='23%'>
+          <mat-label class='input-label'>Type de compte bancaire</mat-label>
+          <mat-form-field class="form-input full-width" appearance="outline">
+            <mat-select formControlName="accountType">
+              <mat-option *ngFor="let type of accountTypes" [value]="type">{{type |capitalizeFirstLetter}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="mt-1" fxLayout='row wrap' fxLayoutAlign='start center' fxLayoutGap='5%'>
+        <div fxLayout='column' fxFlex='20%'>
+          <mat-label class='input-label'>Nom de la banque</mat-label>
+          <mat-form-field class="form-input full-width" appearance="outline">
+            <input matInput type="text" formControlName="bankName" style="width: 89.4%; margin-bottom: 0.4rem;">
+            <mat-icon fxFlexAlign="end" class="drop-down-icon">arrow_drop_down</mat-icon>
+          </mat-form-field>
+        </div>
+        <div fxLayout='column' fxFlex='40%'>
+          <mat-label class='input-label'>IBAN</mat-label>
+          <mat-form-field class="form-input full-width" appearance="outline">
+            <input matInput type="text" formControlName="ibanReactive">
+          </mat-form-field>
+          <div *ngIf="form.get('ibanReactive').invalid && (form.get('ibanReactive').dirty || form.get('ibanReactive').touched)"
+          style="margin-top: 0.5rem;">
+            <mat-error *ngIf="form.get('ibanReactive').errors.iban">
+              Merci d'ajouter un IBAN valide
+            </mat-error>
+          </div>
+        </div>
+        <div fxLayout='column' fxFlex='10%'>
+          <mat-label class='input-label'>Pays</mat-label>
+          <mat-form-field class="form-input" appearance="outline">
+            <mat-select formControlName="country">
+              <mat-option *ngFor="let country of countries" [value]="country">{{country |capitalizeFirstLetter}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="mt-1" fxLayout='row wrap' fxLayoutAlign='start center' fxLayoutGap='5%'>
+        <div fxLayout='column' fxFlex='20%'>
+          <mat-label class='input-label'>Raison sociale</mat-label>
+          <mat-form-field class="form-input full-width" appearance="outline">
+              <input matInput type="text" formControlName="raison">
+          </mat-form-field>
+        </div>
+        <div fxLayout='column' fxFlex='20%'>
+          <mat-label class='input-label'>SIREN</mat-label>
+          <mat-form-field class="form-input full-width" appearance="outline">
+              <input matInput type="text" formControlName="siren"
+              onkeyup="this.value=this.value.replace(/[^\d]/,'')">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="mt-2" fxLayout='row wrap' fxLayoutAlign='start center' fxLayoutGap='5%'>
+        <div fxLayout='column' fxFlex='20%'>
+          <div fxLayout='row wrap'>
+            <mat-label class='input-label'>Document d'identité</mat-label>
+            <mat-icon style="margin-left: 0.5rem;" class='info-outline-icon'>info_outline</mat-icon>
+          </div>
+          <div class="form-input full-width">
+              <input type="file" accept="image/*, application/pdf" #fileInput (change)="onFileChange($event, 'doc1')"
+              [hidden]='true'>
+              <button class="mat-stroked-button add-file-btn" (click)='fileInput.value = null; fileInput.click()'>
+                Choisir un fichier
+              </button>
+          </div>
+        </div>
+        <div fxLayout='column' fxFlex='20%' *ngIf="!!firstDoc">
+          <div fxLayout='row wrap' style="margin-top: 2rem;">
+            <div (click)='firstDoc = null'>
+              <mat-icon class='delete-icon'>delete</mat-icon>
+            </div>
+            <mat-label class='input-label' style="margin-left: 0.5rem;">{{firstDoc.name}}</mat-label>
+          </div>
+        </div>
+      </div>
+      <div class="mt-2" fxLayout='row wrap' fxLayoutAlign='start center' fxLayoutGap='5%'>
+        <div fxLayout='column' fxFlex='20%'>
+          <div fxLayout='row wrap'>
+            <mat-label class='input-label'>Document supp</mat-label>
+            <mat-icon style="margin-left: 0.5rem;" class='info-outline-icon'>info_outline</mat-icon>
+          </div>
+          <div class="form-input full-width">
+              <input type="file" accept="image/*, application/pdf" #fileInput1 (change)="onFileChange($event, 'doc2')"
+              [hidden]='true'>
+              <button class="mat-stroked-button add-file-btn" (click)='fileInput1.value = null; fileInput1.click()'>
+                Choisir un fichier
+              </button>
+          </div>
+        </div>
+        <div fxLayout='column' fxFlex='20%' *ngIf="!!secDoc">
+          <div fxLayout='row wrap' style="margin-top: 2rem;">
+            <div (click)='secDoc = null'>
+              <mat-icon class='delete-icon'>delete</mat-icon>
+            </div>
+            <mat-label class='input-label' style="margin-left: 0.5rem;">{{secDoc.name}}</mat-label>
+          </div>
+        </div>
+      </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align='end'>
+          <button class="mat-raised-button control-btn"
+            (click)="cancel()">
+            {{'Cancel' | lowercase | translate | titlecase}}
+          </button>
+
+          <button style="margin-left: 1.4rem; color: white;" class="mat-raised-button mat-primary control-btn" type='submit' [disabled]='!form.valid || !!!firstDoc || !!!secDoc' (click)='save()'>
+                  {{'Mettre à jour mes informations bancaire' | lowercase | translate | capitalizeFirstLetter}}
+          </button>
+</mat-dialog-actions>

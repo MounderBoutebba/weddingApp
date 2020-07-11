@@ -1,0 +1,50 @@
+<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="2rem" class="container">
+  <h2 translate class='main-title'>Réservations</h2>
+  <section fxLayout="column" fxLayoutGap="0.5rem">
+    <mat-label class="title" translate>Confirmées et payées</mat-label>
+    <span translate class="sub-text">Visualisez et gérez les réservations confirmées et payées par le client</span>
+  </section>
+  <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="0.6rem" style="width: 100%">
+    <section fxLayoutGap="1rem" fxLayout="row" fxLayoutAlign="end center" style="width: 100%;padding: 0 2rem">
+      <p class="refresh" (click)="refresh()">Actualiser</p>
+    </section>
+
+    <section fxLayout="row" fxLayoutAlign="center center" style="width: 100%;" *ngIf="loading">
+      <p class="loading-text">Chargement...</p>
+    </section>
+
+    <section fxLayout="row" fxLayoutAlign="center center" style="width: 100%;"
+             *ngIf="reservations.length<=0 && !loading">
+      <p style="font-size: 1.5rem">Vous n'avez aucune Réservation</p>
+    </section>
+
+    <section fxLayout="column" fxLayoutGap="2rem" style="width: 100%;">
+      <div
+        *ngFor="let reservation of reservations"
+        fxLayout="column" fxLayoutAlign="center start"
+        class="reservation-container"
+      >
+        <app-reservation-card-payed-confirmed-provider
+          style="width:100%;"
+          [reservation]="reservation"
+        >
+        </app-reservation-card-payed-confirmed-provider>
+      </div>
+
+
+    </section>
+
+
+    <section
+      [fxShow]="reservations.length>0"
+      fxLayout="row wrap" fxLayoutAlign="center center"
+      style="width: 100%;padding-top: 1rem">
+      <app-paginator
+        [length]="totalPage"
+        [pageSize]="10"
+        (page)="searchPaginated($event)"
+      ></app-paginator>
+    </section>
+  </div>
+  <br>
+</div>

@@ -1,0 +1,134 @@
+<form class="formTexture">
+  <!-- Réservation -->
+  <div class="margin15U15D">
+    <span class="accent-title" translate>
+      Réservation
+    </span>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="space-between">
+    <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=100>
+      <div class="margin30UD0LR">
+        <span class="light-title">Animateur pour enfants</span>
+      </div>
+      <div class="margin10U10D" fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex=47>
+          <div>
+            <span translate class="greyText15">Durée de la mission</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab
+              (click)='numberInputChangeValue("animateur","decrement", "dureeMissionAnimateur", 1, companyDescriptionInfo?.criteres?.animateurEnfants_dureeDeReservation)'
+              class='margin-right number-control-btn  margin-left'
+              [class.number-control-btn-remove]="bookingObject.animateur.dureeMissionAnimateur == companyDescriptionInfo.criteres.animateurEnfants_dureeDeReservation"
+              [disabled]="bookingObject.animateur.dureeMissionAnimateur == companyDescriptionInfo.criteres.animateurEnfants_dureeDeReservation">
+              <mat-icon
+                [ngStyle]="{'color' : bookingObject.animateur.dureeMissionAnimateur == companyDescriptionInfo.criteres.animateurEnfants_dureeDeReservation ? '#999999' : '#F17082'}"
+                class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{bookingObject.animateur.dureeMissionAnimateur}} h </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeValue("animateur","increment", "dureeMissionAnimateur", 1)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex=47>
+          <div>
+            <span translate class="greyText15">Nombre d’animateur(s)</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab (click)='numberInputChangeValue("animateur","decrement", "NombreAnimateurs", 1, 1)'
+              class='margin-right number-control-btn  margin-left'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{bookingObject.animateur.NombreAnimateurs}}</span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeValue("animateur","increment", "NombreAnimateurs", 1)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-divider class="matdividerForcedHeight"></mat-divider>
+  <!--fin Réservation-->
+
+  <!-- animations -->
+  <div *ngIf="!!animations?.length" class="margin40T">
+    <span class="accent-title" translate>Animations proposés</span>
+  </div>
+  <div *ngFor="let animation of animations;let i = index;let lastAnimation = last"
+    class="margin10U10D">
+    <div *ngIf="i<=1 || showmoreAnimations" class="inline-container-4 margin30UD0LR">
+      <div>
+        <span translate class="boldText">{{animation.name | lowercase | translate | capitalizeFirstLetter}}</span>
+        <br />
+        <span translate class="greyText">Obtenir une animation {{animation.name | translate}} pour les
+          enfants</span>
+      </div>
+      <mat-slide-toggle color="primary" [checked]='animation.checked'
+        (change)='toggleChangeAnimation($event.checked,i)'>
+      </mat-slide-toggle>
+    </div>
+    <button mat-button color='primary' class="padding0"
+      *ngIf="!showmoreAnimations && i==1 && animations.length > 1"
+      (click)="showmoreAnimations = true" ng-reflect-color="primary">
+      <span translate class="bold18">Afficher plus d'animations</span>
+      <mat-icon color='primary' class="margin10L">keyboard_arrow_down</mat-icon>
+    </button>
+    <button mat-button color='primary' class="padding0" *ngIf="showmoreAnimations && i>1 && lastAnimation"
+      (click)="showmoreAnimations = false" ng-reflect-color="primary">
+      <span translate class="bold18">Afficher moins d'options</span>
+      <mat-icon color='primary' class="margin10L">keyboard_arrow_up</mat-icon>
+    </button>
+    <mat-divider *ngIf="i <= 1 || showmoreAnimations" class="margin1rem"></mat-divider>
+  </div>
+
+  <!-- end Animations -->
+
+  <!-- options divers -->
+  <div *ngIf="optionDivers?.length" class="margin40U40D">
+    <span class="accent-title" translate>Option Divers</span>
+  </div>
+  <div *ngIf="optionDivers?.length" fxLayout="column" fxLayoutAlign="space-around">
+    <div *ngFor="let opt of optionDivers ; let i = index">
+      <div>
+        <div class="inline-container-4" class="margin30D margin20U" fxLayout fxLayoutAlign="space-between center">
+          <div>
+            <span translate class="boldText">{{opt.name}}</span>
+            <br>
+            <span translate class="lightGreyText">{{opt.feeType}}</span>
+            <br>
+            <span translate class="greyText">{{opt.description}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='optionDivers[i].checked'
+            (change)='toggleChangeOptionDivers($event.checked, opt)'>
+          </mat-slide-toggle>
+        </div>
+
+        <div *ngIf="opt.feeType === feeType.UNIT_FEE && optionDivers[i].checked" fxLayout="row"
+          fxLayoutAlign="space-between center">
+          <div fxFlexOffset=53>
+            <span translate>Exemplaires</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+              (click)='numberInputChangeOptionDivers("decrement", 1, opt, 1)'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{opt.examplaire}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeOptionDivers("increment", 1, opt)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <mat-divider *ngIf="companyDescriptionInfo?.company?.options?.length" class="margin-bottom" class="margin20T">
+  </mat-divider>
+  <!-- end options divers-->
+</form>

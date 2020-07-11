@@ -1,0 +1,351 @@
+<div style="width: 95%;margin: auto">
+
+  <form [formGroup]="filterForm" (ngSubmit)="submit()" enctype="multipart/form-data">
+    <div
+      fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly"
+      class="btn-container" [ngClass.lt-md]="{'btn-container--hidden-search-bar':hiddenSearchbar}">
+
+      <div fxLayout="column">
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>verified providers</mat-label>
+              <span translate>a selection of providers verified according to quality criteria</span>
+            </section>
+            <mat-slide-toggle style="float: right" color="primary"
+                              formControlName="verifiedProvider"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>100% secure services without down payment</mat-label>
+              <span translate>professionals who agree to receive the full payment after completion of the service</span>
+            </section>
+            <mat-slide-toggle style="float: right" color="primary"
+                              formControlName="securePayment"></mat-slide-toggle>
+          </div>
+          <mat-divider [fxShow]="showMore"></mat-divider>
+        </div>
+        <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common"
+             [fxShow]="showMore">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>top rated providers</mat-label>
+            <span translate>display only the providers with the best scores, ie a score higher than 3/5</span>
+          </section>
+          <mat-slide-toggle color="primary" formControlName="topRatedProviders"></mat-slide-toggle>
+        </div>
+
+        <a class="view-more" (click)="showMore=!showMore">
+          <span translate [fxHide]="showMore">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="showMore">keyboard_arrow_down</mat-icon>
+
+          <span translate [fxShow]="showMore">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="showMore">keyboard_arrow_up</mat-icon>
+        </a>
+        <mat-divider></mat-divider>
+
+      </div>
+
+      <div fxLayout="column" formGroupName="categories">
+        <mat-label translate style="font-weight: bold">Proposed services</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="choregrapheMariage">
+            <span translate>wedding choreographer</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="coachSportif">
+            <span translate>sports coach</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="officiantCeremonie">
+            <span translate>ceremonial officer</span>
+          </mat-checkbox>
+        </section>
+      </div>
+      <mat-divider></mat-divider>
+
+      <div *ngIf="choregrapheMariage" fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly">
+        <mat-label translate style="font-weight: bold">wedding choreographe</mat-label>
+        <br>
+        <div fxLayout="column"  formGroupName="choregrapheMariage_lieu">
+          <mat-label translate style="font-weight: bold">place of realization</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="domicile">
+              <span translate>home</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="salle">
+              <span translate>indoors</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column" formGroupName="choregrapheMariage_typesDeDances">
+          <mat-label translate style="font-weight: bold">types of dances</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="classique">
+              <span translate>classical</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="salsa">
+              <span translate>salsa</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="ballet">
+              <span translate>ballet</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="flamenco">
+              <span translate>flamenco</span>
+            </mat-checkbox>
+          </section>
+          <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="choregrapheMariageTypesDeDancesMore">
+            <mat-checkbox color="primary" class="checkbox" formControlName="traditionnelle">
+              <span translate>traditional</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="danse_de_salon">
+              <span translate>ballroom dancing</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="contemporain_moderne">
+              <span translate>Contemporary / modern</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="hip_hop">
+              <span translate>Hip-hop</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="latin_salsa">
+              <span translate>Latin / salsa</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="jazz">
+              <span translate>Jazz</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="claquettes">
+              <span translate>Sandals</span>
+            </mat-checkbox>
+
+          </section>
+          <a class="view-more" (click)="choregrapheMariageTypesDeDancesMore=!choregrapheMariageTypesDeDancesMore">
+            <span translate [fxHide]="choregrapheMariageTypesDeDancesMore">view more questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxHide]="choregrapheMariageTypesDeDancesMore">keyboard_arrow_down</mat-icon>
+
+            <span translate [fxShow]="choregrapheMariageTypesDeDancesMore">view less questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxShow]="choregrapheMariageTypesDeDancesMore">keyboard_arrow_up</mat-icon>
+          </a>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <mat-label translate style="font-weight: bold">associated services</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center" formGroupName="choregrapheMariage_servicesAssocies">
+            <mat-checkbox color="primary" class="checkbox" formControlName="creation_choregraphie">
+              <span translate>choreographic creation</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="creation_bande_musical">
+              <span translate>musical band creation</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="corrections_distance">
+              <span translate>remote corrections</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="conseils_sur_les_tenues_adaptees">
+              <span translate>tips on adapted outfits</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>appointment tips</mat-label>
+              <span translate>providers who offers the possibility of a personalized advice appointment</span>
+            </section>
+            <mat-slide-toggle formControlName="choregrapheMariage_conseilsPersonnalises"
+                              color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>trials</mat-label>
+              <span translate>providers who offers the possibility of conducting test sessions</span>
+            </section>
+            <mat-slide-toggle formControlName="choregrapheMariage_essais" color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+      <div *ngIf="coachSportif" fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly">
+        <mat-label translate style="font-weight: bold">sports coach</mat-label>
+        <br>
+        <div fxLayout="column"  formGroupName="coachSportif_lieu">
+          <mat-label translate style="font-weight: bold">place of realization</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="domicile">
+              <span translate>home</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="salle">
+              <span translate>indoors</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column" formGroupName="coachSportif_typesDeSport">
+          <mat-label translate style="font-weight: bold">types of sports</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="musculation">
+              <span translate>bodybuilding</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="cardioBoxing">
+              <span translate>cardio boxing</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="pilates">
+              <span translate>pilates</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="lesMills">
+              <span translate>the mills</span>
+            </mat-checkbox>
+          </section>
+          <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="coachSportifTypesDeSportMore">
+            <mat-checkbox color="primary" class="checkbox" formControlName="cycling">
+              <span translate>cycling</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="jump_fit">
+              <span translate>jump_fit</span>
+            </mat-checkbox>
+          </section>
+          <a class="view-more" (click)="coachSportifTypesDeSportMore=!coachSportifTypesDeSportMore">
+            <span translate [fxHide]="coachSportifTypesDeSportMore">view more questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxHide]="coachSportifTypesDeSportMore">keyboard_arrow_down</mat-icon>
+
+            <span translate [fxShow]="coachSportifTypesDeSportMore">view less questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxShow]="coachSportifTypesDeSportMore">keyboard_arrow_up</mat-icon>
+          </a>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column" formGroupName="coachSportif_servicesAssocies">
+          <mat-label translate style="font-weight: bold">associated services</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="reequilibrage_alimentaire">
+              <span translate>food rebalancing</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="remise_en_forme">
+              <span translate>fitness</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="perte_de_masse_graisseuse">
+              <span translate>loss of fat mass</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="prise_de_muscle">
+              <span translate>muscle grip</span>
+            </mat-checkbox>
+          </section>
+          <br>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>appointment tips</mat-label>
+              <span translate>providers who offers the possibility of a personalized advice appointment</span>
+            </section>
+            <mat-slide-toggle formControlName="coachSportif_conseilsPersonnalises" color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>trials</mat-label>
+              <span translate>providers who offers the possibility of conducting test sessions</span>
+            </section>
+            <mat-slide-toggle formControlName="coachSportif_essais" color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+
+      <div *ngIf="officiantCeremonie" fxLayout="column" fxLayoutGap="1rem"
+           fxLayoutAlign="start space-evenly" >
+        <mat-label translate style="font-weight: bold">ceremonial officer</mat-label>
+        <br>
+        <div fxLayout="column" formGroupName="officiantCeremonie_servicesAssocies">
+          <mat-label translate style="font-weight: bold">associated services</mat-label>
+          <br>
+          <section fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-checkbox color="primary" class="checkbox" formControlName="officier_la_ceremonie_laique_avec_rituel">
+              <span translate>officer the ceremony secular with ritual</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="organisation_des_entrees_et_sorties_de_la_ceremonie">
+              <span translate>organization of the entrances and exits of the ceremony</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="orchestrer_la_duree_et_le_timing">
+              <span translate>orchestrate the duration and the timing</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="creation_du_texte_des_maries">
+              <span translate>creating the text of the bride and groom</span>
+            </mat-checkbox>
+          </section>
+          <section fxLayout="row wrap" fxLayoutAlign="start center"
+                   [fxShow]="officiantCeremonieServicesAssociesMore">
+            <mat-checkbox color="primary" class="checkbox" formControlName="creation_des_textes_des_intervenants">
+              <span translate>creation of the interveners' texts</span>
+            </mat-checkbox>
+            <mat-checkbox color="primary" class="checkbox" formControlName="edition_la_playlist_musicale">
+              <span translate>music playlist edition</span>
+            </mat-checkbox>
+          </section>
+          <a class="view-more" (click)="officiantCeremonieServicesAssociesMore=!officiantCeremonieServicesAssociesMore">
+            <span translate [fxHide]="officiantCeremonieServicesAssociesMore">view more questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxHide]="officiantCeremonieServicesAssociesMore">keyboard_arrow_down</mat-icon>
+
+            <span translate [fxShow]="officiantCeremonieServicesAssociesMore">view less questions</span>
+            <mat-icon style="transform: translateY(30%)"
+                      [fxShow]="officiantCeremonieServicesAssociesMore">keyboard_arrow_up</mat-icon>
+          </a>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>appointment tips</mat-label>
+              <span translate>providers who offers the possibility of a personalized advice appointment</span>
+            </section>
+            <mat-slide-toggle formControlName="officiantCeremonie_conseilsPersonnalises"
+                              color="primary"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+
+    </div>
+
+    <div
+      fxFlexAlign.lt-md="center" fxLayout="row wrap"  fxLayout.lt-md="column" fxLayoutAlign="end center" fxLayoutGap="1rem"
+      class="group-btn full">
+      <button class="form-input full" mat-raised-button type="button" (click)="cancelForm()">
+        <span translate>cancel</span>
+      </button>
+      <button class="form-input full"  mat-raised-button type="button" (click)="reset()">
+        <span translate>delete selected filters</span>
+      </button>
+      <button class="form-input full"  mat-raised-button color="primary" type="submit">
+        <span style="color: white" translate>show results</span>
+      </button>
+    </div>
+  </form>
+
+</div>

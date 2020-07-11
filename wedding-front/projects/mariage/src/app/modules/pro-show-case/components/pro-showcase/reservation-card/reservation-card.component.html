@@ -1,0 +1,117 @@
+<mat-card class="reservationBox">
+    <form class="reservationForm" fxLayout="column" >
+        <mat-form-field appearance="outline">
+            <mat-label class="black13text">Date de l’événement</mat-label>
+            <input class="period-calendar-option-input customCalendar"
+                   matInput #periodInput
+                   type="text"
+                   ngxDaterangepickerMd
+                   [showCancel]="true"
+                   [(ngModel)]="dateRange"
+                   [dateLimit]="limit"
+                   [minDate]="minDate"
+                   [ngModelOptions]="{standalone: true}"
+                   (ngModelChange)='dateChange({startDate: $event.startDate?.toDate(), endDate: $event.endDate?.toDate()})'>
+            <img class="input-img" matSuffix src="/assets/icons/svg/calendar-pink.svg">
+        <mat-error *ngIf="showDateError">La date est requis</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label class="black13text">Lieu de l'événement</mat-label>
+          <input matInput type="text" #autocompleteaddr>
+            <img class="input-img" matSuffix src="/assets/icons/svg/placeholder-pink.svg">
+            <mat-error *ngIf="showPlaceError">Le lieu est requis</mat-error>
+        </mat-form-field>
+
+        <mat-accordion>
+            <mat-expansion-panel [expanded] = "panelExpanded" (opened)="panelOpened()" (closed)="panelClosed()">
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="black13text">
+                        Nombre d'invités
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label> Adultes </mat-label>
+                    <input matInput type="text" digitOnly placeholder="Nombre d'adultes"
+                      (ngModelChange)="onNgModelChange($event, adultsNumber)" [(ngModel)]="adultsNumber"
+                      [ngModelOptions]="{standalone: true}">
+                  </mat-form-field>
+                  <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label> Enfants </mat-label>
+                    <input matInput type="text" digitOnly placeholder="Nombre d'enfants"
+                      (ngModelChange)="onNgModelChange($event, enfantsNumber)" [(ngModel)]="enfantsNumber"
+                      [ngModelOptions]="{standalone: true}">
+                  </mat-form-field>
+                  <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label> Bébés </mat-label>
+                    <input matInput type="text" digitOnly placeholder="Nombre de bébés" [(ngModel)]="bebeNumber"
+                      [ngModelOptions]="{standalone: true}">
+                  </mat-form-field>
+            </mat-expansion-panel>
+            <span *ngIf="showNumberError" class="text-danger">stp ajouter au moin un invité</span>
+        </mat-accordion>
+        <div style="margin: 20px 0;" [ngSwitch]='searchTerm'>
+            <app-photographe-videaste-reservation *ngSwitchCase='categoryLabelEnum.PHOTOGRAPHE' #reservationPrice
+            [adultsNumber]='adultsNumber' [enfantsNumber]='enfantsNumber'
+            [companyDescriptionInfo]='companyDescriptionInfo'></app-photographe-videaste-reservation>
+            <app-photographe-videaste-reservation *ngSwitchCase='categoryLabelEnum.VIDEALISTE' #reservationPrice
+            [adultsNumber]='adultsNumber' [enfantsNumber]='enfantsNumber'
+            [companyDescriptionInfo]='companyDescriptionInfo'></app-photographe-videaste-reservation>
+            <app-coiffure-maquillage-esthetique-soins-reservation *ngSwitchCase='categoryLabelEnum.COIFFURE' #reservationPrice
+            [adultsNumber]='adultsNumber' [enfantsNumber]='enfantsNumber'
+            [companyDescriptionInfo]='companyDescriptionInfo'></app-coiffure-maquillage-esthetique-soins-reservation>
+            <app-coiffure-maquillage-esthetique-soins-reservation *ngSwitchCase='categoryLabelEnum.MAQUILLAGE' #reservationPrice
+            [adultsNumber]='adultsNumber' [enfantsNumber]='enfantsNumber'
+            [companyDescriptionInfo]='companyDescriptionInfo'></app-coiffure-maquillage-esthetique-soins-reservation>
+            <app-coiffure-maquillage-esthetique-soins-reservation *ngSwitchCase='categoryLabelEnum.ESTHETIQUE' #reservationPrice
+            [adultsNumber]='adultsNumber' [enfantsNumber]='enfantsNumber'
+            [companyDescriptionInfo]='companyDescriptionInfo'></app-coiffure-maquillage-esthetique-soins-reservation>
+            <app-coiffure-maquillage-esthetique-soins-reservation *ngSwitchCase='categoryLabelEnum.SOIN' #reservationPrice
+            [adultsNumber]='adultsNumber' [enfantsNumber]='enfantsNumber'
+            [companyDescriptionInfo]='companyDescriptionInfo'></app-coiffure-maquillage-esthetique-soins-reservation>
+            <app-lieu-traiteur-gateaux-reservation *ngSwitchCase='categoryLabelEnum.LIEU' #reservationPrice
+            [adultsNumber]='adultsNumber' [enfantsNumber]='enfantsNumber'
+            [companyDescriptionInfo]='companyDescriptionInfo'></app-lieu-traiteur-gateaux-reservation>
+            <app-lieu-traiteur-gateaux-reservation *ngSwitchCase='categoryLabelEnum.TRAITEUR' #reservationPrice
+            [adultsNumber]='adultsNumber' [enfantsNumber]='enfantsNumber'
+            [companyDescriptionInfo]='companyDescriptionInfo'></app-lieu-traiteur-gateaux-reservation>
+            <app-lieu-traiteur-gateaux-reservation *ngSwitchCase='categoryLabelEnum.GATEAU_MARIAGE' #reservationPrice
+            [adultsNumber]='adultsNumber' [enfantsNumber]='enfantsNumber'
+            [companyDescriptionInfo]='companyDescriptionInfo'></app-lieu-traiteur-gateaux-reservation>
+            <app-coach-reservation *ngSwitchCase='categoryLabelEnum.COACH' #reservationPrice
+            [adultsNumber]='adultsNumber' [enfantsNumber]='enfantsNumber'
+            [companyDescriptionInfo]='companyDescriptionInfo'></app-coach-reservation>
+            <app-animateur-enfant-reservation *ngSwitchCase='categoryLabelEnum.ANIMATEUR_ENFANTS' #reservationPrice
+            [adultsNumber]='adultsNumber' [enfantsNumber]='enfantsNumber'
+            [companyDescriptionInfo]='companyDescriptionInfo'></app-animateur-enfant-reservation>
+            <app-officiant-reservation *ngSwitchCase='categoryLabelEnum.OFFICIANT' #reservationPrice
+            [adultsNumber]='adultsNumber' [enfantsNumber]='enfantsNumber'
+            [companyDescriptionInfo]='companyDescriptionInfo'></app-officiant-reservation>
+            <app-decorateur-fleuriste-reservation *ngSwitchCase='categoryLabelEnum.DECORATUER' #reservationPrice
+            [adultsNumber]='adultsNumber' [enfantsNumber]='enfantsNumber'
+            [companyDescriptionInfo]='companyDescriptionInfo'></app-decorateur-fleuriste-reservation>
+            <app-decorateur-fleuriste-reservation *ngSwitchCase='categoryLabelEnum.FLEURISTE' #reservationPrice
+            [adultsNumber]='adultsNumber' [enfantsNumber]='enfantsNumber'
+            [companyDescriptionInfo]='companyDescriptionInfo'></app-decorateur-fleuriste-reservation>
+            <app-decorateur-fleuriste-reservation *ngSwitchCase='categoryLabelEnum.DJ' #reservationPrice
+            [adultsNumber]='adultsNumber' [enfantsNumber]='enfantsNumber'
+            [companyDescriptionInfo]='companyDescriptionInfo'></app-decorateur-fleuriste-reservation>
+        </div>
+        <div fxLayout fxLayoutAlign="center" fxFlex>
+            <button mat-flat-button color="primary" (click)='submitBooking()'
+                class="reservationBtn">Demande de réservation</button>
+        </div>
+        <div fxLayout="column">
+            <mat-divider class="divider"></mat-divider>
+            <div fxLayout fxLayoutAlign="center" style="padding: 0 20px;">
+                <div fxFlex=13>
+                    <img src="assets/images/axa_logo.jpg" style="width:30px; height:30px;" />
+                </div>
+                <div class="axaText">
+                    <span class="axasubtext">En partenariat avec AXA</span> <br>
+                    <span>La platefrome est assurée jusqu'à 9M€.</span>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</mat-card>

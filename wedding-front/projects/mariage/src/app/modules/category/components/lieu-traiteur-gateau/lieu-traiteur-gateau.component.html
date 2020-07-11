@@ -1,0 +1,656 @@
+<div style="width: 95%;margin: auto">
+
+  <form [formGroup]="filterForm" (ngSubmit)="submit()" enctype="multipart/form-data">
+    <div
+      fxLayout="column" fxLayoutGap="1rem" fxLayoutAlign="start space-evenly"
+      class="btn-container" [ngClass.lt-md]="{'btn-container--hidden-search-bar':hiddenSearchbar}">
+
+      <div fxLayout="column">
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>verified providers</mat-label>
+              <span translate>a selection of providers verified according to quality criteria</span>
+            </section>
+            <mat-slide-toggle style="float: right" color="primary"
+                              formControlName="verifiedProvider"></mat-slide-toggle>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div fxLayout="column">
+          <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common">
+            <section fxLayout="column">
+              <mat-label class="bold" translate>100% secure services without down payment</mat-label>
+              <span translate>professionals who agree to receive the full payment after completion of the service</span>
+            </section>
+            <mat-slide-toggle style="float: right" color="primary"
+                              formControlName="securePayment"></mat-slide-toggle>
+          </div>
+          <mat-divider [fxShow]="showMore"></mat-divider>
+        </div>
+        <div fxLayout="row" fxLayoutGap="1rem" fxLayoutAlign="space-between start" class="spacing spacing-common"
+             [fxShow]="showMore">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>top rated providers</mat-label>
+            <span translate>display only the providers with the best scores, ie a score higher than 3/5</span>
+          </section>
+          <mat-slide-toggle color="primary"  formControlName="topRatedProviders"></mat-slide-toggle>
+        </div>
+
+        <a class="view-more" (click)="showMore=!showMore">
+          <span translate [fxHide]="showMore">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="showMore">keyboard_arrow_down</mat-icon>
+
+          <span translate [fxShow]="showMore">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="showMore">keyboard_arrow_up</mat-icon>
+        </a>
+        <mat-divider></mat-divider>
+
+      </div>
+
+      <div fxLayout="column" formGroupName="categories">
+        <mat-label translate style="font-weight: bold">Proposed services</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="lieu">
+            <span translate>place of reception</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="traiteur">
+            <span translate>caterer</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="gateaumariage">
+            <span translate>wedding cake</span>
+          </mat-checkbox>
+        </section>
+      </div>
+      <mat-divider></mat-divider>
+
+      <div fxLayout="column" *ngIf="lieu" formGroupName="lieu_typeDeLieu">
+        <mat-label translate style="font-weight: bold">types of place</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="auberge">
+            <span translate>hostel</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="domaine">
+            <span translate>field</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="chateau">
+            <span translate>castle</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="salle_des_fetes">
+            <span translate>reception room</span>
+          </mat-checkbox>
+        </section>
+        <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="lieuTypeDeLieuShow">
+          <mat-checkbox color="primary" class="checkbox" formControlName="bateau">
+            <span translate>Bateau</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="hotel">
+            <span translate>Hôtel</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="peniche">
+            <span translate>Péniche</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="restaurant">
+            <span translate>Restaurant</span>
+          </mat-checkbox>
+        </section>
+        <a class="view-more" (click)="lieuTypeDeLieuShow=!lieuTypeDeLieuShow">
+          <span translate [fxHide]="lieuTypeDeLieuShow">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="lieuTypeDeLieuShow">keyboard_arrow_down</mat-icon>
+
+          <span translate [fxShow]="lieuTypeDeLieuShow">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="lieuTypeDeLieuShow">keyboard_arrow_up</mat-icon>
+        </a>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu" formGroupName="lieu_capaciteInvites">
+        <mat-label translate style="font-weight: bold">guest capacity</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="lt50">
+            <span translate>less than 50 guests</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lt120gt51">
+            <span translate>between 51 and 120 guests</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lt200gt121">
+            <span translate>between 121 and 200 guests</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="gt201">
+            <span translate>greater than 201 guests</span>
+          </mat-checkbox>
+        </section>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu">
+        <mat-label translate style="font-weight: bold">types of spaces</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="lieu_salleDeReception">
+            <span translate>reception room</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lieu_pisteDeDense">
+            <span translate>dance floor</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lieu_terrasse">
+            <span translate>terrace</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lieu_jardin">
+            <span translate>garden</span>
+          </mat-checkbox>
+        </section>
+        <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="lieuTypesOfSpacesShow">
+          <mat-checkbox color="primary" class="checkbox" formControlName="lieu_chambrePourLesMariee">
+            <span translate>Chambre pour la mariée</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lieu_cuisinePourLeTraiteur">
+            <span translate>Cuisine pour le traiteur</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lieu_chapiteau">
+            <span translate>Chapiteau</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lieu_parking">
+            <span translate>Parking</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lieu_tente">
+            <span translate>Tente</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lieu_hebergementInvites">
+            <span translate>Hébergement invités</span>
+          </mat-checkbox>
+        </section>
+        <a class="view-more" (click)="lieuTypesOfSpacesShow=!lieuTypesOfSpacesShow">
+          <span translate [fxHide]="lieuTypesOfSpacesShow">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="lieuTypesOfSpacesShow">keyboard_arrow_down
+          </mat-icon>
+
+          <span translate [fxShow]="lieuTypesOfSpacesShow">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="lieuTypesOfSpacesShow">keyboard_arrow_up
+          </mat-icon>
+        </a>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu" formGroupName="lieu_situationGeographique">
+        <mat-label translate style="font-weight: bold">geographic location</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="sur_la_plage">
+            <span translate>on the beach</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="pres_de_la_mer">
+            <span translate>near the sea</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="a_la_montagne">
+            <span translate>at the mountain</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="en_ville">
+            <span translate>En ville</span>
+          </mat-checkbox>
+        </section>
+        <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="lieuSituationGeographiqueShow">
+          <mat-checkbox color="primary" class="checkbox" formControlName="a_la_sortie_de_la_ville">
+            <span translate>À la sortie de la ville</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="a_la_campagne">
+            <span translate>À la campagne</span>
+          </mat-checkbox>
+        </section>
+        <a class="view-more" (click)="lieuSituationGeographiqueShow=!lieuSituationGeographiqueShow">
+          <span translate [fxHide]="lieuSituationGeographiqueShow">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="lieuSituationGeographiqueShow">keyboard_arrow_down</mat-icon>
+
+          <span translate [fxShow]="lieuSituationGeographiqueShow">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="lieuSituationGeographiqueShow">keyboard_arrow_up</mat-icon>
+        </a>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu" formGroupName="lieu_typeReception">
+        <mat-label translate style="font-weight: bold">possible receptions</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="vin_honneur">
+            <span translate>wine reception</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="reception">
+            <span translate>reception</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="cocktail">
+            <span translate>cocktail</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="buffet">
+            <span translate>buffet</span>
+          </mat-checkbox>
+        </section>
+        <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="lieuTypeReceptionShow">
+          <mat-checkbox color="primary" class="checkbox" formControlName="diner">
+            <span translate>Dîner</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="aperitif">
+            <span translate>Apéritif</span>
+          </mat-checkbox>
+        </section>
+        <a class="view-more" (click)="lieuTypeReceptionShow=!lieuTypeReceptionShow">
+          <span translate [fxHide]="lieuTypeReceptionShow">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="lieuTypeReceptionShow">keyboard_arrow_down</mat-icon>
+
+          <span translate [fxShow]="lieuTypeReceptionShow">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="lieuTypeReceptionShow">keyboard_arrow_up</mat-icon>
+        </a>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu" formGroupName="lieu_utilisationDuLieu">
+        <mat-label translate style="font-weight: bold">use of the place</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="interieur_et_exterieur">
+            <span translate>inside and outside</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="interieur_seul">
+            <span translate>interior only</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="exterieur_seul">
+            <span translate>outside only</span>
+          </mat-checkbox>
+
+        </section>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu" formGroupName="lieu_configurationDeLaReception">
+        <mat-label translate style="font-weight: bold">reception configuration</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="assis_et_debout">
+            <span translate>sitting and Standing</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="debout_seul">
+            <span translate>standing alone</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="assis_seul">
+            <span translate>sitting alone</span>
+          </mat-checkbox>
+        </section>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu" formGroupName="lieu_heureMinDeDebut">
+        <mat-label translate style="font-weight: bold">duration of the rental</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="lt5">
+            <span translate>less than 5h</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lt10gt6">
+            <span translate>between 6 and 10h</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lt18gt11">
+            <span translate>between 11 and 18h</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox">
+            <span translate>24h (all day)</span>
+          </mat-checkbox>
+        </section>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu" formGroupName="lieu_limiteHoraireDuree">
+        <mat-label translate style="font-weight: bold">time limit to be respected</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="lt0gt0">
+            <span translate>no limit</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lt2gt1">
+            <span translate>1am</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="lt3gt2">
+            <span translate>2am</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="gt3">
+            <span translate>3am</span>
+          </mat-checkbox>
+        </section>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>suitable for people with reduced mobility</mat-label>
+            <span translate>check the option if you want to display only places that are suitable for people with reduced mobility</span>
+          </section>
+          <mat-slide-toggle formControlName="lieu_adaptabiliteMobiliteReduite" color="primary"></mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>guest accommodation service</mat-label>
+            <span translate>check the option if you want to show only places that offer accommodation for guests</span>
+          </section>
+          <mat-slide-toggle formControlName="lieu_hebergementInvites" color="primary"></mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>hide the places that impose the catering service</mat-label>
+            <span translate>check the option if you want to display only the places that do not impose the catering service</span>
+          </section>
+          <mat-slide-toggle formControlName="lieu_lieuSansServiceTraiteur" color="primary"></mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>hide the places that impose the wedding cake service</mat-label>
+            <span translate>check the option if you want to display only places that do not impose the wedding cake service</span>
+          </section>
+          <mat-slide-toggle formControlName="lieu_lieuSansServiceGateau" color="primary"></mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>hide the places that impose the service photographer and / or
+              videographer
+            </mat-label>
+            <span translate>check the option if you want to display only places that do not require the photographer / videographer service</span>
+          </section>
+          <mat-slide-toggle formControlName="lieu_lieuSansServicePhotographeVideaste"
+                            color="primary"></mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>hide the places that impose the service Dj (Music)</mat-label>
+            <span translate>check this option if you want to show only places that do not require DJ service</span>
+          </section>
+          <mat-slide-toggle formControlName="lieu_lieuSansServiceMusic" color="primary"></mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>hide the places that impose the decoration service, flowers, etc.
+            </mat-label>
+            <span
+              translate>check the option if you want to display only places that do not require service decoration</span>
+          </section>
+          <mat-slide-toggle formControlName="lieu_lieuSansServiceDecoration" color="primary"></mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>decoration service</mat-label>
+            <span
+              translate>check the option if you want to display only the places offering the decoration service</span>
+          </section>
+          <mat-slide-toggle formControlName="lieu_decoration" color="primary"></mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>dishes and cutlery</mat-label>
+            <span translate>check the option if you want to display only the places that offer the dishes and cutlery service</span>
+          </section>
+          <mat-slide-toggle formControlName="lieu_laviselleEtCouvert" color="primary"></mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="lieu">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>draped table</mat-label>
+            <span translate>check the option if you want to display only places that offer table draped service</span>
+          </section>
+          <mat-slide-toggle formControlName="lieu_drapeDeTable" color="primary"></mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <!-- traiteur -->
+      <div fxLayout="column" *ngIf="traiteur" formGroupName="traiteur_specialiteCuisine">
+        <mat-label translate style="font-weight: bold">caterer</mat-label>
+        <br>
+        <mat-label translate style="font-weight: bold">cooking specialties</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="francaise">
+            <span translate>french</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="mediterraneenne">
+            <span translate>mediterranean</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="italienne">
+            <span translate>italian</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="americaine">
+            <span translate>american</span>
+          </mat-checkbox>
+        </section>
+        <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="traiteurSpecialiteCuisineShow">
+          <mat-checkbox color="primary" class="checkbox" formControlName="asiatique">
+            <span translate>Asiatique</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="indienne">
+            <span translate>Indienne</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="barbecue">
+            <span translate>Barbecue</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="healthy_saine">
+            <span translate>Healthy/Saine</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="mexicaine_latine">
+            <span translate>Mexicaine/Latine</span>
+          </mat-checkbox>
+        </section>
+        <a class="view-more" (click)="traiteurSpecialiteCuisineShow=!traiteurSpecialiteCuisineShow">
+          <span translate [fxHide]="traiteurSpecialiteCuisineShow">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="traiteurSpecialiteCuisineShow">keyboard_arrow_down</mat-icon>
+
+          <span translate [fxShow]="traiteurSpecialiteCuisineShow">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="traiteurSpecialiteCuisineShow">keyboard_arrow_up</mat-icon>
+        </a>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="traiteur" formGroupName="traiteur_niveauElaboration">
+        <mat-label translate style="font-weight: bold">level of elaboration</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="cuisine_brut">
+            <span translate>raw cuisine</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="cuisine_simple">
+            <span translate>simple kitchen</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="cuisine_semi_gastronomique">
+            <span translate>semi gastronomic cuisine</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="cuisine_gastronomique">
+            <span translate>gastronomic cooking</span>
+          </mat-checkbox>
+        </section>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="traiteur" formGroupName="traiteur_specificiteReligieuses">
+        <mat-label translate style="font-weight: bold">religious specificities</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="adapte_au_client">
+            <span translate>fits the customer</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="casher">
+            <span translate>kosher</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="halal">
+            <span translate>helal</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="vegetarienne">
+            <span translate>vegetarian</span>
+          </mat-checkbox>
+        </section>
+        <br>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="traiteur">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>wine service / Cocktail / Buffet</mat-label>
+            <span translate>show only caterers who offer the service of honor wine / cocktail / buffet</span>
+          </section>
+          <mat-slide-toggle formControlName="traiteur_vinHonneurCocktailBuffet" color="primary"></mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="traiteur">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>dinner service</mat-label>
+            <span translate>show only caterers who offer Dinner service</span>
+          </section>
+          <mat-slide-toggle formControlName="traiteur_diner" color="primary"></mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <!--<div fxLayout="column" *ngIf="traiteur">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>beverage service</mat-label>
+            <span translate>show only caterers who offer alcoholic and non-alcoholic beverages</span>
+          </section>
+          <mat-slide-toggle formControlName="traiteur_boissonAlcooliseeEtNonAlcoolise"
+                            color="primary"></mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
+      </div>-->
+
+      <div fxLayout="column" *ngIf="traiteur">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>corkage</mat-label>
+            <span translate>hide the caterers who propose the cork right</span>
+          </section>
+          <mat-slide-toggle formControlName="traiteur_DroitDeBouchon" color="primary"></mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div fxLayout="column" *ngIf="traiteur">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="1rem" class="spacing">
+          <section fxLayout="column">
+            <mat-label class="bold" translate>room service</mat-label>
+            <span translate>check the option if you want to show only places that offer room service</span>
+          </section>
+          <mat-slide-toggle formControlName="traiteur_serviceEnSalle" color="primary"></mat-slide-toggle>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+
+      <!-- wedding cake -->
+      <div fxLayout="column" *ngIf="gateaumariage" formGroupName="gateaumariage_gateaux">
+        <mat-label translate style="font-weight: bold">wedding cake</mat-label>
+        <br>
+        <section fxLayout="row wrap" fxLayoutAlign="start center">
+          <mat-checkbox color="primary" class="checkbox" formControlName="nakedCake">
+            <span translate>cake</span>
+          </mat-checkbox>
+          <mat-checkbox color="primary" class="checkbox" formControlName="weddingCake">
+            <span translate>wed cake</span>
+          </mat-checkbox>
+        </section>
+        <section fxLayout="row wrap" fxLayoutAlign="start center" [fxShow]="gateaumariageGateauxShow">
+          <mat-checkbox color="primary" class="checkbox" formControlName="vintageChic">
+            <span translate>vintage chic</span>
+          </mat-checkbox>
+        </section>
+        <a class="view-more" (click)="gateaumariageGateauxShow=!gateaumariageGateauxShow">
+          <span translate [fxHide]="gateaumariageGateauxShow">view more questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxHide]="gateaumariageGateauxShow">keyboard_arrow_down
+          </mat-icon>
+
+          <span translate [fxShow]="gateaumariageGateauxShow">view less questions</span>
+          <mat-icon style="transform: translateY(30%)"
+                    [fxShow]="gateaumariageGateauxShow">keyboard_arrow_up
+          </mat-icon>
+        </a>
+        <mat-divider></mat-divider>
+      </div>
+
+
+    </div>
+
+    <div
+      fxFlexAlign.lt-md="center" fxLayout="row wrap"  fxLayout.lt-md="column" fxLayoutAlign="end center" fxLayoutGap="1rem"
+      class="group-btn full">
+      <button class="form-input full" mat-raised-button type="button" (click)="cancelForm()">
+        <span translate>cancel</span>
+      </button>
+      <button class="form-input full"  mat-raised-button type="button" (click)="reset()">
+        <span translate>delete selected filters</span>
+      </button>
+      <button class="form-input full"  mat-raised-button color="primary" type="submit">
+        <span style="color: white" translate>show results</span>
+      </button>
+    </div>
+  </form>
+
+</div>

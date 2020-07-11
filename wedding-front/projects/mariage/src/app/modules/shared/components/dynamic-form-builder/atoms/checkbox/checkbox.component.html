@@ -1,0 +1,128 @@
+<div [formGroup]="form" *ngIf='form'>
+
+  <div fxLayout="column" style=" !important">
+
+    <mat-label *ngIf='field.type === fieldTypeEnum.CHECK_BOX || field.type === fieldTypeEnum.CHECK_BOX_NUMBER'
+               class="cnl-title">
+      {{field.displayName|lowercase|translate|capitalizeFirstLetter}}
+    </mat-label>
+
+    <mat-label *ngIf='field.label && field.type === fieldTypeEnum.CHECK_BOX || field.type === fieldTypeEnum.CHECK_BOX_NUMBER'
+      class="cnl-label">
+      {{field.label|lowercase|translate|capitalizeFirstLetter}}
+    </mat-label>
+
+    <div fxLayout="column" *ngIf='field.type === fieldTypeEnum.TOGGLE_CHECKBOX_NUMBER && disableOptions'>
+
+      <mat-label class="">
+        3rd
+        {{field.numberCheckBoxOptions.displayName|lowercase|translate|capitalizeFirstLetter}}
+      </mat-label>
+
+      <mat-label *ngIf='field.numberCheckBoxOptions.label' class="">
+        4th
+        {{field.numberCheckBoxOptions.label|lowercase|translate|capitalizeFirstLetter}}
+      </mat-label>
+
+    </div>
+
+  </div>
+
+
+  <mat-form-field  appearance="none" class="checkbox-dfb mt-0" formGroupName="{{field.name}}">
+
+    <input matInput [hidden]='true'>
+
+    <div>
+
+      <div  *ngIf='field.type === fieldTypeEnum.CHECK_BOX' fxLayout="row wrap">
+        <div *ngFor="let opt of field.options; let i=index" style="width:50%;margin-bottom: 1rem"
+        [ngClass]='{"hide": !showMoreOptions && i>=displayItemsLimit}'>
+          <mat-checkbox formControlName="{{opt.key}}" color='primary' [disabled]='!disableOptions'
+              *ngIf='opt.key && i<displayItemsLimit' (change)='checkBoxChanged($event.checked,opt.key)'>
+            <span class="checkbox-label">{{opt.label|lowercase|translate|capitalizeFirstLetter}}</span>
+          </mat-checkbox>
+
+          <mat-checkbox formControlName="{{opt.key}}" color='primary' [disabled]='!disableOptions'
+              *ngIf='opt.key && showMoreOptions && i>=displayItemsLimit' (change)='checkBoxChanged($event.checked,opt.key)'>
+            <span class="checkbox-label">{{opt.label|lowercase|translate|capitalizeFirstLetter}}</span>
+          </mat-checkbox>
+        </div>
+      </div>
+
+      <div *ngIf='field.type === fieldTypeEnum.TOGGLE_CHECKBOX_NUMBER && disableOptions'
+           formGroupName="{{field.numberCheckBoxOptions.name}}"
+           fxLayout="row wrap" fxLayoutAlign="space-between center">
+
+        <div *ngFor="let opt of field.numberCheckBoxOptions.options; let i=index" style="width:50%;margin-bottom: 1rem">
+              <mat-checkbox formControlName="{{opt.key}}" color='primary' [disabled]='!disableOptions'
+              *ngIf='opt.key && i<displayItemsLimit' (change)='checkBoxChanged($event.checked,opt.key)'>
+                <span class="checkbox-label">{{opt.label|lowercase|translate|capitalizeFirstLetter}}</span>
+              </mat-checkbox>
+              <mat-checkbox formControlName="{{opt.key}}" color='primary' [disabled]='!disableOptions'
+              *ngIf='opt.key && showMoreOptions && i>=displayItemsLimit' (change)='checkBoxChanged($event.checked,opt.key)'>
+                <span class="checkbox-label">{{opt.label|lowercase|translate|capitalizeFirstLetter}}</span>
+              </mat-checkbox>
+              </div>
+
+      </div>
+
+      <div *ngIf='field.type === fieldTypeEnum.CHECK_BOX_NUMBER && disableOptions'
+           formGroupName="{{field.name}}"
+           fxLayout="row wrap" fxLayoutAlign="space-between center">
+
+        <div *ngFor="let opt of field.checkboxNumberOptions; let i=index" style="width:50%;margin-bottom: 1rem">
+          <mat-checkbox formControlName="{{opt.key}}" color='primary' [disabled]='!disableOptions'
+              *ngIf='opt.key && i<displayItemsLimit' (change)='checkBoxChanged($event.checked,opt.key)'>
+            <span class="checkbox-label">{{opt.label|lowercase|translate|capitalizeFirstLetter}}</span>
+          </mat-checkbox>
+              <mat-checkbox formControlName="{{opt.key}}" color='primary' [disabled]='!disableOptions'
+              *ngIf='opt.key && showMoreOptions && i>=displayItemsLimit' (change)='checkBoxChanged($event.checked,opt.key)'>
+                <span class="checkbox-label">{{opt.label|lowercase|translate|capitalizeFirstLetter}}</span>
+              </mat-checkbox>
+          <app-number [numberOption]='opt.numberOpt' [calledFromCheckBox]='true' [optKey]='opt.key'
+                      [disableOptions]='opt.value' [field]="field" [form]="form" *ngIf='opt.key && i<displayItemsLimit'>
+          </app-number>
+          <app-number [numberOption]='opt.numberOpt' [calledFromCheckBox]='true' [optKey]='opt.key'
+                      [disableOptions]='opt.value' [field]="field" [form]="form"
+                      *ngIf='opt.key && showMoreOptions && i>=displayItemsLimit'>
+          </app-number>
+              </div>
+        <button mat-button color='primary' (click)="showMoreOptions = !showMoreOptions"
+                *ngIf='field.checkboxNumberOptions.length && field.checkboxNumberOptions?.length > displayItemsLimit'>
+              {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+              <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+              <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+              </button>
+      </div>
+
+      <div>
+
+        <div *ngIf='field.type === fieldTypeEnum.CHECK_BOX'>
+                <button mat-button color='primary' (click)='showMoreOptions = !showMoreOptions'
+                *ngIf='field.options.length > displayItemsLimit'>
+                {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                <mat-icon color='primary' *ngIf='!showMoreOptions'>keyboard_arrow_down</mat-icon>
+                <mat-icon color='primary' *ngIf='showMoreOptions'>keyboard_arrow_up</mat-icon>
+                </button>
+              </div>
+
+        <div *ngIf='field.showAddFieldBtn'>
+          <button mat-stroked-button (click)='addOption.emit(field)' class="ajout-btn">
+                <mat-icon style='margin-bottom: 0.1rem !important; font-size: 20px !important;'>add</mat-icon>
+          </button>
+          &nbsp;
+          <mat-label class='add-btn-label'>{{'Add'|lowercase|translate|capitalizeFirstLetter}}</mat-label>
+        </div>
+
+      </div>
+
+    </div>
+
+  </mat-form-field>
+  <div class="text-danger" *ngIf="field.type === fieldTypeEnum.CHECK_BOX && !showErrMsg" translate>
+    {{field.displayName|lowercase|translate|capitalizeFirstLetter}} {{'is required'|translate}}
+  </div>
+  <mat-divider style=" !important"></mat-divider>
+</div>
+

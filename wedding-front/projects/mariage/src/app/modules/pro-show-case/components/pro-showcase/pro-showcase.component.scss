@@ -1,0 +1,285 @@
+$marginLeft: 1em;
+$marginTop: 1.5em;
+$marginRight: 1em;
+$marginBottom: 1.5em;
+$paddingBottom: 2em;
+$paddingTop: 1em;
+$grayColor: #999999;
+$primary: #F17082;
+$secondary : #ffa9b5;
+$black48:#484848;
+
+.discription-text{
+    margin: 30px 0 25px 0;
+    font-family: Arial;
+    color: $black48;
+    font-size: 15px;
+    line-height: 1.47;
+}
+.image-gallerie{
+    margin-top: 30px;
+}
+.image-container{
+    height: 130px;
+    margin-bottom: 3px;
+}
+.image-container img{
+    height: 100%;
+    width: 100%;
+
+}
+.margin-right {
+    margin-right: $marginRight;
+}
+
+.margin-left {
+    margin-left: $marginLeft;
+}
+.margin-bottom {
+    margin-bottom: $marginBottom;
+}
+
+.margin-top {
+    margin-top: $marginTop;
+}
+.inline-container-4 {
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.number-control-btn {
+    width: 2.5em !important;
+    height: 2.5em !important;
+    background-color: #FAFAFA;
+    transition: none !important;
+    box-shadow: none !important;
+    border: solid thin $primary;
+}
+
+.number-control-btn-remove {
+    opacity: .6;
+}
+
+.number-control-btn :disabled,
+button[disabled] {
+    border: solid thin $grayColor;
+    opacity: .6;
+}
+.position-in-center {
+    position: relative;
+    right: -1.5px;
+    top: -1.5px;
+}
+.tab{
+    position: relative;
+    z-index: 10;
+}
+.tab-z-index{
+    position: relative;
+    z-index: 10000;
+}
+.formTexture{
+    font-size: 15px;
+}
+.boldText{
+    font-size: 15px;
+    color: #000000;
+}
+.bold {
+    font-weight: 600;
+}
+.greyText{
+    font-size: 13.5px;
+    line-height: 2.28;
+    color: #606060;
+}
+.lightGreyText{
+    font-size: 13.5px;
+    line-height: 1.48;
+    color: #898989;
+}
+.accent-title{
+    background-color: $primary;
+    color: white;
+    border-radius: 13.5px;
+    padding: 6px 15px;
+    letter-spacing: 1px;
+    font-size: 15px;
+}
+.light-title{
+    background-color: $secondary;
+    color: black;
+    border-radius: 13.5px;
+    padding: 6px 15px;
+    letter-spacing: 1px;
+    font-size: 15px;
+}
+.divided-title{
+    min-height: 60px;
+}
+.half-divider{
+    height: 2px;
+    background-color: $secondary;
+    width: 100%;
+}
+.container{
+    width: 1425px;
+}
+.reservation-container{
+    position: fixed;
+    top: 100px;
+    right: 12%;
+    z-index: 10;
+}
+.content-container{
+    position: relative;
+    left: 12%;
+}
+@media screen and (max-width: 959px) {
+    .container{
+        min-width: auto;
+        width: 100%;
+    }
+    .reservation-container{
+        position: relative;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        margin: 0 auto;
+    }
+    .content-container{
+        position: relative;
+        bottom: 0;
+        left: 0;
+        margin-right: 0 !important;
+        padding: 0 10px;
+    }
+}
+@media screen and (min-width:960px){
+    .reservationBox{
+        max-height: calc(100vh - 150px);
+        //overflow-y: auto;
+    }
+}
+.initialPrice .from {
+    font-size: 13.5px;
+    color: $black48;
+  }
+  
+.initialPrice .price {
+    font-size: 18px;
+    font-weight: bold;
+    color: $black48;
+  }
+.checkbox{
+    line-height: 16px;
+    font-size: 15px;
+    color: #000000;
+    padding-left: 3px;
+    padding-top: 2px;
+}
+.greyText15{
+    font-size: 15px;
+    color: $black48;
+}
+.metierTitle{
+    padding: 0 20px;
+}
+.margin-15U30D{
+    margin: 15px 0 30px 0;
+}
+.margin-20U40D{
+    margin: 20px 0 40px 0;
+}
+.prestationContainerBig{
+    height: 8rem;
+    margin-top: 15px;
+}
+.container4rem{
+    height: 4rem;
+    margin-top: 10px;
+}
+.mrTop10{
+    margin-top: 10px;
+}
+.margin30UD0LR{
+    margin: 30px 0;
+}
+.matdividerForcedHeight{
+    margin: 1em 0;
+    height: 2px;
+}
+.titleSpacing{
+    margin: 30px 0
+}
+.margin10U30D{
+    margin: 10px 0 30px 0
+}
+.margin40U40D{
+    margin: 40px 0;
+}
+.margin15U15D{
+    margin: 15px 0;
+}
+.margin10U10D{
+    margin: 10px 0;
+}
+.margin20U20D{
+    margin: 20px 0;
+}
+.padding10U10D{
+    padding: 10px 0;
+}
+.margin1rem{
+    margin: 1rem 0;
+}
+.marginTop1rem{
+    margin-top: 1rem;
+}
+.padding0{
+    padding: 0;
+}
+.font15andhalf{
+    font-size: 15.5px;
+}
+.bold18{
+    font-weight: bold;
+    font-size: 18px
+}
+.margin10L{
+    margin-left: 10px;
+}
+.margin20T{
+    margin-top: 20px;
+}
+.margin40T{
+    margin-top: 40px;
+}
+.margin30U45D{
+    margin: 30px 0 45px 0;
+}
+.margin30D{
+    margin-bottom: 30px;
+}
+.margin20U{
+    margin-top: 20px;
+}
+.height8rem{
+    height: 8rem;
+}
+.margin15R{
+    margin-right: 15px;
+}
+.margin60L30T{
+   margin-left: 60px;
+   margin-top: 30px;
+}
+.showmoreBtnComments{
+    padding: 0;
+    font-size: 16px;
+}
+.arrowsComments{
+    position: relative;top: 6px;left: 6px;
+}

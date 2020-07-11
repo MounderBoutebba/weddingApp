@@ -1,0 +1,20 @@
+<div class="discription-text">
+    <p>
+        {{description.preview}} <span *ngIf="textHidden">...</span>
+    <span *ngIf ="!textHidden">{{description.full}}</span>
+    </p>
+    
+</div>
+<button *ngIf="description.full" mat-button color='primary' style="padding: 0;font-size: 16px;" (click)="showMore()">
+        <div *ngIf ="textHidden">
+                <span translate >Afficher plus de détails</span>
+                <mat-icon color='primary' style="position: relative;top: 6px;left: 6px;">keyboard_arrow_down
+                </mat-icon>
+        </div>
+        <div *ngIf ="!textHidden">
+                <span translate >Afficher moins de détails</span>
+                <mat-icon color='primary' style="position: relative;top: 6px;left: 6px;">keyboard_arrow_up
+                </mat-icon>
+        </div>
+</button>
+<app-images-container [companyDescriptionInfo]='companyDescriptionInfo'></app-images-container>

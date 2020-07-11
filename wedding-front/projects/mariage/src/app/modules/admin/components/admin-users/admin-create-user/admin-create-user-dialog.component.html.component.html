@@ -1,0 +1,50 @@
+<form class="general-container" [formGroup]="userForm">
+    <div style="display: flex; flex-direction: column;">
+        <h2>Créer un utilisateur</h2>
+        <mat-form-field class="margin-bottom" *ngIf="!this.data">
+            <mat-label>Type d'utilisateur</mat-label>
+            <mat-select formControlName="role">
+                <mat-option value="client">
+                    <span translate>Client</span>
+                </mat-option>
+                <mat-option value="provider">
+                        <span translate>Provider</span>
+                </mat-option>
+                <mat-option value="admin">
+                    <span translate>Admin</span>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="margin-bottom">
+            <input matInput placeholder="Email" formControlName="email">
+        </mat-form-field>
+        <div formGroupName="phone" class="inline-container-1 margin-bottom">
+            <mat-form-field>
+                <mat-label>Indicatif</mat-label>
+                <mat-select formControlName="country">
+                    <mat-option value="+33">
+                        +33
+                    </mat-option>
+                    <mat-option value="+213">
+                        +213
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Numéro de téléphone" formControlName="phoneNumber">
+            </mat-form-field>
+        </div>
+        <mat-form-field class="margin-bottom" *ngIf="!this.data">
+            <mat-label translate>Connexion type</mat-label>
+            <mat-select formControlName="connectionType">
+                <mat-option *ngFor="let type of values();" [value]="type">
+                    {{type}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="margin-bottom" *ngIf="!this.data">
+            <input matInput type="password" placeholder="password" formControlName="password">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="onSaveUser($event)" [disabled]="userForm.invalid">Sauvegarder</button>
+    </div>
+</form>

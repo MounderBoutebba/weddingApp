@@ -1,0 +1,20 @@
+<div fxLayout='column' class="form" [formGroup]='form'>
+    <div fxLayout='row wrap' fxLayoutGap='3.625rem' class="input-wrapper">
+        <input matInput fxFlex='11.4375rem' placeholder="Renseignez votre adresse e-mail" type='email'
+        formControlName='email'>
+        <img src="/assets/icons/svg/user.svg" alt="user icon">
+    </div>
+    <mat-divider class="mat-divider"></mat-divider>
+
+    <div fxLayout='row wrap' fxLayoutGap='3.625rem' class="input-wrapper">
+        <input matInput fxFlex='11.4375rem' placeholder="Choissez un mot de passe" type='password'
+        formControlName='password'>
+        <img src="/assets/icons/svg/key.svg" alt="user icon">
+    </div>
+
+</div>
+<button class="log-in-div" fxLayout='column' fxLayoutAlign='center center' (click)='login()' [disabled]='!form.valid'>
+    <span>Se connecter</span>
+</button>
+<div class="sign-up-label">Vous avez pas déjà un compte ? <span (click)='signup.emit(true)'><u>S’inscrire</u></span></div>
+<div class="sign-up-sec-label">En vous inscrivant, vous reconnaissez avoir lu, compris et acceptez les <span><u>conditions d’utilisation</u></span>.</div>

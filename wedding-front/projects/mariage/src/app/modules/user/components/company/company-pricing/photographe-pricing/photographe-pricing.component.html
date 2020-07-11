@@ -1,0 +1,8 @@
+<h2 *ngIf="primaryComponent" style="font-size: 18.5px !important;">{{'Photograph'|lowercase|translate|titlecase}}</h2>
+<app-dynamic-form-builder [fields]="parsedCriteres" (addOption)='onAddOption($event)' *ngIf="showForm" #formBuilder></app-dynamic-form-builder>
+<h2 *ngIf="showVideastePricingComponent" style="font-size: 18.5px; color: black;">{{'Videographer'|lowercase|translate|titlecase}}</h2>
+<app-videaste-pricing *ngIf="showVideastePricingComponent" [criteres]="videasteInitCriteres"
+[primaryComponent]='false' #videastePricingComponent></app-videaste-pricing>
+<button type='button' mat-flat-button color='primary'
+class='submit-btn' [disabled]='!formBuilder.form.valid' (click)='formSubmitted()' *ngIf="showSubmitBtn" [ngClass]="{'hidden': !primaryComponent}">
+{{'Next' | lowercase | translate | titlecase}}</button>

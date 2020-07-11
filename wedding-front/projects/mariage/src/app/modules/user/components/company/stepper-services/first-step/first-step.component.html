@@ -1,0 +1,6 @@
+<app-dynamic-form-builder [fields]="fields" (addOption)='onAddOption($event)' #formBuilder></app-dynamic-form-builder>
+<button type='button' mat-flat-button color='primary'
+class='submit-btn' [disabled]='!formBuilder.form.valid' (click)='formSubmitted()' *ngIf="showSubmitBtn">
+{{'Next' | lowercase | translate | titlecase}}</button>
+  
+  

@@ -1,0 +1,997 @@
+<form class="formTexture">
+  <!-- prestation propose -->
+  <div class="mrTop10">
+    <span class="accent-title" translate>
+      Prestations proposés
+    </span>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="space-between">
+    <div *ngIf="isLieu" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=100>
+      <div class="margin30UD0LR">
+        <mat-checkbox color="primary" translate [checked]='lieuIsChecked'
+          (change)='initBookingObject($event.checked, traiteurIsChecked,gateauIsChecked)'><span
+          class="checkbox">Lieu de reception</span> </mat-checkbox>
+      </div>
+      <div *ngIf="isLieu && lieuIsChecked" class="margin10U10D"  fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex=47>
+          <div>
+            <span translate>Début de location</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab
+              (click)='timeInputChangeValue("lieu","decrement", "debutLocation", 15, companyDescriptionInfo?.criteres?.lieu_debutLocation?.heures)'
+              class='margin-right number-control-btn  margin-left'
+              [class.number-control-btn-remove]="bookingObject.lieu.debutLocation.heure === companyDescriptionInfo.criteres.lieu_debutLocation.heures
+              && bookingObject.lieu.debutLocation.min === companyDescriptionInfo.criteres.lieu_debutLocation.min"
+              [disabled]="bookingObject.lieu.debutLocation.heure === companyDescriptionInfo.criteres.lieu_debutLocation.heures
+              && bookingObject.lieu.debutLocation.min === companyDescriptionInfo.criteres.lieu_debutLocation.min">
+              <mat-icon
+                [ngStyle]="{'color' : bookingObject.lieu.debutLocation.heure === companyDescriptionInfo.criteres.lieu_debutLocation.heures
+                && bookingObject.lieu.debutLocation.min === companyDescriptionInfo.criteres.lieu_debutLocation.min ? '#999999' : '#F17082'}"
+                class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{bookingObject.lieu.debutLocation.heure | timeDisplay}}h{{bookingObject.lieu.debutLocation.min | timeDisplay}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='timeInputChangeValue("lieu","increment", "debutLocation", 15)'
+              [class.number-control-btn-remove]="bookingObject.lieu.debutLocation.heure === bookingObject.lieu.finLocation.heure - 1
+              && bookingObject.lieu.debutLocation.min === bookingObject.lieu.finLocation.min"
+              [disabled]="bookingObject.lieu.debutLocation.heure === bookingObject.lieu.finLocation.heure - 1
+              && bookingObject.lieu.debutLocation.min === bookingObject.lieu.finLocation.min"
+              [ngStyle]="{'color': bookingObject.lieu.debutLocation.heure === bookingObject.lieu.finLocation.heure - 1
+              && bookingObject.lieu.debutLocation.min === bookingObject.lieu.finLocation.min ? '#999999' : '#F17082'}">
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex=47>
+          <div>
+            <span translate>Fin de location</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab
+              (click)='timeInputChangeValue("lieu","decrement", "finLocation", 15, companyDescriptionInfo?.criteres?.lieu_debutLocation?.heures)'
+              class='margin-right number-control-btn  margin-left'
+              [class.number-control-btn-remove]="bookingObject.lieu.finLocation.heure === bookingObject.lieu.debutLocation.heure + 1
+              && bookingObject.lieu.finLocation.min === bookingObject.lieu.debutLocation.min"
+              [disabled]="bookingObject.lieu.finLocation.heure === bookingObject.lieu.debutLocation.heure + 1
+              && bookingObject.lieu.finLocation.min === bookingObject.lieu.debutLocation.min">
+              <mat-icon color='primary' class='position-in-center'
+              [ngStyle]="{'color': bookingObject.lieu.finLocation.heure === bookingObject.lieu.debutLocation.heure + 1
+              && bookingObject.lieu.finLocation.min === bookingObject.lieu.debutLocation.min ? '#999999' : '#F17082'}">remove</mat-icon>
+            </button>
+            <span matSuffix> {{bookingObject.lieu.finLocation.heure | timeDisplay}}h{{bookingObject.lieu.finLocation.min | timeDisplay}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='timeInputChangeValue("lieu","increment", "finLocation", 15)'
+              [class.number-control-btn-remove]="bookingObject.lieu.finLocation.heure === companyDescriptionInfo.criteres.lieu_limiteHoraire.heures
+              && bookingObject.lieu.finLocation.min === companyDescriptionInfo.criteres.lieu_limiteHoraire.min"
+              [disabled]="bookingObject.lieu.finLocation.heure === companyDescriptionInfo.criteres.lieu_limiteHoraire.heures
+              && bookingObject.lieu.finLocation.min === companyDescriptionInfo.criteres.lieu_limiteHoraire.min">
+              <mat-icon color='primary' class='position-in-center'
+              [ngStyle]="{'color' : bookingObject.lieu.finLocation.heure === companyDescriptionInfo.criteres.lieu_limiteHoraire.heures
+              && bookingObject.lieu.finLocation.min === companyDescriptionInfo.criteres.lieu_limiteHoraire.min ? '#999999' : '#F17082'}">add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+      <div class="margin30UD0LR">
+        <mat-checkbox color="primary" translate [checked]='traiteurIsChecked'
+          (change)='initBookingObject(lieuIsChecked, $event.checked,gateauIsChecked)'><span
+          class="checkbox">Traiteur</span> </mat-checkbox>
+      </div>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=47>
+      <div>
+        <mat-checkbox color="primary" translate [checked]='gateauIsChecked'
+          (change)='initBookingObject(lieuIsChecked, traiteurIsChecked,$event.checked)'><span
+          class="checkbox">Gateau</span> </mat-checkbox>
+      </div>
+    </div>
+  </div>
+  <mat-divider class="matdividerForcedHeight"></mat-divider>
+  <!-- fin prestation propose -->
+
+  <!-- lieu de reception -->
+  <!-- lieu title -->
+  <div *ngIf="isLieu && lieuIsChecked" fxLayout fxLayoutAlign="space-between center" class="divided-title">
+    <div class="half-divider"></div> <span  class="metierTitle">Lieu </span>
+    <div class="half-divider"></div>
+  </div>
+
+  <!-- espace disponible -->
+  <div *ngIf="isLieu && lieuIsChecked"  class="margin-20U40D">
+    <span class="accent-title" translate>Espaces disponibles</span>
+  </div>
+
+  <div *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_salleDeReception"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Salle de réception</span>
+      <br>
+      <span translate class="greyText">Réserver la salle de réception</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.lieu.salleDeReception'
+      (change)='toggleChange("lieu","salleDeReception", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_salleDeReception"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_pisteDeDense"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Piste de dance</span>
+      <br>
+      <span translate class="greyText">Réserver la piste de danse</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.lieu.pisteDeDense'
+      (change)='toggleChange("lieu","pisteDeDense", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_pisteDeDense"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_chambrePourLesMariee"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Chambre pour la mariée</span>
+      <br>
+      <span translate class="greyText">Réserver la chambre pour la mariée</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.lieu.chambrePourLesMariee'
+      (change)='toggleChange("lieu","chambrePourLesMariee", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_chambrePourLesMariee"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_cuisinePourLeTraiteur"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Cuisine pour le traiteur</span>
+      <br>
+      <span translate class="greyText">Réserver la cuisine pour le traiteur</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.lieu.cuisinePourLeTraiteur'
+      (change)='toggleChange("lieu","cuisinePourLeTraiteur", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_cuisinePourLeTraiteur"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_terrasse"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Terrasse</span>
+      <br>
+      <span translate class="greyText">Réserver la terasse</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.lieu.terrasse'
+      (change)='toggleChange("lieu","terrasse", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_terrasse" class="margin-bottom">
+  </mat-divider>
+
+  <div *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_jardin"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Jardin</span>
+      <br>
+      <span translate class="greyText">Réserver le jardin</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.lieu.jardin'
+      (change)='toggleChange("lieu","jardin", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_jardin" class="margin-bottom">
+  </mat-divider>
+
+  <div *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_chapiteau"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Chapiteau</span>
+      <br>
+      <span translate class="greyText">Réserver le chapiteau</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.lieu.chapiteau'
+      (change)='toggleChange("lieu","chapiteau", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_chapiteau"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_tente"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Tente</span>
+      <br>
+      <span translate class="greyText">Réserver la tente</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.lieu.tente'
+      (change)='toggleChange("lieu","tente", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_tente" class="margin-bottom">
+  </mat-divider>
+
+  <div *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_parking" fxLayout="column">
+    <div class="inline-container-4 margin-bottom">
+      <div>
+        <span translate class="boldText">Parking</span>
+        <br>
+        <span translate class="greyText">Réserver le parking</span>
+      </div>
+      <mat-slide-toggle color="primary" [checked]='bookingObject.lieu.parking'
+        (change)='toggleChange("lieu","parking", $event.checked)'></mat-slide-toggle>
+    </div>
+    <div *ngIf="bookingObject.lieu.parking" fxLayout="row" fxLayoutAlign="space-between center"
+       class="margin-15U30D">
+      <div fxFlexOffset=51>
+        <span translate>Nombre de places</span>
+      </div>
+      <div fxLayout fxLayoutAlign="center center">
+        <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+          (click)='numberInputChangeValue("lieu","decrement", "parkingNbrPlace", 1, 1)'
+          [class.number-control-btn-remove]="bookingObject.lieu.parkingNbrPlace == 1"
+          [disabled]="bookingObject.lieu.parkingNbrPlace == 1">
+          <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+        </button>
+        <span matSuffix> {{bookingObject.lieu.parkingNbrPlace}} </span>
+        <button mat-mini-fab class='margin-left number-control-btn'
+          (click)='numberInputChangeValue("lieu","increment", "parkingNbrPlace", 1)'
+          [class.number-control-btn-remove]="bookingObject.lieu.parkingNbrPlace == companyDescriptionInfo?.criteres?.lieu_parkingSurface"
+          [disabled]='bookingObject.lieu.parkingNbrPlace == companyDescriptionInfo?.criteres?.lieu_parkingSurface'>
+          <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <mat-divider *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_parking" class="margin-bottom">
+  </mat-divider>
+
+  <div *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_hebergementInvites" fxLayout="column">
+    <div class="inline-container-4 margin-bottom">
+      <div>
+        <span translate class="boldText">Hébergement invités</span>
+        <br>
+        <span translate class="greyText">Réserver un hébergement pour les invités</span>
+      </div>
+      <mat-slide-toggle color="primary" [checked]='bookingObject.lieu.hebergementInvites'
+        (change)='toggleChange("lieu","hebergementInvites", $event.checked)'></mat-slide-toggle>
+    </div>
+
+    <div class="margin30UD0LR" *ngIf="bookingObject.lieu.hebergementInvites" fxLayout="row wrap"
+      fxLayoutAlign="space-between center">
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex=47>
+        <div>
+          <span translate>Nombre de nuits.</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab
+            (click)='numberInputChangeValue("lieu","decrement", "hebergementInvitesNbrDeNuits", 1, 1)'
+            class='margin-right number-control-btn  margin-left'
+            [class.number-control-btn-remove]="bookingObject.lieu.hebergementInvitesNbrDeNuits == 1"
+            [disabled]="bookingObject.lieu.hebergementInvitesNbrDeNuits == 1">
+            <mat-icon
+              [ngStyle]="{'color' : bookingObject.lieu.hebergementInvitesNbrDeNuits == 1 ? '#999999' : '#F17082'}"
+              class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.lieu.hebergementInvitesNbrDeNuits}} </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+            (click)='numberInputChangeValue("lieu","increment", "hebergementInvitesNbrDeNuits", 1)'>
+            <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex=47>
+        <div>
+          <span translate>Nombre de perso.</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab
+            (click)='numberInputChangeValue("lieu","decrement", "hebergementInvitesNbrInvites", 1, 1)'
+            class='margin-right number-control-btn  margin-left'
+            [class.number-control-btn-remove]="bookingObject.lieu.hebergementInvitesNbrInvites == 1"
+            [disabled]="bookingObject.lieu.hebergementInvitesNbrInvites == 1">
+            <mat-icon
+              [ngStyle]="{'color' : bookingObject.lieu.hebergementInvitesNbrInvites == 1 ? '#999999' : '#F17082'}"
+              class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.lieu.hebergementInvitesNbrInvites}} </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+            [class.number-control-btn-remove]="bookingObject.lieu.hebergementInvitesNbrInvites == companyDescriptionInfo?.criteres?.lieu_hebergementInvitesCapacite"
+            [disabled]="bookingObject.lieu.hebergementInvitesNbrInvites == companyDescriptionInfo?.criteres?.lieu_hebergementInvitesCapacite"
+            (click)='numberInputChangeValueNbrInvHebergement("lieu","increment", "hebergementInvitesNbrInvites", 1,companyDescriptionInfo?.criteres?.lieu_hebergementInvitesCapacite)'>
+            <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-divider *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_hebergementInvites"
+    class="margin-bottom"></mat-divider>
+  <!-- fin espace disponible -->
+  <!-- prestations -->
+  <div *ngIf="isLieu && lieuIsChecked" class="margin40U40D">
+    <span class="accent-title" translate>Prestations</span>
+  </div>
+
+  <div *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_decoration"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Décoration</span>
+      <br>
+      <span translate class="greyText">Obtenir la prestation décoration du lieu de réception</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.lieu.decoration'
+      (change)='toggleChange("lieu","decoration", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_decoration"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_laviselleEtCouvert"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Vaisselle et Couverts</span>
+      <br>
+      <span translate class="greyText">Obtenir service location de la vaisselle et couverts</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.lieu.vaiselleEtCouvert'
+      (change)='toggleChange("lieu","vaiselleEtCouvert", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_laviselleEtCouvert"
+    class="margin-bottom"></mat-divider>
+
+  <div *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_drapeDeTable"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Drapé de table</span>
+      <br>
+      <span translate class="greyText">Obtenir le service drapé de table pour les tables pour la
+        réception</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.lieu.drapeDeTable'
+      (change)='toggleChange("lieu","drapeDeTable", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isLieu && lieuIsChecked && companyDescriptionInfo?.criteres?.lieu_drapeDeTable"
+    class="margin-bottom"></mat-divider>
+  <!--fin prestations -->
+  <!-- fin lieu de reception -->
+
+  <!-- Traiteur -->
+  <!-- Traiteur title -->
+  <div *ngIf="isTraiteur && traiteurIsChecked" fxLayout fxLayoutAlign="space-between center" class="divided-title">
+    <div class="half-divider"></div> <span  class="metierTitle">Traiteur </span>
+    <div class="half-divider"></div>
+  </div>
+  <!-- cocktail buffet -->
+  <div *ngIf="isTraiteur && traiteurIsChecked && companyDescriptionInfo.criteres.traiteur_vinHonneurCocktailBuffet.value"
+  fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div class="titleSpacing margin40U40D">
+      <span class="accent-title" translate>
+        Vin d'honneur / Cocktail / Buffet
+      </span>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex=100>
+      <div fxLayout="column" *ngFor="let product of vinHonneurCocktailBuffet.products">
+        <div class="titleSpacing">
+          <span class="light-title" translate>
+            <strong>{{product.name}}</strong>
+          </span>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxFlex=100>
+          <div *ngFor="let opt of product.options; let i = index" class="margin1rem" fxFlex=100
+          [hidden]="!getShowMore('vinHonneurCocktailBuffet', product.name)?.value && i>= 2">
+            <div *ngIf='i<2' class="padding10U10D" fxFlex=100
+            fxLayout="column" fxLayoutAlign="space-between space-around">
+
+              <div fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+                <div fxLayout="column" fxLayoutAlign="start space-around" fxFlex='80%'>
+                  <div>
+                    <span class="boldText">{{opt.name | lowercase | translate | capitalizeFirstLetter}}</span>
+                  </div>
+                  <div>
+                    <span class="greyText15">{{opt.label | lowercase | translate | capitalizeFirstLetter}}</span>
+                  </div>
+                </div>
+                <mat-slide-toggle color="primary" [checked] = "getProduct('vinHonneurCocktailBuffet', product.name, opt.name).value"
+                (change)='toggleChangeProduitTraiteur("vinHonneurCocktailBuffet", product.name, opt.name, $event.checked)'></mat-slide-toggle>
+              </div>
+              <div *ngIf="getProduct('vinHonneurCocktailBuffet', product.name, opt.name).value"
+              fxLayout="row wrap" fxLayoutAlign="end stretch" style='margin-top: 1.5rem;'>
+                <div fxLayout fxLayoutAlign="center center">
+                  <span translate class="boldText">Nombre de pièces</span>
+                </div>
+                <div fxLayout fxLayoutAlign="center center">
+                  <button (click)='numberInputChangeValueProduitTraiteur("decrement","vinHonneurCocktailBuffet", product.name, opt.name, 1 ,1)' mat-mini-fab
+                    class='margin-right number-control-btn number-control-btn-remove margin-left'>
+                    <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                  </button>
+                  <span matSuffix> {{opt.nbrPieces}} </span>
+                  <button (click)='numberInputChangeValueProduitTraiteur("increment","vinHonneurCocktailBuffet", product.name, opt.name, 1)' mat-mini-fab
+                    class='margin-left number-control-btn'>
+                    <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <mat-divider class="matdividerForcedHeight" style='width: 100% !important;'></mat-divider>
+            </div>
+            <div *ngIf="getShowMore('vinHonneurCocktailBuffet', product.name)?.value && i>=2" class="padding10U10D" fxFlex=100
+            fxLayout="column" fxLayoutAlign="space-between space-around">
+
+              <div fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+                <div fxLayout="column" fxLayoutAlign="start space-around" fxFlex='80%'>
+                  <div>
+                    <span class="boldText">{{opt.name | lowercase | translate | capitalizeFirstLetter}}</span>
+                  </div>
+                  <div>
+                    <span class="greyText15">{{opt.label | lowercase | translate | capitalizeFirstLetter}}</span>
+                  </div>
+                </div>
+                <mat-slide-toggle color="primary" [checked] = "getProduct('vinHonneurCocktailBuffet', product.name, opt.name).value"
+                (change)='toggleChangeProduitTraiteur("vinHonneurCocktailBuffet", product.name, opt.name, $event.checked)'></mat-slide-toggle>
+              </div>
+              <div *ngIf="getProduct('vinHonneurCocktailBuffet', product.name, opt.name).value"
+              fxLayout="row wrap" fxLayoutAlign="end stretch" style='margin-top: 1.5rem;'>
+                <div fxLayout fxLayoutAlign="center center">
+                  <span translate class="boldText">Nombre de pièces</span>
+                </div>
+                <div fxLayout fxLayoutAlign="center center">
+                  <button (click)='numberInputChangeValueProduitTraiteur("decrement","vinHonneurCocktailBuffet", product.name, opt.name, 1 ,1)' mat-mini-fab
+                    class='margin-right number-control-btn number-control-btn-remove margin-left'>
+                    <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                  </button>
+                  <span matSuffix> {{opt.nbrPieces}} </span>
+                  <button (click)='numberInputChangeValueProduitTraiteur("increment","vinHonneurCocktailBuffet", product.name, opt.name, 1)' mat-mini-fab
+                    class='margin-left number-control-btn'>
+                    <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <mat-divider class="matdividerForcedHeight" style='width: 100% !important;'></mat-divider>
+            </div>
+          </div>
+          <div *ngIf="product.options.length > 2">
+            <button mat-button color='primary' (click)="setShowMore('vinHonneurCocktailBuffet', product.name)">
+                {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                <mat-icon color='primary' *ngIf="!getShowMore('vinHonneurCocktailBuffet', product.name)?.value">keyboard_arrow_down</mat-icon>
+                <mat-icon color='primary' *ngIf="getShowMore('vinHonneurCocktailBuffet', product.name)?.value">keyboard_arrow_up</mat-icon>
+            </button>
+        </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--fin cocktail buffet -->
+
+  <!-- diner -->
+  <div *ngIf="isTraiteur && traiteurIsChecked && companyDescriptionInfo.criteres.traiteur_Dinner.value"
+  fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div class="titleSpacing margin40U40D">
+      <span class="accent-title" translate>
+        Dîner
+      </span>
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex=100>
+      <div fxLayout="column" *ngFor="let product of Dinner.products">
+        <div class="titleSpacing">
+          <span class="light-title" translate>
+            <strong>{{product.name}}</strong>
+          </span>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxFlex=100>
+          <div *ngFor="let opt of product.options; let i = index" class="margin1rem" fxFlex=100
+          [hidden]="!getShowMore('Dinner', product.name)?.value && i>= 2">
+            <div *ngIf='i<2' class="padding10U10D" fxFlex=100
+            fxLayout="column" fxLayoutAlign="space-between space-around">
+
+              <div fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+                <div fxLayout="column" fxLayoutAlign="start space-around" fxFlex='80%'>
+                  <div>
+                    <span class="boldText">{{opt.name | lowercase | translate | capitalizeFirstLetter}}</span>
+                  </div>
+                  <div>
+                    <span class="greyText15">{{opt.label | lowercase | translate | capitalizeFirstLetter}}</span>
+                  </div>
+                </div>
+                <mat-slide-toggle color="primary" [checked]="getProduct('Dinner', product.name, opt.name).value"
+                (change)='toggleChangeProduitTraiteur("Dinner", product.name, opt.name, $event.checked)'></mat-slide-toggle>
+              </div>
+              <div *ngIf="getProduct('Dinner', product.name, opt.name).value"
+              fxLayout="row wrap" fxLayoutAlign="end stretch" style='margin-top: 1.5rem;'>
+                <div fxLayout fxLayoutAlign="center center">
+                  <span translate class="boldText">Nombre de pièces</span>
+                </div>
+                <div fxLayout fxLayoutAlign="center center">
+                  <button (click)='numberInputChangeValueProduitTraiteur("decrement","Dinner", product.name, opt.name, 1 ,1)' mat-mini-fab
+                    class='margin-right number-control-btn number-control-btn-remove margin-left'>
+                    <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                  </button>
+                  <span matSuffix> {{opt.nbrPieces}} </span>
+                  <button (click)='numberInputChangeValueProduitTraiteur("increment","Dinner", product.name, opt.name, 1)' mat-mini-fab
+                    class='margin-left number-control-btn'>
+                    <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <mat-divider class="matdividerForcedHeight" style='width: 100% !important;'></mat-divider>
+            </div>
+            <div *ngIf="getShowMore('Dinner', product.name)?.value && i>=2" class="padding10U10D" fxFlex=100
+            fxLayout="column" fxLayoutAlign="space-between space-around">
+
+              <div fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+                <div fxLayout="column" fxLayoutAlign="start space-around" fxFlex='80%'>
+                  <div>
+                    <span class="boldText">{{opt.name | lowercase | translate | capitalizeFirstLetter}}</span>
+                  </div>
+                  <div>
+                    <span class="greyText15">{{opt.label | lowercase | translate | capitalizeFirstLetter}}</span>
+                  </div>
+                </div>
+                <mat-slide-toggle color="primary" [checked]="getProduct('Dinner', product.name, opt.name).value"
+                (change)='toggleChangeProduitTraiteur("Dinner", product.name, opt.name, $event.checked)'></mat-slide-toggle>
+              </div>
+              <div *ngIf="getProduct('Dinner', product.name, opt.name).value"
+              fxLayout="row wrap" fxLayoutAlign="end stretch" style='margin-top: 1.5rem;'>
+                <div fxLayout fxLayoutAlign="center center">
+                  <span translate class="boldText">Nombre de pièces</span>
+                </div>
+                <div fxLayout fxLayoutAlign="center center">
+                  <button (click)='numberInputChangeValueProduitTraiteur("decrement","Dinner", product.name, opt.name, 1 ,1)' mat-mini-fab
+                    class='margin-right number-control-btn number-control-btn-remove margin-left'>
+                    <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+                  </button>
+                  <span matSuffix> {{opt.nbrPieces}} </span>
+                  <button (click)='numberInputChangeValueProduitTraiteur("increment","Dinner", product.name, opt.name, 1)' mat-mini-fab
+                    class='margin-left number-control-btn'>
+                    <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <mat-divider class="matdividerForcedHeight" style='width: 100% !important;'></mat-divider>
+            </div>
+          </div>
+          <div *ngIf="product.options.length > 2">
+            <button mat-button color='primary' (click)="setShowMore('Dinner', product.name)">
+                {{'Show more'|lowercase|translate|capitalizeFirstLetter}}
+                <mat-icon color='primary' *ngIf="!getShowMore('Dinner', product.name)?.value">keyboard_arrow_down</mat-icon>
+                <mat-icon color='primary' *ngIf="getShowMore('Dinner', product.name)?.value">keyboard_arrow_up</mat-icon>
+            </button>
+        </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- fin diner -->
+  <!-- boissons -->
+  <div
+    *ngIf="isTraiteur && traiteurIsChecked && (companyDescriptionInfo.criteres.traiteur_boissonAlcooliseeEtNonAlcoolise || companyDescriptionInfo.criteres.traiteur_droitDeBouchon)"
+    class="margin40U40D">
+    <span class="accent-title" translate>Boissons
+    </span>
+  </div>
+  <!-- boisson de bouchoun -->
+
+  <div *ngIf="isTraiteur && traiteurIsChecked && companyDescriptionInfo.criteres.traiteur_droitDeBouchon"
+    fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxFlex=100>
+      <div *ngIf="companyDescriptionInfo.criteres.traiteur_droitDeBouchon" class="inline-container-4 margin-bottom"
+        class="marginTop1rem" fxFlex=100>
+        <div fxFlex='93%'>
+
+          <span translate class="boldText">Droit de bouchon</span>
+          <br>
+          <span translate class="greyText">Payer un droit pour pouvoir apporter mes propres bouteilles de vin
+            ou boissons.</span>
+        </div>
+        <mat-slide-toggle color="primary" [checked]='bookingObject.traiteur.droitDeBouchon'
+          (change)='toggleChange("traiteur","droitDeBouchon", $event.checked)'></mat-slide-toggle>
+      </div>
+      <div *ngIf="bookingObject.traiteur.droitDeBouchon" fxLayout="row" fxLayoutAlign="space-between center" fxFlex=100
+      style="margin-top: 1.5rem;">
+        <div fxFlexOffset=51>
+          <span translate>Nombre de pièces</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+            (click)='numberInputChangeValue("traiteur","decrement", "droitDeBouchonNbrBouteilles", 1, 1)'
+            [class.number-control-btn-remove]="bookingObject.traiteur.droitDeBouchonNbrBouteilles == 1"
+            [disabled]="bookingObject.traiteur.droitDeBouchonNbrBouteilles == 1">
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{bookingObject.traiteur.droitDeBouchonNbrBouteilles}} </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+            (click)='numberInputChangeValue("traiteur","increment", "droitDeBouchonNbrBouteilles", 1)'>
+            <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <mat-divider style="width: 100% !important;" class="margin1rem"></mat-divider>
+  </div>
+  <!--fin boisson de bouchoun -->
+  <!-- boissons alcoolises -->
+  <div
+    *ngIf="isTraiteur && traiteurIsChecked && companyDescriptionInfo.criteres.traiteur_boissonAlcooliseeEtNonAlcoolise"
+    class="margin20U20D">
+    <span class="light-title" translate>Boissons alcoolisées</span>
+  </div>
+  <div *ngIf="isTraiteur && traiteurIsChecked && bookingObject.traiteur.boissonsAlcoolises?.length" fxLayout="row wrap"
+    fxLayoutAlign="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxFlex=100>
+      <div *ngFor="let produit of bookingObject.traiteur.boissonsAlcoolises; let i = index;let lastProduit = last"
+        fxFlex=100>
+        <div *ngIf="i<=1 || showmoreBoissonsAlcoolises" class="inline-container-4 margin-bottom"
+          class="marginTop1rem">
+          <div fxFlex='93%'>
+            <span translate class="boldText">{{produit.name}}</span>
+            <br>
+            <span translate class="greyText">{{produit.label}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='bookingObject.traiteur.boissonsAlcoolises[i].value'
+            (change)='toggleChangeBoisson("traiteur","boissonsAlcoolises", $event.checked,i)'></mat-slide-toggle>
+        </div>
+        <div *ngIf="bookingObject.traiteur.boissonsAlcoolises[i].value && (i<=1 || showmoreBoissonsAlcoolises)"
+          fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 1.5rem;">
+          <div fxFlexOffset=51>
+            <span translate>Nombre de pièces</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+              (click)='numberInputChangeValueObjectComplex("traiteur","decrement", "boissonsAlcoolises", 1, i, 1)'
+              [class.number-control-btn-remove]="bookingObject.traiteur.boissonsAlcoolises[i].nbrPieces == 1"
+              [disabled]="bookingObject.traiteur.boissonsAlcoolises[i].nbrPieces == 1">
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{bookingObject.traiteur.boissonsAlcoolises[i].nbrPieces}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeValueObjectComplex("traiteur","increment", "boissonsAlcoolises", 1, i)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+        <mat-divider *ngIf="i <= 1 || showmoreBoissonsAlcoolises" class="margin1rem"></mat-divider>
+        <button mat-button color='primary' class="padding0" *ngIf="!showmoreBoissonsAlcoolises && i==1 && bookingObject.traiteur.boissonsAlcoolises.length > 2"
+          (click)="showmoreBoissonsAlcoolises = true" ng-reflect-color="primary">
+          <span translate>Afficher plus de détails</span>
+          <mat-icon color='primary' class="margin10L">keyboard_arrow_down</mat-icon>
+        </button>
+        <button mat-button color='primary' class="padding0" *ngIf="showmoreBoissonsAlcoolises && i>1 && lastProduit && bookingObject.traiteur.boissonsAlcoolises.length > 2"
+          (click)="showmoreBoissonsAlcoolises = false" ng-reflect-color="primary">
+          <span translate>Afficher moins de détails</span>
+          <mat-icon color='primary' class="margin10L">keyboard_arrow_up</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--fin boissons alcoolises -->
+  <!-- boissons non alcoolises -->
+  <div
+    *ngIf="isTraiteur && traiteurIsChecked && companyDescriptionInfo.criteres.traiteur_boissonAlcooliseeEtNonAlcoolise"
+    class="margin20U20D">
+    <span class="light-title" translate>Boissons non alcoolisées</span>
+  </div>
+  <div *ngIf="isTraiteur && traiteurIsChecked && bookingObject.traiteur.boissonsNonAlcoolises?.length"
+    fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxFlex=100>
+      <div *ngFor="let produit of bookingObject.traiteur.boissonsNonAlcoolises; let i = index;let lastProduit = last"
+        fxFlex=100>
+        <div *ngIf="i<=1 || showmoreBoissonsNonAlcoolises" class="inline-container-4 margin-bottom"
+          class="marginTop1rem">
+          <div fxFlex='93%'>
+            <span translate class="boldText">{{produit.name}}</span>
+            <br>
+            <span translate class="greyText">{{produit.label}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='bookingObject.traiteur.boissonsNonAlcoolises[i].value'
+            (change)='toggleChangeBoisson("traiteur","boissonsNonAlcoolises", $event.checked,i)'></mat-slide-toggle>
+        </div>
+        <div *ngIf="bookingObject.traiteur.boissonsNonAlcoolises[i].value && (i<=1 || showmoreBoissonsNonAlcoolises)"
+          fxLayout="row" fxLayoutAlign="space-between center" style="margin-top: 1.5rem;">
+          <div fxFlexOffset=51>
+            <span translate>Nombre de pièces</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+              (click)='numberInputChangeValueObjectComplex("traiteur","decrement", "boissonsNonAlcoolises", 1, i, 1)'
+              [class.number-control-btn-remove]="bookingObject.traiteur.boissonsNonAlcoolises[i].nbrPieces == 1"
+              [disabled]="bookingObject.traiteur.boissonsNonAlcoolises[i].nbrPieces == 1">
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{bookingObject.traiteur.boissonsNonAlcoolises[i].nbrPieces}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeValueObjectComplex("traiteur","increment", "boissonsNonAlcoolises", 1, i)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+        <mat-divider *ngIf="i <= 1 || showmoreBoissonsNonAlcoolises" class="margin1rem"></mat-divider>
+        <button mat-button color='primary' class="padding0"
+        *ngIf="!showmoreBoissonsNonAlcoolises && i==1 && bookingObject.traiteur.boissonsNonAlcoolises.length > 2"
+          (click)="showmoreBoissonsNonAlcoolises = true" ng-reflect-color="primary">
+          <span translate>Afficher plus de détails</span>
+          <mat-icon color='primary' class="margin10L">keyboard_arrow_down</mat-icon>
+        </button>
+        <button mat-button color='primary' class="padding0"
+          *ngIf="showmoreBoissonsNonAlcoolises && i>1 && lastProduit && bookingObject.traiteur.boissonsNonAlcoolises.length > 2"
+          (click)="showmoreBoissonsNonAlcoolises = false"
+          ng-reflect-color="primary">
+          <span translate>Afficher moins de détails</span>
+          <mat-icon color='primary' class="margin10L">keyboard_arrow_up</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!--fin  boissons non alcoolises -->
+  <!--fin boissons -->
+  <!-- services -->
+  <div
+    *ngIf="isTraiteur && traiteurIsChecked && (companyDescriptionInfo.criteres.traiteur_serviceEnSalle || companyDescriptionInfo.criteres.traiteur_serviceDebarrassageEtNettoyage)"
+    class="margin40U40D">
+    <span class="accent-title" translate>Services
+    </span>
+  </div>
+  <div *ngIf="isTraiteur && traiteurIsChecked && companyDescriptionInfo?.criteres?.traiteur_serviceEnSalle"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Service en salle</span>
+      <br>
+      <span translate class="greyText">Obtenir la prestation service en salle par des serveurs
+        professionnels</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.traiteur.serviceEnSalle'
+      (change)='toggleChange("traiteur","serviceEnSalle", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider *ngIf="isTraiteur && traiteurIsChecked && companyDescriptionInfo?.criteres?.traiteur_serviceEnSalle"
+    class="margin-bottom"></mat-divider>
+
+  <div
+    *ngIf="isTraiteur && traiteurIsChecked && companyDescriptionInfo?.criteres?.traiteur_serviceDebarrassageEtNettoyage"
+    class="inline-container-4 margin-bottom">
+    <div>
+      <span translate class="boldText">Debarrassage Et Nettoyage</span>
+      <br>
+      <span translate class="greyText">Obtenir le service drapé de table pour les tables pour la
+        réception</span>
+    </div>
+    <mat-slide-toggle color="primary" [checked]='bookingObject.traiteur.serviceDebarrassageEtNettoyage'
+      (change)='toggleChange("traiteur","serviceDebarrassageEtNettoyage", $event.checked)'></mat-slide-toggle>
+  </div>
+  <mat-divider
+    *ngIf="isTraiteur && traiteurIsChecked && companyDescriptionInfo?.criteres?.traiteur_serviceDebarrassageEtNettoyage"
+    class="margin-bottom"></mat-divider>
+  <!--fin services -->
+  <!--fin Traiteur -->
+
+  <!-- gateau -->
+  <!-- Gateau title -->
+  <div *ngIf="isGateau && gateauIsChecked" fxLayout fxLayoutAlign="space-between center" class="divided-title">
+    <div class="half-divider"></div> <span  class="metierTitle">Gâteau </span>
+    <div class="half-divider"></div>
+  </div>
+  <!-- produit -->
+  <div *ngIf="isGateau && gateauIsChecked && companyDescriptionInfo.criteres?.gateaumariage_gateaux.value"
+    class="margin40U40D">
+    <span class="accent-title" translate>Produits
+    </span>
+  </div>
+
+  <div *ngIf="isGateau && gateauIsChecked && companyDescriptionInfo.criteres?.gateaumariage_gateaux.value"
+    fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFlex=100>
+      <div *ngFor="let produit of gateauxProduits; let i = index;let lastProduit = last" fxFlex=100
+      div fxLayout="column" fxLayoutAlign="space-between stretch">
+        <div *ngIf="i<=1 || showmoreGateauModels" class="inline-container-4 margin-bottom" class="marginTop1rem"
+        fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxFlex=100>
+          <div>
+            <span translate class="boldText">{{produit.name}}</span>
+            <br>
+            <span translate class="greyText">{{produit.label}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='gateauxProduits[i].value'
+            (change)='toggleChangeProduit("gateau","produits", $event.checked,i)'></mat-slide-toggle>
+        </div>
+
+        <div class="margin30UD0LR" *ngIf="gateauxProduits[i].value && (i<=1 || showmoreGateauModels)" fxLayout="row wrap"
+          fxLayoutAlign="space-between center">
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex=47>
+            <div>
+              <span translate>Nombre de parts</span>
+            </div>
+            <div fxLayout fxLayoutAlign="center center">
+              <button mat-mini-fab (click)='numberInputChangeValueGateau("gateau","decrement", "produits", 1, i,"nbrParts",1)'
+                class='margin-right number-control-btn  margin-left'
+                [class.number-control-btn-remove]="gateauxProduits[i].nbrParts == getProduitOpt(produit.name, 'Nbre de parts min').value"
+                [disabled]="gateauxProduits[i].nbrParts == getProduitOpt(produit.name, 'Nbre de parts min').value">
+                <mat-icon [ngStyle]="{'color' : gateauxProduits[i].nbrParts == getProduitOpt(produit.name, 'Nbre de parts min').value ? '#999999' : '#F17082'}"
+                  class='position-in-center'>remove</mat-icon>
+              </button>
+              <span matSuffix> {{gateauxProduits[i].nbrParts}} </span>
+              <button mat-mini-fab class='margin-left number-control-btn'
+                (click)='numberInputChangeValueGateau("gateau","increment", "produits", 1, i,"nbrParts")'
+                [class.number-control-btn-remove]="gateauxProduits[i].nbrParts == getProduitOpt(produit.name, 'Nbre de parts max').value"
+                [disabled]="gateauxProduits[i].nbrParts == getProduitOpt(produit.name, 'Nbre de parts max').value">
+                <mat-icon color='primary' class='position-in-center'
+                [ngStyle]="{'color' : gateauxProduits[i].nbrParts == getProduitOpt(produit.name, 'Nbre de parts max').value ? '#999999' : '#F17082'}">add</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex=47>
+            <div>
+              <span translate>Nombre d’étages</span>
+            </div>
+            <div fxLayout fxLayoutAlign="center center">
+              <button mat-mini-fab
+                (click)='numberInputChangeValueGateau("gateau","decrement", "produits", 1, i,"nbrEtages", 1)'
+                class='margin-right number-control-btn  margin-left'
+                [class.number-control-btn-remove]="gateauxProduits[i].nbrEtages == 1"
+                [disabled]="gateauxProduits[i].nbrEtages == 1">
+                <mat-icon
+                  [ngStyle]="{'color' : gateauxProduits[i].nbrEtages == 1 ? '#999999' : '#F17082'}"
+                  class='position-in-center'>remove</mat-icon>
+              </button>
+              <span matSuffix> {{gateauxProduits[i].nbrEtages}} </span>
+              <button mat-mini-fab class='margin-left number-control-btn'
+                (click)='numberInputChangeValueGateau("gateau","increment", "produits", 1, i,"nbrEtages")'
+                [class.number-control-btn-remove]="gateauxProduits[i].nbrEtages == getProduitOpt(produit.name, 'Nbre d\'étages max').value"
+                [disabled]="gateauxProduits[i].nbrEtages == getProduitOpt(produit.name, 'Nbre d\'étages max').value">
+                <mat-icon color='primary' class='position-in-center'
+                [ngStyle]="{'color' : gateauxProduits[i].nbrEtages == getProduitOpt(produit.name, 'Nbre d\'étages max').value ? '#999999' : '#F17082'}">add</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <button mat-button style="width: 30%;" color='primary' class="padding0" *ngIf="!showmoreGateauModels && i==1"
+          (click)="showmoreGateauModels = true" ng-reflect-color="primary">
+          <span translate>Afficher plus de détails</span>
+          <mat-icon color='primary' class="margin10L">keyboard_arrow_down</mat-icon>
+        </button>
+        <button mat-button style="width: 30%;" color='primary' class="padding0"
+          *ngIf="showmoreGateauModels && i>1 && lastProduit" (click)="showmoreGateauModels = false"
+          ng-reflect-color="primary">
+          <span translate>Afficher moins de détails</span>
+          <mat-icon color='primary' class="margin10L">keyboard_arrow_up</mat-icon>
+        </button>
+        <mat-divider *ngIf="isGateau && gateauIsChecked && gateauxProduits[i].value && (i<=1 || showmoreGateauModels)"
+          class="margin-bottom"></mat-divider>
+      </div>
+    </div>
+  </div>
+  <!--fin produit -->
+  <!-- services -->
+  <div
+    *ngIf="isGateau && gateauIsChecked && companyDescriptionInfo.criteres?.gateaumariage_gateaux.value"
+    class="margin40U40D">
+    <span class="accent-title" translate>Services
+    </span>
+  </div>
+  <div *ngIf="isGateau && gateauIsChecked && companyDescriptionInfo.criteres?.gateaumariage_gateaux.livraison.value"
+  class="inline-container-4 margin-bottom">
+  <div>
+    <span translate class="boldText">Livraison</span>
+    <br>
+    <span translate class="greyText">Obtenir la livraison des produits directement dans le lieu de réception</span>
+  </div>
+  <mat-slide-toggle color="primary" [checked]='bookingObject.gateau.livraison'
+    (change)='toggleChange("gateau","livraison", $event.checked)'></mat-slide-toggle>
+</div>
+<mat-divider *ngIf="isGateau && gateauIsChecked && companyDescriptionInfo.criteres?.gateaumariage_gateaux.livraison.value"
+  class="margin-bottom"></mat-divider>
+    <!--fin services -->
+  <!--fin gateau -->
+   <!-- options divers -->
+   <div *ngIf="optionDivers?.length" class="margin40U40D">
+    <span class="accent-title" translate>Option Divers</span>
+  </div>
+  <div *ngIf="optionDivers?.length" fxLayout="column" fxLayoutAlign="space-around">
+    <div *ngFor="let opt of optionDivers ; let i = index">
+      <div *ngIf="isLieu && lieuIsChecked && optionContainCategory(opt.id, 'lieu')">
+        <div class="inline-container-4" class="margin30D margin20U" fxLayout fxLayoutAlign="space-between center">
+          <div>
+            <span translate class="boldText">{{opt.name}}</span>
+            <br>
+            <span translate class="lightGreyText">{{opt.feeType}}</span>
+            <br>
+            <span translate class="greyText">{{opt.description}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='optionDivers[i].checked'
+            (change)='toggleChangeOptionDivers($event.checked, opt)'>
+          </mat-slide-toggle>
+        </div>
+  
+        <div *ngIf="opt.feeType === feeType.UNIT_FEE && optionDivers[i].checked" fxLayout="row"
+          fxLayoutAlign="space-between center">
+          <div fxFlexOffset=53>
+            <span translate>Exemplaires</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+              (click)='numberInputChangeValueObjectComplex("","decrement", "optionDivers", 1, i, 1)'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{opt.examplaire}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeValueObjectComplex("","increment", "optionDivers", 1, i)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="isTraiteur && traiteurIsChecked && optionContainCategory(opt.id, 'traiteur')
+      && !(isLieu && lieuIsChecked && optionContainCategory(opt.id, 'lieu'))">
+        <div class="inline-container-4" class="margin30D margin20U" fxLayout fxLayoutAlign="space-between center">
+          <div>
+            <span translate class="boldText">{{opt.name}}</span>
+            <br>
+            <span translate class="lightGreyText">{{opt.feeType}}</span>
+            <br>
+            <span translate class="greyText">{{opt.description}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='optionDivers[i].checked'
+            (change)='toggleChangeOptionDivers($event.checked, opt)'>
+          </mat-slide-toggle>
+        </div>
+  
+        <div *ngIf="opt.feeType === feeType.UNIT_FEE && optionDivers[i].checked" fxLayout="row"
+          fxLayoutAlign="space-between center">
+          <div fxFlexOffset=53>
+            <span translate>Exemplaires</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+              (click)='numberInputChangeValueObjectComplex("","decrement", "optionDivers", 1, i, 1)'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{opt.examplaire}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeValueObjectComplex("","increment", "optionDivers", 1, i)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div *ngIf="isGateau && gateauIsChecked && optionContainCategory(opt.id, 'gateaumariage')
+      && !(isLieu && lieuIsChecked && optionContainCategory(opt.id, 'lieu')) 
+      && !(isTraiteur && traiteurIsChecked && optionContainCategory(opt.id, 'traiteur'))">
+        <div class="inline-container-4" class="margin30D margin20U" fxLayout fxLayoutAlign="space-between center">
+          <div>
+            <span translate class="boldText">{{opt.name}}</span>
+            <br>
+            <span translate class="lightGreyText">{{opt.feeType}}</span>
+            <br>
+            <span translate class="greyText">{{opt.description}}</span>
+          </div>
+          <mat-slide-toggle color="primary" [checked]='optionDivers[i].checked'
+            (change)='toggleChangeOptionDivers($event.checked, opt)'>
+          </mat-slide-toggle>
+        </div>
+  
+        <div *ngIf="opt.feeType === feeType.UNIT_FEE && optionDivers[i].checked" fxLayout="row"
+          fxLayoutAlign="space-between center">
+          <div fxFlexOffset=53>
+            <span translate>Exemplaires</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+              (click)='numberInputChangeValueObjectComplex("","decrement", "optionDivers", 1, i, 1)'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{opt.examplaire}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeValueObjectComplex("","increment", "optionDivers", 1, i)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+  <mat-divider *ngIf="companyDescriptionInfo?.company?.options?.length" class="margin-bottom" class="margin20T">
+  </mat-divider>
+</form>

@@ -1,0 +1,124 @@
+<form class="formTexture">
+  <!-- Réservation -->
+  <div class="margin15U15D">
+    <span class="accent-title" translate>
+      Réservation
+    </span>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="space-between">
+    <div fxLayout="column" fxLayoutAlign="space-around stretch" fxFlex=100>
+      <div class="margin30UD0LR">
+        <span class="checkbox">Hébergés</span>
+      </div>
+      <div class="margin10U10D" fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex=47>
+          <div>
+            <span translate class="greyText15">Nombre de pers.</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab (click)='numberInputChangeValue("hebergement","decrement", "nombreDePersonnes", 1, 1)'
+              class='margin-right number-control-btn  margin-left'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{bookingObject.hebergement.nombreDePersonnes}} </span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeValue("hebergement","increment", "nombreDePersonnes", 1)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex=47>
+          <div>
+            <span translate class="greyText15">Nombre de chamb.</span>
+          </div>
+          <div fxLayout fxLayoutAlign="center center">
+            <button mat-mini-fab (click)='numberInputChangeValue("hebergement","decrement", "nombreDeChambre", 1, 1)'
+              class='margin-right number-control-btn  margin-left'>
+              <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+            </button>
+            <span matSuffix> {{bookingObject.hebergement.nombreDeChambre}}</span>
+            <button mat-mini-fab class='margin-left number-control-btn'
+              (click)='numberInputChangeValue("hebergement","increment", "nombreDeChambre", 1)'>
+              <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <mat-divider class="matdividerForcedHeight"></mat-divider>
+  <!--fin Réservation-->
+  <!-- services -->
+  <div *ngIf="bookingObject.hebergement.services?.length" class="margin40T">
+    <span class="accent-title" translate>services</span>
+  </div>
+  <div *ngFor="let service of bookingObject.hebergement.services;let i = index;let lastService = last"
+    class="margin10U10D">
+    <div *ngIf="i<=1 || showmoreServices" class="inline-container-4 margin30UD0LR">
+      <div>
+        <span translate class="boldText">{{service.name | lowercase | translate | capitalizeFirstLetter}}</span>
+        <br>
+        <span translate class="greyText">Obtenir ce service</span>
+      </div>
+      <mat-slide-toggle color="primary" [checked]='service.checked' (change)='toggleChangeService($event.checked,i)'>
+      </mat-slide-toggle>
+    </div>
+    <button mat-button color='primary' class="padding0" *ngIf="!showmoreServices && i==1"
+      (click)="showmoreServices = true" ng-reflect-color="primary">
+      <span translate class="bold18">Afficher plus de critères</span>
+      <mat-icon color='primary' class="margin10L">keyboard_arrow_down</mat-icon>
+    </button>
+    <button mat-button color='primary' class="padding0" *ngIf="showmoreServices && i>1 && lastService"
+      (click)="showmoreServices = false" ng-reflect-color="primary">
+      <span translate class="bold18">Afficher moins de critères</span>
+      <mat-icon color='primary' class="margin10L">keyboard_arrow_up</mat-icon>
+    </button>
+    <mat-divider *ngIf="i <= 1 || showmoreServices" class="margin1rem"></mat-divider>
+  </div>
+
+  <!-- end services -->
+
+  <!-- options divers -->
+  <div *ngIf="bookingObject.optionDivers?.length" class="margin40U40D">
+    <span class="accent-title" translate>Option Divers</span>
+  </div>
+  <div *ngIf="bookingObject.optionDivers?.length" fxLayout="column" fxLayoutAlign="space-around">
+    <div *ngFor="let opt of bookingObject.optionDivers ; let i = index">
+
+      <div class="inline-container-4" class="margin30D margin20U" fxLayout fxLayoutAlign="space-between center">
+        <div>
+          <span translate class="boldText">{{opt.name}}</span>
+          <br>
+          <span translate class="lightGreyText">{{opt.feeType}}</span>
+          <br>
+          <span translate class="greyText">{{opt.description}}</span>
+        </div>
+        <mat-slide-toggle color="primary" [checked]='bookingObject.optionDivers[i].checked'
+          (change)='toggleChangeOptionDivers($event.checked, opt)'>
+        </mat-slide-toggle>
+      </div>
+
+      <div *ngIf="opt.feeType === feeType.UNIT_FEE && bookingObject.optionDivers[i].checked" fxLayout="row"
+        fxLayoutAlign="space-between center">
+        <div fxFlexOffset=53>
+          <span translate>Exemplaires</span>
+        </div>
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-mini-fab class='margin-right number-control-btn number-control-btn-remove margin-left'
+            (click)='numberInputChangeValueOptionsDivers("decrement", 1, i, 1)'>
+            <mat-icon color='primary' class='position-in-center'>remove</mat-icon>
+          </button>
+          <span matSuffix> {{opt.examplaire}} </span>
+          <button mat-mini-fab class='margin-left number-control-btn'
+            (click)='numberInputChangeValueOptionsDivers("increment", 1, i)'>
+            <mat-icon color='primary' class='position-in-center'>add</mat-icon>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <mat-divider *ngIf="companyDescriptionInfo?.company?.options?.length" class="margin-bottom" class="margin20T">
+  </mat-divider>
+</form>

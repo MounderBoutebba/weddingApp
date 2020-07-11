@@ -1,0 +1,95 @@
+<div class="container">
+    <div fxLayout="row wrap" fxLayoutGap="65px">
+        <div fxLayout="column" fxFlex.gt-sm="47%" fxFlex.lt-md="100" class="content-container">
+            <app-pro-general-infos [companyDescriptionInfo]='companyDescriptionInfo'></app-pro-general-infos>
+            <div>
+                <mat-tab-group [class]="modalOpened ? 'tab-z-index': 'tab'">
+                    <mat-tab label="Déscription">
+                        <app-description-tab [companyDescriptionInfo]='companyDescriptionInfo'
+                            [searchedCategory]='searchedCategory'></app-description-tab>
+                    </mat-tab>
+                    <mat-tab label="Détails">
+                        <app-details-tab [companyDescriptionInfo]='companyDescriptionInfo'
+                            [searchedCategory]='searchedCategory'></app-details-tab>
+                    </mat-tab>
+                    <mat-tab label="Disponibilité">
+                        <app-availability-tab [companyDescriptionInfo]='companyDescriptionInfo'></app-availability-tab>
+                    </mat-tab>
+                    <mat-tab label="Commentaires">
+                        <app-comments-tab [companyDescriptionInfo]='companyDescriptionInfo'
+                            [searchedCategory]='searchedCategory'></app-comments-tab>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+            <mat-divider style="margin: 30px 0;"></mat-divider>
+            <div *ngIf="companyDescriptionInfo && searchedCategory">
+                <div [ngSwitch]='searchedCategory'>
+                    <app-photographe-videaste-description [searchedCategory]='searchedCategory'
+                        [companyDescriptionInfo]='companyDescriptionInfo'
+                        *ngSwitchCase='categoryLabelEnum.PHOTOGRAPHE'>
+                    </app-photographe-videaste-description>
+                    <app-photographe-videaste-description [searchedCategory]='searchedCategory'
+                        [companyDescriptionInfo]='companyDescriptionInfo'
+                        *ngSwitchCase='categoryLabelEnum.VIDEALISTE'>
+                    </app-photographe-videaste-description>
+                    <app-dj [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.DJ'
+                    ></app-dj>
+                    <app-lieu-traiteur-gateau [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.LIEU'></app-lieu-traiteur-gateau>
+                    <app-lieu-traiteur-gateau [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.TRAITEUR'></app-lieu-traiteur-gateau>
+                    <app-lieu-traiteur-gateau [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.GATEAU_MARIAGE'></app-lieu-traiteur-gateau>
+                    <app-coiffure-maquillage-esthetique-soins [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.COIFFURE'></app-coiffure-maquillage-esthetique-soins>
+                    <app-coiffure-maquillage-esthetique-soins [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.MAQUILLAGE'></app-coiffure-maquillage-esthetique-soins>
+                    <app-coiffure-maquillage-esthetique-soins [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.ESTHETIQUE'></app-coiffure-maquillage-esthetique-soins>
+                    <app-coiffure-maquillage-esthetique-soins [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.SOIN'></app-coiffure-maquillage-esthetique-soins>
+                    <app-hebergement [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.HEBERGEMENT'></app-hebergement>
+                    <app-voiture-bus [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.VOITURE'></app-voiture-bus>
+                    <app-voiture-bus [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.BUS'></app-voiture-bus>
+                    <app-voyage-de-noce [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.VOYAGE_DE_NOCES'></app-voyage-de-noce>
+                    <app-animateur-enfants [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.ANIMATEUR_ENFANTS'></app-animateur-enfants>
+                    <app-coach [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.COACH'></app-coach>
+                    <app-officiant [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.OFFICIANT'></app-officiant>
+                    <app-decorateur-fleuriste [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.DECORATUER'></app-decorateur-fleuriste>
+                    <app-decorateur-fleuriste [searchedCategory]='searchedCategory'
+                    [companyDescriptionInfo]='companyDescriptionInfo'
+                    *ngSwitchCase='categoryLabelEnum.FLEURISTE'></app-decorateur-fleuriste>
+                </div>
+            </div>
+        </div>
+        <!-- reservation box -->
+        <div fxFlex.gt-sm="25%" fxFlex.lt-md=100 class="reservation-container">
+            <app-reservation-card [companyDescriptionInfo]='companyDescriptionInfo' [searchTerm]='searchedCategory'></app-reservation-card>
+        </div>
+    </div>
+</div>

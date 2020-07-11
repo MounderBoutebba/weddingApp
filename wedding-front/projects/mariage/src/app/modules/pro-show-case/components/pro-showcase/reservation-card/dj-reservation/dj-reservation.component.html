@@ -1,0 +1,64 @@
+<mat-accordion>
+    <mat-expansion-panel [expanded]="panelExpanded" (opened)="panelOpened()" (closed)="panelClosed()" class="mat-expansion-panel-reservation">
+        <mat-expansion-panel-header [collapsedHeight]="'50px'" [expandedHeight] = "'50px'"
+        style="padding: 0 16px;" fxLayout fxLayoutAlign="center center">
+           <div fxLayout fxLayoutAlign="space-between" style="width: 95%;font-size: 15px;font-weight: bold;">
+               <span>Total</span> <span>{{prices.total}} €</span>
+           </div>
+        </mat-expansion-panel-header>
+        <mat-list class="devisList">
+            <mat-list-item *ngIf="bookingObj.dj.dureeMissionDj">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>{{djObj.tarif_horaire}}€ x {{bookingObj.dj.dureeMissionDj}} heures </span>
+                    <span>{{djObj.tarif_horaire * bookingObj.dj.dureeMissionDj }} €</span>
+                </div>
+            </mat-list-item>
+            <mat-divider *ngIf="bookingObj.dj.dureeMissionDj" style="position: inherit;"></mat-divider>
+            <mat-divider *ngIf="!!prices.periodeMaj"
+            style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.periodeMaj">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Majoration pèriode</span>
+                    <span>{{prices.periodeMaj}} € </span>
+                </div>
+            </mat-list-item>
+            
+            <mat-divider *ngIf="!!prices.weekEndMaj"
+            style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.weekEndMaj">
+                <div fxLayout fxLayoutAlign="space-between" class="reservationBoxLigne">
+                    <span>Majoration weekend</span>
+                    <span>{{prices.weekEndMaj}} € </span>
+                </div>
+            </mat-list-item>
+            
+            <mat-divider *ngIf="!!prices.dj.services" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.dj.services">
+                <div fxLayout fxLayoutAlign="space-between" style="width: 100%;font-family: Arial;
+            font-size: 13px;">
+                    <span>services proposés</span>
+                    <span>{{prices.dj.services}} €</span>
+                </div>
+            </mat-list-item>
+
+            <mat-divider *ngIf="!!prices.dj.matriels" style="position: inherit;"></mat-divider>
+            <mat-list-item *ngIf="!!prices.dj.matriels">
+                <div fxLayout fxLayoutAlign="space-between" style="width: 100%;font-family: Arial;
+            font-size: 13px;">
+                    <span>materiels proposés</span>
+                    <span>{{prices.dj.matriels}} €</span>
+                </div>
+            </mat-list-item>
+
+            <!-- option divers-->
+            <mat-divider  style="position: inherit;" *ngIf="bookingObj?.optionDivers?.length"></mat-divider>
+            <mat-list-item *ngIf="bookingObj?.optionDivers?.length">
+                <div fxLayout fxLayoutAlign="space-between" style="width: 100%;font-family: Arial;
+            font-size: 13px;">
+                    <span>Option divers</span>
+                    <span>{{prices.optionDivers}} €</span>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    </mat-expansion-panel>
+</mat-accordion>

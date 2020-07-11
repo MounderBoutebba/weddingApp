@@ -1,0 +1,48 @@
+:host {
+  ::ng-deep {
+    .md-drppicker {
+      top: unset !important;
+      left: unset !important;
+      right: unset !important;
+      padding: 0 !important;
+      overflow: visible !important;
+      box-shadow: unset !important;
+    }
+
+    .md-drppicker td.available {
+      cursor: pointer !important;
+      user-select: none;
+      touch-action: none;
+      pointer-events: none;
+    }
+
+    .md-drppicker td.active.disabled {
+      background-color: #ffffff !important;
+      color: #999 !important;
+    }
+
+    .md-drppicker td.active:not(.disabled) {
+      background-color: #ffffff !important;
+      color: #000000 !important;
+    }
+
+    .md-drppicker .btn {
+      display: none;
+    }
+
+    .md-drppicker td {
+      border: 0.1px solid #bfbfbf !important;
+      border-radius: 0 !important;
+    }
+
+    .md-drppicker table {
+     // border-collapse: collapse !important;
+    }
+
+    .md-drppicker td.available.off{
+      opacity: 0.3;
+    }
+
+
+  }
+}

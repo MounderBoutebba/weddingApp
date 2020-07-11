@@ -1,0 +1,17 @@
+.general-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: auto;
+}
+
+.inline-container-1 {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.margin-bottom {
+    margin-bottom: 1em;
+}

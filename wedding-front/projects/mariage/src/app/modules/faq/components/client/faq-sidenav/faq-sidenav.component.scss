@@ -1,0 +1,22 @@
+h1{
+  margin-top: 0;
+}
+
+h1 > a {
+  font-size: 18.5px;
+  color: #484848;
+}
+
+li{
+  list-style: none;
+  margin-bottom: 0.7rem;
+}
+
+li > a {
+  font-size: 15px;
+  color: #484848;
+}
+
+.active{
+  font-weight: bold;
+}

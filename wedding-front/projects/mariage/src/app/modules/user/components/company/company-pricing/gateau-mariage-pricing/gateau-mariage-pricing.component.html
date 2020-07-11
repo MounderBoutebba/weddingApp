@@ -1,0 +1,11 @@
+<h2 *ngIf="primaryComponent" style="font-size: 18.5px !important;">{{'Wedding Cake'|lowercase|translate|titlecase}}</h2>
+<app-dynamic-form-builder [fields]="parsedCriteres" (addOption)='onAddOption($event)' *ngIf="showForm" #formBuilder></app-dynamic-form-builder>
+<h2 *ngIf="showTraiteurComponent" style="font-size: 18.5px !important;">{{'Caterer'|lowercase|translate|titlecase}}</h2>
+<app-traiteur-pricing *ngIf="showTraiteurComponent" [criteres]="traiteurInitCriteres"
+[primaryComponent]='false' #traiteurComponent></app-traiteur-pricing>
+<h2 *ngIf="showLieuComponent" style="font-size: 18.5px !important;">{{'place'|lowercase|translate|titlecase}}</h2>
+<app-lieu-pricing *ngIf="showLieuComponent" [criteres]="lieuInitCriteres"
+[primaryComponent]='false' #lieuComponent></app-lieu-pricing>
+<button type='button' mat-flat-button color='primary'
+class='submit-btn' [disabled]='!formBuilder.form.valid' (click)='formSubmitted()' *ngIf="showSubmitBtn" [ngClass]="{'hidden': !primaryComponent}">
+{{'Next' | lowercase | translate | titlecase}}</button>

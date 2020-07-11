@@ -1,0 +1,44 @@
+.element {
+  /*
+  width: fit-content;
+  */
+  height: 2rem;
+}
+
+.plus {
+  width: 2rem;
+  height: 2rem;
+  border: var(--primary-color) 2px solid;
+  border-radius: 50%;
+}
+
+.minus::before, .plus::before {
+  content: ' ';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--primary-color);
+  height: 1px;
+  width: 1rem;
+  z-index: 100;
+}
+
+.plus::after {
+  content: ' ';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--primary-color);
+  height: 1rem;
+  width: 1.5px;
+  z-index: 101;
+}
+
+.minus {
+  width: 2rem;
+  height: 2rem;
+  border: var(--primary-color) 2px solid;
+  border-radius: 50%;
+}
