@@ -1,0 +1,32 @@
+import { ICreatePaiementsAccount } from '../../../domain/usecases/services/create-paiments-account.usecase';
+import { User } from '../../../domain/entities/user.model';
+import { StripeService } from '../../externalInterfaces/stripe/stripe.service';
+import * as Stripe from 'stripe';
+import { Customer } from '../../../domain/entities/paiements/customer.model';
+import { UsersServices } from '../users/users.service';
+import { PaiementsRepository } from './paiements.repository';
+import { Card } from '../../../domain/entities/paiements/card.model';
+import { Iban } from '../../../domain/entities/paiements/iban.model';
+import { CardInfo } from '../../../domain/entities/paiements/card-info.model';
+import { BankAccount } from '../../../domain/entities/paiements/bank-account.model';
+export declare class PaiementsRepositoryService implements ICreatePaiementsAccount {
+    private readonly externalPaiementsService;
+    private readonly usersServices;
+    private readonly paiementsRepository;
+    constructor(externalPaiementsService: StripeService, usersServices: UsersServices, paiementsRepository: PaiementsRepository);
+    createPaiementAccount(user: User): Promise<Customer>;
+    createProviderPaiementAccount(user: User, bankAccount: BankAccount): Promise<Customer>;
+    identityVerification(accountId: string, identityPrincipale: any, identitySecondary: any): Promise<any>;
+    savePaiementAccount(customer: Customer, user: User): Promise<Customer>;
+    getPaiementAccount(email: string): Promise<import("../entities/paiement.entity").PaiementEntity>;
+    getProviderPaiementBankAccount(accountId: string, bankAccountId: string): Promise<Stripe.bankAccounts.IBankAccount>;
+    generateTokenFromCard(card: Card): Promise<string>;
+    addCardPaiement(email: string, cardToken: string): Promise<Customer>;
+    tokenExist(token: any): Promise<Stripe.tokens.IToken>;
+    findCustomer(id: any): Promise<Stripe.customers.ICustomer>;
+    addIban(iban: Iban): Promise<Stripe.sources.ISource>;
+    updateCard(cusID: string, metadata: object): Promise<any>;
+    deleteCard(customerId: string, cardId: string): Promise<Stripe.IDeleteConfirmation>;
+    getSetepIntent(customerId: string): Promise<string>;
+    getAllCardsPaiementAccount(customerId: string): Promise<CardInfo[]>;
+}

@@ -1,0 +1,55 @@
+import { Client, Provider, User } from '../../domain/entities/user.model';
+import { UserEntity } from '../../infrastructure/databases/entities';
+import { UsersServices } from '../../infrastructure/databases/users/users.service';
+import { ConfigService } from '../config/config-service';
+import { GcpFileService } from '../../global/services/gcp-file/gcp-file.service';
+import { VerifiedDto } from './dto/verified.dto';
+export declare class UsersService {
+    private usersServices;
+    private readonly gcpFileService;
+    private readonly configService;
+    private readonly createUsersUsecase;
+    private readonly twilio;
+    constructor(usersServices: UsersServices, gcpFileService: GcpFileService, configService: ConfigService);
+    getUserInfo(): User;
+    getUsers(): Promise<UserEntity[]>;
+    getUserByEmail(email: string): Promise<UserEntity>;
+    findUser(id: string): Promise<UserEntity>;
+    createUser(user: User): Promise<User>;
+    createClient(user: Client): Promise<Client>;
+    createProvider(user: Provider): Promise<Provider>;
+    patchUserLastConnexion(email: string, user: Partial<UserEntity>): Promise<UserEntity>;
+    patchUser(email: string, user: Partial<UserEntity>): Promise<{
+        id: string;
+        notifications: import("../../infrastructure/databases/entities/notifications.entity").NotificationsEntity[];
+        location: {
+            address: string;
+            lat: number;
+            lng: number;
+        };
+        email: string;
+        emailVerified?: boolean;
+        phoneVerified?: boolean;
+        phoneToken: string;
+        phoneTokenRequestCount: number;
+        firstname?: string;
+        deletedAt?: Date;
+        languages?: string[];
+        lastname?: string;
+        phone?: import("../../infrastructure/databases/entities").Phone;
+        status?: import("../../infrastructure/databases/entities").Status;
+        state?: import("../../infrastructure/databases/entities").State;
+        lastConnexionDate?: Date;
+        connectionType: import("../../infrastructure/databases/entities").ConnectionType;
+        role: import("../../infrastructure/databases/entities").Roles;
+        photo: string;
+        paiement: import("../../infrastructure/databases/entities/paiement.entity").PaiementEntity;
+        createdAt: Date;
+    }>;
+    confirmUser(email: string, user: Partial<UserEntity>): Promise<UserEntity>;
+    static filename(req: any, file: any, cb: any): any;
+    static fileFilter(req1: any, file: any, callback: any): any;
+    changePhoto(email: any, filename: any): Promise<UserEntity>;
+    deleteUser(email: any): Promise<UserEntity>;
+    markUserAsVerified(email: any, data: VerifiedDto): Promise<import("../../infrastructure/databases/entities").ProviderEntity>;
+}

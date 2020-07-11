@@ -1,0 +1,40 @@
+import { CompanyService } from '../company/company.service';
+import { UsersService } from '../users/users.service';
+import { CreateBookingDto } from './dto/createBooking.dto';
+import { ReservationsService } from '../../infrastructure/databases/reservations/reservations.service';
+import { ClientEntity } from '../../infrastructure/databases/entities';
+import { ReservationEntity } from '../../infrastructure/databases/entities/reservation.entity';
+import { UpdateBookingDto } from './dto/updateBooking.dto';
+import { NotificationsService } from '../notifications/notifications.service';
+import { EmailService } from '../../global/services/mail/email.service';
+export declare class BookingService {
+    private readonly companyService;
+    private readonly usersService;
+    private readonly reservationsService;
+    private readonly notificationsService;
+    private readonly emailService;
+    constructor(companyService: CompanyService, usersService: UsersService, reservationsService: ReservationsService, notificationsService: NotificationsService, emailService: EmailService);
+    createBooking(order: CreateBookingDto, client: ClientEntity): Promise<import("../../infrastructure/databases/entities/reservationsIndex.model").ReservationsIndexModel>;
+    private calculateTotalPrice;
+    deleteBooking(id: string, user: ClientEntity): Promise<void>;
+    updateBooking(id: string, order: UpdateBookingDto): Promise<unknown>;
+    findReservation(id: string): Promise<ReservationEntity>;
+    findAllBookings(query: any, page: number): Promise<{
+        data: unknown[];
+        total: any;
+    }>;
+    findBooking(id: string): Promise<unknown>;
+    findBookingPsql(id: string): Promise<ReservationEntity>;
+    private calculatePhotographePrice;
+    private calculateVideastePrice;
+    private calculateGateauMariagePrice;
+    private calculateLieuPrice;
+    private calculateTraiteurPrice;
+    private calculateMaquillagePrice;
+    private calculateSoinsPrice;
+    private calculateEsthetiquePrice;
+    private calculateCoiffurePrice;
+    private calculateOptionDiversPrice;
+    private calculateFraisDeplacementPrice;
+    validateReservationByClient(order: UpdateBookingDto, id: string): Promise<unknown>;
+}

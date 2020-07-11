@@ -1,0 +1,31 @@
+import { ICreateUser } from '../../../domain/usecases/services/create-user.usecase';
+import { UsersRepository } from './users.repository';
+import { Client, Provider, User } from '../../../domain/entities/user.model';
+import { ClientEntity, ProviderEntity, UserEntity } from '../entities';
+import { ClientsRepository } from './clients.repository';
+import { ProvidersRepository } from './providers.repository';
+import { ElasticsearchService } from '../elasticsearch/elasticsearch.service';
+import { VerifiedDto } from '../../../presentation/users/dto/verified.dto';
+export declare class UsersServices implements ICreateUser {
+    private readonly usersRepository;
+    private readonly clientsRepository;
+    private readonly providersRepository;
+    es: ElasticsearchService;
+    constructor(usersRepository: UsersRepository, clientsRepository: ClientsRepository, providersRepository: ProvidersRepository);
+    createUser(user: User): Promise<User>;
+    createClient(client: Client): Promise<Client>;
+    createProvider(provider: Provider): Promise<Provider>;
+    isUserExist(emailExist: string): Promise<boolean>;
+    isUserExistById(userId: string): Promise<boolean>;
+    findUserByEmail(email: string): Promise<UserEntity>;
+    getUsers(): Promise<UserEntity[]>;
+    delete(user: UserEntity): Promise<UserEntity>;
+    findClientByEmail(email: string): Promise<ClientEntity>;
+    findProviderByEmail(email: string): Promise<ProviderEntity>;
+    findProvider(id: string): Promise<ProviderEntity>;
+    findAllProviders(ids: string[]): Promise<ProviderEntity[]>;
+    findUserById(id: string): Promise<UserEntity>;
+    updateUser(email: string, user: Partial<UserEntity>): Promise<UserEntity>;
+    updateClient(email: string, client: Partial<ClientEntity>): Promise<ClientEntity>;
+    markProviderAsVerified(provider: ProviderEntity, data: VerifiedDto): Promise<ProviderEntity>;
+}
