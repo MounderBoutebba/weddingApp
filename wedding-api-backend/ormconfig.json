@@ -1,0 +1,29 @@
+{
+  "type": "postgres",
+  "host": "raja.db.elephantsql.com",
+  "port": 5432,
+  "username": "qifwmsog",
+  "password": "iyPh2B1LQ5rNMKFtEfOq15c94UP_uvtd",
+  "database": "qifwmsog",
+  "entities": [
+    "src/infrastructure/databases/**/*.entity.js"
+  ],
+  "migrationsRun": true,
+  "logging": true,
+  "logger": "file",
+  "migrations": [
+    "src/migrations/*.js"
+  ],
+  "cli": {
+    "migrationsDir": "src/migrations"
+  },
+  "synchronize": true,
+  "extra": {
+    "max": 1,
+    "min": 1
+  },
+  "cache": {
+    "type": "database",
+    "tableName": "query_result_cache"
+  }
+}

@@ -1,0 +1,7 @@
+runtime: nodejs10
+service: api
+env_variables: 
+  NODE_ENV: gcp
+automatic_scaling: 
+  max_idle_instances: 1
+  min_idle_instances: 1

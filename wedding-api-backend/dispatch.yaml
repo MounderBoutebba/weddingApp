@@ -1,0 +1,8 @@
+dispatch:
+  # Send all work to the one static backend.
+  - url: "*/api/*"
+    service: api
+  - url: "*/cmsapi/*"
+    service: cms-api  
+
+
