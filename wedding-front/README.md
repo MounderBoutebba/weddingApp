@@ -1,7 +1,5 @@
-# MariageSereinWeb
+# wedding
 
-[![pipeline status](https://gitlab.com/transfonum/mariage-serein/mariage-serein-web/badges/dev/pipeline.svg)](https://gitlab.com/transfonum/mariage-serein/mariage-serein-web/commits/dev)
-[![coverage report](https://gitlab.com/transfonum/mariage-serein/mariage-serein-web/badges/dev/coverage.svg)](https://gitlab.com/transfonum/mariage-serein/mariage-serein-web/commits/dev)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.2.
 

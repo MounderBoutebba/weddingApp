@@ -6,8 +6,7 @@
     <p align="center">
 <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
 <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-[![pipeline status](https://gitlab.com/transfonum/mariage-serein/mariage-serein-api/badges/dev/pipeline.svg)](https://gitlab.com/transfonum/mariage-serein/mariage-serein-api/commits/dev)
-[![coverage report](https://gitlab.com/transfonum/mariage-serein/mariage-serein-api/badges/dev/coverage.svg)](https://gitlab.com/transfonum/mariage-serein/mariage-serein-api/commits/dev)
+
 </p>
 
 ## Description
