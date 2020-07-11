@@ -1,0 +1,14 @@
+{
+  "env": {
+    "URL":"http://localhost:4000"
+  },
+  "chromeWebSecurity": false,
+  "baseUrl": "http://localhost:4000",
+  "video": false,
+  "fixturesFolder": "projects/mariage/e2e/fixtures",
+  "integrationFolder": "projects/mariage/e2e/integration",
+  "pluginsFile": "projects/mariage/e2e/plugins",
+  "screenshotsFolder": "projects/mariage/e2e/screenshots",
+  "supportFile": "projects/mariage/e2e/support",
+  "videosFolder": "projects/mariage/e2e/videos"
+}

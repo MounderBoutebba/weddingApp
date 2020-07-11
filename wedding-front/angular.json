@@ -1,0 +1,240 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "mariage": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/mariage",
+      "sourceRoot": "projects/mariage/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/browser",
+            "index": "projects/mariage/src/index.html",
+            "main": "projects/mariage/src/main.ts",
+            "polyfills": "projects/mariage/src/polyfills.ts",
+            "tsConfig": "projects/mariage/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/mariage/src/winwez.ico",
+              "projects/mariage/src/assets",
+              "projects/mariage/src/manifest.webmanifest"
+            ],
+            "styles": [
+              "projects/mariage/src/assets/styles/app.scss",
+              "node_modules/@ng-select/ng-select/themes/material.theme.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/snazzy-info-window/dist/snazzy-info-window.css"
+            ],
+            "scripts": [
+              "node_modules/marked/lib/marked.js"
+            ]
+          },
+          "configurations": {
+            "hmr": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/mariage/src/environments/environment.ts",
+                  "with": "projects/mariage/src/environments/environment.hmr.ts"
+                }
+              ]
+            },
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/mariage/src/environments/environment.ts",
+                  "with": "projects/mariage/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "serviceWorker": false,
+              "ngswConfigPath": "projects/mariage/ngsw-config.json"
+            },
+            "gcp": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/mariage/src/environments/environment.ts",
+                  "with": "projects/mariage/src/environments/environment.gcp.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "serviceWorker": false,
+              "ngswConfigPath": "projects/mariage/ngsw-config.json"
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "mariage:build",
+            "proxyConfig": "proxy.conf.json"
+          },
+          "configurations": {
+            "hmr": {
+              "hmr": true,
+              "browserTarget": "mariage:build:hmr"
+            },
+            "production": {
+              "browserTarget": "mariage:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "mariage:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "polyfills": "projects/mariage/src/polyfills.ts",
+            "tsConfig": "projects/mariage/tsconfig.spec.json",
+            "assets": [
+              "projects/mariage/src/winwez.ico",
+              "projects/mariage/src/assets"
+            ],
+            "styles": [
+              "projects/mariage/src/assets/styles/app.scss",
+              "node_modules/@ng-select/ng-select/themes/material.theme.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/snazzy-info-window/dist/snazzy-info-window.css"
+            ],
+            "scripts": [
+              "node_modules/marked/lib/marked.js"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/mariage/tsconfig.app.json",
+              "projects/mariage/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "ngx-cypress-builder:cypress",
+          "root": "projects/mariage/e2e/",
+          "projectType": "application",
+          "options": {
+            "devServerTarget": "mariage:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "mariage:serve:production"
+            }
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/server",
+            "main": "projects/mariage/server.ts",
+            "tsConfig": "projects/mariage/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/mariage/src/environments/environment.ts",
+                  "with": "projects/mariage/src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": {
+                "scripts": false,
+                "styles": true
+              }
+            },
+            "gcp": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/mariage/src/environments/environment.ts",
+                  "with": "projects/mariage/src/environments/environment.gcp.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": {
+                "scripts": false,
+                "styles": true
+              }
+            }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "mariage:build",
+            "serverTarget": "mariage:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "mariage:build:production",
+              "serverTarget": "mariage:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "mariage:build:production",
+            "serverTarget": "mariage:server:production",
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {}
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "mariage",
+  "cli": {
+    "analytics": false
+  }
+}
