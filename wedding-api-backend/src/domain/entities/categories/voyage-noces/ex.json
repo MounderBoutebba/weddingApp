@@ -1,0 +1,36 @@
+{
+    "providerID":  "4abb3d9b-2300-4e04-8a24-4faf26db47bc" ,
+    "paymentType": 1,
+    "cat" : "voyageNoces",
+    "bookingDate": {"startDate": "dsdsd", "endDate": "dsds"},
+    "criteres": {
+        "voyageNoces": { 
+            "duree": 12,
+            "zoneGeo": ["sds"],
+            "situationGeo": ["sds"],
+            "classificationHoteliere": 3,
+            "childrens": true,
+            "animals": true,
+            "equipements": ["sall de sport"],
+            "services": ["service1 .."],
+            "activities": ["massage"],
+            "parking": true,
+            "nombreDeChambre": 3,
+            "typeDeTarification": {
+				"label": "Tarif / Chambre" ,
+				"step": 10,
+				"value": 40,
+				"unit":  "€" 
+			}
+            
+        },
+        "optionDivers": {
+            "coffretBois": true,
+            "coffretBoisExamplaires": 2,
+            "filmEmotion": true,
+            "photoSouvenir": true
+        }
+    }
+  }
+
+ 

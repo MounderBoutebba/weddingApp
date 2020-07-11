@@ -1,0 +1,69 @@
+{
+    "providerID":  "12d1371b-cde9-4805-b4cd-c0ac94d7bb13" ,
+    "cat" : "photographeVideaste",
+    "paymentType": 1,
+    "bookingDate": {"startDate": "dsdsd", "endDate": "dsds"},
+    "criteres": {
+        "photographe": {
+            "dureeMissionPhoto":20,
+            "duoPhoto": true,
+            "photomaton": true,
+            "photocall": true,
+            "livraisonHauteResolutionPhoto": true,
+            "galeriePrive": true,
+            "dureeMissionSeanceEngagement": 6,
+            "seanceEngagementIsChecked": true,
+            "dureeMissionSeanceBrunchOuDejeuner": 5,
+            "seanceBrunchOuDejeunerIsChecked": true,
+            "dureeMissionSeanceApresMariage": 5,
+            "seanceApresMariageIsChecked": true,
+            "donneesDvdExamplairesPhoto": 15,
+            "donneesDvdExamplairesPhotoIsChecked": true,
+            "donneesUsbExamplairesPhoto": 154,
+            "donneesUsbExamplairesPhotoIsChecked": true,
+            "tiragePapierFinitionMate": true,
+            "tiragePapierFinitionBrillante": true,
+            "tiragePapier": [ { "name": "10x13", "checked": true, "examplaire": 1},{ "name": "10x13", "checked": true, "examplaire": 20} ],
+            "creationAlbumFinitionMate": true,
+            "creationAlbumFinitionBrillante": true,
+            "creationAlbum": [ 
+             { "name": "a4_paysage29x21", "checked": true, "modeles": [
+                 {"name":"20 pages","checked":true,"examplaire": 3},{"name":"50 pages","checked":true,"examplaire": 6}
+                 ]
+            } ,
+             { "name": "a4_portrait29x21", "checked": true, "modeles": [
+                 {"name":"100 pages","checked":true,"examplaire": 7},
+                 {"name":"150 pages","checked":true,"examplaire": 5}
+                 ]
+            }
+             ],
+            "retouchesPhotoExamplaires": 5,
+            "retouchesPhoto" : true,
+            "livraisonExpressPhoto" : true
+        },
+        "videaliste": {
+            "dureeMissionVideo": 8,
+            "duoVideo" : true,
+            "bandeAnnonce" : true,
+            "filmCourt" : true,
+            "filmLong" : true,
+            "courtMetrage" : true,
+            "videoAerienne" : true,
+            "etalonnageVideo" : true,
+            "livraisonOriginauxHauteResolutionVideo" : true,
+            "livraisonExpressVideo" : true,
+            "donneesDvdExamplairesVideo" : 2,
+            "donneesDvdExamplairesVideoIsChecked" : true,
+            "donneesUsbExamplairesVideo" : 3,
+            "donneesUsbExamplairesVideoIsChecked" : true
+        },
+        "optionDivers": {
+            "coffretBois": true,
+            "coffretBoisExamplaires": 2,
+            "filmEmotion": true,
+            "photoSouvenir": true
+        }
+    }
+  }
+
+ 
