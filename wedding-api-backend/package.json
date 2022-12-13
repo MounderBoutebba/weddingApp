@@ -44,7 +44,7 @@
 		"@nestjs/common": "^6.0.0",
 		"@nestjs/core": "^6.0.0",
 		"@nestjs/passport": "^6.1.0",
-		"@nestjs/platform-express": "^6.0.0",
+		"@nestjs/platform-express": "^9.2.1",
 		"@nestjs/platform-socket.io": "^7.0.7",
 		"@nestjs/schedule": "^0.3.0",
 		"@nestjs/swagger": "^4.1.14",
